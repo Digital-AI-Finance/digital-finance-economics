@@ -1,0 +1,507 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Monetary Economics of Digital Currencies}
+\subtitle{L02: Money Theory Meets Cryptocurrency}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Outline
+\begin{frame}[t]{Lesson Overview}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Today's Topics}
+\begin{enumerate}
+\item Functions of money revisited
+\item Quantity theory in digital age
+\item Cryptocurrencies as money
+\item Stablecoin economics
+\item Currency substitution
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Learning Objectives}
+\begin{itemize}
+\item Apply monetary theory to digital currencies
+\item Assess crypto against money functions
+\item Analyze stablecoin stability mechanisms
+\item Understand Gresham's Law implications
+\end{itemize}
+\end{columns}
+
+\bottomnote{Monetary economics provides rigorous framework for evaluating digital currencies}
+\end{frame}
+
+% Functions of Money Deep Dive
+\begin{frame}[t]{Functions of Money: Economic Analysis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Medium of Exchange}
+
+Economic rationale:
+\begin{itemize}
+\item Eliminates barter inefficiency
+\item Reduces search and matching costs
+\item Transaction cost = $c_b - c_m$ where $c_m \ll c_b$
+\end{itemize}
+
+\vspace{0.3em}
+Requirements:
+\begin{itemize}
+\item Acceptability (network effect)
+\item Divisibility
+\item Portability
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Unit of Account}
+
+Economic rationale:
+\begin{itemize}
+\item Reduces cognitive costs
+\item With $n$ goods: $\frac{n(n-1)}{2} \rightarrow n-1$ prices
+\item Enables economic calculation
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Store of Value}
+
+Requirements:
+\begin{itemize}
+\item Stable purchasing power
+\item Low volatility: $\sigma_{\text{money}} < \sigma_{\text{goods}}$
+\item Inflation protection
+\end{itemize}
+\end{columns}
+
+\bottomnote{Trade-offs exist: a good medium of exchange may not be ideal store of value}
+\end{frame}
+
+% Quantity Theory
+\begin{frame}[t]{Quantity Theory of Money in Digital Age}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Classical Equation of Exchange}
+$$MV = PY$$
+\begin{itemize}
+\item $M$ = Money supply
+\item $V$ = Velocity of circulation
+\item $P$ = Price level
+\item $Y$ = Real output
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Implications}
+\begin{itemize}
+\item If $V$ stable: $\Delta M \rightarrow \Delta P$
+\item Seigniorage = $\frac{\dot{M}}{P}$
+\item Inflation tax on money holders
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Digital Currency Complications}
+
+Bitcoin example:
+\begin{itemize}
+\item $M$ fixed at 21 million (deflationary)
+\item $V$ highly volatile and hard to measure
+\item Which $P$? (Crypto priced in fiat)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Velocity Puzzle}
+\begin{itemize}
+\item Traditional money: $V \approx 5-7$
+\item Bitcoin: $V$ varies 2-20+
+\item Stablecoins: Very high turnover
+\end{itemize}
+\end{columns}
+
+\bottomnote{Fixed supply creates deflationary pressure; incompatible with MoE function}
+\end{frame}
+
+% Bitcoin Volatility
+\begin{frame}[t]{Bitcoin as Money: The Volatility Problem}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{01_bitcoin_volatility/chart.pdf}
+\end{center}
+
+\bottomnote{Bitcoin's 50-85\% volatility vs EUR/USD's 5-10\% makes it unsuitable as unit of account}
+\end{frame}
+
+% Cryptocurrency Assessment
+\begin{frame}[t]{Cryptocurrencies as Money: Economic Assessment}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Medium of Exchange: Grade C-}
+\begin{itemize}
+\item Limited merchant acceptance
+\item High transaction costs (at times)
+\item 10-60 min confirmation times
+\item Scalability trilemma
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Unit of Account: Grade F}
+\begin{itemize}
+\item Extreme volatility
+\item ``Menu cost'' of repricing
+\item No contracts denominated in BTC
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Store of Value: Grade C}
+\begin{itemize}
+\item Long-term appreciation (but volatile)
+\item Digital gold narrative
+\item Correlation with risk assets
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Yermack (2015) Conclusion}
+
+``Bitcoin behaves more like a speculative investment than a currency''
+\begin{itemize}
+\item Low correlation with major currencies
+\item High correlation with tech stocks
+\item Driven by speculation, not trade
+\end{itemize}
+\end{columns}
+
+\bottomnote{Bitcoin fails key money functions; better characterized as speculative asset}
+\end{frame}
+
+% Money Functions Matrix
+\begin{frame}[t]{Money Functions: Comparative Assessment}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{03_money_functions_matrix/chart.pdf}
+\end{center}
+
+\bottomnote{CBDCs designed to achieve high scores across all functions; stablecoins compromise}
+\end{frame}
+
+% Stablecoin Economics
+\begin{frame}[t]{Stablecoin Economics: Design and Mechanisms}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Types by Collateral}
+
+\vspace{0.3em}
+\textbf{1. Fiat-backed (USDT, USDC)}
+\begin{itemize}
+\item 1:1 reserve in bank accounts
+\item Trust in issuer and audits
+\item Redemption guarantee
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Crypto-backed (DAI)}
+\begin{itemize}
+\item Over-collateralized (150\%+)
+\item Smart contract enforcement
+\item Liquidation mechanisms
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{3. Algorithmic (failed: UST)}
+\begin{itemize}
+\item No collateral backing
+\item Arbitrage-based stability
+\item Prone to death spirals
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Economic Trade-offs}
+\begin{itemize}
+\item Capital efficiency vs. safety
+\item Centralization vs. transparency
+\item Scalability vs. collateral needs
+\end{itemize}
+\end{columns}
+
+\bottomnote{Terra/UST collapse (2022) showed algorithmic designs are inherently fragile}
+\end{frame}
+
+% Stablecoin Market
+\begin{frame}[t]{Stablecoin Market Evolution}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{02_stablecoin_market/chart.pdf}
+\end{center}
+
+\bottomnote{Market concentrated in USDT; Terra collapse caused \$40B+ losses in May 2022}
+\end{frame}
+
+% Gresham's Law
+\begin{frame}[t]{Gresham's Law and Currency Substitution}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Gresham's Law}
+
+``Bad money drives out good''
+\begin{itemize}
+\item When two currencies circulate at fixed rate
+\item Undervalued currency hoarded
+\item Overvalued currency spent
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Digital Application}
+\begin{itemize}
+\item Bitcoin hoarded (``HODL'')
+\item Stablecoins used for transactions
+\item Self-fulfilling: reduces velocity
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Currency Substitution}
+
+Dollarization analogy:
+\begin{itemize}
+\item Weak local currency replaced
+\item ``Crypto-ization'' in high-inflation countries
+\item Argentina, Venezuela, Turkey cases
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Consequences}
+\begin{itemize}
+\item Loss of monetary policy autonomy
+\item Seigniorage transfer abroad
+\item Financial stability risks
+\end{itemize}
+\end{columns}
+
+\bottomnote{Currency competition creates both opportunities and risks for monetary systems}
+\end{frame}
+
+% Money Demand
+\begin{frame}[t]{Money Demand for Digital Currencies}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Traditional Money Demand}
+$$M^d/P = L(Y, i)$$
+\begin{itemize}
+\item $L_Y > 0$: Transaction motive
+\item $L_i < 0$: Opportunity cost
+\item Baumol-Tobin inventory model
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Portfolio Approach}
+$$M^d = f(W, r_m, r_b, \pi^e, \sigma)$$
+\begin{itemize}
+\item Wealth effect
+\item Relative returns
+\item Inflation expectations
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Crypto Money Demand}
+
+Additional factors:
+\begin{itemize}
+\item Speculative motive dominates
+\item Network effects matter
+\item Regulatory risk premium
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Empirical Challenges}
+\begin{itemize}
+\item What is ``crypto money supply''?
+\item How to measure crypto velocity?
+\item Multiple exchanges, prices
+\end{itemize}
+\end{columns}
+
+\bottomnote{Traditional money demand models require significant adaptation for crypto analysis}
+\end{frame}
+
+% Seigniorage
+\begin{frame}[t]{Seigniorage in Digital Currency Systems}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Traditional Seigniorage}
+$$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
+\begin{itemize}
+\item Revenue from money creation
+\item Accrues to central bank/government
+\item Inflation tax on money holders
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Bitcoin ``Seigniorage''}
+\begin{itemize}
+\item Block rewards to miners
+\item Declining over time (halvings)
+\item Dissipated in mining costs
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Stablecoin Seigniorage}
+\begin{itemize}
+\item Interest on reserves kept by issuer
+\item Tether earns billions annually
+\item Users bear opportunity cost
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy Implications}
+\begin{itemize}
+\item Who captures monetary rents?
+\item Private vs. public money trade-offs
+\item CBDC: Returns seigniorage to public
+\end{itemize}
+\end{columns}
+
+\bottomnote{Stablecoin issuers capture seigniorage that would otherwise accrue to governments}
+\end{frame}
+
+% Monetary Policy Implications
+\begin{frame}[t]{Monetary Policy Implications}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Transmission Mechanism Risks}
+\begin{itemize}
+\item Crypto reduces money multiplier
+\item Interest rate channel weakened
+\item Bank reserves less relevant
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Financial Stability}
+\begin{itemize}
+\item Pro-cyclical crypto prices
+\item Contagion from crypto crashes
+\item Interconnection with TradFi
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Central Bank Responses}
+\begin{itemize}
+\item CBDC development (defensive)
+\item Stablecoin regulation
+\item Reserve requirements for crypto banks
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Long-term Questions}
+\begin{itemize}
+\item Can crypto coexist with fiat?
+\item Optimal regulatory perimeter?
+\item International coordination needs?
+\end{itemize}
+\end{columns}
+
+\bottomnote{Central banks view crypto growth as potential challenge to monetary sovereignty}
+\end{frame}
+
+% Key Takeaways
+\begin{frame}[t]{Key Takeaways}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Main Conclusions}
+\begin{enumerate}
+\item Bitcoin fails core money functions due to volatility
+\item Stablecoins are ``money-like'' but carry risks
+\item Quantity theory applies but needs adaptation
+\item Seigniorage distribution is policy issue
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Economic Framework}
+\begin{itemize}
+\item Money functions: MoE, UoA, SoV
+\item Quantity theory: $MV = PY$
+\item Gresham's Law and hoarding
+\item Currency substitution dynamics
+\end{itemize}
+\end{columns}
+
+\vspace{0.5em}
+\textbf{Core Insight}
+
+Monetary economics reveals why cryptocurrencies struggle as money: they optimize for speculation, not monetary functions. Stablecoins address some issues but create new ones.
+
+\bottomnote{Next lesson: Central Bank Digital Currencies (CBDCs)}
+\end{frame}
+
+% References
+\begin{frame}[t]{Further Reading}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Academic Papers}
+\begin{itemize}
+\item Yermack (2015): ``Is Bitcoin a Real Currency?''
+\item Gorton \& Zhang (2023): ``Taming Wildcat Stablecoins''
+\item Brunnermeier et al. (2019): ``The Digitalization of Money''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Policy Analysis}
+\begin{itemize}
+\item BIS (2022): ``The Future Monetary System''
+\item IMF (2023): ``Elements of Effective Crypto Policies''
+\item ECB (2022): ``Stablecoin Assessment''
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform}
+\end{frame}
+
+\end{document}

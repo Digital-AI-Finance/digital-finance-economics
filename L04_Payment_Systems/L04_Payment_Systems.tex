@@ -1,0 +1,608 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Payment Systems Economics}
+\subtitle{L04: Economics of Value Transfer}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Outline
+\begin{frame}[t]{Lesson Overview}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Today's Topics}
+\begin{enumerate}
+\item Economics of payment systems
+\item Network effects and adoption
+\item Two-sided market theory
+\item Cross-border payment challenges
+\item Financial inclusion
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Learning Objectives}
+\begin{itemize}
+\item Apply network economics to payments
+\item Analyze interchange fee economics
+\item Understand correspondent banking costs
+\item Evaluate digital solutions
+\end{itemize}
+\end{columns}
+
+\bottomnote{Payment systems are infrastructure for economic activity; their economics matter}
+\end{frame}
+
+% Payment System Basics
+\begin{frame}[t]{Economics of Payment Systems}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Economic Functions}
+
+Payment systems enable:
+\begin{itemize}
+\item Value transfer between parties
+\item Settlement of obligations
+\item Support for economic transactions
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key Economic Properties}
+\begin{itemize}
+\item Network goods (value $\uparrow$ with users)
+\item Infrastructure characteristics
+\item Significant fixed costs
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{System Types}
+
+\vspace{0.3em}
+\textbf{Large Value (Wholesale)}
+\begin{itemize}
+\item Fedwire, TARGET2
+\item RTGS: Real-time gross settlement
+\item Low volume, high value
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Retail}
+\begin{itemize}
+\item Cards, ACH, instant payments
+\item High volume, lower value
+\item Consumer-facing
+\end{itemize}
+\end{columns}
+
+\bottomnote{Payment systems exhibit natural monopoly characteristics due to network effects}
+\end{frame}
+
+% Network Effects
+\begin{frame}[t]{Network Effects in Payments}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Direct Network Effects}
+
+Value increases with users:
+$$V(n) = n \cdot v(n)$$
+
+where $v(n)$ is per-user value.
+
+\vspace{0.3em}
+\textbf{Metcalfe's Law (simplified)}
+$$V \propto n^2$$
+\begin{itemize}
+\item Each user can transact with $n-1$ others
+\item Creates positive feedback loops
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Implications for Payments}
+
+\vspace{0.3em}
+\textbf{Adoption Dynamics}
+\begin{itemize}
+\item Critical mass threshold
+\item Tipping points
+\item Winner-take-most markets
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Entry Barriers}
+\begin{itemize}
+\item Incumbents have user base advantage
+\item New entrants need to ``buy'' network
+\item Interoperability can reduce barriers
+\end{itemize}
+\end{columns}
+
+\bottomnote{Network effects explain why few payment networks dominate each market segment}
+\end{frame}
+
+% Payment Adoption
+\begin{frame}[t]{Payment Technology Adoption Patterns}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{02_payment_adoption/chart.pdf}
+\end{center}
+
+\bottomnote{S-curve adoption: slow start, rapid growth after critical mass (\textasciitilde16\%), then saturation}
+\end{frame}
+
+% Two-Sided Markets
+\begin{frame}[t]{Two-Sided Market Theory}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Platform Model}
+
+Card networks connect:
+\begin{itemize}
+\item Side 1: Cardholders (consumers)
+\item Side 2: Merchants (acceptors)
+\item Platform: Visa, Mastercard
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Cross-Side Network Effects}
+\begin{itemize}
+\item More merchants $\rightarrow$ more cardholders
+\item More cardholders $\rightarrow$ more merchants
+\item Chicken-and-egg problem
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Rochet-Tirole Model}
+
+Optimal pricing:
+$$p_B + p_S = c + m$$
+$$\frac{p_B - c_B}{p_S - c_S} = \frac{\eta_S}{\eta_B}$$
+
+where $\eta$ = price elasticity
+
+\vspace{0.3em}
+\textbf{Key Insight}
+
+Price structure matters, not just level:
+\begin{itemize}
+\item Subsidize price-sensitive side
+\item Charge price-insensitive side
+\item ``Get both sides on board''
+\end{itemize}
+\end{columns}
+
+\bottomnote{Rochet \& Tirole (2006): Two-sided markets require analysis beyond standard economics}
+\end{frame}
+
+% Interchange Fees
+\begin{frame}[t]{Interchange Fee Economics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Fee Flow}
+
+\begin{enumerate}
+\item Consumer pays \$100
+\item Merchant receives \$97-98
+\item Interchange: 1.5-2\% to issuer
+\item Network fee: 0.1-0.2\%
+\item Acquirer margin: 0.2-0.5\%
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Economic Rationale}
+\begin{itemize}
+\item Issuer bears fraud risk
+\item Subsidizes cardholder rewards
+\item Balances two-sided market
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Regulatory Debate}
+
+\vspace{0.3em}
+\textbf{Against High Interchange}
+\begin{itemize}
+\item Merchants pass costs to prices
+\item Regressive: cash users subsidize card users
+\item Anti-competitive coordination
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{For Market Rates}
+\begin{itemize}
+\item Funds card benefits
+\item Network competition exists
+\item Caps reduce innovation
+\end{itemize}
+\end{columns}
+
+\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment capped debit at 0.05\%+21c}
+\end{frame}
+
+% Cross-Border Payments
+\begin{frame}[t]{Cross-Border Payment Challenges}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Problem}
+
+Cross-border payments are:
+\begin{itemize}
+\item Expensive: 6\%+ average cost
+\item Slow: 2-5 days settlement
+\item Opaque: uncertain fees
+\item Fragmented: many intermediaries
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Root Causes}
+\begin{itemize}
+\item Lack of common infrastructure
+\item Regulatory fragmentation
+\item Legacy technology
+\item Correspondent banking model
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Economic Inefficiencies}
+
+\vspace{0.3em}
+\textbf{FX Costs}
+\begin{itemize}
+\item Wide bid-ask spreads
+\item Hidden markups in rates
+\item Multiple conversions
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Compliance Costs}
+\begin{itemize}
+\item AML/KYC at each hop
+\item Sanctions screening
+\item Data format inconsistencies
+\end{itemize}
+\end{columns}
+
+\bottomnote{G20 target: reduce average cost to 3\% by 2027; currently at 6\%+}
+\end{frame}
+
+% Correspondent Banking
+\begin{frame}[t]{Correspondent Banking Network}
+\begin{center}
+\includegraphics[width=0.58\textwidth]{03_correspondent_banking/chart.pdf}
+\end{center}
+
+\bottomnote{Hub-and-spoke model adds costs and delays; each intermediary takes fees}
+\end{frame}
+
+% Remittance Costs
+\begin{frame}[t]{Remittance Costs: The Scale of Inefficiency}
+\begin{center}
+\includegraphics[width=0.62\textwidth]{01_remittance_costs/chart.pdf}
+\end{center}
+
+\bottomnote{High-cost corridors (Africa) hurt poorest populations most; digital can reduce costs}
+\end{frame}
+
+% Settlement Systems
+\begin{frame}[t]{Settlement System Design}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{RTGS (Real-Time Gross)}
+
+Characteristics:
+\begin{itemize}
+\item Immediate, final settlement
+\item Each transaction settled individually
+\item High liquidity requirement
+\end{itemize}
+
+\vspace{0.3em}
+Examples: Fedwire, TARGET2
+
+\vspace{0.3em}
+Trade-offs:
+\begin{itemize}
+\item[\textcolor{mlgreen}{+}] Eliminates settlement risk
+\item[\textcolor{mlred}{-}] High liquidity cost
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{DNS (Deferred Net)}
+
+Characteristics:
+\begin{itemize}
+\item Batch settlement at intervals
+\item Payments netted against each other
+\item Lower liquidity needs
+\end{itemize}
+
+\vspace{0.3em}
+Examples: ACH, many retail systems
+
+\vspace{0.3em}
+Trade-offs:
+\begin{itemize}
+\item[\textcolor{mlgreen}{+}] Liquidity efficient
+\item[\textcolor{mlred}{-}] Settlement risk until batch
+\end{itemize}
+\end{columns}
+
+\bottomnote{Hybrid systems combine benefits: queue management, partial netting with RTGS}
+\end{frame}
+
+% Instant Payments
+\begin{frame}[t]{Instant Payments: Economic Impact}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Global Rollout}
+
+Major systems:
+\begin{itemize}
+\item UK: Faster Payments (2008)
+\item India: UPI (2016)
+\item EU: SEPA Instant (2017)
+\item US: FedNow (2023)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Design Features}
+\begin{itemize}
+\item 24/7/365 availability
+\item Settlement in seconds
+\item Irrevocable payments
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Economic Benefits}
+
+For consumers:
+\begin{itemize}
+\item Improved cash flow management
+\item Emergency transfers
+\item P2P payments
+\end{itemize}
+
+For businesses:
+\begin{itemize}
+\item Working capital optimization
+\item Reduced float costs
+\item Real-time reconciliation
+\end{itemize}
+
+For economy:
+\begin{itemize}
+\item Velocity of money increase
+\item Reduced payment friction
+\end{itemize}
+\end{columns}
+
+\bottomnote{India's UPI: 10+ billion transactions/month; transformed payment landscape}
+\end{frame}
+
+% Financial Inclusion
+\begin{frame}[t]{Financial Inclusion Economics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Unbanked}
+
+1.4 billion adults lack accounts:
+\begin{itemize}
+\item Documentation barriers
+\item Physical access (branches)
+\item Minimum balance requirements
+\item Trust and literacy issues
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Costs}
+\begin{itemize}
+\item Check cashing fees (2-5\%)
+\item No savings accumulation
+\item Excluded from credit
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Mobile Money Success}
+
+M-Pesa (Kenya) model:
+\begin{itemize}
+\item Agent network (not branches)
+\item Phone-based (no smartphone needed)
+\item Low-value, low-cost transactions
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Impact Evidence}
+\begin{itemize}
+\item Suri \& Jack (2016): 2\% poverty reduction
+\item Women especially benefited
+\item Improved risk sharing
+\end{itemize}
+\end{columns}
+
+\bottomnote{Mobile money shows technology can reduce barriers; requires complementary ecosystem}
+\end{frame}
+
+% Digital Solutions
+\begin{frame}[t]{Digital Solutions to Payment Inefficiencies}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Blockchain-Based}
+\begin{itemize}
+\item Ripple/XRP for cross-border
+\item Stablecoins for remittances
+\item DeFi payment rails
+\end{itemize}
+
+Advantages:
+\begin{itemize}
+\item Bypass correspondent banking
+\item 24/7 operation
+\item Lower intermediary costs
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Traditional Innovation}
+\begin{itemize}
+\item SWIFT gpi improvements
+\item ISO 20022 messaging standard
+\item Linked instant payment systems
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Comparison}
+\begin{itemize}
+\item Blockchain: disruptive but immature
+\item Traditional: incremental but reliable
+\item Likely hybrid outcome
+\end{itemize}
+\end{columns}
+
+\bottomnote{Competition between approaches benefits users; both have role to play}
+\end{frame}
+
+% Competition and Regulation
+\begin{frame}[t]{Competition and Regulation in Payments}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Market Structure Issues}
+\begin{itemize}
+\item Natural monopoly tendencies
+\item High barriers to entry
+\item Winner-take-most dynamics
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Regulatory Responses}
+\begin{itemize}
+\item Interchange caps (EU, US)
+\item Open banking mandates
+\item Access to payment systems
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Big Tech Entry}
+\begin{itemize}
+\item Apple Pay, Google Pay
+\item Alipay, WeChat Pay
+\item Meta (stablecoin attempt)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy Concerns}
+\begin{itemize}
+\item Data concentration
+\item Systemic risk
+\item Competitive fairness
+\end{itemize}
+\end{columns}
+
+\bottomnote{Regulators balance innovation promotion against financial stability and competition}
+\end{frame}
+
+% Key Takeaways
+\begin{frame}[t]{Key Takeaways}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Main Conclusions}
+\begin{enumerate}
+\item Payment systems are network goods
+\item Two-sided markets require special analysis
+\item Cross-border payments remain inefficient
+\item Digital innovation offers solutions
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Economic Framework}
+\begin{itemize}
+\item Network effects and critical mass
+\item Two-sided market pricing
+\item Correspondent banking costs
+\item Financial inclusion economics
+\end{itemize}
+\end{columns}
+
+\vspace{0.5em}
+\textbf{Core Insight}
+
+Payment system economics explains both why incumbents dominate and why digital disruption is difficult but potentially transformative.
+
+\bottomnote{Next lesson: Platform Economics and Token Economics}
+\end{frame}
+
+% References
+\begin{frame}[t]{Further Reading}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Academic Papers}
+\begin{itemize}
+\item Rochet \& Tirole (2006): ``Two-Sided Markets''
+\item Suri \& Jack (2016): ``The Long-Run Poverty Effects of M-Pesa''
+\item Kahn \& Roberds (2009): ``Payment System Settlement''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Policy Reports}
+\begin{itemize}
+\item BIS (2020): ``Enhancing Cross-border Payments''
+\item FSB (2020): ``Cross-border Payments Roadmap''
+\item World Bank Remittance Reports
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform}
+\end{frame}
+
+\end{document}
