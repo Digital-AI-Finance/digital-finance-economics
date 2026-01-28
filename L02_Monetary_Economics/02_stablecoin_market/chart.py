@@ -1,7 +1,13 @@
-"""Stablecoin Market Share Evolution - Growth and composition"""
+"""Stablecoin Reserve Dynamics: Bank Run Simulation
+
+Monte Carlo simulation of reserve depletion under stress scenarios.
+Based on Diamond & Dybvig (1983) bank run model.
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
+
+np.random.seed(42)
 
 plt.rcParams.update({
     'font.size': 14, 'axes.labelsize': 14, 'axes.titlesize': 16,
@@ -16,49 +22,118 @@ MLGREEN = '#2CA02C'
 MLRED = '#D62728'
 MLLAVENDER = '#ADADE0'
 
-fig, ax = plt.subplots(figsize=(10, 6))
+# Simulation parameters
+N_SIMS = 500  # Number of Monte Carlo simulations
+T_DAYS = 60   # Simulation horizon in days
+NORMAL_REDEMPTION_RATE = 0.02  # 2% per day
+PANIC_REDEMPTION_RATE = 0.15   # 15% per day
+CONFIDENCE_THRESHOLD = 0.80    # Reserve ratio triggering panic
+DEPEG_THRESHOLD = 0.50         # Reserve ratio causing de-peg
 
-# Quarterly data from 2019 to 2024
-quarters = ['Q1\n2019', 'Q3\n2019', 'Q1\n2020', 'Q3\n2020', 'Q1\n2021', 'Q3\n2021',
-            'Q1\n2022', 'Q3\n2022', 'Q1\n2023', 'Q3\n2023', 'Q1\n2024']
+def simulate_reserves(initial_reserve_ratio, n_sims=N_SIMS, t_days=T_DAYS):
+    """
+    Simulate reserve dynamics under Diamond-Dybvig bank run model.
 
-# Market cap in billions USD (simulated but realistic)
-tether = np.array([2, 4, 5, 16, 35, 68, 83, 68, 70, 84, 95])
-usdc = np.array([0.3, 0.5, 1, 3, 10, 30, 55, 45, 32, 25, 30])
-dai = np.array([0.1, 0.3, 0.2, 1, 3, 7, 10, 6, 5, 5, 5])
-others = np.array([0.5, 0.7, 1, 2, 5, 15, 20, 12, 8, 10, 15])
+    Returns:
+        reserve_ratios: Array of shape (n_sims, t_days+1) with reserve ratios
+        depeg_times: Array of de-peg timing for each simulation (NaN if no de-peg)
+    """
+    reserve_ratios = np.zeros((n_sims, t_days + 1))
+    reserve_ratios[:, 0] = initial_reserve_ratio
+    depeg_times = np.full(n_sims, np.nan)
 
-x = np.arange(len(quarters))
+    for sim in range(n_sims):
+        for t in range(t_days):
+            current_ratio = reserve_ratios[sim, t]
 
-# Stacked area chart
-ax.fill_between(x, 0, tether, alpha=0.8, color=MLGREEN, label='USDT (Tether)')
-ax.fill_between(x, tether, tether + usdc, alpha=0.8, color=MLBLUE, label='USDC (Circle)')
-ax.fill_between(x, tether + usdc, tether + usdc + dai, alpha=0.8, color=MLORANGE, label='DAI (MakerDAO)')
-ax.fill_between(x, tether + usdc + dai, tether + usdc + dai + others, alpha=0.8, color=MLLAVENDER, label='Others')
+            # Diamond-Dybvig: Check if confidence threshold breached
+            if current_ratio < CONFIDENCE_THRESHOLD:
+                # Panic regime: High redemption rate
+                redemption_rate = PANIC_REDEMPTION_RATE
+            else:
+                # Normal regime: Low redemption rate
+                redemption_rate = NORMAL_REDEMPTION_RATE
 
-# Add total line
-total = tether + usdc + dai + others
-ax.plot(x, total, 'k-', linewidth=2, label='Total Market Cap')
+            # Add stochastic noise to redemption rate
+            noise = np.random.normal(0, 0.01)
+            actual_redemption = max(0, redemption_rate + noise)
 
-# Annotation for Terra collapse
-ax.annotate('Terra/UST\ncollapse', xy=(6.3, 140), xytext=(7.5, 155),
-            fontsize=10, ha='center',
-            arrowprops=dict(arrowstyle='->', color='gray', lw=1.5),
-            bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
+            # Update reserve ratio
+            new_ratio = current_ratio * (1 - actual_redemption)
+            reserve_ratios[sim, t + 1] = max(0, new_ratio)
 
-ax.set_xlabel('Quarter', fontweight='bold')
-ax.set_ylabel('Market Cap (Billion USD)', fontweight='bold')
-ax.set_title('Stablecoin Market Evolution', fontsize=16, fontweight='bold', color=MLPURPLE)
+            # Check for de-peg event
+            if new_ratio < DEPEG_THRESHOLD and np.isnan(depeg_times[sim]):
+                depeg_times[sim] = t + 1
 
-ax.set_xticks(x)
-ax.set_xticklabels(quarters)
-ax.legend(loc='upper left', framealpha=0.9)
-ax.grid(True, alpha=0.3, axis='y')
-ax.set_xlim(-0.5, len(quarters) - 0.5)
-ax.set_ylim(0, 180)
+            # Stop simulation if reserves depleted
+            if new_ratio <= 0:
+                reserve_ratios[sim, t+1:] = 0
+                break
 
-plt.tight_layout()
+    return reserve_ratios, depeg_times
+
+# Run simulations for different initial reserve ratios
+scenarios = {
+    'Full Reserve (100%)': 1.00,
+    'Partial Reserve (85%)': 0.85,
+    'Fractional Reserve (70%)': 0.70
+}
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
+
+colors = [MLGREEN, MLBLUE, MLORANGE]
+days = np.arange(T_DAYS + 1)
+
+for (label, initial_ratio), color in zip(scenarios.items(), colors):
+    reserve_ratios, depeg_times = simulate_reserves(initial_ratio)
+
+    # Calculate statistics
+    mean_ratio = np.mean(reserve_ratios, axis=0)
+    percentile_5 = np.percentile(reserve_ratios, 5, axis=0)
+    percentile_95 = np.percentile(reserve_ratios, 95, axis=0)
+
+    # Plot mean trajectory with confidence bands
+    ax1.plot(days, mean_ratio * 100, color=color, linewidth=2.5, label=label)
+    ax1.fill_between(days, percentile_5 * 100, percentile_95 * 100,
+                     color=color, alpha=0.2)
+
+    # Calculate de-peg probability over time
+    depeg_prob = np.zeros(T_DAYS + 1)
+    for t in range(T_DAYS + 1):
+        depeg_prob[t] = np.mean(depeg_times <= t)
+
+    ax2.plot(days, depeg_prob * 100, color=color, linewidth=2.5, label=label)
+
+# Main plot: Reserve ratio trajectories
+ax1.axhline(y=CONFIDENCE_THRESHOLD * 100, color='gray', linestyle='--',
+           linewidth=1.5, alpha=0.7, label='Confidence Threshold (80%)')
+ax1.axhline(y=DEPEG_THRESHOLD * 100, color=MLRED, linestyle='--',
+           linewidth=2, alpha=0.8, label='De-peg Threshold (50%)')
+
+ax1.set_xlabel('Days', fontweight='bold')
+ax1.set_ylabel('Reserve Ratio (%)', fontweight='bold')
+ax1.set_title('Reserve Dynamics Under Stress', fontsize=16, fontweight='bold', color=MLPURPLE)
+ax1.legend(loc='upper right', framealpha=0.95, fontsize=11)
+ax1.grid(True, alpha=0.3)
+ax1.set_xlim(0, T_DAYS)
+ax1.set_ylim(0, 105)
+
+# Second plot: De-peg probability
+ax2.set_xlabel('Days', fontweight='bold')
+ax2.set_ylabel('De-peg Probability (%)', fontweight='bold')
+ax2.set_title('Cumulative De-peg Risk', fontsize=16, fontweight='bold', color=MLPURPLE)
+ax2.legend(loc='upper left', framealpha=0.95, fontsize=11)
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(0, T_DAYS)
+ax2.set_ylim(0, 100)
+
+# Add citation
+fig.text(0.5, 0.02, 'Based on Diamond & Dybvig (1983) bank run model',
+         ha='center', fontsize=10, style='italic', color='gray')
+
+plt.tight_layout(rect=[0, 0.03, 1, 1])
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')
 plt.savefig(Path(__file__).parent / 'chart.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Chart saved to chart.pdf")
+print("Chart saved to chart.pdf and chart.png")

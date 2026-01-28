@@ -1,4 +1,11 @@
-"""Digital Finance Growth Decomposition - Extensive vs Intensive Margin Analysis"""
+"""Digital Finance Growth Decomposition: Solow-Style Accounting
+
+Decomposing fintech sector growth into technology infrastructure, adoption,
+network effects, and total factor productivity (TFP) components.
+
+Citation: Solow, R. M. (1957). Technical change and the aggregate production function.
+The Review of Economics and Statistics, 39(3), 312-320.
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -8,7 +15,7 @@ np.random.seed(42)
 plt.rcParams.update({
     'font.size': 14, 'axes.labelsize': 14, 'axes.titlesize': 16,
     'xtick.labelsize': 13, 'ytick.labelsize': 13, 'legend.fontsize': 13,
-    'figure.figsize': (10, 6), 'figure.dpi': 150
+    'figure.figsize': (12, 8), 'figure.dpi': 150
 })
 
 MLPURPLE = '#3333B2'
@@ -18,93 +25,101 @@ MLGREEN = '#2CA02C'
 MLRED = '#D62728'
 MLLAVENDER = '#ADADE0'
 
-# Time series: 2010-2035
-years = np.arange(2010, 2036)
+# Time series: 2010-2025
+years = np.arange(2010, 2026)
 t = years - 2010
 
-# Extensive margin: users (logistic S-curve)
-L_users = 3e9  # 3 billion users asymptote
-k_users = 0.3
-t0_users = 10  # inflection at 2020
-users = L_users / (1 + np.exp(-k_users * (t - t0_users)))
+# Growth decomposition: Growth = α*Technology + β*Adoption + γ*Network + TFP_residual
+# All contributions in percentage points per year
 
-# Intensive margin: transactions per user per year (logistic)
-L_txns = 200  # 200 txns/user/year asymptote
-k_txns = 0.25
-t0_txns = 15  # inflection at 2025
-txns_per_user = L_txns / (1 + np.exp(-k_txns * (t - t0_txns)))
+# 1. Technology Infrastructure (starts small, accelerates)
+# Captures: cloud computing, APIs, mobile platforms, blockchain
+tech_contribution = 0.5 + 1.8 * (1 - np.exp(-0.25 * t))  # Asymptotes at ~2.3%
+tech_contribution[0:2] = [0.3, 0.4]  # Slower start pre-smartphone era
 
-# Total volume
-total_volume = users * txns_per_user / 1e9  # in billions of transactions
+# 2. Adoption/Penetration (S-curve pattern)
+# Captures: user growth, market penetration, financial inclusion
+adoption_contribution = 3.5 / (1 + np.exp(-0.5 * (t - 8)))  # Inflection at 2018
+adoption_contribution[0:3] = [0.5, 0.7, 1.0]  # Early phase
 
-# Create figure with 2 subplots
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10), sharex=True)
+# 3. Network Effects (exponential after critical mass)
+# Captures: platform effects, two-sided markets, ecosystem value
+network_contribution = np.zeros_like(t, dtype=float)
+network_contribution[5:] = 0.8 * (1 - np.exp(-0.3 * (t[5:] - 5)))  # Kicks in after 2015
+network_contribution = np.minimum(network_contribution, 2.0)  # Cap at 2%
 
-# Top subplot: Two margins
-ax1_right = ax1.twinx()
+# 4. Regulatory Environment (step changes)
+# Captures: PSD2 (2018), open banking, CBDC pilots
+regulatory_contribution = np.zeros_like(t, dtype=float)
+regulatory_contribution[0:8] = 0.2  # Pre-PSD2
+regulatory_contribution[8:11] = 0.8  # PSD2 effect (2018-2020)
+regulatory_contribution[11:] = 1.2  # Pandemic regulatory acceleration (2021+)
 
-# Plot extensive margin (users)
-line1 = ax1.plot(years, users / 1e9, color=MLBLUE, linewidth=2.5,
-                 label='Extensive Margin (Users)', marker='o', markersize=3)
-ax1.set_ylabel('Digital Finance Users (Billions)', color=MLBLUE, fontweight='bold')
-ax1.tick_params(axis='y', labelcolor=MLBLUE)
-ax1.grid(True, alpha=0.3, linestyle='--')
+# 5. Calculate total observed growth and TFP residual
+# Total growth = sum of explained factors + TFP
+# We set total growth as a reasonable fintech sector growth path
+total_growth = 5.0 + 8.0 / (1 + np.exp(-0.4 * (t - 10)))  # Ranges 5-13% annual growth
+total_growth[11] = 18.0  # Pandemic spike (2021)
+total_growth[12:] = 12.0 - 0.5 * (t[12:] - 12)  # Gradual normalization
 
-# Plot intensive margin (txns per user)
-line2 = ax1_right.plot(years, txns_per_user, color=MLORANGE, linewidth=2.5,
-                       label='Intensive Margin (Txns/User/Year)', marker='s', markersize=3)
-ax1_right.set_ylabel('Transactions per User per Year', color=MLORANGE, fontweight='bold')
-ax1_right.tick_params(axis='y', labelcolor=MLORANGE)
+# TFP residual = innovation, efficiency gains not captured by factors
+explained_factors = tech_contribution + adoption_contribution + network_contribution + regulatory_contribution
+tfp_residual = total_growth - explained_factors
+tfp_residual = np.maximum(tfp_residual, 0.1)  # Ensure non-negative
 
-# Annotate inflection points
-ax1.axvline(2020, color=MLBLUE, linestyle=':', alpha=0.5, linewidth=1.5)
-ax1.text(2020, users[10] / 1e9 * 1.1, 'User Growth\nInflection',
-         ha='center', fontsize=10, color=MLBLUE, weight='bold')
+# Create stacked area chart
+fig, ax = plt.subplots(figsize=(12, 8))
 
-ax1_right.axvline(2025, color=MLORANGE, linestyle=':', alpha=0.5, linewidth=1.5)
-ax1_right.text(2025, txns_per_user[15] * 1.15, 'Usage\nIntensification',
-               ha='center', fontsize=10, color=MLORANGE, weight='bold')
+# Stack the contributions
+ax.stackplot(years,
+             tech_contribution,
+             adoption_contribution,
+             network_contribution,
+             regulatory_contribution,
+             tfp_residual,
+             labels=['Technology Infrastructure',
+                     'Adoption & Penetration',
+                     'Network Effects',
+                     'Regulatory Environment',
+                     'TFP Residual (Innovation)'],
+             colors=[MLBLUE, MLGREEN, MLORANGE, MLLAVENDER, MLPURPLE],
+             alpha=0.85)
 
-# Combine legends
-lines = line1 + line2
-labels = [l.get_label() for l in lines]
-ax1.legend(lines, labels, loc='upper left', frameon=True, fancybox=True, shadow=True)
-ax1.set_title('Digital Finance Growth: Two Margins', fontweight='bold', size=16)
+# Overlay total growth line
+ax.plot(years, total_growth, color='black', linewidth=3, linestyle='--',
+        label='Total Growth', marker='o', markersize=6)
 
-# Bottom subplot: Stacked area showing total volume decomposition
-# We decompose as: contribution from extensive = (users_t / users_max) * total_volume
-# contribution from intensive = (txns_per_user_t / txns_max) * total_volume
-# But this doesn't stack properly. Instead, show cumulative growth decomposition
+# Annotate key periods
+ax.axvspan(2010, 2013, alpha=0.1, color='gray', label='_nolegend_')
+ax.text(2011.5, 16, 'Early\nSmartphone Era', ha='center', fontsize=11,
+        bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
-# Compute growth contributions (simplified representation)
-base_volume = (users / users.max()) * (txns_per_user / txns_per_user.max()) * total_volume.max()
-extensive_contribution = (users / users.max()) * total_volume.max() * 0.5
-intensive_contribution = (txns_per_user / txns_per_user.max()) * total_volume.max() * 0.5
+ax.axvspan(2017, 2019, alpha=0.1, color='blue', label='_nolegend_')
+ax.text(2018, 16, 'PSD2 &\nOpen Banking', ha='center', fontsize=11,
+        bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.8))
 
-ax2.fill_between(years, 0, extensive_contribution, color=MLBLUE, alpha=0.6,
-                 label='Extensive Margin Contribution')
-ax2.fill_between(years, extensive_contribution,
-                 extensive_contribution + intensive_contribution,
-                 color=MLORANGE, alpha=0.6, label='Intensive Margin Contribution')
-ax2.plot(years, total_volume, color=MLPURPLE, linewidth=3,
-         label='Total Transaction Volume', linestyle='--')
+ax.axvline(2020, color='red', linestyle=':', linewidth=2, alpha=0.6)
+ax.text(2020, 19, 'Pandemic\nAcceleration', ha='center', fontsize=11, color='red',
+        weight='bold', bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
 
-ax2.set_xlabel('Year', fontweight='bold')
-ax2.set_ylabel('Transaction Volume (Billions/Year)', fontweight='bold')
-ax2.set_title('Total Volume Decomposition', fontweight='bold', size=16)
-ax2.legend(loc='upper left', frameon=True, fancybox=True, shadow=True)
-ax2.grid(True, alpha=0.3, linestyle='--')
+# Labels and title
+ax.set_xlabel('Year', fontweight='bold', fontsize=14)
+ax.set_ylabel('Annual Growth Contribution (Percentage Points)', fontweight='bold', fontsize=14)
+ax.set_title('Digital Finance Growth Decomposition: Solow-Style Accounting\n' +
+             'Growth = α·Technology + β·Adoption + γ·Network + δ·Regulation + TFP',
+             fontweight='bold', fontsize=16, pad=20)
 
-# Add annotations for key milestones
-ax2.annotate('Early Adoption\n(User Focus)',
-             xy=(2015, total_volume[5]), xytext=(2013, total_volume[5] * 2),
-             arrowprops=dict(arrowstyle='->', color='black', lw=1.5),
-             fontsize=10, ha='center', weight='bold')
+# Legend
+ax.legend(loc='upper left', frameon=True, fancybox=True, shadow=True, fontsize=12)
 
-ax2.annotate('Maturity\n(Usage Deepening)',
-             xy=(2030, total_volume[20]), xytext=(2028, total_volume[20] * 1.15),
-             arrowprops=dict(arrowstyle='->', color='black', lw=1.5),
-             fontsize=10, ha='center', weight='bold')
+# Grid
+ax.grid(True, alpha=0.3, linestyle='--', axis='y')
+ax.set_xlim(2010, 2025)
+ax.set_ylim(0, 20)
+
+# Add citation
+fig.text(0.99, 0.01, 'Source: Solow (1957) growth accounting methodology',
+         ha='right', fontsize=10, style='italic', color='gray')
 
 plt.tight_layout()
 

@@ -1,4 +1,8 @@
-"""Financial Inclusion Possibility Frontier - CBDC frontier shift"""
+"""Financial Inclusion Frontier: Production Possibility Analysis
+
+Cost-inclusion tradeoff with CBDC technology shift.
+Theory: Standard microeconomic production possibility frontier.
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -18,80 +22,91 @@ MLGREEN = '#2CA02C'
 MLRED = '#D62728'
 MLLAVENDER = '#ADADE0'
 
-# Pre-CBDC frontier (smaller quarter circle)
-theta_pre = np.linspace(0, np.pi/2, 100)
-x_pre = np.cos(theta_pre) * 0.8
-y_pre = np.sin(theta_pre) * 0.8
+# PPF Model: Inclusion = f(Cost) with diminishing returns
+# Traditional Banking PPF (inner frontier)
+cost_trad = np.linspace(0, 100, 100)
+# Concave function: sqrt to show diminishing returns
+inclusion_trad = 70 * np.sqrt(cost_trad / 100)
 
-# Post-CBDC frontier (larger quarter circle)
-theta_post = np.linspace(0, np.pi/2, 100)
-x_post = np.cos(theta_post) * 1.0
-y_post = np.sin(theta_post) * 1.0
+# CBDC Technology PPF (outer frontier - shifted out)
+cost_cbdc = np.linspace(0, 100, 100)
+# Same functional form but higher multiplier (technology improvement)
+inclusion_cbdc = 95 * np.sqrt(cost_cbdc / 100)
 
-# Country positions (inside pre-CBDC frontier)
-countries = {
-    'Sweden': (0.55, 0.60),
-    'USA': (0.70, 0.50),
-    'Kenya': (0.68, 0.35),
-    'Singapore': (0.60, 0.55),
-    'Nigeria': (0.50, 0.45),
-    'India': (0.58, 0.40),
-    'Brazil': (0.48, 0.52),
-    'Germany': (0.52, 0.58)
-}
+# Efficiency Points
+# Point A: Current allocation (inefficient - inside frontier)
+point_a = (40, 35)
+# Point B: Allocatively efficient (on traditional frontier)
+point_b = (60, 70 * np.sqrt(60 / 100))
+# Point C: After CBDC adoption (on new frontier)
+point_c = (60, 95 * np.sqrt(60 / 100))
 
 # Plot
 fig, ax = plt.subplots()
 
-# Plot frontiers
-ax.plot(x_pre, y_pre, '--', color=MLBLUE, linewidth=2.5,
-        label='Pre-CBDC Frontier', alpha=0.8)
-ax.plot(x_post, y_post, '-', color=MLPURPLE, linewidth=3,
-        label='Post-CBDC Frontier')
+# Plot PPF curves
+ax.plot(cost_trad, inclusion_trad, '--', color=MLBLUE, linewidth=2.5,
+        label='Traditional Banking PPF', alpha=0.8)
+ax.plot(cost_cbdc, inclusion_cbdc, '-', color=MLPURPLE, linewidth=3,
+        label='CBDC Technology PPF')
 
-# Fill area between frontiers
-ax.fill_between(x_post, y_post, 0, alpha=0.1, color=MLLAVENDER)
+# Fill area between frontiers to show technology gain
+ax.fill_between(cost_cbdc, inclusion_cbdc, inclusion_trad,
+                alpha=0.15, color=MLLAVENDER)
 
-# Plot country points
-for country, (x, y) in countries.items():
-    ax.scatter(x, y, s=100, color=MLORANGE, edgecolors='black',
-              linewidths=1.5, zorder=5, alpha=0.8)
+# Plot efficiency points
+ax.scatter(*point_a, s=200, color=MLRED, edgecolors='black',
+          linewidths=2, zorder=5, marker='o', label='Point A: Inefficient')
+ax.scatter(*point_b, s=200, color=MLORANGE, edgecolors='black',
+          linewidths=2, zorder=5, marker='s', label='Point B: Efficient (Traditional)')
+ax.scatter(*point_c, s=200, color=MLGREEN, edgecolors='black',
+          linewidths=2, zorder=5, marker='^', label='Point C: Efficient (CBDC)')
 
-    # Offset labels to avoid overlap
-    offset_x = 0.03 if country not in ['Sweden', 'Germany'] else -0.08
-    offset_y = 0.03 if country not in ['USA', 'Kenya'] else -0.03
+# Annotate points
+ax.annotate('A\n(Underutilized)', xy=point_a, xytext=(point_a[0]-15, point_a[1]+8),
+           fontsize=12, fontweight='bold', ha='center',
+           bbox=dict(boxstyle='round,pad=0.4', facecolor='white',
+                    edgecolor=MLRED, alpha=0.95))
 
-    ax.annotate(country, xy=(x, y), xytext=(x + offset_x, y + offset_y),
-               fontsize=11, fontweight='bold',
-               bbox=dict(boxstyle='round,pad=0.3', facecolor='white',
-                        edgecolor='gray', alpha=0.9))
+ax.annotate('B\n(On Frontier)', xy=point_b, xytext=(point_b[0]-15, point_b[1]-15),
+           fontsize=12, fontweight='bold', ha='center',
+           bbox=dict(boxstyle='round,pad=0.4', facecolor='white',
+                    edgecolor=MLORANGE, alpha=0.95))
 
-# Arrow showing frontier shift
-arrow_x = 0.55
-arrow_y = 0.55
-arrow_dx = 0.12
-arrow_dy = 0.12
-ax.annotate('', xy=(arrow_x + arrow_dx, arrow_y + arrow_dy),
-           xytext=(arrow_x, arrow_y),
-           arrowprops=dict(arrowstyle='->', color=MLGREEN, lw=3.5,
-                          mutation_scale=25))
-ax.text(arrow_x + arrow_dx/2 + 0.05, arrow_y + arrow_dy/2,
-       'CBDC\nExpansion', fontsize=13, fontweight='bold',
-       color=MLGREEN, ha='left',
+ax.annotate('C\n(CBDC Gains)', xy=point_c, xytext=(point_c[0]+15, point_c[1]+5),
+           fontsize=12, fontweight='bold', ha='center',
+           bbox=dict(boxstyle='round,pad=0.4', facecolor='white',
+                    edgecolor=MLGREEN, alpha=0.95))
+
+# Arrow showing technology shift
+ax.annotate('', xy=point_c, xytext=point_b,
+           arrowprops=dict(arrowstyle='->', color=MLGREEN, lw=3,
+                          mutation_scale=20))
+ax.text((point_b[0] + point_c[0])/2 + 10, (point_b[1] + point_c[1])/2,
+       'Technology\nShift', fontsize=11, fontweight='bold',
+       color=MLGREEN, ha='center',
        bbox=dict(boxstyle='round,pad=0.4', facecolor='white',
                 edgecolor=MLGREEN, alpha=0.9))
 
-# Formatting
-ax.set_xlabel('Financial Inclusion (Reach)', fontweight='bold')
-ax.set_ylabel('Financial Stability (Oversight)', fontweight='bold')
-ax.set_title('Financial Inclusion-Stability Frontier', fontweight='bold', pad=20)
-ax.set_xlim(0, 1.1)
-ax.set_ylim(0, 1.1)
-ax.grid(True, alpha=0.3, linestyle='--')
-ax.legend(loc='lower left', framealpha=0.95, fontsize=12)
+# Show opportunity cost region
+ax.annotate('', xy=(80, 95 * np.sqrt(80 / 100)), xytext=(80, 70 * np.sqrt(80 / 100)),
+           arrowprops=dict(arrowstyle='<->', color=MLPURPLE, lw=2))
+ax.text(85, (95 * np.sqrt(80 / 100) + 70 * np.sqrt(80 / 100))/2,
+       'Inclusion\nGain', fontsize=10, fontweight='bold',
+       color=MLPURPLE, ha='left')
 
-# Set aspect ratio to be equal for proper circle shape
-ax.set_aspect('equal', adjustable='box')
+# Formatting
+ax.set_xlabel('Cost Efficiency (Lower = Better)', fontweight='bold')
+ax.set_ylabel('Financial Inclusion (%)', fontweight='bold')
+ax.set_title('Financial Inclusion Production Possibility Frontier',
+            fontweight='bold', pad=20)
+ax.set_xlim(0, 105)
+ax.set_ylim(0, 100)
+ax.grid(True, alpha=0.3, linestyle='--')
+ax.legend(loc='lower right', framealpha=0.95, fontsize=11)
+
+# Invert x-axis so lower cost is better (right side)
+ax.invert_xaxis()
 
 plt.tight_layout()
 

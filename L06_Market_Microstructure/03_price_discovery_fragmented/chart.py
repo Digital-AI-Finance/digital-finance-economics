@@ -1,4 +1,8 @@
-"""Price Discovery in Fragmented Markets"""
+"""Price Discovery in Fragmented Markets: Information Share
+
+Multi-venue price discovery with Hasbrouck information share calculation.
+Theory: Hasbrouck (1995) "One Security, Many Markets: Determining the Contributions to Price Discovery"
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -8,7 +12,7 @@ np.random.seed(42)
 plt.rcParams.update({
     'font.size': 14, 'axes.labelsize': 14, 'axes.titlesize': 16,
     'xtick.labelsize': 13, 'ytick.labelsize': 13, 'legend.fontsize': 13,
-    'figure.figsize': (10, 6), 'figure.dpi': 150
+    'figure.figsize': (14, 10), 'figure.dpi': 150
 })
 
 MLPURPLE = '#3333B2'
@@ -18,58 +22,195 @@ MLGREEN = '#2CA02C'
 MLRED = '#D62728'
 MLLAVENDER = '#ADADE0'
 
-# Generate Exchange 1 with shock at step 100
-steps = 200
-returns = np.random.normal(0, 0.5, steps)
-returns[100] += 3  # Add shock
-exchange1 = 100 + np.cumsum(returns)
+# Simulate multi-venue trading: CEX (leader), DEX (follower), P2P (noise)
+steps = 300
+dt = 1.0
 
-# Generate other exchanges with lags and noise
-exchange2 = np.zeros(steps)
-exchange3 = np.zeros(steps)
-exchange4 = np.zeros(steps)
-
-exchange2[0] = exchange1[0]
-exchange3[0] = exchange1[0]
-exchange4[0] = exchange1[0]
-
+# True efficient price: random walk with information shocks
+true_price = np.zeros(steps)
+true_price[0] = 100.0
 for i in range(1, steps):
-    exchange2[i] = exchange1[max(0, i-1)] + np.random.normal(0, 0.2)
-    exchange3[i] = exchange1[max(0, i-2)] + np.random.normal(0, 0.3)
-    exchange4[i] = exchange1[max(0, i-3)] + np.random.normal(0, 0.4)
+    shock = 0.0
+    if i == 100:  # Information event
+        shock = 2.5
+    elif i == 200:  # Second information event
+        shock = -1.8
+    true_price[i] = true_price[i-1] + np.random.normal(0, 0.15) + shock
 
-# Create main plot with inset
-fig, ax = plt.subplots()
+# Venue 1: CEX - Fast, high volume, leads price discovery
+# Observes true price with minimal delay + small noise
+cex_lag = 1
+cex_noise = 0.08
+price_cex = np.zeros(steps)
+price_cex[0] = true_price[0]
+for i in range(1, steps):
+    lag_idx = max(0, i - cex_lag)
+    price_cex[i] = true_price[lag_idx] + np.random.normal(0, cex_noise)
 
+# Venue 2: DEX - Slower, smaller volume, follows with delay
+# Observes CEX price with lag + moderate noise
+dex_lag = 3
+dex_noise = 0.25
+price_dex = np.zeros(steps)
+price_dex[0] = true_price[0]
+for i in range(1, steps):
+    lag_idx = max(0, i - dex_lag)
+    price_dex[i] = price_cex[lag_idx] + np.random.normal(0, dex_noise)
+
+# Venue 3: P2P - Very slow, minimal volume, high noise
+# Observes stale prices + high noise (minimal contribution)
+p2p_lag = 5
+p2p_noise = 0.45
+price_p2p = np.zeros(steps)
+price_p2p[0] = true_price[0]
+for i in range(1, steps):
+    lag_idx = max(0, i - p2p_lag)
+    price_p2p[i] = price_dex[lag_idx] + np.random.normal(0, p2p_noise)
+
+# Calculate Hasbrouck Information Share
+# IS_i = variance contribution of venue i to common efficient price
+# Approximate using variance decomposition of price innovations
+
+# Price changes (returns)
+returns_cex = np.diff(price_cex)
+returns_dex = np.diff(price_dex)
+returns_p2p = np.diff(price_p2p)
+returns_true = np.diff(true_price)
+
+# Covariance matrix of returns
+returns_matrix = np.vstack([returns_cex, returns_dex, returns_p2p])
+cov_matrix = np.cov(returns_matrix)
+
+# Correlation with true price innovations (proxy for information contribution)
+corr_cex = np.corrcoef(returns_cex, returns_true)[0, 1]
+corr_dex = np.corrcoef(returns_dex, returns_true)[0, 1]
+corr_p2p = np.corrcoef(returns_p2p, returns_true)[0, 1]
+
+# Information share: squared correlation (variance contribution)
+# Normalized to sum to 1
+is_cex = corr_cex**2
+is_dex = corr_dex**2
+is_p2p = corr_p2p**2
+total_is = is_cex + is_dex + is_p2p
+
+info_share = {
+    'CEX': is_cex / total_is,
+    'DEX': is_dex / total_is,
+    'P2P': is_p2p / total_is
+}
+
+# Identify arbitrage opportunities (price divergence > threshold)
+arb_threshold = 1.0
+arb_cex_dex = np.abs(price_cex - price_dex)
+arb_opportunities = np.where(arb_cex_dex > arb_threshold)[0]
+
+# Create comprehensive figure
+fig = plt.figure(figsize=(14, 10))
+gs = fig.add_gridspec(3, 2, hspace=0.35, wspace=0.3)
+
+# Panel 1: Price series across venues (lead-lag relationship)
+ax1 = fig.add_subplot(gs[0, :])
 time = np.arange(steps)
-ax.plot(time, exchange1, label='Exchange 1 (Leader)', color=MLBLUE, linewidth=2)
-ax.plot(time, exchange2, label='Exchange 2 (Lag 1)', color=MLGREEN, alpha=0.8)
-ax.plot(time, exchange3, label='Exchange 3 (Lag 2)', color=MLORANGE, alpha=0.8)
-ax.plot(time, exchange4, label='Exchange 4 (Lag 3)', color=MLRED, alpha=0.8)
+ax1.plot(time, true_price, label='True Efficient Price', color='black', linewidth=2, linestyle='--', alpha=0.7)
+ax1.plot(time, price_cex, label='CEX (Leader)', color=MLBLUE, linewidth=2, alpha=0.9)
+ax1.plot(time, price_dex, label='DEX (Follower)', color=MLGREEN, linewidth=1.5, alpha=0.8)
+ax1.plot(time, price_p2p, label='P2P (Noise)', color=MLORANGE, linewidth=1.2, alpha=0.7)
 
-ax.set_xlabel('Time Steps')
-ax.set_ylabel('Price ($)')
-ax.set_title('Price Discovery Across Fragmented Exchanges')
-ax.legend()
-ax.grid(alpha=0.3)
+# Mark information shocks
+ax1.axvline(x=100, color=MLRED, linestyle=':', alpha=0.5, linewidth=1.5)
+ax1.axvline(x=200, color=MLRED, linestyle=':', alpha=0.5, linewidth=1.5)
+ax1.text(100, ax1.get_ylim()[1], 'Info Shock', ha='center', va='bottom', fontsize=10, color=MLRED)
 
-# Add inset with correlation heatmap
-ax_inset = fig.add_axes([0.65, 0.15, 0.25, 0.25])
-prices_matrix = np.vstack([exchange1, exchange2, exchange3, exchange4])
-corr_matrix = np.corrcoef(prices_matrix)
+ax1.set_xlabel('Time Steps')
+ax1.set_ylabel('Price ($)')
+ax1.set_title('Multi-Venue Price Discovery: Lead-Lag Relationships', fontweight='bold')
+ax1.legend(loc='upper left', framealpha=0.95)
+ax1.grid(alpha=0.3, linestyle='--')
 
-im = ax_inset.imshow(corr_matrix, cmap='RdYlGn', vmin=0, vmax=1, aspect='auto')
-ax_inset.set_xticks([0, 1, 2, 3])
-ax_inset.set_yticks([0, 1, 2, 3])
-ax_inset.set_xticklabels(['E1', 'E2', 'E3', 'E4'], fontsize=10)
-ax_inset.set_yticklabels(['E1', 'E2', 'E3', 'E4'], fontsize=10)
-ax_inset.set_title('Correlation', fontsize=11)
+# Panel 2: Information Share by Venue
+ax2 = fig.add_subplot(gs[1, 0])
+venues = list(info_share.keys())
+shares = list(info_share.values())
+colors_bar = [MLBLUE, MLGREEN, MLORANGE]
+
+bars = ax2.bar(venues, shares, color=colors_bar, alpha=0.8, edgecolor='black', linewidth=1.5)
+ax2.set_ylabel('Information Share')
+ax2.set_title('Hasbrouck Information Share\n(Contribution to Price Discovery)', fontweight='bold')
+ax2.set_ylim(0, 1)
+ax2.grid(axis='y', alpha=0.3, linestyle='--')
+
+# Add percentage labels on bars
+for bar, share in zip(bars, shares):
+    height = bar.get_height()
+    ax2.text(bar.get_x() + bar.get_width()/2., height,
+            f'{share*100:.1f}%',
+            ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+# Panel 3: Arbitrage Opportunities (CEX-DEX spread)
+ax3 = fig.add_subplot(gs[1, 1])
+ax3.plot(time, arb_cex_dex, color=MLPURPLE, linewidth=1.5, alpha=0.8)
+ax3.axhline(y=arb_threshold, color=MLRED, linestyle='--', linewidth=2, alpha=0.7, label=f'Arb Threshold (${arb_threshold})')
+ax3.fill_between(time, 0, arb_cex_dex, where=(arb_cex_dex > arb_threshold),
+                 color=MLRED, alpha=0.2, label='Arb Opportunity')
+ax3.set_xlabel('Time Steps')
+ax3.set_ylabel('|CEX Price - DEX Price| ($)')
+ax3.set_title('Arbitrage Opportunities\n(Price Divergence Between Venues)', fontweight='bold')
+ax3.legend(loc='upper right', framealpha=0.95)
+ax3.grid(alpha=0.3, linestyle='--')
+
+# Panel 4: Cross-correlation heatmap (lead-lag structure)
+ax4 = fig.add_subplot(gs[2, 0])
+corr_matrix_full = np.corrcoef([returns_cex, returns_dex, returns_p2p])
+im = ax4.imshow(corr_matrix_full, cmap='RdYlBu_r', vmin=-1, vmax=1, aspect='auto')
+ax4.set_xticks([0, 1, 2])
+ax4.set_yticks([0, 1, 2])
+ax4.set_xticklabels(['CEX', 'DEX', 'P2P'])
+ax4.set_yticklabels(['CEX', 'DEX', 'P2P'])
+ax4.set_title('Return Correlation Matrix\n(Lead-Lag Structure)', fontweight='bold')
 
 # Add correlation values
-for i in range(4):
-    for j in range(4):
-        text = ax_inset.text(j, i, f'{corr_matrix[i, j]:.2f}',
-                            ha="center", va="center", color="black", fontsize=9)
+for i in range(3):
+    for j in range(3):
+        text_color = 'white' if abs(corr_matrix_full[i, j]) > 0.5 else 'black'
+        ax4.text(j, i, f'{corr_matrix_full[i, j]:.2f}',
+                ha="center", va="center", color=text_color, fontsize=11, fontweight='bold')
+
+cbar = plt.colorbar(im, ax=ax4, fraction=0.046, pad=0.04)
+cbar.set_label('Correlation', rotation=270, labelpad=20)
+
+# Panel 5: Summary statistics
+ax5 = fig.add_subplot(gs[2, 1])
+ax5.axis('off')
+
+summary_text = f"""
+Price Discovery Statistics
+{'='*40}
+
+Information Share (Hasbrouck 1995):
+  CEX:    {info_share['CEX']*100:.1f}%  (Leader)
+  DEX:    {info_share['DEX']*100:.1f}%  (Follower)
+  P2P:    {info_share['P2P']*100:.1f}%  (Noise)
+
+Lead-Lag Structure:
+  CEX lag:     {cex_lag} step(s)
+  DEX lag:     {dex_lag} step(s)
+  P2P lag:     {p2p_lag} step(s)
+
+Arbitrage:
+  Opportunities: {len(arb_opportunities)} periods
+  Avg spread:    ${np.mean(arb_cex_dex):.3f}
+  Max spread:    ${np.max(arb_cex_dex):.3f}
+
+Interpretation:
+• CEX dominates price discovery (~{info_share['CEX']*100:.0f}%)
+• DEX follows with lag, contributes ~{info_share['DEX']*100:.0f}%
+• P2P has minimal impact (~{info_share['P2P']*100:.0f}%)
+• Arbitrageurs exploit temporary spreads
+"""
+
+ax5.text(0.05, 0.95, summary_text, transform=ax5.transAxes,
+        fontsize=11, verticalalignment='top', family='monospace',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3))
 
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')
 plt.savefig(Path(__file__).parent / 'chart.png', dpi=150, bbox_inches='tight')

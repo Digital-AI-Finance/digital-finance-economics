@@ -1,4 +1,9 @@
-"""Digital Finance Trilemma"""
+"""Digital Finance Trilemma: Constraint Optimization
+
+Impossible trinity in blockchain design - decentralization, security, scalability.
+Theory: Adapted from monetary policy trilemma (Mundell-Fleming).
+Constraint: Systems cannot simultaneously maximize all three properties.
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -18,19 +23,22 @@ MLGREEN = '#2CA02C'
 MLRED = '#D62728'
 MLLAVENDER = '#ADADE0'
 
-# Triangle vertices
-A = np.array([0.5, np.sqrt(3)/2])  # Efficiency (top)
-B = np.array([0, 0])                # Stability (bottom-left)
-C = np.array([1, 0])                # Innovation (bottom-right)
+# Triangle vertices for ternary plot
+# Decentralization (top), Security (bottom-left), Scalability (bottom-right)
+A = np.array([0.5, np.sqrt(3)/2])  # Decentralization (top)
+B = np.array([0, 0])                # Security (bottom-left)
+C = np.array([1, 0])                # Scalability (bottom-right)
 
-# Systems with barycentric coordinates (efficiency, stability, innovation)
+# Systems with barycentric coordinates (decentralization, security, scalability)
+# Constraint: Can optimize at most 2 of 3 dimensions
+# Values sum to ~2 (normalized to 1), showing the tradeoff
 systems = {
-    'Bitcoin': (0.2, 0.3, 0.5, MLORANGE),
-    'Ethereum': (0.3, 0.25, 0.45, MLPURPLE),
-    'CBDC': (0.35, 0.5, 0.15, MLBLUE),
-    'Visa': (0.5, 0.4, 0.1, MLGREEN),
-    'Stablecoins': (0.3, 0.35, 0.35, MLRED),
-    'DeFi': (0.15, 0.15, 0.7, MLLAVENDER)
+    'Bitcoin': (0.45, 0.45, 0.10, MLORANGE),      # High D+S, Low Sc
+    'Ethereum': (0.40, 0.40, 0.20, MLPURPLE),     # High D+S, Low Sc (improving)
+    'Visa': (0.05, 0.45, 0.50, MLGREEN),          # Low D, High S+Sc
+    'Solana': (0.25, 0.30, 0.45, MLBLUE),         # Medium D+S, High Sc
+    'BSC': (0.15, 0.35, 0.50, MLRED),             # Low D, Medium S, High Sc
+    'Lightning': (0.35, 0.35, 0.30, MLLAVENDER)   # Balanced compromise
 }
 
 def barycentric_to_cartesian(eff, stab, innov):
@@ -52,24 +60,64 @@ ax.plot(triangle[:, 0], triangle[:, 1], 'k-', linewidth=2)
 
 # Label vertices
 offset = 0.08
-ax.text(A[0], A[1] + offset, 'Efficiency', ha='center', va='bottom',
-        fontsize=14, fontweight='bold')
-ax.text(B[0] - offset, B[1], 'Stability', ha='right', va='center',
-        fontsize=14, fontweight='bold')
-ax.text(C[0] + offset, C[1], 'Innovation', ha='left', va='center',
-        fontsize=14, fontweight='bold')
+ax.text(A[0], A[1] + offset, 'Decentralization', ha='center', va='bottom',
+        fontsize=14, fontweight='bold', color='#1a1a1a')
+ax.text(B[0] - offset, B[1], 'Security', ha='right', va='center',
+        fontsize=14, fontweight='bold', color='#1a1a1a')
+ax.text(C[0] + offset, C[1], 'Scalability', ha='left', va='center',
+        fontsize=14, fontweight='bold', color='#1a1a1a')
+
+# Plot feasible region (interior of triangle with slight constraint boundary)
+# The constraint boundary shows that maximizing all three is impossible
+constraint_threshold = 0.8  # Systems can't be above this level on all dimensions
+feasible_region = plt.Polygon([A, B, C], alpha=0.05, facecolor='green',
+                              edgecolor='none', zorder=0)
+ax.add_patch(feasible_region)
+
+# Add constraint boundary annotation
+constraint_center = (A + B + C) / 3
+ax.text(constraint_center[0], constraint_center[1] - 0.15,
+        'Feasible Region\n(D + S + Sc ≤ K)',
+        ha='center', va='center', fontsize=10, style='italic',
+        bbox=dict(boxstyle='round,pad=0.5', facecolor='white', alpha=0.7, edgecolor='gray'))
 
 # Plot systems
-for name, (eff, stab, innov, color) in systems.items():
-    x, y = barycentric_to_cartesian(eff, stab, innov)
-    ax.scatter(x, y, s=200, c=color, alpha=0.7, edgecolors='black', linewidth=2)
-    ax.text(x, y - 0.05, name, ha='center', va='top', fontsize=11, fontweight='bold')
+for name, (dec, sec, scal, color) in systems.items():
+    x, y = barycentric_to_cartesian(dec, sec, scal)
+    ax.scatter(x, y, s=250, c=color, alpha=0.8, edgecolors='black', linewidth=2.5, zorder=5)
 
-# Draw arrow from Ethereum toward Efficiency (showing movement)
-eth_x, eth_y = barycentric_to_cartesian(0.3, 0.25, 0.45)
-target_x, target_y = barycentric_to_cartesian(0.4, 0.2, 0.4)
-ax.annotate('', xy=(target_x, target_y), xytext=(eth_x, eth_y),
-            arrowprops=dict(arrowstyle='->', lw=2, color='black', alpha=0.5))
+    # Position labels to avoid overlap
+    if name == 'Bitcoin':
+        offset_y = -0.06
+    elif name == 'Lightning':
+        offset_y = 0.06
+    else:
+        offset_y = -0.06
+
+    ax.text(x, y + offset_y, name, ha='center',
+            va='bottom' if offset_y > 0 else 'top',
+            fontsize=11, fontweight='bold', zorder=6)
+
+# Draw tradeoff arrows showing impossible movements
+# Arrow 1: Bitcoin cannot easily increase scalability without sacrificing D or S
+btc_x, btc_y = barycentric_to_cartesian(0.45, 0.45, 0.10)
+btc_target_x, btc_target_y = barycentric_to_cartesian(0.35, 0.35, 0.30)
+ax.annotate('', xy=(btc_target_x, btc_target_y), xytext=(btc_x, btc_y),
+            arrowprops=dict(arrowstyle='->', lw=2.5, color='red', alpha=0.6,
+                          linestyle='--'), zorder=4)
+ax.text((btc_x + btc_target_x)/2 - 0.05, (btc_y + btc_target_y)/2,
+        'Scaling\ntradeoff', fontsize=9, style='italic', color='red',
+        ha='right', va='center')
+
+# Arrow 2: Visa cannot easily increase decentralization without sacrificing performance
+visa_x, visa_y = barycentric_to_cartesian(0.05, 0.45, 0.50)
+visa_target_x, visa_target_y = barycentric_to_cartesian(0.25, 0.35, 0.40)
+ax.annotate('', xy=(visa_target_x, visa_target_y), xytext=(visa_x, visa_y),
+            arrowprops=dict(arrowstyle='->', lw=2.5, color='blue', alpha=0.6,
+                          linestyle='--'), zorder=4)
+ax.text((visa_x + visa_target_x)/2 + 0.08, (visa_y + visa_target_y)/2,
+        'Decentralization\ntradeoff', fontsize=9, style='italic', color='blue',
+        ha='left', va='center')
 
 # Add grid lines (optional)
 for i in np.linspace(0, 1, 6):
@@ -88,11 +136,39 @@ for i in np.linspace(0, 1, 6):
     p2 = i * C + (1-i) * B
     ax.plot([p1[0], p2[0]], [p1[1], p2[1]], 'gray', alpha=0.2, linewidth=0.5)
 
-ax.set_xlim(-0.15, 1.15)
+# Add legend explaining the constraint
+legend_text = (
+    'Trilemma Constraint:\n'
+    'Systems can optimize at most 2 of 3 properties.\n'
+    '• Bitcoin/Ethereum: D+S, sacrifice Sc\n'
+    '• Visa/BSC: S+Sc, sacrifice D\n'
+    '• Solana: Balanced compromise'
+)
+ax.text(1.15, 0.85, legend_text, fontsize=9, va='top', ha='left',
+        bbox=dict(boxstyle='round,pad=0.8', facecolor='lightyellow',
+                  alpha=0.8, edgecolor='gray', linewidth=1.5))
+
+# Add "Pick any two" annotation at edges
+edge_annotation_size = 9
+# D+S edge (left)
+mid_AB = (A + B) / 2
+ax.text(mid_AB[0] - 0.12, mid_AB[1], 'D + S\n(crypto)', fontsize=edge_annotation_size,
+        ha='right', va='center', style='italic', color='#555')
+# S+Sc edge (bottom)
+mid_BC = (B + C) / 2
+ax.text(mid_BC[0], mid_BC[1] - 0.08, 'S + Sc\n(traditional)', fontsize=edge_annotation_size,
+        ha='center', va='top', style='italic', color='#555')
+# D+Sc edge (right)
+mid_AC = (A + C) / 2
+ax.text(mid_AC[0] + 0.12, mid_AC[1], 'D + Sc\n(rare)', fontsize=edge_annotation_size,
+        ha='left', va='center', style='italic', color='#555')
+
+ax.set_xlim(-0.2, 1.35)
 ax.set_ylim(-0.15, 1.0)
 ax.set_aspect('equal')
 ax.axis('off')
-ax.set_title('Digital Finance Trilemma', fontsize=16, fontweight='bold', pad=20)
+ax.set_title('Blockchain Trilemma: Constraint Optimization',
+             fontsize=17, fontweight='bold', pad=20)
 
 plt.tight_layout()
 
