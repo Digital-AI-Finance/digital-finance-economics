@@ -1,0 +1,246 @@
+{
+  "lesson": "L03",
+  "title": "Central Bank Digital Currencies",
+  "questions": [
+    {
+      "id": 1,
+      "question": "Which of the following is a defining characteristic of a CBDC?",
+      "options": {
+        "A": "It must be based on blockchain technology",
+        "B": "It is a direct liability of the central bank",
+        "C": "It must pay interest to holders",
+        "D": "It replaces all physical cash immediately"
+      },
+      "correct": "B",
+      "explanation": "A CBDC is a digital form of central bank money that represents a direct liability of the central bank. It does not require blockchain, does not necessarily pay interest, and is designed to complement rather than immediately replace cash."
+    },
+    {
+      "id": 2,
+      "question": "Which of the following is NOT a CBDC?",
+      "options": {
+        "A": "China's e-CNY",
+        "B": "Bank reserves held at the central bank",
+        "C": "The proposed Digital Euro",
+        "D": "A wholesale CBDC for interbank settlement"
+      },
+      "correct": "B",
+      "explanation": "Bank reserves are already digital central bank money but are not classified as CBDCs because they are restricted to financial institutions and are not a new form of money. CBDCs refer to digital central bank money that is either widely accessible to the public (retail) or implemented with new technology for wholesale purposes."
+    },
+    {
+      "id": 3,
+      "question": "What is a primary motivation for central banks to develop CBDCs?",
+      "options": {
+        "A": "To eliminate all commercial banks",
+        "B": "To maintain monetary sovereignty against private digital currencies",
+        "C": "To maximize central bank profits",
+        "D": "To replace the entire banking system"
+      },
+      "correct": "B",
+      "explanation": "A key motivation for CBDCs is to maintain monetary sovereignty in the face of private digital currencies (like stablecoins and cryptocurrencies). Central banks are not seeking to eliminate commercial banks or replace the banking system, but rather to ensure public money remains relevant in the digital age."
+    },
+    {
+      "id": 4,
+      "question": "According to the lecture, what is the key economic question regarding CBDCs?",
+      "options": {
+        "A": "How quickly can CBDCs be implemented?",
+        "B": "Does public benefit exceed costs and risks?",
+        "C": "Which technology platform is most advanced?",
+        "D": "How much profit can central banks generate?"
+      },
+      "correct": "B",
+      "explanation": "The fundamental economic question is whether the public benefits of CBDCs outweigh their costs and risks. This requires careful analysis of trade-offs rather than focusing solely on technical implementation or profit generation."
+    },
+    {
+      "id": 5,
+      "question": "What is the primary difference between retail and wholesale CBDCs?",
+      "options": {
+        "A": "Retail CBDCs use blockchain while wholesale do not",
+        "B": "Retail CBDCs are for general public use while wholesale are for financial institutions",
+        "C": "Retail CBDCs pay interest while wholesale do not",
+        "D": "Retail CBDCs are only for international payments"
+      },
+      "correct": "B",
+      "explanation": "Retail CBDCs are designed for general public use as a payment instrument, while wholesale CBDCs are restricted to financial institutions for interbank settlement and securities transactions. This distinction is based on accessibility rather than technology or interest-bearing features."
+    },
+    {
+      "id": 6,
+      "question": "Which type of CBDC generally has lower operational costs and clearer efficiency gains?",
+      "options": {
+        "A": "Retail CBDC",
+        "B": "Wholesale CBDC",
+        "C": "Both have equal costs",
+        "D": "Neither provides efficiency gains"
+      },
+      "correct": "B",
+      "explanation": "Wholesale CBDCs have lower operational burden, clearer efficiency gains, and are less disruptive to the banking system compared to retail CBDCs, which face high operational costs, privacy challenges, and potential competition with commercial banks."
+    },
+    {
+      "id": 7,
+      "question": "In a token-based CBDC system, what is verified during a transaction?",
+      "options": {
+        "A": "The identity of the holder",
+        "B": "The credit history of both parties",
+        "C": "The instrument (token) itself",
+        "D": "The bank account balance"
+      },
+      "correct": "C",
+      "explanation": "Token-based systems verify the authenticity of the instrument itself (like verifying a physical banknote), not the identity of the holder. This is similar to digital cash and contrasts with account-based systems that verify user identity."
+    },
+    {
+      "id": 8,
+      "question": "What is a key economic advantage of account-based CBDCs over token-based ones?",
+      "options": {
+        "A": "Lower transaction costs",
+        "B": "Greater privacy protection",
+        "C": "Ability to pay interest and enable programmable features",
+        "D": "Offline transaction capability"
+      },
+      "correct": "C",
+      "explanation": "Account-based CBDCs can be interest-bearing and allow for programmable features and targeted policies because they maintain full transaction records and user identification. Token-based systems offer advantages in privacy and lower transaction costs, but lack these policy capabilities."
+    },
+    {
+      "id": 9,
+      "question": "How does an interest-bearing CBDC potentially enhance monetary policy transmission?",
+      "options": {
+        "A": "It eliminates the need for commercial banks",
+        "B": "It provides direct transmission to the public and creates a floor on deposit rates",
+        "C": "It automatically adjusts interest rates based on inflation",
+        "D": "It prevents banks from changing their interest rates"
+      },
+      "correct": "B",
+      "explanation": "An interest-bearing CBDC allows central banks to transmit policy directly to the public without relying solely on bank intermediation. The CBDC rate creates a floor on deposit rates because banks must compete with the risk-free CBDC option."
+    },
+    {
+      "id": 10,
+      "question": "What is a potential enhanced policy option enabled by interest-bearing CBDCs?",
+      "options": {
+        "A": "Eliminating all commercial banks",
+        "B": "Imposing negative interest rates on retail CBDC holdings",
+        "C": "Preventing any private digital payments",
+        "D": "Fixing exchange rates permanently"
+      },
+      "correct": "B",
+      "explanation": "Interest-bearing CBDCs could enable negative interest rates on retail holdings, overcoming the zero lower bound constraint that exists with physical cash. This is one of several enhanced policy options, including helicopter money and time-limited digital currency."
+    },
+    {
+      "id": 11,
+      "question": "In the traditional monetary policy transmission channel, how do interest rate changes affect the economy?",
+      "options": {
+        "A": "Policy rate changes directly determine consumer spending without bank involvement",
+        "B": "Policy rate changes affect deposit rates through bank intermediation, which then influences consumption and investment",
+        "C": "Interest rates have no effect on consumption or investment decisions",
+        "D": "Only government spending is affected by interest rate changes"
+      },
+      "correct": "B",
+      "explanation": "The traditional interest rate channel works through bank intermediation: central bank policy rate changes → bank deposit/lending rate changes → consumption and investment decisions. CBDCs could potentially enhance this by providing more direct transmission."
+    },
+    {
+      "id": 12,
+      "question": "What is a major political economy concern with enhanced CBDC monetary policy tools?",
+      "options": {
+        "A": "They are too expensive to implement",
+        "B": "Political resistance to negative rates and privacy implications of targeting",
+        "C": "They make monetary policy completely ineffective",
+        "D": "They eliminate all commercial bank lending"
+      },
+      "correct": "B",
+      "explanation": "While CBDCs could strengthen monetary policy transmission, there are significant political economy concerns including public resistance to negative interest rates and privacy implications of targeted monetary transfers or time-limited money."
+    },
+    {
+      "id": 13,
+      "question": "What is the primary bank disintermediation risk associated with retail CBDCs?",
+      "options": {
+        "A": "Banks will make higher profits",
+        "B": "Deposits could migrate from banks to CBDCs, forcing banks to rely on costlier wholesale funding",
+        "C": "Central banks will start offering commercial loans",
+        "D": "All bank employees will lose their jobs"
+      },
+      "correct": "B",
+      "explanation": "The main disintermediation concern is that if CBDCs are attractive to depositors, funds will flow from bank deposits to CBDCs. This forces banks to lose cheap deposit funding and potentially rely on more expensive wholesale funding, which could lead to credit supply contraction."
+    },
+    {
+      "id": 14,
+      "question": "According to Andolfatto's (2021) model mentioned in the lecture, what role does CBDC play in the banking market?",
+      "options": {
+        "A": "It eliminates all bank deposits",
+        "B": "It serves as an outside option that forces competitive deposit rates",
+        "C": "It has no effect on bank behavior",
+        "D": "It guarantees positive welfare effects for all agents"
+      },
+      "correct": "B",
+      "explanation": "In Andolfatto's model, CBDC acts as an outside option for depositors, which forces banks to offer more competitive deposit rates. The net welfare effect is ambiguous—it depends on various factors including market structure and design parameters."
+    },
+    {
+      "id": 15,
+      "question": "Which design feature is NOT mentioned as a mitigation strategy for bank disintermediation?",
+      "options": {
+        "A": "Holding limits (e.g., 3000 EUR maximum)",
+        "B": "Tiered remuneration (lower interest for large holdings)",
+        "C": "Offering no interest on CBDC",
+        "D": "Requiring users to close all bank accounts before accessing CBDC"
+      },
+      "correct": "D",
+      "explanation": "Mitigation strategies include holding limits, tiered remuneration, and zero interest on CBDCs to limit their attractiveness relative to bank deposits. Requiring users to close bank accounts would be counterproductive and is not a proposed strategy—CBDCs are meant to coexist with commercial banking."
+    },
+    {
+      "id": 16,
+      "question": "Why might CBDCs increase financial stability risks during crisis periods?",
+      "options": {
+        "A": "They eliminate all government deposit insurance",
+        "B": "Digital bank runs could occur faster and flight to safety could be amplified",
+        "C": "They prevent central banks from providing liquidity",
+        "D": "They make all banks immediately profitable"
+      },
+      "correct": "B",
+      "explanation": "CBDCs could accelerate bank runs because digital transfers are instantaneous, and during crises, flight to the safety of central bank money (CBDC) could be amplified. This requires careful design to balance accessibility with stability considerations."
+    },
+    {
+      "id": 17,
+      "question": "What are the two main components of China's CBDC strategy?",
+      "options": {
+        "A": "e-CNY for international use and digital yuan for domestic use",
+        "B": "e-CNY for domestic use and mBridge for wholesale cross-border payments",
+        "C": "Bitcoin integration and blockchain development",
+        "D": "Replacing all cash immediately and eliminating banks"
+      },
+      "correct": "B",
+      "explanation": "China's strategy involves the e-CNY (digital yuan) primarily for domestic retail use and participation in mBridge, a multi-CBDC platform for wholesale cross-border payments with UAE, Hong Kong, and Thailand, aimed at reducing dependence on SWIFT."
+    },
+    {
+      "id": 18,
+      "question": "What is mBridge designed to facilitate?",
+      "options": {
+        "A": "Domestic retail payments within a single country",
+        "B": "Wholesale cross-border payments between multiple central banks",
+        "C": "Private cryptocurrency exchanges",
+        "D": "Commercial bank deposit insurance"
+      },
+      "correct": "B",
+      "explanation": "mBridge is a multi-CBDC platform involving China, UAE, Hong Kong, and Thailand designed for wholesale cross-border payments. It enables direct central bank settlement across borders, reducing costs and settlement times compared to correspondent banking."
+    },
+    {
+      "id": 19,
+      "question": "What are the key design principles for the proposed Digital Euro?",
+      "options": {
+        "A": "Replace all cash, maximize central bank revenue, eliminate banks",
+        "B": "Complement cash, privacy by design for small payments, holding limits, no initial interest",
+        "C": "Blockchain-only, anonymous for all transactions, unlimited holdings",
+        "D": "Negative interest rates, no privacy protections, mandatory adoption"
+      },
+      "correct": "B",
+      "explanation": "The ECB's design principles emphasize that the Digital Euro should complement (not replace) cash, incorporate privacy protections for small payments, include holding limits (around 3000 EUR proposed), and not pay interest initially to avoid disintermediation risks."
+    },
+    {
+      "id": 20,
+      "question": "According to the lecture, how many countries are currently exploring CBDCs?",
+      "options": {
+        "A": "About 30 countries",
+        "B": "More than 130 countries",
+        "C": "Only 5 major economies",
+        "D": "All countries have already launched CBDCs"
+      },
+      "correct": "B",
+      "explanation": "The lecture notes that over 130 countries are exploring CBDCs, with China's e-CNY being the most advanced large-economy pilot. This reflects widespread global interest in CBDCs, though most are still in research or pilot phases rather than full deployment."
+    }
+  ]
+}

@@ -27,27 +27,51 @@ jobs:
           python -c "
           import json, glob, sys
           errors = 0
-          for f in glob.glob('**/questions.json', recursive=True):
+          for f in glob.glob('L*/questions.json', recursive=True):
               print(f'Validating {f}...')
               try:
                   with open(f) as fp:
                       data = json.load(fp)
-                  if not isinstance(data, list):
-                      print(f'ERROR: {f} - root must be array')
+                  if not isinstance(data, dict):
+                      print(f'ERROR: {f} - root must be object')
                       errors += 1
                       continue
-                  for i, q in enumerate(data):
+                  if 'questions' not in data:
+                      print(f'ERROR: {f} - missing questions array')
+                      errors += 1
+                      continue
+                  questions = data['questions']
+                  if not isinstance(questions, list):
+                      print(f'ERROR: {f} - questions must be array')
+                      errors += 1
+                      continue
+                  for i, q in enumerate(questions):
+                      if 'id' not in q:
+                          print(f'ERROR: {f}[{i}] missing id')
+                          errors += 1
                       if 'question' not in q:
                           print(f'ERROR: {f}[{i}] missing question')
                           errors += 1
                       if 'options' not in q:
                           print(f'ERROR: {f}[{i}] missing options')
                           errors += 1
-                      elif len(q['options']) < 2:
-                          print(f'ERROR: {f}[{i}] needs >=2 options')
+                      elif not isinstance(q['options'], dict):
+                          print(f'ERROR: {f}[{i}] options must be object')
                           errors += 1
-                      if 'answer' not in q:
-                          print(f'ERROR: {f}[{i}] missing answer')
+                      elif not all(k in q['options'] for k in ['A', 'B', 'C', 'D']):
+                          print(f'ERROR: {f}[{i}] options must have A,B,C,D keys')
+                          errors += 1
+                      if 'correct' not in q:
+                          print(f'ERROR: {f}[{i}] missing correct field')
+                          errors += 1
+                      elif q['correct'] not in ['A', 'B', 'C', 'D']:
+                          print(f'ERROR: {f}[{i}] correct must be A, B, C, or D')
+                          errors += 1
+                      if 'explanation' not in q:
+                          print(f'ERROR: {f}[{i}] missing explanation')
+                          errors += 1
+                      elif not q['explanation'] or not q['explanation'].strip():
+                          print(f'ERROR: {f}[{i}] explanation cannot be empty')
                           errors += 1
               except json.JSONDecodeError as e:
                   print(f'ERROR: {f} invalid JSON: {e}')
@@ -63,11 +87,13 @@ jobs:
           python -c "
           import json, glob
           total = 0
-          for f in glob.glob('**/questions.json', recursive=True):
+          for f in glob.glob('L*/questions.json', recursive=True):
               with open(f) as fp:
                   data = json.load(fp)
-              count = len(data)
+              count = len(data.get('questions', []))
               total += count
               print(f'{f}: {count} questions')
           print(f'Total: {total} questions')
+          if total != 160:
+              print(f'WARNING: Expected 160 questions, found {total}')
           "

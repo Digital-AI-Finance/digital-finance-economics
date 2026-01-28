@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: L03 Cbdcs | Digital Finance & Economics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --mlpurple: #3333B2;
+            --mlblue: #0066CC;
+            --quiz-accent: #8b5cf6;
+            --quiz-light: #ede9fe;
+            --correct: #22c55e;
+            --correct-bg: #dcfce7;
+            --incorrect: #ef4444;
+            --incorrect-bg: #fee2e2;
+            --bg: #f6f8fa;
+            --card-bg: #ffffff;
+            --text: #24292e;
+            --text-secondary: #586069;
+            --border: #e1e4e8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.4;
+            min-height: 100vh;
+        }
+
+        .nav {
+            background: linear-gradient(135deg, var(--mlpurple), var(--mlblue));
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-title { font-weight: 600; font-size: 14px; }
+        .nav-links { display: flex; gap: 16px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 12px; opacity: 0.9; }
+        .nav-links a:hover { opacity: 1; }
+
+        .quiz-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+        .quiz-title { font-size: 16px; font-weight: 600; color: var(--mlpurple); }
+        .quiz-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+        }
+        .stat-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .stat-progress { background: var(--quiz-light); color: var(--quiz-accent); }
+        .stat-score { background: var(--correct-bg); color: var(--correct); }
+
+        .progress-bar-container {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-bottom: 12px;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--quiz-accent);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        /* Three-column layout */
+        .questions-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            min-height: 280px;
+        }
+
+        .question-card.answered { opacity: 0.7; }
+
+        .question-card.correct-card {
+            border: 2px solid var(--correct);
+            background: linear-gradient(to bottom, var(--correct-bg), var(--card-bg));
+        }
+
+        .question-card.incorrect-card {
+            border: 2px solid var(--incorrect);
+            background: linear-gradient(to bottom, var(--incorrect-bg), var(--card-bg));
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .q-number {
+            background: var(--quiz-light);
+            color: var(--quiz-accent);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .q-status { font-size: 14px; }
+
+        .q-text {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            flex-grow: 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 44px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--quiz-accent);
+            background: var(--quiz-light);
+        }
+
+        .option-btn.correct {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+        }
+
+        .option-btn.disabled { cursor: default; }
+
+        .option-letter {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .option-letter {
+            background: var(--correct);
+            color: white;
+        }
+
+        .option-btn.incorrect .option-letter {
+            background: var(--incorrect);
+            color: white;
+        }
+
+        .option-text { flex: 1; }
+
+        .feedback {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            line-height: 1.4;
+            display: none;
+        }
+
+        .feedback.show { display: block; }
+        .feedback.correct { background: var(--correct-bg); color: #166534; }
+        .feedback.incorrect { background: var(--incorrect-bg); color: #991b1b; }
+
+        /* Results */
+        .results-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 32px;
+            text-align: center;
+            max-width: 500px;
+            margin: 40px auto;
+            display: none;
+        }
+        .results-card.show { display: block; }
+        .results-icon { font-size: 48px; margin-bottom: 8px; }
+        .results-score { font-size: 36px; font-weight: 700; color: var(--quiz-accent); }
+        .results-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+        .results-grade {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .grade-a { background: #dcfce7; color: #166534; }
+        .grade-b { background: #dbeafe; color: #1e40af; }
+        .grade-c { background: #fef3c7; color: #92400e; }
+        .grade-d { background: #fed7aa; color: #9a3412; }
+        .grade-f { background: #fee2e2; color: #991b1b; }
+
+        .results-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .btn-primary { background: var(--quiz-accent); color: white; }
+        .btn-primary:hover { background: #7c3aed; }
+        .btn-secondary { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+
+        /* Next button container */
+        .next-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .btn-next {
+            padding: 10px 32px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: var(--quiz-accent);
+            color: white;
+            transition: all 0.2s;
+            display: none;
+        }
+        .btn-next:hover { background: #7c3aed; transform: scale(1.02); }
+        .btn-next.show { display: inline-block; }
+        .btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 900px) {
+            .questions-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .questions-row { grid-template-columns: 1fr; }
+            .question-card { min-height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-title">Quiz: L03 Cbdcs</div>
+        <div class="nav-links">
+            <a href="../index.html">Dashboard</a>
+            
+            <a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <main class="quiz-container">
+        <div class="quiz-header">
+            <div class="quiz-title">Quiz: L03 Cbdcs</div>
+            <div class="quiz-stats">
+                <span class="stat-badge stat-progress" id="progressBadge">0/20</span>
+                <span class="stat-badge stat-score" id="scoreBadge">Score: 0</span>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <div class="questions-row" id="questionsRow"></div>
+
+        <div class="next-btn-container">
+            <button class="btn-next" id="nextBtn" onclick="loadNextQuestions()">Next</button>
+        </div>
+
+        <div class="results-card" id="resultsCard">
+            <div class="results-icon" id="resultsIcon"></div>
+            <div class="results-score" id="resultsScore"></div>
+            <div class="results-label">Correct Answers</div>
+            <div class="results-grade" id="resultsGrade"></div>
+            <div class="results-buttons">
+                <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+                <a href="../index.html" class="btn btn-secondary">Dashboard</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const quizData = {
+            questions: [
+                {
+                                "id": 1,
+                                "question": "Which of the following is a defining characteristic of a CBDC?",
+                                "options": {
+                                                "A": "It must be based on blockchain technology",
+                                                "B": "It is a direct liability of the central bank",
+                                                "C": "It must pay interest to holders",
+                                                "D": "It replaces all physical cash immediately"
+                                },
+                                "correct": "B",
+                                "explanation": "A CBDC is a digital form of central bank money that represents a direct liability of the central bank. It does not require blockchain, does not necessarily pay interest, and is designed to complement rather than immediately replace cash."
+                },
+                {
+                                "id": 2,
+                                "question": "Which of the following is NOT a CBDC?",
+                                "options": {
+                                                "A": "China's e-CNY",
+                                                "B": "Bank reserves held at the central bank",
+                                                "C": "The proposed Digital Euro",
+                                                "D": "A wholesale CBDC for interbank settlement"
+                                },
+                                "correct": "B",
+                                "explanation": "Bank reserves are already digital central bank money but are not classified as CBDCs because they are restricted to financial institutions and are not a new form of money. CBDCs refer to digital central bank money that is either widely accessible to the public (retail) or implemented with new technology for wholesale purposes."
+                },
+                {
+                                "id": 3,
+                                "question": "What is a primary motivation for central banks to develop CBDCs?",
+                                "options": {
+                                                "A": "To eliminate all commercial banks",
+                                                "B": "To maintain monetary sovereignty against private digital currencies",
+                                                "C": "To maximize central bank profits",
+                                                "D": "To replace the entire banking system"
+                                },
+                                "correct": "B",
+                                "explanation": "A key motivation for CBDCs is to maintain monetary sovereignty in the face of private digital currencies (like stablecoins and cryptocurrencies). Central banks are not seeking to eliminate commercial banks or replace the banking system, but rather to ensure public money remains relevant in the digital age."
+                },
+                {
+                                "id": 4,
+                                "question": "According to the lecture, what is the key economic question regarding CBDCs?",
+                                "options": {
+                                                "A": "How quickly can CBDCs be implemented?",
+                                                "B": "Does public benefit exceed costs and risks?",
+                                                "C": "Which technology platform is most advanced?",
+                                                "D": "How much profit can central banks generate?"
+                                },
+                                "correct": "B",
+                                "explanation": "The fundamental economic question is whether the public benefits of CBDCs outweigh their costs and risks. This requires careful analysis of trade-offs rather than focusing solely on technical implementation or profit generation."
+                },
+                {
+                                "id": 5,
+                                "question": "What is the primary difference between retail and wholesale CBDCs?",
+                                "options": {
+                                                "A": "Retail CBDCs use blockchain while wholesale do not",
+                                                "B": "Retail CBDCs are for general public use while wholesale are for financial institutions",
+                                                "C": "Retail CBDCs pay interest while wholesale do not",
+                                                "D": "Retail CBDCs are only for international payments"
+                                },
+                                "correct": "B",
+                                "explanation": "Retail CBDCs are designed for general public use as a payment instrument, while wholesale CBDCs are restricted to financial institutions for interbank settlement and securities transactions. This distinction is based on accessibility rather than technology or interest-bearing features."
+                },
+                {
+                                "id": 6,
+                                "question": "Which type of CBDC generally has lower operational costs and clearer efficiency gains?",
+                                "options": {
+                                                "A": "Retail CBDC",
+                                                "B": "Wholesale CBDC",
+                                                "C": "Both have equal costs",
+                                                "D": "Neither provides efficiency gains"
+                                },
+                                "correct": "B",
+                                "explanation": "Wholesale CBDCs have lower operational burden, clearer efficiency gains, and are less disruptive to the banking system compared to retail CBDCs, which face high operational costs, privacy challenges, and potential competition with commercial banks."
+                },
+                {
+                                "id": 7,
+                                "question": "In a token-based CBDC system, what is verified during a transaction?",
+                                "options": {
+                                                "A": "The identity of the holder",
+                                                "B": "The credit history of both parties",
+                                                "C": "The instrument (token) itself",
+                                                "D": "The bank account balance"
+                                },
+                                "correct": "C",
+                                "explanation": "Token-based systems verify the authenticity of the instrument itself (like verifying a physical banknote), not the identity of the holder. This is similar to digital cash and contrasts with account-based systems that verify user identity."
+                },
+                {
+                                "id": 8,
+                                "question": "What is a key economic advantage of account-based CBDCs over token-based ones?",
+                                "options": {
+                                                "A": "Lower transaction costs",
+                                                "B": "Greater privacy protection",
+                                                "C": "Ability to pay interest and enable programmable features",
+                                                "D": "Offline transaction capability"
+                                },
+                                "correct": "C",
+                                "explanation": "Account-based CBDCs can be interest-bearing and allow for programmable features and targeted policies because they maintain full transaction records and user identification. Token-based systems offer advantages in privacy and lower transaction costs, but lack these policy capabilities."
+                },
+                {
+                                "id": 9,
+                                "question": "How does an interest-bearing CBDC potentially enhance monetary policy transmission?",
+                                "options": {
+                                                "A": "It eliminates the need for commercial banks",
+                                                "B": "It provides direct transmission to the public and creates a floor on deposit rates",
+                                                "C": "It automatically adjusts interest rates based on inflation",
+                                                "D": "It prevents banks from changing their interest rates"
+                                },
+                                "correct": "B",
+                                "explanation": "An interest-bearing CBDC allows central banks to transmit policy directly to the public without relying solely on bank intermediation. The CBDC rate creates a floor on deposit rates because banks must compete with the risk-free CBDC option."
+                },
+                {
+                                "id": 10,
+                                "question": "What is a potential enhanced policy option enabled by interest-bearing CBDCs?",
+                                "options": {
+                                                "A": "Eliminating all commercial banks",
+                                                "B": "Imposing negative interest rates on retail CBDC holdings",
+                                                "C": "Preventing any private digital payments",
+                                                "D": "Fixing exchange rates permanently"
+                                },
+                                "correct": "B",
+                                "explanation": "Interest-bearing CBDCs could enable negative interest rates on retail holdings, overcoming the zero lower bound constraint that exists with physical cash. This is one of several enhanced policy options, including helicopter money and time-limited digital currency."
+                },
+                {
+                                "id": 11,
+                                "question": "In the traditional monetary policy transmission channel, how do interest rate changes affect the economy?",
+                                "options": {
+                                                "A": "Policy rate changes directly determine consumer spending without bank involvement",
+                                                "B": "Policy rate changes affect deposit rates through bank intermediation, which then influences consumption and investment",
+                                                "C": "Interest rates have no effect on consumption or investment decisions",
+                                                "D": "Only government spending is affected by interest rate changes"
+                                },
+                                "correct": "B",
+                                "explanation": "The traditional interest rate channel works through bank intermediation: central bank policy rate changes → bank deposit/lending rate changes → consumption and investment decisions. CBDCs could potentially enhance this by providing more direct transmission."
+                },
+                {
+                                "id": 12,
+                                "question": "What is a major political economy concern with enhanced CBDC monetary policy tools?",
+                                "options": {
+                                                "A": "They are too expensive to implement",
+                                                "B": "Political resistance to negative rates and privacy implications of targeting",
+                                                "C": "They make monetary policy completely ineffective",
+                                                "D": "They eliminate all commercial bank lending"
+                                },
+                                "correct": "B",
+                                "explanation": "While CBDCs could strengthen monetary policy transmission, there are significant political economy concerns including public resistance to negative interest rates and privacy implications of targeted monetary transfers or time-limited money."
+                },
+                {
+                                "id": 13,
+                                "question": "What is the primary bank disintermediation risk associated with retail CBDCs?",
+                                "options": {
+                                                "A": "Banks will make higher profits",
+                                                "B": "Deposits could migrate from banks to CBDCs, forcing banks to rely on costlier wholesale funding",
+                                                "C": "Central banks will start offering commercial loans",
+                                                "D": "All bank employees will lose their jobs"
+                                },
+                                "correct": "B",
+                                "explanation": "The main disintermediation concern is that if CBDCs are attractive to depositors, funds will flow from bank deposits to CBDCs. This forces banks to lose cheap deposit funding and potentially rely on more expensive wholesale funding, which could lead to credit supply contraction."
+                },
+                {
+                                "id": 14,
+                                "question": "According to Andolfatto's (2021) model mentioned in the lecture, what role does CBDC play in the banking market?",
+                                "options": {
+                                                "A": "It eliminates all bank deposits",
+                                                "B": "It serves as an outside option that forces competitive deposit rates",
+                                                "C": "It has no effect on bank behavior",
+                                                "D": "It guarantees positive welfare effects for all agents"
+                                },
+                                "correct": "B",
+                                "explanation": "In Andolfatto's model, CBDC acts as an outside option for depositors, which forces banks to offer more competitive deposit rates. The net welfare effect is ambiguous—it depends on various factors including market structure and design parameters."
+                },
+                {
+                                "id": 15,
+                                "question": "Which design feature is NOT mentioned as a mitigation strategy for bank disintermediation?",
+                                "options": {
+                                                "A": "Holding limits (e.g., 3000 EUR maximum)",
+                                                "B": "Tiered remuneration (lower interest for large holdings)",
+                                                "C": "Offering no interest on CBDC",
+                                                "D": "Requiring users to close all bank accounts before accessing CBDC"
+                                },
+                                "correct": "D",
+                                "explanation": "Mitigation strategies include holding limits, tiered remuneration, and zero interest on CBDCs to limit their attractiveness relative to bank deposits. Requiring users to close bank accounts would be counterproductive and is not a proposed strategy—CBDCs are meant to coexist with commercial banking."
+                },
+                {
+                                "id": 16,
+                                "question": "Why might CBDCs increase financial stability risks during crisis periods?",
+                                "options": {
+                                                "A": "They eliminate all government deposit insurance",
+                                                "B": "Digital bank runs could occur faster and flight to safety could be amplified",
+                                                "C": "They prevent central banks from providing liquidity",
+                                                "D": "They make all banks immediately profitable"
+                                },
+                                "correct": "B",
+                                "explanation": "CBDCs could accelerate bank runs because digital transfers are instantaneous, and during crises, flight to the safety of central bank money (CBDC) could be amplified. This requires careful design to balance accessibility with stability considerations."
+                },
+                {
+                                "id": 17,
+                                "question": "What are the two main components of China's CBDC strategy?",
+                                "options": {
+                                                "A": "e-CNY for international use and digital yuan for domestic use",
+                                                "B": "e-CNY for domestic use and mBridge for wholesale cross-border payments",
+                                                "C": "Bitcoin integration and blockchain development",
+                                                "D": "Replacing all cash immediately and eliminating banks"
+                                },
+                                "correct": "B",
+                                "explanation": "China's strategy involves the e-CNY (digital yuan) primarily for domestic retail use and participation in mBridge, a multi-CBDC platform for wholesale cross-border payments with UAE, Hong Kong, and Thailand, aimed at reducing dependence on SWIFT."
+                },
+                {
+                                "id": 18,
+                                "question": "What is mBridge designed to facilitate?",
+                                "options": {
+                                                "A": "Domestic retail payments within a single country",
+                                                "B": "Wholesale cross-border payments between multiple central banks",
+                                                "C": "Private cryptocurrency exchanges",
+                                                "D": "Commercial bank deposit insurance"
+                                },
+                                "correct": "B",
+                                "explanation": "mBridge is a multi-CBDC platform involving China, UAE, Hong Kong, and Thailand designed for wholesale cross-border payments. It enables direct central bank settlement across borders, reducing costs and settlement times compared to correspondent banking."
+                },
+                {
+                                "id": 19,
+                                "question": "What are the key design principles for the proposed Digital Euro?",
+                                "options": {
+                                                "A": "Replace all cash, maximize central bank revenue, eliminate banks",
+                                                "B": "Complement cash, privacy by design for small payments, holding limits, no initial interest",
+                                                "C": "Blockchain-only, anonymous for all transactions, unlimited holdings",
+                                                "D": "Negative interest rates, no privacy protections, mandatory adoption"
+                                },
+                                "correct": "B",
+                                "explanation": "The ECB's design principles emphasize that the Digital Euro should complement (not replace) cash, incorporate privacy protections for small payments, include holding limits (around 3000 EUR proposed), and not pay interest initially to avoid disintermediation risks."
+                },
+                {
+                                "id": 20,
+                                "question": "According to the lecture, how many countries are currently exploring CBDCs?",
+                                "options": {
+                                                "A": "About 30 countries",
+                                                "B": "More than 130 countries",
+                                                "C": "Only 5 major economies",
+                                                "D": "All countries have already launched CBDCs"
+                                },
+                                "correct": "B",
+                                "explanation": "The lecture notes that over 130 countries are exploring CBDCs, with China's e-CNY being the most advanced large-economy pilot. This reflects widespread global interest in CBDCs, though most are still in research or pilot phases rather than full deployment."
+                }
+]
+        };
+
+        const state = {
+            currentIndex: 0,
+            answers: {},
+            score: 0,
+            displayedQuestions: [],
+            pendingSlots: []
+        };
+
+        const questionsRow = document.getElementById('questionsRow');
+        const progressBar = document.getElementById('progressBar');
+        const progressBadge = document.getElementById('progressBadge');
+        const scoreBadge = document.getElementById('scoreBadge');
+        const resultsCard = document.getElementById('resultsCard');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function initQuiz() {
+            state.currentIndex = 0;
+            state.answers = {};
+            state.score = 0;
+            state.displayedQuestions = [];
+            state.pendingSlots = [];
+
+            resultsCard.classList.remove('show');
+            questionsRow.style.display = 'grid';
+            nextBtn.classList.remove('show');
+
+            // Show first 3 questions
+            for (let i = 0; i < 3 && i < quizData.questions.length; i++) {
+                state.displayedQuestions.push(i);
+            }
+            state.currentIndex = Math.min(3, quizData.questions.length);
+
+            renderQuestions();
+            updateStats();
+        }
+
+        function renderQuestions() {
+            questionsRow.innerHTML = '';
+
+            state.displayedQuestions.forEach((qIdx, slot) => {
+                const q = quizData.questions[qIdx];
+                const answered = state.answers[q.id] !== undefined;
+                const isCorrect = answered && state.answers[q.id] === q.correct;
+                const isIncorrect = answered && state.answers[q.id] !== q.correct;
+
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                if (isCorrect) card.classList.add('correct-card', 'answered');
+                if (isIncorrect) card.classList.add('incorrect-card', 'answered');
+
+                card.innerHTML = `
+                    <div class="q-header">
+                        <span class="q-number">Q${qIdx + 1}</span>
+                        ${answered ? `<span class="q-status">${isCorrect ? '&#10004;' : '&#10008;'}</span>` : ''}
+                    </div>
+                    <div class="q-text">${q.question}</div>
+                    <div class="options" data-qid="${q.id}" data-slot="${slot}">
+                        ${['A','B','C','D'].map(letter => {
+                            let optClass = 'option-btn';
+                            if (answered) {
+                                optClass += ' disabled';
+                                if (letter === q.correct) optClass += ' correct';
+                                else if (letter === state.answers[q.id]) optClass += ' incorrect';
+                            }
+                            return `
+                                <button class="${optClass}" data-letter="${letter}" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letter}</span>
+                                    <span class="option-text">${q.options[letter]}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="feedback ${answered ? 'show' : ''} ${isCorrect ? 'correct' : 'incorrect'}">
+                        ${answered ? (isCorrect ? '&#10004; ' : `&#10008; Answer: ${q.correct}. `) + q.explanation : ''}
+                    </div>
+                `;
+
+                // Add click handlers
+                if (!answered) {
+                    card.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.addEventListener('click', () => handleAnswer(qIdx, slot, btn.dataset.letter));
+                    });
+                }
+
+                questionsRow.appendChild(card);
+            });
+
+            renderMath();
+        }
+
+        function handleAnswer(qIdx, slot, letter) {
+            const q = quizData.questions[qIdx];
+            state.answers[q.id] = letter;
+
+            if (letter === q.correct) state.score++;
+
+            // Track this slot as pending replacement
+            if (!state.pendingSlots.includes(slot)) {
+                state.pendingSlots.push(slot);
+            }
+
+            updateStats();
+            renderQuestions();
+
+            // Check if all questions answered
+            const answered = Object.keys(state.answers).length;
+            if (answered >= quizData.questions.length) {
+                // Short delay then show results
+                setTimeout(showResults, 800);
+            } else if (state.currentIndex < quizData.questions.length && state.pendingSlots.length > 0) {
+                // Show Next button if there are more questions and pending slots
+                nextBtn.classList.add('show');
+            }
+        }
+
+        function loadNextQuestions() {
+            // Replace pending slots with new questions
+            while (state.pendingSlots.length > 0 && state.currentIndex < quizData.questions.length) {
+                const slot = state.pendingSlots.shift();
+                state.displayedQuestions[slot] = state.currentIndex;
+                state.currentIndex++;
+            }
+
+            // Hide Next button
+            nextBtn.classList.remove('show');
+
+            renderQuestions();
+
+            // Check if quiz is complete (all displayed questions answered)
+            const answered = Object.keys(state.answers).length;
+            if (answered >= quizData.questions.length) {
+                setTimeout(showResults, 500);
+            }
+        }
+
+        function updateStats() {
+            const answered = Object.keys(state.answers).length;
+            const total = quizData.questions.length;
+
+            progressBar.style.width = `${(answered / total) * 100}%`;
+            progressBadge.textContent = `${answered}/${total}`;
+            scoreBadge.textContent = `Score: ${state.score}`;
+        }
+
+        function showResults() {
+            questionsRow.style.display = 'none';
+            nextBtn.classList.remove('show');
+            resultsCard.classList.add('show');
+
+            const total = quizData.questions.length;
+            const percentage = Math.round((state.score / total) * 100);
+
+            document.getElementById('resultsScore').textContent = `${state.score}/${total}`;
+
+            let grade, gradeClass, icon;
+            if (percentage >= 90) { grade = 'Excellent! A'; gradeClass = 'grade-a'; icon = '&#127942;'; }
+            else if (percentage >= 80) { grade = 'Great! B'; gradeClass = 'grade-b'; icon = '&#11088;'; }
+            else if (percentage >= 70) { grade = 'Good! C'; gradeClass = 'grade-c'; icon = '&#128077;'; }
+            else if (percentage >= 60) { grade = 'Pass - D'; gradeClass = 'grade-d'; icon = '&#128221;'; }
+            else { grade = 'Keep practicing'; gradeClass = 'grade-f'; icon = '&#128218;'; }
+
+            document.getElementById('resultsIcon').innerHTML = icon;
+            const gradeEl = document.getElementById('resultsGrade');
+            gradeEl.textContent = `${grade} (${percentage}%)`;
+            gradeEl.className = `results-grade ${gradeClass}`;
+        }
+
+        function restartQuiz() {
+            initQuiz();
+        }
+
+        function renderMath() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initQuiz();
+            setTimeout(renderMath, 100);
+        });
+    </script>
+</body>
+</html>

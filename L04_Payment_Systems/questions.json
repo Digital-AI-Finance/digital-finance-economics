@@ -1,0 +1,246 @@
+{
+  "lesson": "L04",
+  "title": "Economics of Payment Systems",
+  "questions": [
+    {
+      "id": 1,
+      "question": "According to Metcalfe's Law (simplified), the value of a payment network with n users is proportional to:",
+      "options": {
+        "A": "n (linear growth)",
+        "B": "n^2 (quadratic growth)",
+        "C": "log(n) (logarithmic growth)",
+        "D": "n! (factorial growth)"
+      },
+      "correct": "B",
+      "explanation": "Metcalfe's Law states that network value is proportional to n^2, as each user can transact with (n-1) others, creating n(n-1)/2 possible connections. This creates positive feedback loops and explains why payment networks exhibit winner-take-most dynamics."
+    },
+    {
+      "id": 2,
+      "question": "In the network effects formula V(n) = n · v(n), what does v(n) represent?",
+      "options": {
+        "A": "Total network value",
+        "B": "Number of network nodes",
+        "C": "Per-user value",
+        "D": "Transaction volume"
+      },
+      "correct": "C",
+      "explanation": "v(n) represents the per-user value, which itself increases with network size. When multiplied by the number of users (n), it gives the total network value V(n). This captures how each user's benefit grows as more users join the network."
+    },
+    {
+      "id": 3,
+      "question": "What percentage of the population typically represents the 'critical mass' threshold for payment network adoption according to the S-curve model?",
+      "options": {
+        "A": "5%",
+        "B": "16%",
+        "C": "50%",
+        "D": "75%"
+      },
+      "correct": "B",
+      "explanation": "The critical mass threshold is approximately 16% of the population. After this point, adoption accelerates rapidly as network effects become self-reinforcing. Before this threshold, growth is slow as the network value is still limited."
+    },
+    {
+      "id": 4,
+      "question": "Which of the following best describes why incumbents have advantages in payment networks?",
+      "options": {
+        "A": "They have more physical branches",
+        "B": "They have established user bases creating network effects",
+        "C": "They have better technology",
+        "D": "They have lower costs"
+      },
+      "correct": "B",
+      "explanation": "Incumbents benefit from network effects created by their existing user base. New entrants face the challenge of needing to 'buy' a network to compete, as their service has limited value until achieving critical mass. This creates significant barriers to entry in payment markets."
+    },
+    {
+      "id": 5,
+      "question": "In the Rochet-Tirole two-sided market model, what does the optimal pricing formula p_B + p_S = c + m express?",
+      "options": {
+        "A": "The total price to both sides equals costs plus markup",
+        "B": "Buyer price equals seller price",
+        "C": "Transaction fees must equal network costs",
+        "D": "Interchange fees are always zero"
+      },
+      "correct": "A",
+      "explanation": "In the Rochet-Tirole model, p_B + p_S = c + m means the sum of prices charged to buyers (B) and sellers (S) equals the platform's cost (c) plus markup (m). The key insight is that the price structure (how costs are split between sides) matters, not just the total price level."
+    },
+    {
+      "id": 6,
+      "question": "In two-sided market pricing, what determines which side should be charged more according to the Rochet-Tirole model?",
+      "options": {
+        "A": "The side with more users",
+        "B": "The side with higher income",
+        "C": "The side with lower price elasticity (less price-sensitive)",
+        "D": "The side that benefits more from the platform"
+      },
+      "correct": "C",
+      "explanation": "The optimal pricing formula shows that the side with lower price elasticity (η) should be charged more. Platforms subsidize the price-sensitive side and charge the price-insensitive side to maximize total adoption and transaction volume on both sides of the market."
+    },
+    {
+      "id": 7,
+      "question": "Card payment networks (Visa, Mastercard) are classic examples of two-sided markets because they connect:",
+      "options": {
+        "A": "Banks and central banks",
+        "B": "Cardholders and merchants",
+        "C": "Domestic and international payments",
+        "D": "Credit and debit transactions"
+      },
+      "correct": "B",
+      "explanation": "Card networks are platforms that connect two distinct sides: cardholders (consumers) on one side and merchants (acceptors) on the other. The value to each side increases with participation on the other side, creating cross-side network effects."
+    },
+    {
+      "id": 8,
+      "question": "What is the typical interchange fee percentage that flows from the merchant's acquirer to the card issuer in a payment transaction?",
+      "options": {
+        "A": "0.1-0.2%",
+        "B": "0.5-0.8%",
+        "C": "1.5-2%",
+        "D": "5-7%"
+      },
+      "correct": "C",
+      "explanation": "Interchange fees typically range from 1.5-2% of the transaction value. These fees flow from the merchant's bank (acquirer) to the cardholder's bank (issuer) and are meant to balance the two-sided market by subsidizing card issuance and rewards programs while charging merchants for access to cardholders."
+    },
+    {
+      "id": 9,
+      "question": "What does 'cross-side network effects' mean in the context of payment systems?",
+      "options": {
+        "A": "International transactions are more expensive",
+        "B": "More users on one side increase value for users on the other side",
+        "C": "Payments can cross between different currencies",
+        "D": "Network security increases with more users"
+      },
+      "correct": "B",
+      "explanation": "Cross-side network effects occur when participation on one side of the platform increases value for users on the other side. In card networks, more merchants make cards more valuable to consumers, and more cardholders make card acceptance more valuable to merchants."
+    },
+    {
+      "id": 10,
+      "question": "The 'chicken-and-egg problem' in payment networks refers to:",
+      "options": {
+        "A": "Whether to build retail or wholesale payment systems first",
+        "B": "The difficulty of attracting both sides of the market simultaneously when starting a new network",
+        "C": "Deciding whether to charge merchants or consumers",
+        "D": "The order of implementing security versus convenience features"
+      },
+      "correct": "B",
+      "explanation": "The chicken-and-egg problem describes the bootstrap challenge: merchants won't accept a payment method without cardholders, but cardholders won't adopt without merchant acceptance. Platforms must strategically subsidize one side or build both sides simultaneously to overcome this coordination problem."
+    },
+    {
+      "id": 11,
+      "question": "According to the lecture, why do card issuers receive interchange fees?",
+      "options": {
+        "A": "To cover the cost of physical card production",
+        "B": "To bear fraud risk and subsidize cardholder rewards",
+        "C": "To compensate for currency exchange losses",
+        "D": "To fund network infrastructure maintenance"
+      },
+      "correct": "B",
+      "explanation": "Interchange fees compensate issuers for bearing fraud risk and funding cardholder benefits like rewards programs. This pricing structure balances the two-sided market by making cards attractive to consumers while merchants pay for access to this consumer base."
+    },
+    {
+      "id": 12,
+      "question": "One regulatory argument against high interchange fees is that they are regressive because:",
+      "options": {
+        "A": "They favor large merchants over small ones",
+        "B": "They increase with transaction size",
+        "C": "Cash users subsidize card users through higher prices",
+        "D": "They prevent new payment networks from entering the market"
+      },
+      "correct": "C",
+      "explanation": "High interchange fees lead merchants to raise prices for all customers. Cash users, typically lower-income, pay these higher prices but don't receive card rewards, effectively subsidizing wealthier card users. This regressive distribution is a key regulatory concern."
+    },
+    {
+      "id": 13,
+      "question": "What is the correspondent banking model used for?",
+      "options": {
+        "A": "Domestic instant payments between consumers",
+        "B": "Cross-border payments through intermediary banks",
+        "C": "Credit card transaction processing",
+        "D": "Central bank monetary policy implementation"
+      },
+      "correct": "B",
+      "explanation": "Correspondent banking is the hub-and-spoke model for cross-border payments where banks maintain accounts with intermediary banks to facilitate international transfers. Each intermediary adds costs and delays, contributing to the inefficiency of cross-border payments."
+    },
+    {
+      "id": 14,
+      "question": "In an RTGS (Real-Time Gross Settlement) system, how are transactions settled?",
+      "options": {
+        "A": "In batches at end of day with netting",
+        "B": "Each transaction settled immediately and individually",
+        "C": "Weekly with multilateral netting",
+        "D": "Monthly with bilateral reconciliation"
+      },
+      "correct": "B",
+      "explanation": "RTGS systems like Fedwire and TARGET2 settle each transaction immediately and individually in real-time. This eliminates settlement risk but requires high liquidity as banks must have sufficient funds available for each transaction without netting benefits."
+    },
+    {
+      "id": 15,
+      "question": "What is the key advantage of DNS (Deferred Net Settlement) over RTGS?",
+      "options": {
+        "A": "Faster transaction speed",
+        "B": "Lower liquidity requirements",
+        "C": "Better security",
+        "D": "International compatibility"
+      },
+      "correct": "B",
+      "explanation": "DNS systems batch and net payments before settlement, meaning banks only need liquidity for the net position rather than gross amounts. This significantly reduces liquidity costs, though it introduces settlement risk until the batch is processed."
+    },
+    {
+      "id": 16,
+      "question": "Which instant payment system was launched in India in 2016 and now processes over 10 billion transactions per month?",
+      "options": {
+        "A": "Faster Payments",
+        "B": "SEPA Instant",
+        "C": "UPI",
+        "D": "FedNow"
+      },
+      "correct": "C",
+      "explanation": "UPI (Unified Payments Interface) was launched in India in 2016 and has transformed the country's payment landscape, processing over 10 billion transactions monthly. It enables instant, 24/7 transfers and has been a major driver of financial inclusion."
+    },
+    {
+      "id": 17,
+      "question": "M-Pesa's success in Kenya was primarily driven by which design choice?",
+      "options": {
+        "A": "Requiring smartphones and internet connectivity",
+        "B": "Using agent networks instead of bank branches",
+        "C": "Focusing on high-value business transactions",
+        "D": "Integration with international credit card networks"
+      },
+      "correct": "B",
+      "explanation": "M-Pesa succeeded by using agent networks rather than traditional bank branches, making it accessible in rural areas. It also worked on basic mobile phones without requiring smartphones or internet, enabling low-value, low-cost transactions for previously unbanked populations."
+    },
+    {
+      "id": 18,
+      "question": "According to Suri & Jack (2016), what was M-Pesa's estimated impact on poverty reduction in Kenya?",
+      "options": {
+        "A": "0.5% reduction",
+        "B": "2% reduction",
+        "C": "5% reduction",
+        "D": "10% reduction"
+      },
+      "correct": "B",
+      "explanation": "Suri & Jack (2016) found that M-Pesa contributed to approximately 2% poverty reduction in Kenya. The impact was particularly strong for women and came through improved risk sharing, business opportunities, and access to financial services."
+    },
+    {
+      "id": 19,
+      "question": "What is the current average cost of cross-border remittances, and what is the G20 target for 2027?",
+      "options": {
+        "A": "Current: 3%, Target: 1%",
+        "B": "Current: 6%+, Target: 3%",
+        "C": "Current: 10%, Target: 5%",
+        "D": "Current: 2%, Target: 1%"
+      },
+      "correct": "B",
+      "explanation": "Cross-border remittances currently cost over 6% on average, with some corridors (especially to Africa) even higher. The G20 has set a target to reduce this to 3% by 2027, recognizing that high fees disproportionately hurt the poorest populations who rely on remittances."
+    },
+    {
+      "id": 20,
+      "question": "What economic benefit do instant payment systems provide to businesses?",
+      "options": {
+        "A": "Lower interchange fees",
+        "B": "Working capital optimization and reduced float costs",
+        "C": "Elimination of fraud risk",
+        "D": "Automatic currency conversion"
+      },
+      "correct": "B",
+      "explanation": "Instant payments enable businesses to optimize working capital by receiving funds immediately, eliminating float periods. This improves cash flow management and enables real-time reconciliation. These benefits can significantly reduce the cost of holding liquidity for operational needs."
+    }
+  ]
+}

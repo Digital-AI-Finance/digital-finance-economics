@@ -1,0 +1,246 @@
+{
+  "lesson": "L01",
+  "title": "Introduction to the Economics of Digital Finance",
+  "questions": [
+    {
+      "id": 1,
+      "question": "According to the course's economic definition, what is a core characteristic of digital finance?",
+      "options": {
+        "A": "It uses blockchain technology for all transactions",
+        "B": "It relies on digital infrastructure for value transfer",
+        "C": "It eliminates all intermediaries from financial services",
+        "D": "It requires cryptocurrency as the primary medium of exchange"
+      },
+      "correct": "B",
+      "explanation": "The course defines digital finance economically as financial services and instruments that rely on digital infrastructure for value transfer, rather than by specific technologies like blockchain. Options A and D are too narrow, while C is incorrect because digital finance can involve either disintermediation or re-intermediation."
+    },
+    {
+      "id": 2,
+      "question": "What is the key distinction between technical and economic questions in digital finance?",
+      "options": {
+        "A": "Technical questions ask 'How does it work?' while economic questions ask 'What incentives drive adoption?'",
+        "B": "Technical questions focus on regulation while economic questions focus on coding",
+        "C": "Technical questions are theoretical while economic questions are practical",
+        "D": "Technical questions study markets while economic questions study algorithms"
+      },
+      "correct": "A",
+      "explanation": "The course explicitly distinguishes technical questions (mechanisms and implementation, 'How does it work?') from economic questions (incentives and welfare, 'What incentives drive adoption?'). This fundamental distinction guides the entire course's analytical approach."
+    },
+    {
+      "id": 3,
+      "question": "Which of the following is an economic question rather than a technical question about smart contracts?",
+      "options": {
+        "A": "What programming languages are used to write smart contracts?",
+        "B": "How do smart contracts execute on the blockchain?",
+        "C": "How do smart contracts reduce transaction costs?",
+        "D": "What cryptographic algorithms secure smart contracts?"
+      },
+      "correct": "C",
+      "explanation": "Economic questions focus on incentives and welfare effects. Asking how smart contracts reduce transaction costs addresses economic efficiency and cost-benefit analysis. Options A, B, and D all focus on technical mechanisms and implementation details."
+    },
+    {
+      "id": 4,
+      "question": "Which of the following is NOT explicitly mentioned in the course's scope of digital finance?",
+      "options": {
+        "A": "Central Bank Digital Currencies (CBDCs)",
+        "B": "Decentralized Finance (DeFi)",
+        "C": "Quantum computing for encryption",
+        "D": "Tokenized assets"
+      },
+      "correct": "C",
+      "explanation": "The course scope explicitly includes cryptocurrencies, stablecoins, CBDCs, digital payment systems, DeFi, and tokenized assets. Quantum computing for encryption is a technical implementation topic not listed as part of the economic scope of digital finance."
+    },
+    {
+      "id": 5,
+      "question": "According to the Four Economic Lenses framework, which lens examines how digital currencies affect money supply and monetary policy transmission?",
+      "options": {
+        "A": "Platform Economics",
+        "B": "Monetary Economics",
+        "C": "Market Microstructure",
+        "D": "Regulatory Economics"
+      },
+      "correct": "B",
+      "explanation": "Monetary Economics (Lens 1) addresses key questions about how digital currencies affect money supply, monetary policy transmission, and whether cryptocurrencies can replace fiat money. This lens applies theoretical tools like the quantity theory of money and money demand functions."
+    },
+    {
+      "id": 6,
+      "question": "Which economic lens would you apply to understand why some cryptocurrencies dominate and how network effects shape adoption?",
+      "options": {
+        "A": "Monetary Economics",
+        "B": "Regulatory Economics",
+        "C": "Platform Economics",
+        "D": "Market Microstructure"
+      },
+      "correct": "C",
+      "explanation": "Platform Economics (Lens 2) examines network effects models, critical mass, winner-take-all dynamics, and token value determination. It uses two-sided market theory and mechanism design to understand cryptocurrency adoption patterns and dominance."
+    },
+    {
+      "id": 7,
+      "question": "The Market Microstructure lens primarily focuses on which aspect of digital finance?",
+      "options": {
+        "A": "How crypto markets discover prices and why spreads vary",
+        "B": "How central banks should design digital currencies",
+        "C": "How tokens create network effects",
+        "D": "How regulators classify cryptocurrencies"
+      },
+      "correct": "A",
+      "explanation": "Market Microstructure (Lens 3) examines price discovery mechanisms, bid-ask spreads, liquidity provision, and differences between AMMs and order books. It addresses market efficiency questions rather than monetary policy, platform dynamics, or regulatory classification."
+    },
+    {
+      "id": 8,
+      "question": "Which economic lens would be most appropriate to analyze the rationale for consumer protection in cryptocurrency markets?",
+      "options": {
+        "A": "Platform Economics",
+        "B": "Monetary Economics",
+        "C": "Market Microstructure",
+        "D": "Regulatory Economics"
+      },
+      "correct": "D",
+      "explanation": "Regulatory Economics (Lens 4) applies market failure analysis to justify regulation, examining asymmetric information, systemic risk externalities, and consumer protection rationales. It evaluates the costs and benefits of different regulatory approaches."
+    },
+    {
+      "id": 9,
+      "question": "According to the classical functions of money discussed in the course, which function solves the 'double coincidence of wants' problem?",
+      "options": {
+        "A": "Unit of account",
+        "B": "Store of value",
+        "C": "Medium of exchange",
+        "D": "Legal tender"
+      },
+      "correct": "C",
+      "explanation": "The medium of exchange function solves the double coincidence of wants problem by reducing transaction costs and requiring acceptability. This allows trade to occur without both parties needing to want exactly what the other offers."
+    },
+    {
+      "id": 10,
+      "question": "Which function of money simplifies price comparisons and enables economic calculation?",
+      "options": {
+        "A": "Medium of exchange",
+        "B": "Unit of account",
+        "C": "Store of value",
+        "D": "Standard of deferred payment"
+      },
+      "correct": "B",
+      "explanation": "The unit of account function simplifies price comparisons, enables economic calculation, and reduces cognitive costs by providing a common measure of value. This allows economic agents to compare prices efficiently across different goods and services."
+    },
+    {
+      "id": 11,
+      "question": "What is the primary limitation of Bitcoin as a medium of exchange according to the course?",
+      "options": {
+        "A": "Insufficient network capacity",
+        "B": "High transaction fees",
+        "C": "Price volatility",
+        "D": "Lack of merchant acceptance"
+      },
+      "correct": "C",
+      "explanation": "The course identifies volatility as Bitcoin's primary limitation as a medium of exchange. While Bitcoin faces other challenges, price volatility directly undermines its ability to serve as a stable medium for transactions, unlike stablecoins which aim to address this issue."
+    },
+    {
+      "id": 12,
+      "question": "According to Jevons' principle cited in the course, how should we evaluate whether something functions as money?",
+      "options": {
+        "A": "By its legal tender status",
+        "B": "By its technological sophistication",
+        "C": "By its functional performance across the three classical functions",
+        "D": "By its backing from a central authority"
+      },
+      "correct": "C",
+      "explanation": "Jevons (1875) stated that 'Money is what money does,' meaning we evaluate monetary assets by their functional performance across the three classical functions (medium of exchange, unit of account, store of value), not by legal status or other criteria."
+    },
+    {
+      "id": 13,
+      "question": "What economic problem does the use of money fundamentally solve in trade?",
+      "options": {
+        "A": "Information asymmetry",
+        "B": "Double coincidence of wants",
+        "C": "Moral hazard",
+        "D": "Adverse selection"
+      },
+      "correct": "B",
+      "explanation": "Money solves the double coincidence of wants problem, which occurs in barter economies where both parties must simultaneously want what the other offers. Money as a medium of exchange eliminates this requirement and dramatically reduces transaction costs."
+    },
+    {
+      "id": 14,
+      "question": "In the historical evolution of payment methods, what primary economic force drove each transition according to the course?",
+      "options": {
+        "A": "Government regulation",
+        "B": "Technological innovation",
+        "C": "Reducing transaction costs and enabling trade at scale",
+        "D": "Increased security requirements"
+      },
+      "correct": "C",
+      "explanation": "The course explicitly states that each transition in payment methods was driven by economic forces: reducing transaction costs and enabling trade at scale. While technology and regulation played roles, the fundamental driver was economic efficiency."
+    },
+    {
+      "id": 15,
+      "question": "Which concept explains the idea that 'bad money drives out good' in monetary systems?",
+      "options": {
+        "A": "Nash equilibrium",
+        "B": "Gresham's Law",
+        "C": "The quantity theory of money",
+        "D": "Say's Law"
+      },
+      "correct": "B",
+      "explanation": "Gresham's Law states that 'bad money drives out good,' meaning that when two forms of money are in circulation, people will hoard the more valuable form and spend the less valuable form. This concept is discussed in the Monetary Economics lens as relevant to digital currency competition."
+    },
+    {
+      "id": 16,
+      "question": "What does 'disintermediation' mean in the context of digital finance?",
+      "options": {
+        "A": "Adding more intermediaries to financial transactions",
+        "B": "Government regulation of intermediaries",
+        "C": "Removal or reduction of traditional intermediaries in financial transactions",
+        "D": "Changing the technology used by intermediaries"
+      },
+      "correct": "C",
+      "explanation": "Disintermediation refers to the removal or reduction of traditional intermediaries (like banks) in financial transactions. The course notes that digital finance can enable either disintermediation or re-intermediation, making this a key economic characteristic."
+    },
+    {
+      "id": 17,
+      "question": "Based on the three functions of money, which type of digital currency is explicitly designed to fulfill all three functions?",
+      "options": {
+        "A": "Bitcoin",
+        "B": "Stablecoins",
+        "C": "Central Bank Digital Currencies (CBDCs)",
+        "D": "Utility tokens"
+      },
+      "correct": "C",
+      "explanation": "The course explicitly states that CBDCs are 'designed to fulfill all three' functions of money (medium of exchange, unit of account, store of value), while Bitcoin is limited as a medium due to volatility, and stablecoins face trust issues despite better stability."
+    },
+    {
+      "id": 18,
+      "question": "According to the course, stablecoins perform better than Bitcoin as a medium of exchange, but face what primary economic challenge?",
+      "options": {
+        "A": "Technological scalability",
+        "B": "Trust issues",
+        "C": "Network effects",
+        "D": "Regulatory arbitrage"
+      },
+      "correct": "B",
+      "explanation": "The course states that while stablecoins are 'better' than Bitcoin as a medium of exchange due to lower volatility, they face 'trust issues.' This refers to the need to trust the issuer's backing and redemption mechanisms."
+    },
+    {
+      "id": 19,
+      "question": "Why should economists study digital finance according to the course's research opportunities argument?",
+      "options": {
+        "A": "To compete with computer scientists for funding",
+        "B": "Because digital finance provides high-frequency blockchain data, natural experiments in adoption, and cross-country regulatory variation",
+        "C": "To create new cryptocurrencies",
+        "D": "To replace traditional monetary theory"
+      },
+      "correct": "B",
+      "explanation": "The course identifies specific research opportunities: high-frequency blockchain data for empirical analysis, natural experiments in adoption patterns, and cross-country regulatory variation for comparative studies. This makes digital finance a 'laboratory for testing economic theories with real-world data.'"
+    },
+    {
+      "id": 20,
+      "question": "Which of the following best represents the scale of digital finance transformation mentioned in the course?",
+      "options": {
+        "A": "Digital payments expected to reach $5 trillion by 2027",
+        "B": "Digital payments expected to reach $15+ trillion by 2027 and 130+ countries exploring CBDCs",
+        "C": "50 countries have launched CBDCs",
+        "D": "Digital payments have replaced 50% of cash transactions globally"
+      },
+      "correct": "B",
+      "explanation": "The course cites '$15+ trillion digital payments by 2027' and '130+ countries exploring CBDCs' as evidence of disruption potential and why economists should study digital finance. COVID-19 accelerated this digital payment adoption trend."
+    }
+  ]
+}

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: L04 Payment Systems | Digital Finance & Economics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --mlpurple: #3333B2;
+            --mlblue: #0066CC;
+            --quiz-accent: #8b5cf6;
+            --quiz-light: #ede9fe;
+            --correct: #22c55e;
+            --correct-bg: #dcfce7;
+            --incorrect: #ef4444;
+            --incorrect-bg: #fee2e2;
+            --bg: #f6f8fa;
+            --card-bg: #ffffff;
+            --text: #24292e;
+            --text-secondary: #586069;
+            --border: #e1e4e8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.4;
+            min-height: 100vh;
+        }
+
+        .nav {
+            background: linear-gradient(135deg, var(--mlpurple), var(--mlblue));
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-title { font-weight: 600; font-size: 14px; }
+        .nav-links { display: flex; gap: 16px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 12px; opacity: 0.9; }
+        .nav-links a:hover { opacity: 1; }
+
+        .quiz-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+        .quiz-title { font-size: 16px; font-weight: 600; color: var(--mlpurple); }
+        .quiz-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+        }
+        .stat-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .stat-progress { background: var(--quiz-light); color: var(--quiz-accent); }
+        .stat-score { background: var(--correct-bg); color: var(--correct); }
+
+        .progress-bar-container {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-bottom: 12px;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--quiz-accent);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        /* Three-column layout */
+        .questions-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            min-height: 280px;
+        }
+
+        .question-card.answered { opacity: 0.7; }
+
+        .question-card.correct-card {
+            border: 2px solid var(--correct);
+            background: linear-gradient(to bottom, var(--correct-bg), var(--card-bg));
+        }
+
+        .question-card.incorrect-card {
+            border: 2px solid var(--incorrect);
+            background: linear-gradient(to bottom, var(--incorrect-bg), var(--card-bg));
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .q-number {
+            background: var(--quiz-light);
+            color: var(--quiz-accent);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .q-status { font-size: 14px; }
+
+        .q-text {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            flex-grow: 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 44px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--quiz-accent);
+            background: var(--quiz-light);
+        }
+
+        .option-btn.correct {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+        }
+
+        .option-btn.disabled { cursor: default; }
+
+        .option-letter {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .option-letter {
+            background: var(--correct);
+            color: white;
+        }
+
+        .option-btn.incorrect .option-letter {
+            background: var(--incorrect);
+            color: white;
+        }
+
+        .option-text { flex: 1; }
+
+        .feedback {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            line-height: 1.4;
+            display: none;
+        }
+
+        .feedback.show { display: block; }
+        .feedback.correct { background: var(--correct-bg); color: #166534; }
+        .feedback.incorrect { background: var(--incorrect-bg); color: #991b1b; }
+
+        /* Results */
+        .results-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 32px;
+            text-align: center;
+            max-width: 500px;
+            margin: 40px auto;
+            display: none;
+        }
+        .results-card.show { display: block; }
+        .results-icon { font-size: 48px; margin-bottom: 8px; }
+        .results-score { font-size: 36px; font-weight: 700; color: var(--quiz-accent); }
+        .results-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+        .results-grade {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .grade-a { background: #dcfce7; color: #166534; }
+        .grade-b { background: #dbeafe; color: #1e40af; }
+        .grade-c { background: #fef3c7; color: #92400e; }
+        .grade-d { background: #fed7aa; color: #9a3412; }
+        .grade-f { background: #fee2e2; color: #991b1b; }
+
+        .results-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .btn-primary { background: var(--quiz-accent); color: white; }
+        .btn-primary:hover { background: #7c3aed; }
+        .btn-secondary { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+
+        /* Next button container */
+        .next-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .btn-next {
+            padding: 10px 32px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: var(--quiz-accent);
+            color: white;
+            transition: all 0.2s;
+            display: none;
+        }
+        .btn-next:hover { background: #7c3aed; transform: scale(1.02); }
+        .btn-next.show { display: inline-block; }
+        .btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 900px) {
+            .questions-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .questions-row { grid-template-columns: 1fr; }
+            .question-card { min-height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-title">Quiz: L04 Payment Systems</div>
+        <div class="nav-links">
+            <a href="../index.html">Dashboard</a>
+            
+            <a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <main class="quiz-container">
+        <div class="quiz-header">
+            <div class="quiz-title">Quiz: L04 Payment Systems</div>
+            <div class="quiz-stats">
+                <span class="stat-badge stat-progress" id="progressBadge">0/20</span>
+                <span class="stat-badge stat-score" id="scoreBadge">Score: 0</span>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <div class="questions-row" id="questionsRow"></div>
+
+        <div class="next-btn-container">
+            <button class="btn-next" id="nextBtn" onclick="loadNextQuestions()">Next</button>
+        </div>
+
+        <div class="results-card" id="resultsCard">
+            <div class="results-icon" id="resultsIcon"></div>
+            <div class="results-score" id="resultsScore"></div>
+            <div class="results-label">Correct Answers</div>
+            <div class="results-grade" id="resultsGrade"></div>
+            <div class="results-buttons">
+                <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+                <a href="../index.html" class="btn btn-secondary">Dashboard</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const quizData = {
+            questions: [
+                {
+                                "id": 1,
+                                "question": "According to Metcalfe's Law (simplified), the value of a payment network with n users is proportional to:",
+                                "options": {
+                                                "A": "n (linear growth)",
+                                                "B": "n^2 (quadratic growth)",
+                                                "C": "log(n) (logarithmic growth)",
+                                                "D": "n! (factorial growth)"
+                                },
+                                "correct": "B",
+                                "explanation": "Metcalfe's Law states that network value is proportional to n^2, as each user can transact with (n-1) others, creating n(n-1)/2 possible connections. This creates positive feedback loops and explains why payment networks exhibit winner-take-most dynamics."
+                },
+                {
+                                "id": 2,
+                                "question": "In the network effects formula V(n) = n · v(n), what does v(n) represent?",
+                                "options": {
+                                                "A": "Total network value",
+                                                "B": "Number of network nodes",
+                                                "C": "Per-user value",
+                                                "D": "Transaction volume"
+                                },
+                                "correct": "C",
+                                "explanation": "v(n) represents the per-user value, which itself increases with network size. When multiplied by the number of users (n), it gives the total network value V(n). This captures how each user's benefit grows as more users join the network."
+                },
+                {
+                                "id": 3,
+                                "question": "What percentage of the population typically represents the 'critical mass' threshold for payment network adoption according to the S-curve model?",
+                                "options": {
+                                                "A": "5%",
+                                                "B": "16%",
+                                                "C": "50%",
+                                                "D": "75%"
+                                },
+                                "correct": "B",
+                                "explanation": "The critical mass threshold is approximately 16% of the population. After this point, adoption accelerates rapidly as network effects become self-reinforcing. Before this threshold, growth is slow as the network value is still limited."
+                },
+                {
+                                "id": 4,
+                                "question": "Which of the following best describes why incumbents have advantages in payment networks?",
+                                "options": {
+                                                "A": "They have more physical branches",
+                                                "B": "They have established user bases creating network effects",
+                                                "C": "They have better technology",
+                                                "D": "They have lower costs"
+                                },
+                                "correct": "B",
+                                "explanation": "Incumbents benefit from network effects created by their existing user base. New entrants face the challenge of needing to 'buy' a network to compete, as their service has limited value until achieving critical mass. This creates significant barriers to entry in payment markets."
+                },
+                {
+                                "id": 5,
+                                "question": "In the Rochet-Tirole two-sided market model, what does the optimal pricing formula p_B + p_S = c + m express?",
+                                "options": {
+                                                "A": "The total price to both sides equals costs plus markup",
+                                                "B": "Buyer price equals seller price",
+                                                "C": "Transaction fees must equal network costs",
+                                                "D": "Interchange fees are always zero"
+                                },
+                                "correct": "A",
+                                "explanation": "In the Rochet-Tirole model, p_B + p_S = c + m means the sum of prices charged to buyers (B) and sellers (S) equals the platform's cost (c) plus markup (m). The key insight is that the price structure (how costs are split between sides) matters, not just the total price level."
+                },
+                {
+                                "id": 6,
+                                "question": "In two-sided market pricing, what determines which side should be charged more according to the Rochet-Tirole model?",
+                                "options": {
+                                                "A": "The side with more users",
+                                                "B": "The side with higher income",
+                                                "C": "The side with lower price elasticity (less price-sensitive)",
+                                                "D": "The side that benefits more from the platform"
+                                },
+                                "correct": "C",
+                                "explanation": "The optimal pricing formula shows that the side with lower price elasticity (η) should be charged more. Platforms subsidize the price-sensitive side and charge the price-insensitive side to maximize total adoption and transaction volume on both sides of the market."
+                },
+                {
+                                "id": 7,
+                                "question": "Card payment networks (Visa, Mastercard) are classic examples of two-sided markets because they connect:",
+                                "options": {
+                                                "A": "Banks and central banks",
+                                                "B": "Cardholders and merchants",
+                                                "C": "Domestic and international payments",
+                                                "D": "Credit and debit transactions"
+                                },
+                                "correct": "B",
+                                "explanation": "Card networks are platforms that connect two distinct sides: cardholders (consumers) on one side and merchants (acceptors) on the other. The value to each side increases with participation on the other side, creating cross-side network effects."
+                },
+                {
+                                "id": 8,
+                                "question": "What is the typical interchange fee percentage that flows from the merchant's acquirer to the card issuer in a payment transaction?",
+                                "options": {
+                                                "A": "0.1-0.2%",
+                                                "B": "0.5-0.8%",
+                                                "C": "1.5-2%",
+                                                "D": "5-7%"
+                                },
+                                "correct": "C",
+                                "explanation": "Interchange fees typically range from 1.5-2% of the transaction value. These fees flow from the merchant's bank (acquirer) to the cardholder's bank (issuer) and are meant to balance the two-sided market by subsidizing card issuance and rewards programs while charging merchants for access to cardholders."
+                },
+                {
+                                "id": 9,
+                                "question": "What does 'cross-side network effects' mean in the context of payment systems?",
+                                "options": {
+                                                "A": "International transactions are more expensive",
+                                                "B": "More users on one side increase value for users on the other side",
+                                                "C": "Payments can cross between different currencies",
+                                                "D": "Network security increases with more users"
+                                },
+                                "correct": "B",
+                                "explanation": "Cross-side network effects occur when participation on one side of the platform increases value for users on the other side. In card networks, more merchants make cards more valuable to consumers, and more cardholders make card acceptance more valuable to merchants."
+                },
+                {
+                                "id": 10,
+                                "question": "The 'chicken-and-egg problem' in payment networks refers to:",
+                                "options": {
+                                                "A": "Whether to build retail or wholesale payment systems first",
+                                                "B": "The difficulty of attracting both sides of the market simultaneously when starting a new network",
+                                                "C": "Deciding whether to charge merchants or consumers",
+                                                "D": "The order of implementing security versus convenience features"
+                                },
+                                "correct": "B",
+                                "explanation": "The chicken-and-egg problem describes the bootstrap challenge: merchants won't accept a payment method without cardholders, but cardholders won't adopt without merchant acceptance. Platforms must strategically subsidize one side or build both sides simultaneously to overcome this coordination problem."
+                },
+                {
+                                "id": 11,
+                                "question": "According to the lecture, why do card issuers receive interchange fees?",
+                                "options": {
+                                                "A": "To cover the cost of physical card production",
+                                                "B": "To bear fraud risk and subsidize cardholder rewards",
+                                                "C": "To compensate for currency exchange losses",
+                                                "D": "To fund network infrastructure maintenance"
+                                },
+                                "correct": "B",
+                                "explanation": "Interchange fees compensate issuers for bearing fraud risk and funding cardholder benefits like rewards programs. This pricing structure balances the two-sided market by making cards attractive to consumers while merchants pay for access to this consumer base."
+                },
+                {
+                                "id": 12,
+                                "question": "One regulatory argument against high interchange fees is that they are regressive because:",
+                                "options": {
+                                                "A": "They favor large merchants over small ones",
+                                                "B": "They increase with transaction size",
+                                                "C": "Cash users subsidize card users through higher prices",
+                                                "D": "They prevent new payment networks from entering the market"
+                                },
+                                "correct": "C",
+                                "explanation": "High interchange fees lead merchants to raise prices for all customers. Cash users, typically lower-income, pay these higher prices but don't receive card rewards, effectively subsidizing wealthier card users. This regressive distribution is a key regulatory concern."
+                },
+                {
+                                "id": 13,
+                                "question": "What is the correspondent banking model used for?",
+                                "options": {
+                                                "A": "Domestic instant payments between consumers",
+                                                "B": "Cross-border payments through intermediary banks",
+                                                "C": "Credit card transaction processing",
+                                                "D": "Central bank monetary policy implementation"
+                                },
+                                "correct": "B",
+                                "explanation": "Correspondent banking is the hub-and-spoke model for cross-border payments where banks maintain accounts with intermediary banks to facilitate international transfers. Each intermediary adds costs and delays, contributing to the inefficiency of cross-border payments."
+                },
+                {
+                                "id": 14,
+                                "question": "In an RTGS (Real-Time Gross Settlement) system, how are transactions settled?",
+                                "options": {
+                                                "A": "In batches at end of day with netting",
+                                                "B": "Each transaction settled immediately and individually",
+                                                "C": "Weekly with multilateral netting",
+                                                "D": "Monthly with bilateral reconciliation"
+                                },
+                                "correct": "B",
+                                "explanation": "RTGS systems like Fedwire and TARGET2 settle each transaction immediately and individually in real-time. This eliminates settlement risk but requires high liquidity as banks must have sufficient funds available for each transaction without netting benefits."
+                },
+                {
+                                "id": 15,
+                                "question": "What is the key advantage of DNS (Deferred Net Settlement) over RTGS?",
+                                "options": {
+                                                "A": "Faster transaction speed",
+                                                "B": "Lower liquidity requirements",
+                                                "C": "Better security",
+                                                "D": "International compatibility"
+                                },
+                                "correct": "B",
+                                "explanation": "DNS systems batch and net payments before settlement, meaning banks only need liquidity for the net position rather than gross amounts. This significantly reduces liquidity costs, though it introduces settlement risk until the batch is processed."
+                },
+                {
+                                "id": 16,
+                                "question": "Which instant payment system was launched in India in 2016 and now processes over 10 billion transactions per month?",
+                                "options": {
+                                                "A": "Faster Payments",
+                                                "B": "SEPA Instant",
+                                                "C": "UPI",
+                                                "D": "FedNow"
+                                },
+                                "correct": "C",
+                                "explanation": "UPI (Unified Payments Interface) was launched in India in 2016 and has transformed the country's payment landscape, processing over 10 billion transactions monthly. It enables instant, 24/7 transfers and has been a major driver of financial inclusion."
+                },
+                {
+                                "id": 17,
+                                "question": "M-Pesa's success in Kenya was primarily driven by which design choice?",
+                                "options": {
+                                                "A": "Requiring smartphones and internet connectivity",
+                                                "B": "Using agent networks instead of bank branches",
+                                                "C": "Focusing on high-value business transactions",
+                                                "D": "Integration with international credit card networks"
+                                },
+                                "correct": "B",
+                                "explanation": "M-Pesa succeeded by using agent networks rather than traditional bank branches, making it accessible in rural areas. It also worked on basic mobile phones without requiring smartphones or internet, enabling low-value, low-cost transactions for previously unbanked populations."
+                },
+                {
+                                "id": 18,
+                                "question": "According to Suri & Jack (2016), what was M-Pesa's estimated impact on poverty reduction in Kenya?",
+                                "options": {
+                                                "A": "0.5% reduction",
+                                                "B": "2% reduction",
+                                                "C": "5% reduction",
+                                                "D": "10% reduction"
+                                },
+                                "correct": "B",
+                                "explanation": "Suri & Jack (2016) found that M-Pesa contributed to approximately 2% poverty reduction in Kenya. The impact was particularly strong for women and came through improved risk sharing, business opportunities, and access to financial services."
+                },
+                {
+                                "id": 19,
+                                "question": "What is the current average cost of cross-border remittances, and what is the G20 target for 2027?",
+                                "options": {
+                                                "A": "Current: 3%, Target: 1%",
+                                                "B": "Current: 6%+, Target: 3%",
+                                                "C": "Current: 10%, Target: 5%",
+                                                "D": "Current: 2%, Target: 1%"
+                                },
+                                "correct": "B",
+                                "explanation": "Cross-border remittances currently cost over 6% on average, with some corridors (especially to Africa) even higher. The G20 has set a target to reduce this to 3% by 2027, recognizing that high fees disproportionately hurt the poorest populations who rely on remittances."
+                },
+                {
+                                "id": 20,
+                                "question": "What economic benefit do instant payment systems provide to businesses?",
+                                "options": {
+                                                "A": "Lower interchange fees",
+                                                "B": "Working capital optimization and reduced float costs",
+                                                "C": "Elimination of fraud risk",
+                                                "D": "Automatic currency conversion"
+                                },
+                                "correct": "B",
+                                "explanation": "Instant payments enable businesses to optimize working capital by receiving funds immediately, eliminating float periods. This improves cash flow management and enables real-time reconciliation. These benefits can significantly reduce the cost of holding liquidity for operational needs."
+                }
+]
+        };
+
+        const state = {
+            currentIndex: 0,
+            answers: {},
+            score: 0,
+            displayedQuestions: [],
+            pendingSlots: []
+        };
+
+        const questionsRow = document.getElementById('questionsRow');
+        const progressBar = document.getElementById('progressBar');
+        const progressBadge = document.getElementById('progressBadge');
+        const scoreBadge = document.getElementById('scoreBadge');
+        const resultsCard = document.getElementById('resultsCard');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function initQuiz() {
+            state.currentIndex = 0;
+            state.answers = {};
+            state.score = 0;
+            state.displayedQuestions = [];
+            state.pendingSlots = [];
+
+            resultsCard.classList.remove('show');
+            questionsRow.style.display = 'grid';
+            nextBtn.classList.remove('show');
+
+            // Show first 3 questions
+            for (let i = 0; i < 3 && i < quizData.questions.length; i++) {
+                state.displayedQuestions.push(i);
+            }
+            state.currentIndex = Math.min(3, quizData.questions.length);
+
+            renderQuestions();
+            updateStats();
+        }
+
+        function renderQuestions() {
+            questionsRow.innerHTML = '';
+
+            state.displayedQuestions.forEach((qIdx, slot) => {
+                const q = quizData.questions[qIdx];
+                const answered = state.answers[q.id] !== undefined;
+                const isCorrect = answered && state.answers[q.id] === q.correct;
+                const isIncorrect = answered && state.answers[q.id] !== q.correct;
+
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                if (isCorrect) card.classList.add('correct-card', 'answered');
+                if (isIncorrect) card.classList.add('incorrect-card', 'answered');
+
+                card.innerHTML = `
+                    <div class="q-header">
+                        <span class="q-number">Q${qIdx + 1}</span>
+                        ${answered ? `<span class="q-status">${isCorrect ? '&#10004;' : '&#10008;'}</span>` : ''}
+                    </div>
+                    <div class="q-text">${q.question}</div>
+                    <div class="options" data-qid="${q.id}" data-slot="${slot}">
+                        ${['A','B','C','D'].map(letter => {
+                            let optClass = 'option-btn';
+                            if (answered) {
+                                optClass += ' disabled';
+                                if (letter === q.correct) optClass += ' correct';
+                                else if (letter === state.answers[q.id]) optClass += ' incorrect';
+                            }
+                            return `
+                                <button class="${optClass}" data-letter="${letter}" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letter}</span>
+                                    <span class="option-text">${q.options[letter]}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="feedback ${answered ? 'show' : ''} ${isCorrect ? 'correct' : 'incorrect'}">
+                        ${answered ? (isCorrect ? '&#10004; ' : `&#10008; Answer: ${q.correct}. `) + q.explanation : ''}
+                    </div>
+                `;
+
+                // Add click handlers
+                if (!answered) {
+                    card.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.addEventListener('click', () => handleAnswer(qIdx, slot, btn.dataset.letter));
+                    });
+                }
+
+                questionsRow.appendChild(card);
+            });
+
+            renderMath();
+        }
+
+        function handleAnswer(qIdx, slot, letter) {
+            const q = quizData.questions[qIdx];
+            state.answers[q.id] = letter;
+
+            if (letter === q.correct) state.score++;
+
+            // Track this slot as pending replacement
+            if (!state.pendingSlots.includes(slot)) {
+                state.pendingSlots.push(slot);
+            }
+
+            updateStats();
+            renderQuestions();
+
+            // Check if all questions answered
+            const answered = Object.keys(state.answers).length;
+            if (answered >= quizData.questions.length) {
+                // Short delay then show results
+                setTimeout(showResults, 800);
+            } else if (state.currentIndex < quizData.questions.length && state.pendingSlots.length > 0) {
+                // Show Next button if there are more questions and pending slots
+                nextBtn.classList.add('show');
+            }
+        }
+
+        function loadNextQuestions() {
+            // Replace pending slots with new questions
+            while (state.pendingSlots.length > 0 && state.currentIndex < quizData.questions.length) {
+                const slot = state.pendingSlots.shift();
+                state.displayedQuestions[slot] = state.currentIndex;
+                state.currentIndex++;
+            }
+
+            // Hide Next button
+            nextBtn.classList.remove('show');
+
+            renderQuestions();
+
+            // Check if quiz is complete (all displayed questions answered)
+            const answered = Object.keys(state.answers).length;
+            if (answered >= quizData.questions.length) {
+                setTimeout(showResults, 500);
+            }
+        }
+
+        function updateStats() {
+            const answered = Object.keys(state.answers).length;
+            const total = quizData.questions.length;
+
+            progressBar.style.width = `${(answered / total) * 100}%`;
+            progressBadge.textContent = `${answered}/${total}`;
+            scoreBadge.textContent = `Score: ${state.score}`;
+        }
+
+        function showResults() {
+            questionsRow.style.display = 'none';
+            nextBtn.classList.remove('show');
+            resultsCard.classList.add('show');
+
+            const total = quizData.questions.length;
+            const percentage = Math.round((state.score / total) * 100);
+
+            document.getElementById('resultsScore').textContent = `${state.score}/${total}`;
+
+            let grade, gradeClass, icon;
+            if (percentage >= 90) { grade = 'Excellent! A'; gradeClass = 'grade-a'; icon = '&#127942;'; }
+            else if (percentage >= 80) { grade = 'Great! B'; gradeClass = 'grade-b'; icon = '&#11088;'; }
+            else if (percentage >= 70) { grade = 'Good! C'; gradeClass = 'grade-c'; icon = '&#128077;'; }
+            else if (percentage >= 60) { grade = 'Pass - D'; gradeClass = 'grade-d'; icon = '&#128221;'; }
+            else { grade = 'Keep practicing'; gradeClass = 'grade-f'; icon = '&#128218;'; }
+
+            document.getElementById('resultsIcon').innerHTML = icon;
+            const gradeEl = document.getElementById('resultsGrade');
+            gradeEl.textContent = `${grade} (${percentage}%)`;
+            gradeEl.className = `results-grade ${gradeClass}`;
+        }
+
+        function restartQuiz() {
+            initQuiz();
+        }
+
+        function renderMath() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initQuiz();
+            setTimeout(renderMath, 100);
+        });
+    </script>
+</body>
+</html>
