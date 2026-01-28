@@ -1,0 +1,11 @@
+organization: Digital-AI-Finance
+repository: digital-finance-economics
+github_token_env: GITHUB_TOKEN
+output:
+  data_file: data/repository_stats.json
+  dashboard_file: index.html
+course:
+  title: "Digital Finance & Economics"
+  level: BSc
+  duration: "45 min per session"
+  lessons: 8

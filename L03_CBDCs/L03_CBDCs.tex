@@ -1,0 +1,591 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Central Bank Digital Currencies (CBDCs)}
+\subtitle{L03: The Economics of Public Digital Money}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Outline
+\begin{frame}[t]{Lesson Overview}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Today's Topics}
+\begin{enumerate}
+\item CBDC design choices and trade-offs
+\item Monetary policy transmission
+\item Bank disintermediation risk
+\item Financial inclusion economics
+\item International currency competition
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Learning Objectives}
+\begin{itemize}
+\item Analyze CBDC design trade-offs
+\item Assess monetary policy implications
+\item Evaluate disintermediation risks
+\item Understand global CBDC landscape
+\end{itemize}
+\end{columns}
+
+\bottomnote{CBDCs represent central banks' response to private digital currencies}
+\end{frame}
+
+% What is a CBDC?
+\begin{frame}[t]{What is a Central Bank Digital Currency?}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Definition}
+
+A CBDC is a digital form of central bank money:
+\begin{itemize}
+\item Direct liability of central bank
+\item Digital (not physical)
+\item Widely accessible (retail) or restricted (wholesale)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Not a CBDC}
+\begin{itemize}
+\item Bank reserves (already digital)
+\item Commercial bank money
+\item Stablecoins (private liability)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Motivations}
+
+Central banks cite multiple goals:
+\begin{itemize}
+\item Maintain monetary sovereignty
+\item Improve payment efficiency
+\item Promote financial inclusion
+\item Counter private digital currencies
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key Economic Question}
+
+Does public benefit exceed costs and risks?
+\end{columns}
+
+\bottomnote{CBDC = digital cash issued by central bank; distinct from existing digital money}
+\end{frame}
+
+% Global CBDC Status
+\begin{frame}[t]{Global CBDC Development Status}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{01_cbdc_world_map/chart.pdf}
+\end{center}
+
+\bottomnote{130+ countries exploring CBDCs; China's e-CNY is most advanced large-economy pilot}
+\end{frame}
+
+% CBDC Design Space
+\begin{frame}[t]{CBDC Design Space: Key Choices}
+\begin{center}
+\includegraphics[width=0.58\textwidth]{02_cbdc_design_space/chart.pdf}
+\end{center}
+
+\bottomnote{Design choices involve trade-offs between privacy, efficiency, and policy goals}
+\end{frame}
+
+% Retail vs Wholesale
+\begin{frame}[t]{Retail vs. Wholesale CBDCs}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Retail CBDC}
+
+For general public use:
+\begin{itemize}
+\item Replaces/complements cash
+\item Consumer payment instrument
+\item Requires distribution network
+\end{itemize}
+
+\vspace{0.3em}
+Economic considerations:
+\begin{itemize}
+\item High operational costs
+\item Privacy vs. AML trade-off
+\item Competition with banks
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Wholesale CBDC}
+
+For financial institutions:
+\begin{itemize}
+\item Interbank settlement
+\item Securities transactions
+\item Cross-border payments
+\end{itemize}
+
+\vspace{0.3em}
+Economic considerations:
+\begin{itemize}
+\item Lower operational burden
+\item Efficiency gains clearer
+\item Less disruptive to banking
+\end{itemize}
+\end{columns}
+
+\bottomnote{Most advanced economies focus on retail; wholesale offers clearer near-term benefits}
+\end{frame}
+
+% Token vs Account
+\begin{frame}[t]{Token-Based vs. Account-Based CBDCs}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Token-Based}
+
+Like digital cash:
+\begin{itemize}
+\item Verify the instrument, not holder
+\item Can enable anonymity
+\item Offline transactions possible
+\end{itemize}
+
+\vspace{0.3em}
+Economic implications:
+\begin{itemize}
+\item Lower transaction costs
+\item Privacy preserving
+\item Harder to implement AML
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Account-Based}
+
+Like bank accounts:
+\begin{itemize}
+\item Verify the identity of holder
+\item Full transaction records
+\item Programmable features possible
+\end{itemize}
+
+\vspace{0.3em}
+Economic implications:
+\begin{itemize}
+\item Interest-bearing feasible
+\item Targeted policies possible
+\item Privacy concerns
+\end{itemize}
+\end{columns}
+
+\bottomnote{Most designs are hybrid: token-like for small values, account-like for large}
+\end{frame}
+
+% Monetary Policy Transmission
+\begin{frame}[t]{Monetary Policy Transmission with CBDCs}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Traditional Channels}
+
+Interest rate channel:
+$$i_{\text{policy}} \rightarrow i_{\text{deposit}} \rightarrow C, I$$
+\begin{itemize}
+\item Works through bank intermediation
+\item Banks pass rate changes to customers
+\item Time lags in transmission
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{CBDC Impact}
+
+If CBDC is interest-bearing:
+$$i_{\text{CBDC}} \rightarrow i_{\text{deposit}}$$
+\begin{itemize}
+\item Direct transmission to public
+\item Floor on deposit rates
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Enhanced Policy Options}
+
+Interest-bearing CBDC enables:
+\begin{itemize}
+\item Negative rates on retail holdings
+\item Helicopter money (direct transfers)
+\item Time-limited money (expiring)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Concerns}
+\begin{itemize}
+\item Political resistance to negative rates
+\item Privacy implications of targeting
+\item Complexity of implementation
+\end{itemize}
+\end{columns}
+
+\bottomnote{CBDC could strengthen monetary policy but raises political economy concerns}
+\end{frame}
+
+% Bank Disintermediation
+\begin{frame}[t]{Bank Disintermediation Risk}
+\begin{center}
+\includegraphics[width=0.70\textwidth]{03_bank_disintermediation/chart.pdf}
+\end{center}
+
+\bottomnote{Deposit flight to CBDC could force banks to rely on costlier wholesale funding}
+\end{frame}
+
+% Disintermediation Economics
+\begin{frame}[t]{Economics of Disintermediation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Concern}
+
+If CBDC is attractive:
+\begin{itemize}
+\item Deposits migrate to CBDC
+\item Banks lose cheap funding
+\item Credit supply may contract
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Andolfatto (2021) Model}
+\begin{itemize}
+\item CBDC as outside option
+\item Forces competitive deposit rates
+\item Net welfare effect ambiguous
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Mitigation Strategies}
+
+Design features to limit migration:
+\begin{itemize}
+\item Holding limits (e.g., 3000 EUR)
+\item Tiered remuneration (lower for large)
+\item No interest on CBDC
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Financial Stability}
+\begin{itemize}
+\item Digital bank runs faster
+\item Flight to safety amplified
+\item Requires careful design
+\end{itemize}
+\end{columns}
+
+\bottomnote{Design constraints trade off CBDC usefulness against banking system stability}
+\end{frame}
+
+% Financial Inclusion
+\begin{frame}[t]{Financial Inclusion Economics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Unbanked Problem}
+
+Globally 1.4 billion unbanked adults:
+\begin{itemize}
+\item Lack documentation for accounts
+\item Live far from bank branches
+\item Cannot afford minimum balances
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{CBDC Potential}
+\begin{itemize}
+\item Lower KYC for small values
+\item Mobile-based access
+\item No minimum balance required
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Economic Analysis}
+
+Benefits:
+\begin{itemize}
+\item Lower transaction costs
+\item Entry to formal finance
+\item Government transfer efficiency
+\end{itemize}
+
+\vspace{0.3em}
+Challenges:
+\begin{itemize}
+\item Digital divide persists
+\item Infrastructure requirements
+\item Financial literacy needs
+\end{itemize}
+\end{columns}
+
+\bottomnote{Inclusion requires complementary policies; technology alone is insufficient}
+\end{frame}
+
+% International Dimension
+\begin{frame}[t]{International Currency Competition}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Currency Competition}
+
+CBDCs could intensify:
+\begin{itemize}
+\item Cross-border CBDC use
+\item Challenge to dollar dominance
+\item Regional currency blocs
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{China's Strategy}
+\begin{itemize}
+\item e-CNY for domestic use
+\item mBridge for wholesale cross-border
+\item Reduce SWIFT dependence
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{US Response Dilemma}
+\begin{itemize}
+\item Digital dollar slower to develop
+\item Privacy concerns prominent
+\item Risk of losing first-mover advantage
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Implications}
+\begin{itemize}
+\item Seigniorage redistribution
+\item Sanctions effectiveness
+\item Monetary policy spillovers
+\end{itemize}
+\end{columns}
+
+\bottomnote{CBDCs add new dimension to international monetary system competition}
+\end{frame}
+
+% Cross-Border Payments
+\begin{frame}[t]{Cross-Border CBDC Applications}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Current Pain Points}
+\begin{itemize}
+\item High costs (average 6\%)
+\item Slow settlement (2-5 days)
+\item Limited transparency
+\item Correspondent banking dependencies
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Wholesale CBDC Solution}
+\begin{itemize}
+\item Direct central bank settlement
+\item Atomic swap mechanisms
+\item 24/7 operation possible
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Multi-CBDC Projects}
+\begin{itemize}
+\item mBridge (China, UAE, HK, Thailand)
+\item Project Dunbar (Singapore, Australia)
+\item Project Icebreaker (Nordic countries)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Benefits}
+\begin{itemize}
+\item Reduced FX settlement risk
+\item Lower remittance costs
+\item Faster trade finance
+\end{itemize}
+\end{columns}
+
+\bottomnote{Wholesale CBDCs show clearer efficiency gains for cross-border payments}
+\end{frame}
+
+% Privacy vs Control
+\begin{frame}[t]{Privacy vs. Policy Control Trade-off}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Privacy Concerns}
+\begin{itemize}
+\item Government surveillance potential
+\item Transaction tracking
+\item Political control over spending
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Design Options}
+\begin{itemize}
+\item Tiered privacy (small = anonymous)
+\item Zero-knowledge proofs
+\item Third-party anonymity services
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Policy Control Benefits}
+\begin{itemize}
+\item AML/CFT compliance
+\item Tax enforcement
+\item Targeted stimulus
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Framework}
+
+Trade-off function:
+$$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
+\begin{itemize}
+\item Social preferences vary by country
+\item No one-size-fits-all design
+\end{itemize}
+\end{columns}
+
+\bottomnote{Privacy preferences differ: Europeans prioritize privacy; China accepts surveillance}
+\end{frame}
+
+% Digital Euro Case
+\begin{frame}[t]{Case Study: The Digital Euro}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{ECB Design Principles}
+\begin{itemize}
+\item Complement to cash, not replacement
+\item Privacy by design (small payments)
+\item Holding limits (\textasciitilde3000 EUR proposed)
+\item No interest initially
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Timeline}
+\begin{itemize}
+\item Investigation phase: 2021-2023
+\item Preparation phase: 2023-2025
+\item Potential launch: 2027-2028
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Economic Rationale}
+\begin{itemize}
+\item Strategic autonomy (vs. US big tech)
+\item Payment system resilience
+\item Declining cash usage
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Criticisms}
+\begin{itemize}
+\item Banks lobby against disintermediation
+\item Privacy advocates concerned
+\item Unclear consumer demand
+\end{itemize}
+\end{columns}
+
+\bottomnote{Digital Euro reflects European values: privacy, strategic autonomy, bank coexistence}
+\end{frame}
+
+% Key Takeaways
+\begin{frame}[t]{Key Takeaways}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Main Conclusions}
+\begin{enumerate}
+\item CBDC design involves fundamental trade-offs
+\item Disintermediation risk requires mitigation
+\item Monetary policy transmission could improve
+\item International competition is intensifying
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Economic Framework}
+\begin{itemize}
+\item Retail vs. wholesale scope
+\item Token vs. account architecture
+\item Privacy vs. policy control
+\item Inclusion vs. stability
+\end{itemize}
+\end{columns}
+
+\vspace{0.5em}
+\textbf{Core Insight}
+
+CBDCs are not simply ``digital cash''---they require careful economic analysis of trade-offs between competing objectives. No design satisfies all goals simultaneously.
+
+\bottomnote{Next lesson: Payment Systems Economics}
+\end{frame}
+
+% References
+\begin{frame}[t]{Further Reading}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Academic Papers}
+\begin{itemize}
+\item Andolfatto (2021): ``Assessing the Impact of CBDC on Private Banks''
+\item Brunnermeier \& Landau (2022): ``The Digital Euro''
+\item Auer et al. (2022): ``CBDCs Beyond Borders''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Central Bank Publications}
+\begin{itemize}
+\item ECB (2023): ``A Stocktake on the Digital Euro''
+\item BIS (2021): ``CBDCs: An Opportunity for the Monetary System''
+\item Fed (2022): ``Money and Payments''
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform}
+\end{frame}
+
+\end{document}

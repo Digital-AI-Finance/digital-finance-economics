@@ -1,0 +1,73 @@
+name: Update Dashboard
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'fetch_github_data.py'
+      - 'generate_dashboard.py'
+      - 'config.yml'
+
+jobs:
+  update-dashboard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Create data directory
+        run: |
+          mkdir -p data
+
+      - name: Fetch GitHub data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python fetch_github_data.py
+
+      - name: Generate dashboard
+        run: |
+          python generate_dashboard.py
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .
+          publish_branch: gh-pages
+          keep_files: false
+          enable_jekyll: false
+          exclude_assets: |
+            .github/
+            data/
+            __pycache__/
+            *.py
+            *.yml
+            .gitignore
+            requirements.txt
+            README.md
+            templates/
+
+      - name: Archive data artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: repository-data
+          path: data/repository_stats.json
+          retention-days: 90

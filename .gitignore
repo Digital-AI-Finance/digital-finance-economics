@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+
+# Temp folders
+temp/
+*/temp/
+
+# Build artifacts
+data/
+_site/
+.lighthouseci/
+
+# Claude (never commit)
+.claude/
+CLAUDE.md
+**/CLAUDE.md
+.omc/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,35 @@
+name: Validate Notebooks
+
+on:
+  push:
+    paths:
+      - 'L*/notebooks/*.ipynb'
+  pull_request:
+    paths:
+      - 'L*/notebooks/*.ipynb'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install jupyter nbval pytest matplotlib numpy scipy seaborn pandas
+
+      - name: Validate notebooks
+        run: |
+          notebooks=$(find . -path "./L*/notebooks/*.ipynb" -type f)
+          if [ -n "$notebooks" ]; then
+            echo "Found notebooks: $notebooks"
+            pytest --nbval-lax $notebooks
+          else
+            echo "No notebooks found to validate"
+          fi

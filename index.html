@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Digital Finance & Economics — BSc Course</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:#fafbfc;color:#1f2937;line-height:1.5;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+.nav{position:sticky;top:0;z-index:999;background:#0f172a;color:#fff;padding:12px 0;border-bottom:1px solid #1e293b;backdrop-filter:blur(8px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;max-width:1600px;margin:0 auto;padding:0 24px}
+.nav-title{font-size:18px;font-weight:700;letter-spacing:-0.3px}
+.nav-links{display:flex;gap:24px;font-size:13px}
+.nav-links a{transition:opacity .2s}
+.nav-links a:hover{opacity:.7}
+
+.wrap{max-width:1600px;margin:0 auto;padding:0 24px;display:flex;gap:32px}
+.side{width:280px;flex-shrink:0;position:sticky;top:72px;height:fit-content;background:#fff;border:1px solid #e1e4e8;border-radius:8px;overflow:hidden}
+.side-head{padding:16px;background:#f6f8fa;border-bottom:1px solid #e1e4e8;font-weight:600;font-size:13px;color:#6b7280}
+.side details{border-bottom:1px solid #e1e4e8}
+.side details:last-child{border:0}
+.side summary{padding:12px 16px;cursor:pointer;font-weight:600;font-size:13px;list-style:none;border-left:3px solid transparent;transition:all .2s;user-select:none}
+.side summary::-webkit-details-marker{display:none}
+.side summary:hover{background:#f6f8fa}
+.side details[open] summary{background:#f6f8fa}
+.side ul{margin:0;padding:0;list-style:none}
+.side li{padding:8px 16px 8px 32px;font-size:12px;color:#6b7280;border-left:3px solid transparent;transition:all .2s;cursor:pointer}
+.side li:hover{background:#f6f8fa;color:#1f2937}
+.p1 summary{border-left-color:#0ea5e9!important}
+.p2 summary{border-left-color:#8b5cf6!important}
+.p3 summary{border-left-color:#f59e0b!important}
+
+.main{flex:1;min-width:0;padding-bottom:80px}
+
+.hero{background:linear-gradient(135deg,#0f172a 0%,#0ea5e9 100%);color:#fff;padding:64px 48px;border-radius:12px;margin:32px 0;display:flex;align-items:center;justify-content:space-between;gap:48px;box-shadow:0 20px 40px rgba(14,165,233,0.15)}
+.hero-left h1{font-size:42px;font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.hero-left p{font-size:16px;opacity:.9;font-weight:400}
+.hero-stats{display:flex;gap:32px}
+.hero-stats div{text-align:center}
+.hero-stats .num{font-size:36px;font-weight:800;display:block}
+.hero-stats .label{font-size:11px;opacity:.8;text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+
+.section{margin:48px 0}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.section-head span{background:#1f2937;color:#fff;padding:6px 16px;border-radius:6px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.section-head.s1 span{background:#0ea5e9}
+.section-head.s2 span{background:#8b5cf6}
+.section-head.s3 span{background:#f59e0b}
+
+.lgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.lcard{display:flex;flex-direction:column;background:#fff;border:1px solid #e1e4e8;border-radius:8px;padding:16px;transition:all .2s;cursor:pointer;position:relative;overflow:hidden}
+.lcard:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.08);border-color:#cbd5e1}
+.lcard-num{font-size:32px;font-weight:800;line-height:1;margin-bottom:8px;display:block}
+.lcard-title{font-size:12px;font-weight:600;color:#1f2937;line-height:1.3}
+.s1 .lcard-num{background:#e0f2fe;color:#0ea5e9;padding:4px 10px;border-radius:6px;width:fit-content}
+.s2 .lcard-num{background:#ede9fe;color:#8b5cf6;padding:4px 10px;border-radius:6px;width:fit-content}
+.s3 .lcard-num{background:#fef3c7;color:#f59e0b;padding:4px 10px;border-radius:6px;width:fit-content}
+
+.lesson-section{margin:48px 0;background:#fff;border:1px solid #e1e4e8;border-radius:8px;overflow:hidden}
+.lesson-head{display:flex;align-items:center;gap:12px;padding:20px 24px;background:#f6f8fa;border-bottom:1px solid #e1e4e8}
+.lesson-num{font-size:18px;font-weight:800;padding:6px 12px;border-radius:6px;display:inline-block}
+.lesson-title{font-size:16px;font-weight:700;color:#1f2937}
+.lesson-link{margin-left:auto;font-size:11px;color:#6b7280;padding:6px 12px;border:1px solid #e1e4e8;border-radius:6px;transition:all .2s}
+.lesson-link:hover{background:#f6f8fa;border-color:#cbd5e1}
+.l1 .lesson-num{background:#e0f2fe;color:#0ea5e9}
+.l2 .lesson-num{background:#ede9fe;color:#8b5cf6}
+.l3 .lesson-num{background:#fef3c7;color:#f59e0b}
+
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:16px;padding:24px}
+.ccard{background:#fafbfc;border:1px solid #e1e4e8;border-radius:6px;overflow:hidden;transition:all .2s;cursor:pointer}
+.ccard:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08);border-color:#cbd5e1}
+.ccard img{width:100%;height:100px;object-fit:cover;background:#f6f8fa;display:block}
+.ccard-name{padding:12px;font-size:11px;font-weight:600;color:#1f2937;line-height:1.3;text-align:center;background:#fff}
+
+.formulas{background:#fff;border:1px solid #e1e4e8;border-radius:8px;padding:32px;margin:48px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+.formula{text-align:center;padding:16px;background:#fafbfc;border-radius:6px}
+.formula .label{font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;font-weight:600}
+.formula .eq{font-size:18px;font-family:'Courier New',monospace;color:#1f2937;margin-top:8px}
+
+.foot{text-align:center;padding:32px 0;border-top:1px solid #e1e4e8;margin-top:64px;font-size:12px;color:#6b7280}
+.foot a{color:#0ea5e9;font-weight:500}
+.foot a:hover{text-decoration:underline}
+
+@media(max-width:1400px){
+.lgrid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:1000px){
+.wrap{flex-direction:column}
+.side{width:100%;position:relative;top:0}
+.lgrid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:800px){
+.hero{flex-direction:column;text-align:center;padding:40px 32px}
+.hero-stats{justify-content:center}
+.lgrid{grid-template-columns:repeat(2,1fr)}
+.cgrid{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}
+.formulas{grid-template-columns:1fr;gap:16px}
+}
+@media(max-width:600px){
+.nav .wrap{padding:0 16px}
+.wrap{padding:0 16px}
+.hero-left h1{font-size:32px}
+.lgrid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<div class="wrap">
+<div class="nav-title">Digital Finance & Economics</div>
+<div class="nav-links">
+<a href="#lessons">Lessons</a>
+<a href="#charts">Charts</a>
+<a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a>
+</div>
+</div>
+</nav>
+
+<div class="wrap">
+
+<aside class="side">
+<div class="side-head">Course Navigation</div>
+<details class="p1" open>
+<summary>Part I: Foundations</summary>
+<ul>
+<li onclick="document.getElementById('L01').scrollIntoView({behavior:'smooth',block:'start'})">L01 Introduction</li>
+<li onclick="document.getElementById('L02').scrollIntoView({behavior:'smooth',block:'start'})">L02 Monetary Economics</li>
+</ul>
+</details>
+<details class="p2" open>
+<summary>Part II: Core Economics</summary>
+<ul>
+<li onclick="document.getElementById('L03').scrollIntoView({behavior:'smooth',block:'start'})">L03 CBDCs</li>
+<li onclick="document.getElementById('L04').scrollIntoView({behavior:'smooth',block:'start'})">L04 Payment Systems</li>
+<li onclick="document.getElementById('L05').scrollIntoView({behavior:'smooth',block:'start'})">L05 Platform Economics</li>
+</ul>
+</details>
+<details class="p3" open>
+<summary>Part III: Markets & Policy</summary>
+<ul>
+<li onclick="document.getElementById('L06').scrollIntoView({behavior:'smooth',block:'start'})">L06 Market Microstructure</li>
+<li onclick="document.getElementById('L07').scrollIntoView({behavior:'smooth',block:'start'})">L07 Regulatory Economics</li>
+<li onclick="document.getElementById('L08').scrollIntoView({behavior:'smooth',block:'start'})">L08 Synthesis</li>
+</ul>
+</details>
+</aside>
+
+<main class="main">
+
+<div class="hero">
+<div class="hero-left">
+<h1>Digital Finance & Economics</h1>
+<p>BSc Course — 8 Lessons × 45 min</p>
+</div>
+<div class="hero-stats">
+<div><span class="num">8</span><span class="label">Lessons</span></div>
+<div><span class="num">40</span><span class="label">Charts</span></div>
+</div>
+</div>
+
+<section class="section" id="lessons">
+<div class="section-head s1"><span>Part I: Foundations</span></div>
+<div class="lgrid">
+<a class="lcard" href="#L01"><span class="lcard-num">01</span><span class="lcard-title">Introduction</span></a>
+<a class="lcard" href="#L02"><span class="lcard-num">02</span><span class="lcard-title">Monetary Economics</span></a>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head s2"><span>Part II: Core Economics</span></div>
+<div class="lgrid">
+<a class="lcard" href="#L03"><span class="lcard-num">03</span><span class="lcard-title">CBDCs</span></a>
+<a class="lcard" href="#L04"><span class="lcard-num">04</span><span class="lcard-title">Payment Systems</span></a>
+<a class="lcard" href="#L05"><span class="lcard-num">05</span><span class="lcard-title">Platform Economics</span></a>
+</div>
+</section>
+
+<section class="section">
+<div class="section-head s3"><span>Part III: Markets & Policy</span></div>
+<div class="lgrid">
+<a class="lcard" href="#L06"><span class="lcard-num">06</span><span class="lcard-title">Market Microstructure</span></a>
+<a class="lcard" href="#L07"><span class="lcard-num">07</span><span class="lcard-title">Regulatory Economics</span></a>
+<a class="lcard" href="#L08"><span class="lcard-num">08</span><span class="lcard-title">Synthesis</span></a>
+</div>
+</section>
+
+<div id="charts" style="margin-top:80px"></div>
+
+<div class="lesson-section l1" id="L01">
+<div class="lesson-head">
+<span class="lesson-num">L01</span>
+<span class="lesson-title">Introduction</span>
+<a class="lesson-link" href="L01_Introduction/L01_Introduction.pdf" target="_blank">View Slides →</a>
+</div>
+<div class="cgrid">
+<a class="ccard" href="L01_Introduction/01_payment_evolution/chart.pdf" target="_blank">
+<img src="L01_Introduction/01_payment_evolution/chart.png" alt="Payment Evolution">
+<div class="ccard-name">Payment Evolution</div>
+</a>
+<a class="ccard" href="L01_Introduction/02_digital_finance_taxonomy/chart.pdf" target="_blank">
+<img src="L01_Introduction/02_digital_finance_taxonomy/chart.png" alt="Digital Finance Taxonomy">
+<div class="ccard-name">Digital Finance Taxonomy</div>
+</a>
+<a class="ccard" href="L01_Introduction/03_global_digital_payments/chart.pdf" target="_blank">
+<img src="L01_Introduction/03_global_digital_payments/chart.png" alt="Global Digital Payments">
+<div class="ccard-name">Global Digital Payments</div>
+</a>
+<a class="ccard" href="L01_Introduction/04_four_economic_lenses/chart.pdf" target="_blank">
+<img src="L01_Introduction/04_four_economic_lenses/chart.png" alt="Four Economic Lenses">
+<div class="ccard-name">Four Economic Lenses</div>
+</a>
+<a class="ccard" href="L01_Introduction/05_digital_finance_growth_decomposition/chart.pdf" target="_blank">
+<img src="L01_Introduction/05_digital_finance_growth_decomposition/chart.png" alt="Growth Decomposition">
+<div class="ccard-name">Growth Decomposition</div>
+</a>
+</div>
+</div>
+
+<div class="lesson-section l1" id="L02">
+<div class="lesson-head">
+<span class="lesson-num">L02</span>
+<span class="lesson-title">Monetary Economics</span>
+<a class="lesson-link" href="L02_Monetary_Economics/L02_Monetary_Economics.pdf" target="_blank">View Slides →</a>
+</div>
+<div class="cgrid">
+<a class="ccard" href="L02_Monetary_Economics/01_bitcoin_volatility/chart.pdf" target="_blank">
+<img src="L02_Monetary_Economics/01_bitcoin_volatility/chart.png" alt="Bitcoin Volatility">
+<div class="ccard-name">Bitcoin Volatility</div>
+</a>
+<a class="ccard" href="L02_Monetary_Economics/02_stablecoin_market/chart.pdf" target="_blank">
+<img src="L02_Monetary_Economics/02_stablecoin_market/chart.png" alt="Stablecoin Market">
+<div class="ccard-name">Stablecoin Market</div>
+</a>
+<a class="ccard" href="L02_Monetary_Economics/03_money_functions_matrix/chart.pdf" target="_blank">
+<img src="L02_Monetary_Economics/03_money_functions_matrix/chart.png" alt="Money Functions Matrix">
+<div class="ccard-name">Money Functions Matrix</div>
+</a>
+<a class="ccard" href="L02_Monetary_Economics/04_quantity_theory_velocity/chart.pdf" target="_blank">
+<img src="L02_Monetary_Economics/04_quantity_theory_velocity/chart.png" alt="Quantity Theory Velocity">
+<div class="ccard-name">Quantity Theory Velocity</div>
+</a>
+<a class="ccard" href="L02_Monetary_Economics/05_greshams_law_simulation/chart.pdf" target="_blank">
+<img src="L02_Monetary_Economics/05_greshams_law_simulation/chart.png" alt="Gresham's Law Simulation">
+<div class="ccard-name">Gresham's Law Simulation</div>
+</a>
+</div>
+</div>
+
+<div class="lesson-section l2" id="L03">
+<div class="lesson-head">
+<span class="lesson-num">L03</span>
+<span class="lesson-title">CBDCs</span>
+<a class="lesson-link" href="L03_CBDCs/L03_CBDCs.pdf" target="_blank">View Slides →</a>
+</div>
+<div class="cgrid">
+<a class="ccard" href="L03_CBDCs/01_cbdc_world_map/chart.pdf" target="_blank">
+<img src="L03_CBDCs/01_cbdc_world_map/chart.png" alt="CBDC World Map">
+<div class="ccard-name">CBDC World Map</div>
+</a>
+<a class="ccard" href="L03_CBDCs/02_cbdc_design_space/chart.pdf" target="_blank">
+<img src="L03_CBDCs/02_cbdc_design_space/chart.png" alt="CBDC Design Space">
+<div class="ccard-name">CBDC Design Space</div>
+</a>
+<a class="ccard" href="L03_CBDCs/03_bank_disintermediation/chart.pdf" target="_blank">
+<img src="L03_CBDCs/03_bank_disintermediation/chart.png" alt="Bank Disintermediation">
+<div class="ccard-name">Bank Disintermediation</div>
+</a>
+<a class="ccard" href="L03_CBDCs/04_monetary_policy_transmission/chart.pdf" target="_blank">
+<img src="L03_CBDCs/04_monetary_policy_transmission/chart.png" alt="Monetary Policy Transmission">
+<div class="ccard-name">Monetary Policy Transmission</div>
+</a>
+<a class="ccard" href="L03_CBDCs/05_financial_inclusion_frontier/chart.pdf" target="_blank">
+<img src="L03_CBDCs/05_financial_inclusion_frontier/chart.png" alt="Financial Inclusion Frontier">
+<div class="ccard-name">Financial Inclusion Frontier</div>
+</a>
+</div>
+</div>
+
+<div class="lesson-section l2" id="L04">
+<div class="lesson-head">
+<span class="lesson-num">L04</span>
+<span class="lesson-title">Payment Systems</span>
+<a class="lesson-link" href="L04_Payment_Systems/L04_Payment_Systems.pdf" target="_blank">View Slides →</a>
+</div>
+<div class="cgrid">
+<a class="ccard" href="L04_Payment_Systems/01_remittance_costs/chart.pdf" target="_blank">
+<img src="L04_Payment_Systems/01_remittance_costs/chart.png" alt="Remittance Costs">
+<div class="ccard-name">Remittance Costs</div>
+</a>
+<a class="ccard" href="L04_Payment_Systems/02_payment_adoption/chart.pdf" target="_blank">
+<img src="L04_Payment_Systems/02_payment_adoption/chart.png" alt="Payment Adoption">
+<div class="ccard-name">Payment Adoption</div>
+</a>
+<a class="ccard" href="L04_Payment_Systems/03_correspondent_banking/chart.pdf" target="_blank">
+<img src="L04_Payment_Systems/03_correspondent_banking/chart.png" alt="Correspondent Banking">
+<div class="ccard-name">Correspondent Banking</div>
+</a>
+<a class="ccard" href="L04_Payment_Systems/04_network_effects_metcalfe/chart.pdf" target="_blank">
+<img src="L04_Payment_Systems/04_network_effects_metcalfe/chart.png" alt="Network Effects (Metcalfe)">
+<div class="ccard-name">Network Effects (Metcalfe)</div>
+</a>
+<a class="ccard" href="L04_Payment_Systems/05_two_sided_market_pricing/chart.pdf" target="_blank">
+<img src="L04_Payment_Systems/05_two_sided_market_pricing/chart.png" alt="Two-Sided Market Pricing">
+<div class="ccard-name">Two-Sided Market Pricing</div>
+</a>
+</div>
+</div>
+
+<div class="lesson-section l2" id="L05">
+<div class="lesson-head">
+<span class="lesson-num">L05</span>
+<span class="lesson-title">Platform Economics</span>
+<a class="lesson-link" href="L05_Platform_Token_Economics/L05_Platform_Token_Economics.pdf" target="_blank">View Slides →</a>
+</div>
+<div class="cgrid">
+<a class="ccard" href="L05_Platform_Token_Economics/01_platform_adoption_dynamics/chart.pdf" target="_blank">
+<img src="L05_Platform_Token_Economics/01_platform_adoption_dynamics/chart.png" alt="Platform Adoption Dynamics">
+<div class="ccard-name">Platform Adoption Dynamics</div>
+</a>
+<a class="ccard" href="L05_Platform_Token_Economics/02_network_effects_critical_mass/chart.pdf" target="_blank">
+<img src="L05_Platform_Token_Economics/02_network_effects_critical_mass/chart.png" alt="Critical Mass Bifurcation">
+<div class="ccard-name">Critical Mass Bifurcation</div>
+</a>
+<a class="ccard" href="L05_Platform_Token_Economics/03_token_velocity_sink/chart.pdf" target="_blank">
+<img src="L05_Platform_Token_Economics/03_token_velocity_sink/chart.png" alt="Token Velocity Sink">
+<div class="ccard-name">Token Velocity Sink</div>
+</a>
+<a class="ccard" href="L05_Platform_Token_Economics/04_tokenomics_supply_schedule/chart.pdf" target="_blank">
+<img src="L05_Platform_Token_Economics/04_tokenomics_supply_schedule/chart.png" alt="Token Supply Schedule">
+<div class="ccard-name">Token Supply Schedule</div>
+</a>
+<a class="ccard" href="L05_Platform_Token_Economics/05_winner_take_all_market_share/chart.pdf" target="_blank">
+<img src="L05_Platform_Token_Economics/05_winner_take_all_market_share/chart.png" alt="Winner-Take-All Markets">
+<div class="ccard-name">Winner-Take-All Markets</div>
+</a>
+</div>
+</div>
+
+<div class="lesson-section l3" id="L06">
+<div class="lesson-head">
+<span class="lesson-num">L06</span>
+<span class="lesson-title">Market Microstructure</span>
+<a class="lesson-link" href="L06_Market_Microstructure/L06_Market_Microstructure.pdf" target="_blank">View Slides →</a>
+</div>
+<div class="cgrid">
+<a class="ccard" href="L06_Market_Microstructure/01_amm_constant_product/chart.pdf" target="_blank">
+<img src="L06_Market_Microstructure/01_amm_constant_product/chart.png" alt="AMM Constant Product">
+<div class="ccard-name">AMM Constant Product</div>
+</a>
+<a class="ccard" href="L06_Market_Microstructure/02_order_book_depth/chart.pdf" target="_blank">
+<img src="L06_Market_Microstructure/02_order_book_depth/chart.png" alt="Order Book Depth">
+<div class="ccard-name">Order Book Depth</div>
+</a>
+<a class="ccard" href="L06_Market_Microstructure/03_price_discovery_fragmented/chart.pdf" target="_blank">
+<img src="L06_Market_Microstructure/03_price_discovery_fragmented/chart.png" alt="Price Discovery">
+<div class="ccard-name">Price Discovery</div>
+</a>
+<a class="ccard" href="L06_Market_Microstructure/04_impermanent_loss/chart.pdf" target="_blank">
+<img src="L06_Market_Microstructure/04_impermanent_loss/chart.png" alt="Impermanent Loss">
+<div class="ccard-name">Impermanent Loss</div>
+</a>
+<a class="ccard" href="L06_Market_Microstructure/05_mev_sandwich_attack/chart.pdf" target="_blank">
+<img src="L06_Market_Microstructure/05_mev_sandwich_attack/chart.png" alt="MEV Sandwich Attack">
+<div class="ccard-name">MEV Sandwich Attack</div>
+</a>
+</div>
+</div>
+
+<div class="lesson-section l3" id="L07">
+<div class="lesson-head">
+<span class="lesson-num">L07</span>
+<span class="lesson-title">Regulatory Economics</span>
+<a class="lesson-link" href="L07_Regulatory_Economics/L07_Regulatory_Economics.pdf" target="_blank">View Slides →</a>
+</div>
+<div class="cgrid">
+<a class="ccard" href="L07_Regulatory_Economics/01_regulation_cost_benefit/chart.pdf" target="_blank">
+<img src="L07_Regulatory_Economics/01_regulation_cost_benefit/chart.png" alt="Regulation Cost-Benefit">
+<div class="ccard-name">Regulation Cost-Benefit</div>
+</a>
+<a class="ccard" href="L07_Regulatory_Economics/02_regulatory_perimeter/chart.pdf" target="_blank">
+<img src="L07_Regulatory_Economics/02_regulatory_perimeter/chart.png" alt="Regulatory Perimeter">
+<div class="ccard-name">Regulatory Perimeter</div>
+</a>
+<a class="ccard" href="L07_Regulatory_Economics/03_compliance_cost_scale/chart.pdf" target="_blank">
+<img src="L07_Regulatory_Economics/03_compliance_cost_scale/chart.png" alt="Compliance Cost Scale">
+<div class="ccard-name">Compliance Cost Scale</div>
+</a>
+<a class="ccard" href="L07_Regulatory_Economics/04_regulatory_arbitrage_game/chart.pdf" target="_blank">
+<img src="L07_Regulatory_Economics/04_regulatory_arbitrage_game/chart.png" alt="Regulatory Arbitrage Game">
+<div class="ccard-name">Regulatory Arbitrage Game</div>
+</a>
+<a class="ccard" href="L07_Regulatory_Economics/05_consumer_protection_information/chart.pdf" target="_blank">
+<img src="L07_Regulatory_Economics/05_consumer_protection_information/chart.png" alt="Consumer Protection">
+<div class="ccard-name">Consumer Protection</div>
+</a>
+</div>
+</div>
+
+<div class="lesson-section l3" id="L08">
+<div class="lesson-head">
+<span class="lesson-num">L08</span>
+<span class="lesson-title">Synthesis</span>
+<a class="lesson-link" href="L08_Synthesis/L08_Synthesis.pdf" target="_blank">View Slides →</a>
+</div>
+<div class="cgrid">
+<a class="ccard" href="L08_Synthesis/01_systemic_risk_contagion/chart.pdf" target="_blank">
+<img src="L08_Synthesis/01_systemic_risk_contagion/chart.png" alt="Systemic Risk Contagion">
+<div class="ccard-name">Systemic Risk Contagion</div>
+</a>
+<a class="ccard" href="L08_Synthesis/02_tradfi_defi_convergence/chart.pdf" target="_blank">
+<img src="L08_Synthesis/02_tradfi_defi_convergence/chart.png" alt="TradFi-DeFi Convergence">
+<div class="ccard-name">TradFi-DeFi Convergence</div>
+</a>
+<a class="ccard" href="L08_Synthesis/03_four_lenses_integration/chart.pdf" target="_blank">
+<img src="L08_Synthesis/03_four_lenses_integration/chart.png" alt="Four Lenses Integration">
+<div class="ccard-name">Four Lenses Integration</div>
+</a>
+<a class="ccard" href="L08_Synthesis/04_digital_finance_trilemma/chart.pdf" target="_blank">
+<img src="L08_Synthesis/04_digital_finance_trilemma/chart.png" alt="Digital Finance Trilemma">
+<div class="ccard-name">Digital Finance Trilemma</div>
+</a>
+<a class="ccard" href="L08_Synthesis/05_policy_effectiveness_heatmap/chart.pdf" target="_blank">
+<img src="L08_Synthesis/05_policy_effectiveness_heatmap/chart.png" alt="Policy Effectiveness">
+<div class="ccard-name">Policy Effectiveness</div>
+</a>
+</div>
+</div>
+
+<div class="formulas">
+<div class="formula">
+<div class="label">Fisher Equation</div>
+<div class="eq">MV = PY</div>
+</div>
+<div class="formula">
+<div class="label">Gresham's Law</div>
+<div class="eq">Bad money drives out good</div>
+</div>
+<div class="formula">
+<div class="label">Network Effect</div>
+<div class="eq">V = n(n-1)/2</div>
+</div>
+<div class="formula">
+<div class="label">Two-Sided Market</div>
+<div class="eq">π = (p<sub>B</sub>-c<sub>B</sub>)n<sub>B</sub> + (p<sub>S</sub>-c<sub>S</sub>)n<sub>S</sub></div>
+</div>
+</div>
+
+<div class="foot">
+<a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub Repository</a> · © Joerg Osterrieder 2025
+</div>
+
+</main>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+name: Validate Quizzes
+
+on:
+  push:
+    paths:
+      - '**/questions.json'
+      - 'quiz/*.html'
+  pull_request:
+    paths:
+      - '**/questions.json'
+      - 'quiz/*.html'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate quiz JSON
+        run: |
+          python -c "
+          import json, glob, sys
+          errors = 0
+          for f in glob.glob('**/questions.json', recursive=True):
+              print(f'Validating {f}...')
+              try:
+                  with open(f) as fp:
+                      data = json.load(fp)
+                  if not isinstance(data, list):
+                      print(f'ERROR: {f} - root must be array')
+                      errors += 1
+                      continue
+                  for i, q in enumerate(data):
+                      if 'question' not in q:
+                          print(f'ERROR: {f}[{i}] missing question')
+                          errors += 1
+                      if 'options' not in q:
+                          print(f'ERROR: {f}[{i}] missing options')
+                          errors += 1
+                      elif len(q['options']) < 2:
+                          print(f'ERROR: {f}[{i}] needs >=2 options')
+                          errors += 1
+                      if 'answer' not in q:
+                          print(f'ERROR: {f}[{i}] missing answer')
+                          errors += 1
+              except json.JSONDecodeError as e:
+                  print(f'ERROR: {f} invalid JSON: {e}')
+                  errors += 1
+          if errors:
+              print(f'{errors} errors found')
+              sys.exit(1)
+          print('All quizzes valid')
+          "
+
+      - name: Count quiz statistics
+        run: |
+          python -c "
+          import json, glob
+          total = 0
+          for f in glob.glob('**/questions.json', recursive=True):
+              with open(f) as fp:
+                  data = json.load(fp)
+              count = len(data)
+              total += count
+              print(f'{f}: {count} questions')
+          print(f'Total: {total} questions')
+          "

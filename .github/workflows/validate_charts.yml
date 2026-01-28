@@ -1,0 +1,52 @@
+name: Validate Charts
+
+on:
+  push:
+    paths:
+      - 'L*/[0-9]*/*.py'
+  pull_request:
+    paths:
+      - 'L*/[0-9]*/*.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install matplotlib numpy scipy seaborn pandas
+
+      - name: Generate all charts
+        run: |
+          for f in L*/[0-9]*/*.py; do
+            if [ -f "$f" ]; then
+              echo "Running $f"
+              python "$f" || echo "WARNING: $f failed"
+            fi
+          done
+
+      - name: Verify PDFs created
+        run: |
+          errors=0
+          for f in L*/[0-9]*/*.py; do
+            if [ -f "$f" ]; then
+              dir=$(dirname "$f")
+              if [ ! -f "$dir/chart.pdf" ]; then
+                echo "ERROR: Missing $dir/chart.pdf"
+                errors=$((errors + 1))
+              fi
+            fi
+          done
+          if [ $errors -gt 0 ]; then
+            echo "ERROR: $errors chart PDFs missing"
+            exit 1
+          fi
+          echo "All chart PDFs verified"

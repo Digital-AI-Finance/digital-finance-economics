@@ -1,0 +1,61 @@
+name: Compile Slides
+
+on:
+  push:
+    paths:
+      - 'L*/*.tex'
+      - 'template_beamer.tex'
+  pull_request:
+    paths:
+      - 'L*/*.tex'
+      - 'template_beamer.tex'
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Find lesson .tex files
+        id: find_files
+        run: |
+          files=$(find . -maxdepth 2 -type f -name "*.tex" \
+            -path "./L*/*.tex" \
+            ! -name "*_quiz.tex" | head -20)
+          echo "Found files: $files"
+          echo "files=$files" >> $GITHUB_OUTPUT
+
+      - name: Compile LaTeX files
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: "*.tex"
+          working_directory: .
+          glob_root_file: true
+          continue_on_error: true
+
+      - name: Check for overflow warnings
+        run: |
+          overflow_found=false
+          for logfile in L*/*.log; do
+            if [ -f "$logfile" ]; then
+              if grep -q "Overfull" "$logfile"; then
+                echo "WARNING: Overflow in $logfile"
+                grep "Overfull" "$logfile" | head -5
+                overflow_found=true
+              fi
+            fi
+          done
+          if [ "$overflow_found" = true ]; then
+            echo "ERROR: Overflow detected in slides"
+            exit 1
+          fi
+          echo "No overflow warnings found"
+
+      - name: Upload compiled PDFs
+        uses: actions/upload-artifact@v4
+        with:
+          name: slides-pdf
+          path: |
+            L*/*.pdf
+          if-no-files-found: ignore

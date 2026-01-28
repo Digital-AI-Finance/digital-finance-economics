@@ -1,0 +1,485 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+% Apply custom colors to Madrid theme
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Introduction to the Economics of Digital Finance}
+\subtitle{L01: Setting the Economic Framework}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Outline
+\begin{frame}[t]{Lesson Overview}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Today's Topics}
+\begin{enumerate}
+\item What is digital finance? (Economic definition)
+\item Historical evolution of money and payments
+\item The four economic lenses framework
+\item Why economists should care
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Learning Objectives}
+\begin{itemize}
+\item Define digital finance from an economic perspective
+\item Distinguish economic from technical questions
+\item Apply multiple economic frameworks to digital finance
+\end{itemize}
+\end{columns}
+
+\bottomnote{This course examines digital finance through economic theory, not technical implementation}
+\end{frame}
+
+% What is Digital Finance?
+\begin{frame}[t]{What is Digital Finance?}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Economic Definition}
+
+Digital finance encompasses financial services and instruments that:
+\begin{itemize}
+\item Rely on digital infrastructure for value transfer
+\item Create new forms of money and payment systems
+\item Enable disintermediation or re-intermediation
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key Distinction}
+\begin{itemize}
+\item Technical: \textit{How does it work?}
+\item Economic: \textit{What incentives drive adoption?}
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Scope of Digital Finance}
+\begin{itemize}
+\item Cryptocurrencies and stablecoins
+\item Central Bank Digital Currencies (CBDCs)
+\item Digital payment systems
+\item Decentralized Finance (DeFi)
+\item Tokenized assets
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Questions}
+\begin{itemize}
+\item Who captures value?
+\item What are the welfare effects?
+\item How does regulation affect outcomes?
+\end{itemize}
+\end{columns}
+
+\bottomnote{Economics analyzes incentives, efficiency, and welfare---not code or protocols}
+\end{frame}
+
+% Historical Evolution
+\begin{frame}[t]{Historical Evolution of Payment Methods}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{01_payment_evolution/chart.pdf}
+\end{center}
+
+\bottomnote{Each transition was driven by economic forces: reducing transaction costs, enabling trade at scale}
+\end{frame}
+
+% Functions of Money
+\begin{frame}[t]{The Economics of Money: Three Functions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Classical Functions of Money}
+
+\vspace{0.3em}
+\textbf{1. Medium of Exchange}
+\begin{itemize}
+\item Solves double coincidence of wants
+\item Reduces transaction costs
+\item Requires acceptability
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Unit of Account}
+\begin{itemize}
+\item Simplifies price comparisons
+\item Enables economic calculation
+\item Reduces cognitive costs
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{3. Store of Value}
+\begin{itemize}
+\item Preserves purchasing power
+\item Enables intertemporal trade
+\item Requires stability
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Digital Finance Challenge}
+
+Do cryptocurrencies fulfill these functions?
+\begin{itemize}
+\item Bitcoin: Limited as medium (volatility)
+\item Stablecoins: Better but trust issues
+\item CBDCs: Designed to fulfill all three
+\end{itemize}
+\end{columns}
+
+\bottomnote{Jevons (1875): Money is what money does---evaluated by functional performance}
+\end{frame}
+
+% Four Economic Lenses
+\begin{frame}[t]{Four Economic Lenses for Digital Finance}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{02_digital_finance_taxonomy/chart.pdf}
+\end{center}
+
+\bottomnote{This course applies all four lenses to understand digital finance comprehensively}
+\end{frame}
+
+% Lens 1: Monetary Economics
+\begin{frame}[t]{Lens 1: Monetary Economics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Questions}
+\begin{itemize}
+\item How do digital currencies affect money supply?
+\item What happens to monetary policy transmission?
+\item Can cryptocurrencies replace fiat money?
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Theoretical Tools}
+\begin{itemize}
+\item Quantity theory of money
+\item Money demand functions
+\item Currency substitution models
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Key Concepts}
+\begin{itemize}
+\item Seigniorage and its distribution
+\item Velocity of money in digital systems
+\item Gresham's Law (bad money drives out good)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Applications}
+\begin{itemize}
+\item CBDC design trade-offs
+\item Stablecoin stability mechanisms
+\item Dollarization vs. crypto-ization
+\end{itemize}
+\end{columns}
+
+\bottomnote{Lessons 2-3 focus on monetary economics of digital currencies and CBDCs}
+\end{frame}
+
+% Lens 2: Platform Economics
+\begin{frame}[t]{Lens 2: Platform Economics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Questions}
+\begin{itemize}
+\item Why do some cryptocurrencies dominate?
+\item How do network effects shape adoption?
+\item What determines token value?
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Theoretical Tools}
+\begin{itemize}
+\item Network effects models
+\item Two-sided market theory
+\item Mechanism design
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Key Concepts}
+\begin{itemize}
+\item Critical mass and tipping points
+\item Winner-take-all dynamics
+\item Platform governance
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Applications}
+\begin{itemize}
+\item Token economics design
+\item Blockchain adoption dynamics
+\item DeFi protocol competition
+\end{itemize}
+\end{columns}
+
+\bottomnote{Lessons 4-5 apply platform economics to payments and token systems}
+\end{frame}
+
+% Lens 3: Market Microstructure
+\begin{frame}[t]{Lens 3: Market Microstructure}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Questions}
+\begin{itemize}
+\item How do crypto markets discover prices?
+\item Why are spreads wider in crypto?
+\item How do AMMs differ from order books?
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Theoretical Tools}
+\begin{itemize}
+\item Bid-ask spread models
+\item Liquidity provision theory
+\item Information asymmetry models
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Key Concepts}
+\begin{itemize}
+\item Market making and inventory risk
+\item Price impact and slippage
+\item Impermanent loss in AMMs
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Applications}
+\begin{itemize}
+\item DEX vs. CEX efficiency
+\item MEV (Maximal Extractable Value)
+\item Market manipulation detection
+\end{itemize}
+\end{columns}
+
+\bottomnote{Lesson 6 provides deep dive into market microstructure of digital finance}
+\end{frame}
+
+% Lens 4: Regulatory Economics
+\begin{frame}[t]{Lens 4: Regulatory Economics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Questions}
+\begin{itemize}
+\item What market failures justify regulation?
+\item How should crypto be classified legally?
+\item What are costs of regulatory arbitrage?
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Theoretical Tools}
+\begin{itemize}
+\item Market failure analysis
+\item Public interest vs. capture theory
+\item Cost-benefit analysis
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Key Concepts}
+\begin{itemize}
+\item Asymmetric information
+\item Systemic risk externalities
+\item Consumer protection rationale
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Applications}
+\begin{itemize}
+\item Principles vs. rules-based regulation
+\item Regulatory sandbox design
+\item International coordination
+\end{itemize}
+\end{columns}
+
+\bottomnote{Lesson 7 applies regulatory economics; Lesson 8 synthesizes all four lenses}
+\end{frame}
+
+% Why Economists Should Care
+\begin{frame}[t]{Why Economists Should Study Digital Finance}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Disruption Potential}
+\begin{itemize}
+\item \$15+ trillion digital payments by 2027
+\item 130+ countries exploring CBDCs
+\item DeFi challenging traditional finance
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy Relevance}
+\begin{itemize}
+\item Central banks need economic analysis
+\item Regulators need welfare frameworks
+\item Governments need tax policy guidance
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Theoretical Innovation}
+\begin{itemize}
+\item New forms of money creation
+\item Novel market mechanisms (AMMs)
+\item Programmable financial contracts
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Research Opportunities}
+\begin{itemize}
+\item High-frequency blockchain data
+\item Natural experiments in adoption
+\item Cross-country regulatory variation
+\end{itemize}
+\end{columns}
+
+\bottomnote{Digital finance is a laboratory for testing economic theories with real-world data}
+\end{frame}
+
+% Global Digital Payments
+\begin{frame}[t]{The Scale of Digital Finance Transformation}
+\begin{center}
+\includegraphics[width=0.62\textwidth]{03_global_digital_payments/chart.pdf}
+\end{center}
+
+\bottomnote{COVID-19 accelerated digital payment adoption; economists must understand these trends}
+\end{frame}
+
+% Economic vs Technical Questions
+\begin{frame}[t]{Economic Questions vs. Technical Questions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Technical Questions}
+\begin{itemize}
+\item How does proof-of-work function?
+\item What is a smart contract?
+\item How do hash functions secure data?
+\item What programming languages are used?
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Focus: Mechanisms and implementation}
+
+\column{0.48\textwidth}
+\textbf{Economic Questions}
+\begin{itemize}
+\item Why do miners invest in PoW systems?
+\item How do smart contracts reduce costs?
+\item What incentives secure the network?
+\item Who benefits from decentralization?
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Focus: Incentives and welfare}
+\end{columns}
+
+\vspace{0.5em}
+\begin{center}
+\textbf{This course focuses on economic analysis, not technical implementation}
+\end{center}
+
+\bottomnote{Understanding ``how'' is useful, but economists must focus on ``why'' and ``so what''}
+\end{frame}
+
+% Key Takeaways
+\begin{frame}[t]{Key Takeaways}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What We Covered}
+\begin{enumerate}
+\item Digital finance defined economically
+\item Historical context of money evolution
+\item Four economic lenses framework
+\item Why economic analysis matters
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Looking Ahead}
+\begin{itemize}
+\item L02: Monetary economics of crypto
+\item L03: CBDCs and monetary policy
+\item L04: Payment systems economics
+\item L05-L08: Further applications
+\end{itemize}
+\end{columns}
+
+\vspace{0.5em}
+\textbf{Core Message}
+
+Digital finance raises fundamental economic questions about money, markets, platforms, and regulation. This course provides the analytical tools to address them.
+
+\bottomnote{Next lesson: Monetary Economics of Digital Currencies}
+\end{frame}
+
+% References
+\begin{frame}[t]{Further Reading}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Foundational Papers}
+\begin{itemize}
+\item Brunnermeier \& Niepelt (2019): ``On the Equivalence of Private and Public Money''
+\item Catalini \& Gans (2020): ``Some Simple Economics of the Blockchain''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Policy Reports}
+\begin{itemize}
+\item BIS Annual Economic Report (2022), Chapter III
+\item IMF Global Financial Stability Report (2023)
+\item FSB Crypto-asset Reports (2022-2023)
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform}
+\end{frame}
+
+\end{document}
