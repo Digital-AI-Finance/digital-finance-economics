@@ -1,0 +1,246 @@
+{
+  "lesson": "L02",
+  "title": "Monetary Economics of Digital Finance",
+  "questions": [
+    {
+      "id": 1,
+      "question": "What is the primary economic rationale for money serving as a medium of exchange?",
+      "options": {
+        "A": "It provides a stable store of value over time",
+        "B": "It eliminates barter inefficiency and reduces transaction costs",
+        "C": "It enables governments to collect seigniorage",
+        "D": "It creates network effects that benefit early adopters"
+      },
+      "correct": "B",
+      "explanation": "The medium of exchange function eliminates the inefficiency of barter and reduces search and matching costs. Transaction cost = c_b - c_m where c_m << c_b (money transaction costs are much lower than barter costs)."
+    },
+    {
+      "id": 2,
+      "question": "How many price relationships are needed in an economy with 10 goods when money serves as the unit of account, compared to a barter economy?",
+      "options": {
+        "A": "100 prices vs. 45 prices",
+        "B": "9 prices vs. 45 prices",
+        "C": "10 prices vs. 90 prices",
+        "D": "9 prices vs. 100 prices"
+      },
+      "correct": "B",
+      "explanation": "With n goods, barter requires n(n-1)/2 price relationships. With money as unit of account, only n-1 prices are needed. For 10 goods: barter needs 10×9/2 = 45 prices, while money needs only 10-1 = 9 prices, drastically reducing cognitive costs."
+    },
+    {
+      "id": 3,
+      "question": "What requirement must a good store of value fulfill regarding volatility?",
+      "options": {
+        "A": "Its volatility must be higher than goods to protect against inflation",
+        "B": "Its volatility must be lower than goods to maintain stable purchasing power",
+        "C": "Its volatility must match goods prices exactly",
+        "D": "Volatility is irrelevant for store of value function"
+      },
+      "correct": "B",
+      "explanation": "A store of value requires low volatility: σ_money < σ_goods. This ensures stable purchasing power and makes it suitable for storing wealth over time. High volatility undermines the store of value function."
+    },
+    {
+      "id": 4,
+      "question": "What key trade-off exists between the medium of exchange and store of value functions of money?",
+      "options": {
+        "A": "Both functions always reinforce each other",
+        "B": "A good medium of exchange may not be an ideal store of value",
+        "C": "Store of value function always takes priority over medium of exchange",
+        "D": "The trade-off only applies to digital currencies, not fiat money"
+      },
+      "correct": "B",
+      "explanation": "The lecture notes explicitly state 'Trade-offs exist: a good medium of exchange may not be ideal store of value.' This is evident in cryptocurrencies where Bitcoin's volatility makes it a poor medium of exchange despite some treating it as a store of value."
+    },
+    {
+      "id": 5,
+      "question": "Which requirements are essential for money to function as a medium of exchange?",
+      "options": {
+        "A": "Fixed supply, government backing, and gold convertibility",
+        "B": "Acceptability, divisibility, and portability",
+        "C": "High volatility, speculative value, and scarcity",
+        "D": "Blockchain technology, cryptographic security, and decentralization"
+      },
+      "correct": "B",
+      "explanation": "The three essential requirements for medium of exchange are acceptability (network effect), divisibility (ability to make change for various transaction sizes), and portability (easy to transport). These are fundamental economic requirements independent of technology."
+    },
+    {
+      "id": 6,
+      "question": "In the quantity theory equation MV = PY, if money supply M increases by 10% while velocity V and real output Y remain constant, what happens to the price level P?",
+      "options": {
+        "A": "P decreases by 10%",
+        "B": "P remains unchanged",
+        "C": "P increases by 10%",
+        "D": "P increases by 20%"
+      },
+      "correct": "C",
+      "explanation": "In the equation MV = PY, if V and Y are constant, then changes in M translate directly to proportional changes in P. A 10% increase in M leads to a 10% increase in P, demonstrating the quantity theory's prediction that inflation is fundamentally a monetary phenomenon."
+    },
+    {
+      "id": 7,
+      "question": "What is a major complication when applying the quantity theory MV = PY to Bitcoin?",
+      "options": {
+        "A": "Bitcoin's money supply M is fixed at 21 million, creating deflationary pressure",
+        "B": "Bitcoin has no transaction velocity",
+        "C": "Bitcoin cannot be measured in any price units",
+        "D": "Bitcoin's real output Y is infinite"
+      },
+      "correct": "A",
+      "explanation": "Bitcoin's fixed supply cap of 21 million creates deflationary pressure, which is incompatible with the medium of exchange function. Additionally, Bitcoin's velocity V is highly volatile (ranging 2-20+) and hard to measure, and there's ambiguity about which price level P to use since crypto is priced in fiat."
+    },
+    {
+      "id": 8,
+      "question": "How does Bitcoin's velocity compare to traditional fiat money?",
+      "options": {
+        "A": "Bitcoin velocity is stable at 5-7 like traditional money",
+        "B": "Bitcoin velocity is always lower than fiat money",
+        "C": "Bitcoin velocity varies from 2 to 20+, much more volatile than fiat's 5-7",
+        "D": "Bitcoin has zero velocity due to being a store of value"
+      },
+      "correct": "C",
+      "explanation": "Traditional money has relatively stable velocity at approximately 5-7, while Bitcoin's velocity varies dramatically from 2 to 20+. This high volatility makes it difficult to apply the quantity theory reliably to Bitcoin and reflects its speculative nature rather than use as transaction medium."
+    },
+    {
+      "id": 9,
+      "question": "What is seigniorage in traditional monetary systems, expressed formally?",
+      "options": {
+        "A": "S = M × P, the total value of money in circulation",
+        "B": "S = ΔM/M × M/P, revenue from money creation accruing to the government",
+        "C": "S = PY/MV, the real value of economic output",
+        "D": "S = V × M, the total transaction volume"
+      },
+      "correct": "B",
+      "explanation": "Seigniorage is the revenue from money creation: S = Ṁ/P = ΔM/M × M/P. It represents the inflation tax on money holders and accrues to the central bank/government. This is the profit from creating money at minimal cost."
+    },
+    {
+      "id": 10,
+      "question": "How does seigniorage work differently for stablecoins compared to traditional fiat currencies?",
+      "options": {
+        "A": "Stablecoins have no seigniorage because they are backed 1:1",
+        "B": "Stablecoin issuers capture seigniorage by earning interest on reserves while users bear opportunity cost",
+        "C": "Stablecoin seigniorage goes to governments through taxation",
+        "D": "Stablecoin seigniorage is distributed to all token holders"
+      },
+      "correct": "B",
+      "explanation": "Stablecoin issuers like Tether capture seigniorage by earning interest on the reserves backing the stablecoins, while users who hold the stablecoins bear the opportunity cost. Tether earns billions annually from this model, representing a transfer of monetary rents from public to private hands."
+    },
+    {
+      "id": 11,
+      "question": "What grade does the lecture assign to Bitcoin as a medium of exchange, and why?",
+      "options": {
+        "A": "Grade A - excellent acceptance and low costs",
+        "B": "Grade C- - limited merchant acceptance, high transaction costs at times, and slow confirmation",
+        "C": "Grade F - complete failure as a payment method",
+        "D": "Grade B - good but with minor issues"
+      },
+      "correct": "B",
+      "explanation": "Bitcoin receives a C- grade as medium of exchange due to limited merchant acceptance, high transaction costs (at times), 10-60 minute confirmation times, and the blockchain scalability trilemma. These factors make it impractical for everyday transactions."
+    },
+    {
+      "id": 12,
+      "question": "Why does Bitcoin receive an F grade as a unit of account?",
+      "options": {
+        "A": "It cannot be divided into smaller units",
+        "B": "It has extreme volatility, high menu costs of repricing, and no contracts are denominated in BTC",
+        "C": "It is illegal to price goods in Bitcoin",
+        "D": "Bitcoin's supply is too limited for pricing"
+      },
+      "correct": "B",
+      "explanation": "Bitcoin fails as a unit of account (Grade F) due to extreme volatility creating high 'menu costs' of constantly repricing goods, and the fact that virtually no contracts are denominated in BTC. Its 50-85% volatility vs EUR/USD's 5-10% makes it unsuitable for this function."
+    },
+    {
+      "id": 13,
+      "question": "What grade does Bitcoin receive as a store of value, and what is the primary justification?",
+      "options": {
+        "A": "Grade F - it has no value storage capability",
+        "B": "Grade A - it's the perfect store of value",
+        "C": "Grade C - long-term appreciation potential but high volatility and correlation with risk assets",
+        "D": "Grade B+ - better than most fiat currencies"
+      },
+      "correct": "C",
+      "explanation": "Bitcoin receives a C grade as store of value. While it has shown long-term appreciation and the 'digital gold' narrative provides some justification, it suffers from high volatility and correlation with risk assets rather than serving as a safe haven. This makes it less reliable as a store of value."
+    },
+    {
+      "id": 14,
+      "question": "According to Yermack (2015), what is Bitcoin's primary characteristic?",
+      "options": {
+        "A": "An ideal currency for everyday transactions",
+        "B": "A speculative investment rather than a currency, with low correlation to currencies and high correlation to tech stocks",
+        "C": "A stable store of value similar to gold",
+        "D": "A perfect unit of account for international trade"
+      },
+      "correct": "B",
+      "explanation": "Yermack (2015) concluded that 'Bitcoin behaves more like a speculative investment than a currency.' It shows low correlation with major currencies, high correlation with tech stocks, and is driven by speculation rather than trade, confirming it fails the key money functions."
+    },
+    {
+      "id": 15,
+      "question": "What characterizes fiat-backed stablecoins like USDT and USDC?",
+      "options": {
+        "A": "They are over-collateralized at 150%+ with cryptocurrency",
+        "B": "They maintain 1:1 reserves in bank accounts with trust in issuer and redemption guarantees",
+        "C": "They use algorithmic mechanisms with no collateral backing",
+        "D": "They are backed by government bonds only"
+      },
+      "correct": "B",
+      "explanation": "Fiat-backed stablecoins like USDT and USDC maintain 1:1 reserves in bank accounts, rely on trust in the issuer and audits, and provide redemption guarantees. This makes them the most straightforward stablecoin design but requires centralized trust."
+    },
+    {
+      "id": 16,
+      "question": "How do crypto-backed stablecoins like DAI maintain their peg?",
+      "options": {
+        "A": "Through 1:1 fiat reserves held in banks",
+        "B": "Through over-collateralization at 150%+ with smart contract enforcement and liquidation mechanisms",
+        "C": "Through algorithmic arbitrage with no collateral",
+        "D": "Through government backing and central bank reserves"
+      },
+      "correct": "B",
+      "explanation": "Crypto-backed stablecoins like DAI use over-collateralization (typically 150%+) with cryptocurrency, smart contract enforcement, and automated liquidation mechanisms to maintain their peg. This provides more decentralization than fiat-backed but requires capital inefficiency."
+    },
+    {
+      "id": 17,
+      "question": "What was the fundamental problem with algorithmic stablecoins like Terra (UST)?",
+      "options": {
+        "A": "They had too much collateral backing",
+        "B": "They had no collateral backing and relied on arbitrage-based stability, making them prone to death spirals",
+        "C": "They were backed by unreliable fiat currencies",
+        "D": "They were over-regulated by governments"
+      },
+      "correct": "B",
+      "explanation": "Algorithmic stablecoins like Terra (UST) had no collateral backing and relied purely on arbitrage-based stability mechanisms. This made them inherently fragile and prone to death spirals, as demonstrated by Terra's collapse in 2022 causing $40B+ in losses. The lecture emphasizes these designs are fundamentally flawed."
+    },
+    {
+      "id": 18,
+      "question": "What does Gresham's Law state, and how does it apply to cryptocurrency?",
+      "options": {
+        "A": "'Good money drives out bad' - people spend valuable crypto and hoard fiat",
+        "B": "'Bad money drives out good' - when two currencies circulate at fixed rate, undervalued currency is hoarded (Bitcoin 'HODL') while overvalued currency (stablecoins) is spent",
+        "C": "All currencies eventually become worthless",
+        "D": "Digital currencies always replace physical currencies"
+      },
+      "correct": "B",
+      "explanation": "Gresham's Law states 'bad money drives out good.' When two currencies circulate at a fixed rate, the undervalued currency is hoarded while the overvalued one is spent. In crypto, this manifests as Bitcoin being hoarded ('HODL' culture) while stablecoins are used for transactions, creating a self-fulfilling prophecy that reduces velocity."
+    },
+    {
+      "id": 19,
+      "question": "What is 'crypto-ization' and in which countries is it observed?",
+      "options": {
+        "A": "The process of converting fiat to cryptocurrency for investment",
+        "B": "Currency substitution where weak local currencies are replaced by cryptocurrencies, observed in high-inflation countries like Argentina, Venezuela, and Turkey",
+        "C": "The mining of new cryptocurrencies",
+        "D": "Government adoption of blockchain technology"
+      },
+      "correct": "B",
+      "explanation": "Crypto-ization is analogous to dollarization - it's currency substitution where weak local currencies are replaced by cryptocurrencies. This occurs in high-inflation countries like Argentina, Venezuela, and Turkey where citizens seek to preserve value by shifting to crypto assets."
+    },
+    {
+      "id": 20,
+      "question": "What are the economic consequences of currency substitution (dollarization or crypto-ization)?",
+      "options": {
+        "A": "Increased monetary policy effectiveness and financial stability",
+        "B": "Loss of monetary policy autonomy, seigniorage transfer abroad, and financial stability risks",
+        "C": "Lower inflation and higher economic growth automatically",
+        "D": "Elimination of all exchange rate risks"
+      },
+      "correct": "B",
+      "explanation": "Currency substitution leads to loss of monetary policy autonomy (can't control domestic money supply), seigniorage transfer abroad (monetary rents captured by foreign issuers), and financial stability risks. These consequences apply whether substitution is with dollars or cryptocurrencies."
+    }
+  ]
+}

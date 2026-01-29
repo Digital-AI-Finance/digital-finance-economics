@@ -1,0 +1,246 @@
+{
+  "lesson": "L05",
+  "title": "Platform and Token Economics",
+  "questions": [
+    {
+      "id": 1,
+      "question": "In the Bass diffusion model, what do the parameters p and q represent?",
+      "options": {
+        "A": "p = innovation coefficient (external influence), q = imitation coefficient (internal influence)",
+        "B": "p = price elasticity, q = quality factor",
+        "C": "p = profit margin, q = quantity demanded",
+        "D": "p = platform size, q = quarterly growth rate"
+      },
+      "correct": "A",
+      "explanation": "The Bass model describes adoption through external innovation (p) where users adopt independently, and internal imitation (q) where users adopt based on existing adopters. The diffusion equation is dN/dt = (p + q*N/M)*(M - N)."
+    },
+    {
+      "id": 2,
+      "question": "According to the platform adoption simulations, which platform type reaches its inflection point fastest?",
+      "options": {
+        "A": "Traditional Bank (p=0.01, q=0.1)",
+        "B": "Fintech (p=0.03, q=0.4)",
+        "C": "Crypto Exchange (p=0.05, q=0.25)",
+        "D": "All reach inflection at the same time"
+      },
+      "correct": "B",
+      "explanation": "Fintech platforms show the fastest adoption with high innovation (p=0.03) and strong network effects (q=0.4), reaching their inflection point earliest. The combination of both external and internal adoption drivers accelerates the S-curve."
+    },
+    {
+      "id": 3,
+      "question": "What is a direct network effect in platform economics?",
+      "options": {
+        "A": "The platform's value increases as it directly invests in infrastructure",
+        "B": "Each additional user increases the platform's value for other users of the same type",
+        "C": "The platform generates revenue directly from transaction fees",
+        "D": "Users can directly contact the platform support team"
+      },
+      "correct": "B",
+      "explanation": "Direct network effects occur when value increases with same-side adoption. Examples include social networks where more users mean more connections, or payment networks where more users mean wider acceptance."
+    },
+    {
+      "id": 4,
+      "question": "What distinguishes indirect network effects from direct ones?",
+      "options": {
+        "A": "Indirect effects are weaker and can be ignored in platform design",
+        "B": "Indirect effects occur between different user groups (e.g., buyers and sellers)",
+        "C": "Indirect effects only apply to blockchain platforms",
+        "D": "Indirect effects decrease as the platform grows"
+      },
+      "correct": "B",
+      "explanation": "Indirect (cross-side) network effects arise in two-sided markets where value for one group depends on participation of another group. Examples include marketplaces (buyers-sellers) or app stores (users-developers)."
+    },
+    {
+      "id": 5,
+      "question": "In the critical mass model, what is the unstable equilibrium?",
+      "options": {
+        "A": "The point where adoption cost equals adoption benefit",
+        "B": "The threshold below which the platform collapses and above which it grows rapidly",
+        "C": "The maximum sustainable adoption rate",
+        "D": "The inflection point of the S-curve"
+      },
+      "correct": "B",
+      "explanation": "The unstable equilibrium (shown as dashed red line) is the critical mass threshold. Below it, the platform tends toward zero adoption; above it, positive feedback drives growth toward full adoption. It separates two stable equilibria."
+    },
+    {
+      "id": 6,
+      "question": "According to the bifurcation diagram, what happens when adoption cost (c) is very low?",
+      "options": {
+        "A": "Multiple equilibria exist with path dependence",
+        "B": "Only the high-adoption stable equilibrium exists",
+        "C": "The platform cannot sustain any users",
+        "D": "Adoption becomes chaotic and unpredictable"
+      },
+      "correct": "B",
+      "explanation": "At low adoption costs, the benefit threshold is easily met, leading to a single high stable equilibrium. As costs increase past the critical threshold (~0.25 in the model), multiple equilibria emerge with a coordination problem."
+    },
+    {
+      "id": 7,
+      "question": "What defines a 'winner-take-all' market structure?",
+      "options": {
+        "A": "Legal monopolies enforced by government regulation",
+        "B": "Strong network effects and low multi-homing costs leading to market concentration",
+        "C": "First-mover advantage that cannot be overcome",
+        "D": "Markets where only one company is profitable"
+      },
+      "correct": "B",
+      "explanation": "Winner-take-all dynamics emerge from strong network effects combined with high switching costs and low multi-homing benefits. Early leads get amplified through positive feedback, as shown in the Polya urn simulation where initial advantages compound."
+    },
+    {
+      "id": 8,
+      "question": "The Polya urn model demonstrates which key property of platform competition?",
+      "options": {
+        "A": "Platforms eventually reach equal market share through competition",
+        "B": "Path dependence: small early advantages can determine long-run outcomes",
+        "C": "New entrants always overcome incumbents through innovation",
+        "D": "Market share is determined solely by product quality"
+      },
+      "correct": "B",
+      "explanation": "The Polya urn shows increasing returns to adoption: probability of gaining users is proportional to current size (counts + 1). Different random seeds produce vastly different final market shares, demonstrating path dependence and lock-in effects."
+    },
+    {
+      "id": 9,
+      "question": "What is a utility token's primary function?",
+      "options": {
+        "A": "Representing ownership shares in the protocol",
+        "B": "Providing access to or payment for platform services",
+        "C": "Securing the blockchain through proof-of-work",
+        "D": "Distributing profits to token holders"
+      },
+      "correct": "B",
+      "explanation": "Utility tokens grant access to platform functionality or serve as medium of exchange within the ecosystem. Examples include paying for cloud storage, gas fees, or accessing premium features. They differ from governance and security tokens."
+    },
+    {
+      "id": 10,
+      "question": "What distinguishes governance tokens from utility tokens?",
+      "options": {
+        "A": "Governance tokens have unlimited supply, utility tokens are capped",
+        "B": "Governance tokens grant voting rights on protocol decisions",
+        "C": "Governance tokens cannot be traded on exchanges",
+        "D": "Governance tokens are always more valuable"
+      },
+      "correct": "B",
+      "explanation": "Governance tokens enable decentralized decision-making by granting voting rights on protocol upgrades, parameter changes, and treasury allocation. They may also carry utility features, but their core function is protocol governance."
+    },
+    {
+      "id": 11,
+      "question": "According to the equation of exchange (M*V = P*Q), what is token velocity (V)?",
+      "options": {
+        "A": "The speed at which new tokens are minted",
+        "B": "The number of times a token changes hands per period",
+        "C": "The volatility of the token price",
+        "D": "The rate at which tokens are burned"
+      },
+      "correct": "B",
+      "explanation": "Velocity measures transaction frequency: how often each token is used. High velocity means tokens circulate quickly, lowering market cap for given transaction volume (M = PQ/V). Low velocity from holding/staking increases value capture."
+    },
+    {
+      "id": 12,
+      "question": "In the velocity model, what is the effect of staking 50% of tokens?",
+      "options": {
+        "A": "It reduces velocity by half, doubling the potential market cap",
+        "B": "It has no effect on market cap since staked tokens still exist",
+        "C": "It increases velocity as stakers earn more rewards to spend",
+        "D": "It reduces the transaction volume (PQ) by half"
+      },
+      "correct": "A",
+      "explanation": "Staking creates a 'velocity sink' by removing tokens from circulation. If 50% of tokens are locked, effective velocity is halved, which doubles market cap for the same transaction volume (M = PQ/V). This is shown by the gap between the two curves."
+    },
+    {
+      "id": 13,
+      "question": "What is Bitcoin's maximum supply cap?",
+      "options": {
+        "A": "18 million BTC",
+        "B": "21 million BTC",
+        "C": "100 million BTC",
+        "D": "Unlimited with halving reducing inflation over time"
+      },
+      "correct": "B",
+      "explanation": "Bitcoin has a hard cap of 21 million coins enforced by its protocol. New supply comes from block rewards that halve every 4 years (starting at 50 BTC, now 6.25 BTC), creating a deflationary issuance schedule approaching the cap asymptotically."
+    },
+    {
+      "id": 14,
+      "question": "How does Bitcoin's halving mechanism affect its supply schedule?",
+      "options": {
+        "A": "Supply is cut in half every 4 years",
+        "B": "Block rewards are cut in half every 4 years, gradually approaching the 21M cap",
+        "C": "Mining difficulty is halved every 4 years",
+        "D": "Transaction fees are halved every 4 years"
+      },
+      "correct": "B",
+      "explanation": "Bitcoin's block reward halves every 210,000 blocks (~4 years): 50→25→12.5→6.25→3.125 BTC. This controls inflation rate while approaching the 21M cap. The chart shows halvings as vertical dotted lines with diminishing new supply."
+    },
+    {
+      "id": 15,
+      "question": "What characterizes an inflationary token model?",
+      "options": {
+        "A": "Fixed supply with no new issuance",
+        "B": "Continuous or increasing token issuance that grows supply over time",
+        "C": "Supply decreases each year through burns",
+        "D": "Supply increases only when transaction volume increases"
+      },
+      "correct": "B",
+      "explanation": "Inflationary models continuously issue new tokens (e.g., +5% annually shown in red). This can fund development, reward validators, or incentivize participation, but may pressure price if demand doesn't match new supply."
+    },
+    {
+      "id": 16,
+      "question": "What is Ethereum's current supply trend after the Merge and EIP-1559?",
+      "options": {
+        "A": "Highly inflationary with 5%+ annual growth",
+        "B": "Fixed cap like Bitcoin",
+        "C": "Net deflationary with burns exceeding issuance",
+        "D": "Zero inflation with perfectly balanced issuance and burns"
+      },
+      "correct": "C",
+      "explanation": "Post-Merge Ethereum has ~0.5M ETH/year issuance (PoS rewards) but ~0.8M burned (EIP-1559 base fee burns), resulting in net -0.3M/year deflation. The blue line shows declining supply, unlike Bitcoin's capped growth or pure inflationary models."
+    },
+    {
+      "id": 17,
+      "question": "What is the primary purpose of token staking mechanisms?",
+      "options": {
+        "A": "Increase transaction speed",
+        "B": "Reduce effective velocity and align long-term holder incentives",
+        "C": "Eliminate the need for miners",
+        "D": "Guarantee token price appreciation"
+      },
+      "correct": "B",
+      "explanation": "Staking locks tokens for rewards, creating a velocity sink that increases market cap (M=PQ/V with lower V). It also aligns incentives by rewarding long-term holders and gives them governance rights, reducing sell pressure."
+    },
+    {
+      "id": 18,
+      "question": "How do token burns affect the supply schedule?",
+      "options": {
+        "A": "They increase velocity by removing tokens from circulation",
+        "B": "They reduce circulating supply, potentially increasing scarcity and per-token value",
+        "C": "They have no effect since burned tokens can be recovered",
+        "D": "They only affect transaction fees, not market cap"
+      },
+      "correct": "B",
+      "explanation": "Token burns permanently remove supply, shifting from inflationary to deflationary (-2%/year in green curve). With constant or growing demand, reduced supply increases scarcity. Combined with fee burns (like EIP-1559), this can create net deflation."
+    },
+    {
+      "id": 19,
+      "question": "What drives winner-take-all outcomes in DeFi protocol competition?",
+      "options": {
+        "A": "Patents and intellectual property protection",
+        "B": "Network effects from liquidity concentration and composability",
+        "C": "Government licensing requirements",
+        "D": "First protocols always maintain their lead"
+      },
+      "correct": "B",
+      "explanation": "DeFi exhibits path dependence through liquidity network effects (deeper liquidity attracts more traders), composability (protocols integrate with market leaders), and capital efficiency. The Polya urn model shows how early advantages compound through increasing returns."
+    },
+    {
+      "id": 20,
+      "question": "According to the path dependence simulations, what determines final market structure?",
+      "options": {
+        "A": "Only the quality of the platform matters",
+        "B": "Early random events can have lasting effects on which platform dominates",
+        "C": "The platform with the lowest prices always wins",
+        "D": "Market shares always converge to equal distribution"
+      },
+      "correct": "B",
+      "explanation": "The inset showing different random seeds demonstrates that identical platforms can reach vastly different market shares based on early adoption patterns. This path dependence means small initial advantages (luck, timing, marketing) can determine long-run winners through positive feedback loops."
+    }
+  ]
+}

@@ -1,0 +1,791 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+% Apply custom colors to Madrid theme
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Regulatory Economics of Digital Finance}
+\subtitle{L07: Costs, Benefits, and Arbitrage}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Outline
+\begin{frame}[t]{Lesson Overview}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Today's Topics}
+\begin{enumerate}
+\item Why regulate digital finance?
+\item Cost-benefit analysis of regulation
+\item The regulatory perimeter problem
+\item Compliance costs and economies of scale
+\item Regulatory arbitrage dynamics
+\item Consumer protection frameworks
+\item International coordination challenges
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Learning Objectives}
+\begin{itemize}
+\item Apply market failure analysis to digital finance
+\item Evaluate regulatory costs vs. benefits
+\item Understand regulatory arbitrage incentives
+\item Assess consumer protection trade-offs
+\item Analyze international coordination problems
+\end{itemize}
+\end{columns}
+
+\bottomnote{This lesson applies regulatory economics frameworks to understand when and how to regulate digital finance}
+\end{frame}
+
+% Why Regulate Digital Finance?
+\begin{frame}[t]{Why Regulate Digital Finance?}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Market Failures in Digital Finance}
+
+\vspace{0.3em}
+\textbf{1. Information Asymmetry}
+\begin{itemize}
+\item Complex technical protocols
+\item Opaque risk disclosures
+\item Retail investor sophistication gaps
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Externalities}
+\begin{itemize}
+\item Systemic risk contagion
+\item Money laundering spillovers
+\item Environmental costs (energy use)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{3. Natural Monopoly}
+\begin{itemize}
+\item Network effects in payment systems
+\item Infrastructure control
+\item Data monopolies
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{4. Consumer Protection}
+\begin{itemize}
+\item Fraud and scams
+\item Irreversible transactions
+\item Custody and loss risks
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Public Interest Rationale}
+\begin{itemize}
+\item Financial stability
+\item Consumer protection
+\item Market integrity
+\end{itemize}
+\end{columns}
+
+\bottomnote{Stigler (1971): Regulation can serve public interest or private capture---evidence determines which}
+\end{frame}
+
+% Cost-Benefit Analysis
+\begin{frame}[t]{Cost-Benefit Analysis of Digital Finance Regulation}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{01_regulation_cost_benefit/chart.pdf}
+\end{center}
+
+\bottomnote{Optimal regulation balances marginal costs against marginal benefits---Harberger deadweight loss minimization}
+\end{frame}
+
+% Regulatory Benefits
+\begin{frame}[t]{Benefits of Regulating Digital Finance}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Quantifiable Benefits}
+\begin{itemize}
+\item Reduced fraud losses
+\item Lower systemic risk probability
+\item Improved market efficiency
+\item Enhanced consumer confidence
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Akerlof's Lemons Problem}
+
+Without regulation:
+\begin{itemize}
+\item Good projects cannot signal quality
+\item Bad projects dominate (adverse selection)
+\item Market unravels
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Difficult-to-Measure Benefits}
+\begin{itemize}
+\item Financial inclusion effects
+\item Innovation spillovers
+\item Reduced inequality
+\item Social trust in institutions
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Regulatory Certification}
+\begin{itemize}
+\item Licensing signals quality
+\item Reduces information costs
+\item Supports market development
+\end{itemize}
+\end{columns}
+
+\bottomnote{Akerlof (1970): Information asymmetry can cause market failure---regulation can restore efficiency}
+\end{frame}
+
+% Regulatory Costs
+\begin{frame}[t]{Costs of Regulating Digital Finance}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Direct Costs}
+\begin{itemize}
+\item Compliance infrastructure
+\item Legal and audit expenses
+\item Reporting systems
+\item Staff training
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Administrative Burden}
+\begin{itemize}
+\item Licensing application fees
+\item Ongoing supervisory costs
+\item Regulatory technology (RegTech)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Indirect Costs}
+\begin{itemize}
+\item Innovation slowdown
+\item Market entry barriers
+\item Reduced competition
+\item Geographic restrictions
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Harberger Deadweight Loss}
+\begin{itemize}
+\item Foregone efficient transactions
+\item Producer and consumer surplus loss
+\item Optimal regulation minimizes total loss
+\end{itemize}
+\end{columns}
+
+\bottomnote{Harberger (1964): Regulation creates deadweight loss when marginal cost exceeds marginal benefit}
+\end{frame}
+
+% Regulatory Perimeter
+\begin{frame}[t]{The Regulatory Perimeter Problem}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{02_regulatory_perimeter/chart.pdf}
+\end{center}
+
+\bottomnote{Determining what falls inside vs. outside the regulatory perimeter is a critical policy choice}
+\end{frame}
+
+% Perimeter Challenges
+\begin{frame}[t]{Challenges in Defining the Regulatory Perimeter}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Functional vs. Institutional Regulation}
+
+\vspace{0.3em}
+\textbf{Institutional Approach}
+\begin{itemize}
+\item Regulate entities (banks, exchanges)
+\item Clear jurisdictional boundaries
+\item Legacy financial system model
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Functional Approach}
+\begin{itemize}
+\item Regulate activities (lending, custody)
+\item Technology-neutral
+\item Better for digital finance
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Perimeter Ambiguities}
+\begin{itemize}
+\item Are DeFi protocols financial institutions?
+\item Are NFTs securities or commodities?
+\item Are DAOs legal entities?
+\item Are validators financial intermediaries?
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Trade-offs}
+\begin{itemize}
+\item Broad perimeter: Higher costs, more certainty
+\item Narrow perimeter: Lower costs, arbitrage risk
+\end{itemize}
+\end{columns}
+
+\bottomnote{Same risk, same regulation principle suggests functional approach for digital finance}
+\end{frame}
+
+% Compliance Costs and Scale
+\begin{frame}[t]{Compliance Costs and Economies of Scale}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{03_compliance_cost_scale/chart.pdf}
+\end{center}
+
+\bottomnote{Stigler (1971): Regulation favors large firms through economies of scale in compliance---creates barrier to entry}
+\end{frame}
+
+% Economies of Scale Analysis
+\begin{frame}[t]{Regulatory Economies of Scale: Winners and Losers}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Why Compliance Costs Are Fixed}
+\begin{itemize}
+\item Core systems (KYC, AML, reporting)
+\item Legal and compliance teams
+\item Technology infrastructure
+\item Audit and certification
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Stigler's Insight}
+\begin{itemize}
+\item Large firms spread fixed costs over more users
+\item Average cost per user falls with scale
+\item Small entrants face higher unit costs
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Market Structure Consequences}
+\begin{itemize}
+\item Concentration and consolidation
+\item Reduced innovation from startups
+\item Incumbent protection
+\item Barriers to entry
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy Responses}
+\begin{itemize}
+\item Tiered regulation (proportionality)
+\item Regulatory sandboxes
+\item Shared compliance infrastructure
+\item RegTech innovation support
+\end{itemize}
+\end{columns}
+
+\bottomnote{Regulation can unintentionally create barriers that protect incumbents at the expense of competition}
+\end{frame}
+
+% Regulatory Arbitrage
+\begin{frame}[t]{Regulatory Arbitrage: Game Theory Perspective}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{04_regulatory_arbitrage_game/chart.pdf}
+\end{center}
+
+\bottomnote{Regulatory arbitrage is a Nash equilibrium when jurisdictions compete for mobile capital}
+\end{frame}
+
+% Arbitrage Mechanisms
+\begin{frame}[t]{Mechanisms of Regulatory Arbitrage in Digital Finance}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Types of Arbitrage}
+
+\vspace{0.3em}
+\textbf{1. Jurisdictional Arbitrage}
+\begin{itemize}
+\item Offshore exchange registration
+\item Tax haven incorporation
+\item Regulatory shopping
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Structural Arbitrage}
+\begin{itemize}
+\item Legal entity classification gaming
+\item Product redesign to avoid rules
+\item Functional unbundling
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{3. Temporal Arbitrage}
+\begin{itemize}
+\item Operating before rules finalized
+\item Moving to new jurisdictions preemptively
+\item Exploiting regulatory lag
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Consequences}
+\begin{itemize}
+\item Undermines regulatory effectiveness
+\item Race to the bottom in standards
+\item Regulatory fragmentation
+\item Enforcement challenges
+\end{itemize}
+\end{columns}
+
+\bottomnote{Digital finance's global and borderless nature amplifies regulatory arbitrage incentives}
+\end{frame}
+
+% Game Theory of Arbitrage
+\begin{frame}[t]{The Race to the Bottom: Game Theory of Regulatory Competition}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Standard Prisoner's Dilemma}
+
+\vspace{0.3em}
+Two jurisdictions:
+\begin{itemize}
+\item Cooperate: Harmonized standards
+\item Defect: Lax regulation to attract firms
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Nash Equilibrium}
+\begin{itemize}
+\item Both defect (lax regulation)
+\item Suboptimal outcome for global welfare
+\item Coordination failure
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Solutions to Coordination Failure}
+
+\vspace{0.3em}
+\textbf{1. International Agreements}
+\begin{itemize}
+\item FATF standards for AML
+\item Basel accords for capital
+\item IOSCO principles for securities
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Extraterritorial Enforcement}
+\begin{itemize}
+\item Long-arm jurisdiction
+\item Market access conditionality
+\item Reciprocity requirements
+\end{itemize}
+\end{columns}
+
+\bottomnote{Without coordination, jurisdictional competition creates a race to the bottom in regulatory standards}
+\end{frame}
+
+% Consumer Protection
+\begin{frame}[t]{Consumer Protection: Information Asymmetry Framework}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{05_consumer_protection_information/chart.pdf}
+\end{center}
+
+\bottomnote{Spence (1973): Disclosure requirements can signal quality and mitigate information asymmetry}
+\end{frame}
+
+% Consumer Protection Details
+\begin{frame}[t]{Consumer Protection in Digital Finance: Policy Tools}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Information Remedies}
+
+\vspace{0.3em}
+\textbf{Disclosure Requirements}
+\begin{itemize}
+\item Risk warnings
+\item Fee transparency
+\item Performance metrics
+\item Conflict of interest disclosures
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Financial Literacy}
+\begin{itemize}
+\item Education campaigns
+\item Suitability assessments
+\item Cooling-off periods
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Conduct Remedies}
+
+\vspace{0.3em}
+\textbf{Behavioral Rules}
+\begin{itemize}
+\item Advertising restrictions
+\item Prohibited practices (pump-and-dump)
+\item Custody standards
+\item Fiduciary duties
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Redress Mechanisms}
+\begin{itemize}
+\item Dispute resolution
+\item Compensation schemes
+\item Whistleblower protections
+\end{itemize}
+\end{columns}
+
+\bottomnote{Effective consumer protection balances information remedies with conduct regulation}
+\end{frame}
+
+% Information Asymmetry Analysis
+\begin{frame}[t]{When Does Disclosure Fail? Limits of Information Remedies}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Theoretical Limits}
+
+\vspace{0.3em}
+\textbf{Bounded Rationality}
+\begin{itemize}
+\item Information overload
+\item Complexity of protocols
+\item Cognitive biases
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Behavioral Biases}
+\begin{itemize}
+\item Overconfidence
+\item FOMO (fear of missing out)
+\item Herd behavior
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{When Conduct Rules Are Needed}
+\begin{itemize}
+\item Sophisticated fraud schemes
+\item Systemic risk externalities
+\item Irreversible harm
+\item Vulnerable populations
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Proportionality Principle}
+\begin{itemize}
+\item Retail vs. institutional investors
+\item Size and complexity thresholds
+\item Risk-based approach
+\end{itemize}
+\end{columns}
+
+\bottomnote{Disclosure alone is insufficient when complexity exceeds consumer capacity to process information}
+\end{frame}
+
+% International Coordination
+\begin{frame}[t]{International Coordination: Challenges and Solutions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Why Coordination Is Hard}
+
+\vspace{0.3em}
+\textbf{Sovereignty Concerns}
+\begin{itemize}
+\item Differing policy priorities
+\item Regulatory culture variation
+\item Political economy constraints
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Heterogeneous Preferences}
+\begin{itemize}
+\item Financial stability vs. innovation
+\item Privacy vs. law enforcement
+\item Consumer protection vs. market access
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Coordination Mechanisms}
+
+\vspace{0.3em}
+\textbf{Standard-Setting Bodies}
+\begin{itemize}
+\item Financial Stability Board (FSB)
+\item Basel Committee (BCBS)
+\item FATF for AML/CFT
+\item IOSCO for securities
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Success Factors}
+\begin{itemize}
+\item Soft law and principles
+\item Peer review mechanisms
+\item Market access incentives
+\end{itemize}
+\end{columns}
+
+\bottomnote{International coordination requires balancing sovereignty with collective action to address cross-border risks}
+\end{frame}
+
+% Coordination Examples
+\begin{frame}[t]{Case Studies in International Coordination}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Success: FATF Travel Rule}
+
+\vspace{0.3em}
+Coordination achieved through:
+\begin{itemize}
+\item Clear standards (originator/beneficiary info)
+\item Peer review and grey-listing
+\item Private sector engagement
+\item Technology-neutral approach
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Remaining Challenges}
+\begin{itemize}
+\item Implementation heterogeneity
+\item Enforcement gaps
+\item DeFi application
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Challenge: Stablecoin Regulation}
+
+\vspace{0.3em}
+Fragmentation due to:
+\begin{itemize}
+\item Divergent classifications (money, security, e-money)
+\item Reserve requirements variation
+\item Redemption right differences
+\item Systemic risk thresholds
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Needed Reforms}
+\begin{itemize}
+\item Harmonized definitions
+\item Mutual recognition agreements
+\item Cross-border resolution frameworks
+\end{itemize}
+\end{columns}
+
+\bottomnote{Successful coordination requires alignment on definitions, standards, and enforcement mechanisms}
+\end{frame}
+
+% Future Regulatory Frameworks
+\begin{frame}[t]{Future Regulatory Frameworks for Digital Finance}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Principles-Based vs. Rules-Based}
+
+\vspace{0.3em}
+\textbf{Principles-Based (UK Model)}
+\begin{itemize}
+\item Flexible and adaptive
+\item High-level objectives
+\item Supervisory judgment
+\item Better for rapid innovation
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Rules-Based (US Model)}
+\begin{itemize}
+\item Precise requirements
+\item Legal certainty
+\item Easier enforcement
+\item Lower supervisory discretion
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Emerging Approaches}
+
+\vspace{0.3em}
+\textbf{Regulatory Sandboxes}
+\begin{itemize}
+\item Controlled experimentation
+\item Learning by doing
+\item Reduced barriers for innovation
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Embedded Supervision}
+\begin{itemize}
+\item Real-time compliance monitoring
+\item Automated reporting (RegTech)
+\item Smart contract-based rules
+\item Supervisory technology (SupTech)
+\end{itemize}
+\end{columns}
+
+\bottomnote{Future regulation will likely blend principles-based flexibility with technology-enabled precision}
+\end{frame}
+
+% Optimal Regulation Framework
+\begin{frame}[t]{Designing Optimal Regulation: Economic Framework}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Marginal Analysis}
+
+\vspace{0.3em}
+Optimal regulation occurs where:
+\begin{itemize}
+\item Marginal benefit = Marginal cost
+\item Deadweight loss minimized
+\item Net social welfare maximized
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Context-Specific Factors}
+\begin{itemize}
+\item Market maturity
+\item Systemic importance
+\item Consumer sophistication
+\item Cross-border exposure
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Design Principles}
+
+\vspace{0.3em}
+\textbf{1. Proportionality}
+\begin{itemize}
+\item Regulation matches risk level
+\item Tiered approaches for different sizes
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Technology-Neutrality}
+\begin{itemize}
+\item Functional not institutional
+\item Avoid picking technology winners
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{3. Adaptive Regulation}
+\begin{itemize}
+\item Review and adjust
+\item Sunset provisions
+\item Experimentation and learning
+\end{itemize}
+\end{columns}
+
+\bottomnote{Optimal regulation is dynamic, proportional, and evidence-based}
+\end{frame}
+
+% Summary
+\begin{frame}[t]{Summary and Key Takeaways}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What We Covered}
+\begin{enumerate}
+\item Market failures justify regulation
+\item Cost-benefit framework for analysis
+\item Regulatory perimeter challenges
+\item Compliance costs favor large firms
+\item Regulatory arbitrage dynamics
+\item Consumer protection trade-offs
+\item International coordination needs
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Key Economic Insights}
+\begin{itemize}
+\item Harberger: Minimize deadweight loss
+\item Stigler: Regulation creates scale economies
+\item Akerlof: Information asymmetry market failure
+\item Game theory: Coordination challenges
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Looking Ahead}
+\begin{itemize}
+\item L08: Synthesis of all four lenses
+\item Integration across lessons
+\end{itemize}
+\end{columns}
+
+\vspace{0.5em}
+\textbf{Core Message}
+
+Regulatory economics provides tools to design efficient regulation: balancing market failure correction against compliance costs, while managing arbitrage and coordination challenges.
+
+\bottomnote{Next lesson: Synthesis and Integration of Economic Frameworks}
+\end{frame}
+
+% Further Reading
+\begin{frame}[t]{Further Reading}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Foundational Papers}
+\begin{itemize}
+\item Stigler (1971): ``The Theory of Economic Regulation''
+\item Akerlof (1970): ``The Market for Lemons''
+\item Harberger (1964): ``The Measurement of Waste''
+\item Peltzman (1976): ``Toward a More General Theory of Regulation''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Digital Finance Applications}
+\begin{itemize}
+\item FSB (2022): ``Assessment of Risks to Financial Stability from Crypto-assets''
+\item Zetzsche et al. (2020): ``The Markets in Crypto-Assets Regulation (MiCA)''
+\item Auer \& Claessens (2020): ``Regulating Big Tech in Finance''
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform}
+\end{frame}
+
+\end{document}

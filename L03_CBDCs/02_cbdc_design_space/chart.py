@@ -1,73 +1,178 @@
-"""CBDC Design Space - 2x2 Matrix of design choices"""
+"""CBDC Design Space: Multi-Attribute Utility Optimization
+
+Pareto frontier showing tradeoffs between privacy, programmability, accessibility.
+Theory: Keeney & Raiffa (1976) Multi-Attribute Utility Theory.
+"""
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch
 import numpy as np
 from pathlib import Path
+from mpl_toolkits.mplot3d import Axes3D
+from scipy.spatial import ConvexHull
 
 plt.rcParams.update({
-    'font.size': 14, 'axes.labelsize': 14, 'axes.titlesize': 16,
-    'xtick.labelsize': 13, 'ytick.labelsize': 13, 'legend.fontsize': 13,
-    'figure.figsize': (10, 6), 'figure.dpi': 150
+    'font.size': 11, 'axes.labelsize': 12, 'axes.titlesize': 14,
+    'xtick.labelsize': 10, 'ytick.labelsize': 10, 'legend.fontsize': 10,
+    'figure.figsize': (14, 6), 'figure.dpi': 150
 })
 
 MLPURPLE = '#3333B2'
 MLBLUE = '#0066CC'
 MLORANGE = '#FF7F0E'
 MLGREEN = '#2CA02C'
+MLRED = '#D62728'
 
-fig, ax = plt.subplots(figsize=(10, 6))
+np.random.seed(42)
 
-# 2x2 matrix positions
-quadrants = [
-    # (x, y, title, description, examples, color)
-    (0.25, 0.72, 'RETAIL + TOKEN',
-     'Anonymous, cash-like\nP2P transfers\nOffline capable',
-     'e-CNY (partial)', MLGREEN),
-    (0.75, 0.72, 'RETAIL + ACCOUNT',
-     'Identity-linked\nProgrammable\nInterest-bearing possible',
-     'Digital Euro (proposed)', MLBLUE),
-    (0.25, 0.28, 'WHOLESALE + TOKEN',
-     'Interbank settlement\nSecurities trading\nCross-border',
-     'Project Jasper, Ubin', MLORANGE),
-    (0.75, 0.28, 'WHOLESALE + ACCOUNT',
-     'Reserve accounts\nCentral bank operated\nLimited access',
-     'Traditional RTGS', MLPURPLE),
-]
+# Generate feasible CBDC design points
+# Attributes: Privacy (P), Programmability (R), Accessibility (A)
+# Constraint: P + R + A <= 2.4 (cannot maximize all three)
+n_designs = 300
+designs = []
+for _ in range(n_designs):
+    p = np.random.uniform(0, 1)
+    r = np.random.uniform(0, 1)
+    a = np.random.uniform(0, 1)
+    # Enforce tradeoff constraint
+    total = p + r + a
+    if total > 2.4:
+        scale = 2.4 / total
+        p, r, a = p * scale, r * scale, a * scale
+    designs.append([p, r, a])
 
-# Draw quadrants
-for x, y, title, desc, example, color in quadrants:
-    box = FancyBboxPatch((x - 0.22, y - 0.18), 0.44, 0.36,
-                         boxstyle="round,pad=0.02,rounding_size=0.02",
-                         facecolor=color, alpha=0.15, edgecolor=color, linewidth=2)
-    ax.add_patch(box)
+designs = np.array(designs)
 
-    ax.text(x, y + 0.12, title, ha='center', va='center', fontsize=12,
-            fontweight='bold', color=color)
-    ax.text(x, y - 0.02, desc, ha='center', va='center', fontsize=10,
-            color='black')
-    ax.text(x, y - 0.14, f'Ex: {example}', ha='center', va='center', fontsize=9,
-            color='gray', style='italic')
+# Find Pareto frontier
+def is_pareto_efficient(costs):
+    """Find Pareto-efficient points (maximize all three attributes)"""
+    is_efficient = np.ones(costs.shape[0], dtype=bool)
+    for i, c in enumerate(costs):
+        if is_efficient[i]:
+            # Remove dominated points (all worse or equal in all dimensions)
+            is_efficient[is_efficient] = np.any(costs[is_efficient] > c, axis=1)
+            is_efficient[i] = True
+    return is_efficient
 
-# Axes labels
-ax.annotate('', xy=(0.98, 0.5), xytext=(0.02, 0.5),
-            arrowprops=dict(arrowstyle='->', color='gray', lw=2))
-ax.text(0.5, 0.52, 'Token-based                                    Account-based',
-        ha='center', va='bottom', fontsize=11, color='gray')
+pareto_mask = is_pareto_efficient(designs)
+pareto_designs = designs[pareto_mask]
+dominated_designs = designs[~pareto_mask]
 
-ax.annotate('', xy=(0.5, 0.95), xytext=(0.5, 0.05),
-            arrowprops=dict(arrowstyle='->', color='gray', lw=2))
-ax.text(0.52, 0.15, 'Wholesale', ha='left', va='center', fontsize=11, color='gray', rotation=90)
-ax.text(0.52, 0.85, 'Retail', ha='left', va='center', fontsize=11, color='gray', rotation=90)
+# Define user preference profiles (weights for utility function)
+# U = w_P * u(P) + w_R * u(R) + w_A * u(A)
+profiles = {
+    'Retail Users': np.array([0.6, 0.2, 0.2]),  # Privacy priority
+    'Businesses': np.array([0.2, 0.6, 0.2]),     # Programmability priority
+    'Policy Makers': np.array([0.2, 0.2, 0.6])   # Accessibility priority
+}
 
-ax.set_xlim(0, 1)
-ax.set_ylim(0, 1)
-ax.axis('off')
-ax.set_title('CBDC Design Space: Key Trade-offs', fontsize=16,
-             fontweight='bold', color=MLPURPLE, pad=10)
+# Find optimal design for each profile
+optimal_designs = {}
+for name, weights in profiles.items():
+    utilities = pareto_designs @ weights
+    optimal_idx = np.argmax(utilities)
+    optimal_designs[name] = pareto_designs[optimal_idx]
 
-plt.tight_layout()
+# Specific CBDC examples (approximate attributes)
+cbdc_examples = {
+    'e-CNY': np.array([0.65, 0.55, 0.75]),    # High privacy, programmability, accessibility
+    'e-Krona': np.array([0.45, 0.70, 0.80]),  # Lower privacy, high programmability
+    'Sand Dollar': np.array([0.50, 0.40, 0.85])  # Moderate privacy, high accessibility
+}
+
+# Normalize examples to constraint
+for name, attrs in cbdc_examples.items():
+    total = attrs.sum()
+    if total > 2.4:
+        cbdc_examples[name] = attrs * (2.4 / total)
+
+# Create figure with 2 subplots
+fig = plt.figure(figsize=(14, 6))
+
+# Left: 3D scatter plot
+ax1 = fig.add_subplot(121, projection='3d')
+
+# Plot dominated designs
+ax1.scatter(dominated_designs[:, 0], dominated_designs[:, 1], dominated_designs[:, 2],
+           c='lightgray', alpha=0.3, s=20, label='Dominated Designs')
+
+# Plot Pareto frontier
+ax1.scatter(pareto_designs[:, 0], pareto_designs[:, 1], pareto_designs[:, 2],
+           c=MLBLUE, alpha=0.6, s=40, edgecolors='navy', linewidths=0.5,
+           label='Pareto Frontier')
+
+# Plot optimal designs for each profile
+colors = [MLGREEN, MLORANGE, MLPURPLE]
+for (name, design), color in zip(optimal_designs.items(), colors):
+    ax1.scatter(design[0], design[1], design[2],
+               c=color, s=200, marker='*', edgecolors='black', linewidths=1.5,
+               label=f'{name} Optimum', zorder=10)
+
+# Plot CBDC examples
+example_colors = {'e-CNY': MLRED, 'e-Krona': '#8B4513', 'Sand Dollar': '#FF1493'}
+for name, attrs in cbdc_examples.items():
+    ax1.scatter(attrs[0], attrs[1], attrs[2],
+               c=example_colors[name], s=150, marker='D', edgecolors='black', linewidths=1,
+               label=name, zorder=9)
+
+ax1.set_xlabel('Privacy (P)', fontsize=11, labelpad=8)
+ax1.set_ylabel('Programmability (R)', fontsize=11, labelpad=8)
+ax1.set_zlabel('Accessibility (A)', fontsize=11, labelpad=8)
+ax1.set_title('CBDC Design Space\n(Multi-Attribute Utility)', fontsize=12, fontweight='bold', pad=15)
+ax1.legend(loc='upper left', fontsize=8, framealpha=0.9)
+ax1.view_init(elev=20, azim=45)
+
+# Right: 2D projection (Privacy vs Programmability, size = Accessibility)
+ax2 = fig.add_subplot(122)
+
+# Plot dominated designs
+ax2.scatter(dominated_designs[:, 0], dominated_designs[:, 1],
+           s=dominated_designs[:, 2] * 100, c='lightgray', alpha=0.3,
+           label='Dominated Designs')
+
+# Plot Pareto frontier
+ax2.scatter(pareto_designs[:, 0], pareto_designs[:, 1],
+           s=pareto_designs[:, 2] * 150, c=MLBLUE, alpha=0.6,
+           edgecolors='navy', linewidths=0.5, label='Pareto Frontier')
+
+# Plot optimal designs
+for (name, design), color in zip(optimal_designs.items(), colors):
+    ax2.scatter(design[0], design[1], s=design[2] * 400,
+               c=color, marker='*', edgecolors='black', linewidths=1.5,
+               label=f'{name}', zorder=10)
+
+# Plot CBDC examples
+for name, attrs in cbdc_examples.items():
+    ax2.scatter(attrs[0], attrs[1], s=attrs[2] * 300,
+               c=example_colors[name], marker='D', edgecolors='black', linewidths=1,
+               label=name, zorder=9)
+
+# Draw indifference curves (iso-utility lines) for one profile
+profile_name = 'Retail Users'
+weights = profiles[profile_name]
+# Indifference curves: w_P*P + w_R*R = constant (for varying utility levels)
+for utility_level in [0.3, 0.5, 0.7]:
+    p_range = np.linspace(0, 1, 100)
+    r_from_utility = (utility_level - weights[0] * p_range) / weights[1]
+    valid = (r_from_utility >= 0) & (r_from_utility <= 1)
+    ax2.plot(p_range[valid], r_from_utility[valid], '--', color=MLGREEN,
+            alpha=0.5, linewidth=1)
+
+ax2.set_xlabel('Privacy (P)', fontsize=12)
+ax2.set_ylabel('Programmability (R)', fontsize=12)
+ax2.set_title('2D Projection: Privacy vs Programmability\n(Bubble size = Accessibility)',
+             fontsize=12, fontweight='bold')
+ax2.legend(loc='upper right', fontsize=8, framealpha=0.9)
+ax2.grid(True, alpha=0.3)
+ax2.set_xlim(-0.05, 1.05)
+ax2.set_ylim(-0.05, 1.05)
+
+# Add annotation for theory
+fig.text(0.5, 0.02,
+        'Theory: Keeney & Raiffa (1976) Multi-Attribute Utility Theory | '
+        'Constraint: Cannot maximize all three attributes simultaneously',
+        ha='center', fontsize=9, style='italic', color='gray')
+
+plt.tight_layout(rect=[0, 0.04, 1, 1])
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')
 plt.savefig(Path(__file__).parent / 'chart.png', dpi=150, bbox_inches='tight')
 plt.close()
-print("Chart saved to chart.pdf")
+print("Enhanced CBDC design space chart saved with Pareto frontier and multi-attribute utility optimization")

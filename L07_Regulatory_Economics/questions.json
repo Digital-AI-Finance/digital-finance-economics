@@ -1,0 +1,246 @@
+{
+  "lesson": "L07",
+  "title": "Regulatory Economics of Digital Finance",
+  "questions": [
+    {
+      "id": 1,
+      "question": "According to the optimal regulation framework, the optimal regulation intensity (r*) occurs where:",
+      "options": {
+        "A": "Marginal cost equals marginal benefit",
+        "B": "Total cost equals total benefit",
+        "C": "Marginal benefit is maximized",
+        "D": "Marginal cost is minimized"
+      },
+      "correct": "A",
+      "explanation": "The optimal regulation intensity r* is found where the marginal cost (MC) curve intersects the marginal benefit (MB) curve, balancing the incremental costs and benefits of additional regulation."
+    },
+    {
+      "id": 2,
+      "question": "In the optimal regulation model, what does the area where MC > MB (after r*) represent?",
+      "options": {
+        "A": "Net social benefit",
+        "B": "Deadweight loss from over-regulation",
+        "C": "Consumer surplus",
+        "D": "Regulatory efficiency gains"
+      },
+      "correct": "B",
+      "explanation": "When regulation intensity exceeds r*, marginal costs exceed marginal benefits, creating deadweight loss from over-regulation where the costs outweigh the benefits."
+    },
+    {
+      "id": 3,
+      "question": "Which market failure is NOT typically addressed by financial regulation?",
+      "options": {
+        "A": "Information asymmetry",
+        "B": "Systemic risk externalities",
+        "C": "Perfect competition",
+        "D": "Consumer protection failures"
+      },
+      "correct": "C",
+      "explanation": "Financial regulation addresses market failures like information asymmetry, systemic risk, and consumer protection issues. Perfect competition is not a market failure—it's the ideal state that regulation may help achieve."
+    },
+    {
+      "id": 4,
+      "question": "What happens to the marginal benefit of regulation as regulation intensity increases?",
+      "options": {
+        "A": "It increases exponentially",
+        "B": "It remains constant",
+        "C": "It decreases (diminishing returns)",
+        "D": "It increases linearly"
+      },
+      "correct": "C",
+      "explanation": "The marginal benefit curve (MB = 1.5 * e^(-2r)) shows exponential decay, reflecting diminishing returns to additional regulation as the most critical risks are addressed first."
+    },
+    {
+      "id": 5,
+      "question": "Principles-based regulation differs from rules-based regulation primarily in that it:",
+      "options": {
+        "A": "Has no enforcement mechanism",
+        "B": "Sets broad outcomes rather than specific requirements",
+        "C": "Only applies to large firms",
+        "D": "Eliminates compliance costs"
+      },
+      "correct": "B",
+      "explanation": "Principles-based regulation specifies desired outcomes and leaves firms flexibility in achieving them, whereas rules-based regulation prescribes specific requirements and procedures."
+    },
+    {
+      "id": 6,
+      "question": "Regulatory sandboxes are designed to:",
+      "options": {
+        "A": "Permanently exempt fintech firms from all regulation",
+        "B": "Allow controlled testing of innovations under regulatory supervision",
+        "C": "Reduce consumer protection requirements",
+        "D": "Eliminate AML/KYC requirements"
+      },
+      "correct": "B",
+      "explanation": "Regulatory sandboxes provide a controlled environment where firms can test innovative products under regulatory supervision with relaxed requirements, but not permanent exemptions."
+    },
+    {
+      "id": 7,
+      "question": "As regulation intensity increases, the proportion of compliant firms:",
+      "options": {
+        "A": "Increases monotonically",
+        "B": "Decreases as firms exit or relocate",
+        "C": "Remains constant",
+        "D": "First increases, then stabilizes"
+      },
+      "correct": "B",
+      "explanation": "The chart shows that as regulation intensity r increases, the proportion of compliant firms decreases (Compliant = max(0, 1-r)), with firms moving to informal sectors or relocating."
+    },
+    {
+      "id": 8,
+      "question": "Which regulatory approach would best minimize regulatory arbitrage?",
+      "options": {
+        "A": "Single-jurisdiction regulation",
+        "B": "International regulatory harmonization",
+        "C": "Lax regulation in all jurisdictions",
+        "D": "Complete deregulation"
+      },
+      "correct": "B",
+      "explanation": "International regulatory harmonization reduces opportunities for regulatory arbitrage by creating consistent standards across jurisdictions, eliminating incentives to relocate for lighter regulation."
+    },
+    {
+      "id": 9,
+      "question": "The compliance cost curve shows that compliance costs as a percentage of revenue:",
+      "options": {
+        "A": "Are constant across all firm sizes",
+        "B": "Decrease as firm size increases (scale economies)",
+        "C": "Increase proportionally with firm size",
+        "D": "Are zero for large firms"
+      },
+      "correct": "B",
+      "explanation": "The model shows avg_cost_pct = (5e6 / revenue + 0.001) * 100, demonstrating that fixed compliance costs become a smaller percentage of revenue for larger firms, creating scale economies."
+    },
+    {
+      "id": 10,
+      "question": "If a 2% compliance cost threshold is imposed, what happens to smaller firms?",
+      "options": {
+        "A": "They receive subsidies",
+        "B": "They are excluded from the regulated market",
+        "C": "They pay lower compliance costs",
+        "D": "They are exempt from all regulation"
+      },
+      "correct": "B",
+      "explanation": "Firms below the revenue level where compliance costs exceed the 2% threshold are effectively excluded from the regulated market as compliance becomes economically unviable."
+    },
+    {
+      "id": 11,
+      "question": "The existence of fixed compliance costs creates:",
+      "options": {
+        "A": "Barriers to entry for small firms",
+        "B": "Perfect competition",
+        "C": "Lower costs for startups",
+        "D": "Equal competitive conditions"
+      },
+      "correct": "A",
+      "explanation": "Fixed compliance costs fall disproportionately on smaller firms (higher % of revenue), creating barriers to entry and favoring larger incumbents with scale economies."
+    },
+    {
+      "id": 12,
+      "question": "Which policy intervention would most effectively address compliance cost scale effects?",
+      "options": {
+        "A": "Uniform regulation for all firm sizes",
+        "B": "Tiered regulation based on firm size or risk",
+        "C": "Eliminating all regulation",
+        "D": "Increasing compliance costs equally for all"
+      },
+      "correct": "B",
+      "explanation": "Tiered or proportional regulation adjusts requirements based on firm size or systemic importance, reducing the disproportionate burden on smaller firms while maintaining oversight."
+    },
+    {
+      "id": 13,
+      "question": "In the regulatory competition game, the Nash equilibrium occurs when both countries choose:",
+      "options": {
+        "A": "Strict regulation",
+        "B": "Medium regulation",
+        "C": "Lax regulation",
+        "D": "Random regulation levels"
+      },
+      "correct": "C",
+      "explanation": "The payoff matrix shows the Nash equilibrium at (Lax, Lax) with payoff 4, where neither country has incentive to unilaterally deviate, demonstrating the 'race to the bottom'."
+    },
+    {
+      "id": 14,
+      "question": "Why is the cooperative outcome (Strict, Strict) with payoff 7 not achieved in one-shot games?",
+      "options": {
+        "A": "It requires enforcement mechanisms or repeated interaction",
+        "B": "It provides lower payoffs than Nash",
+        "C": "Countries cannot communicate",
+        "D": "It's technically infeasible"
+      },
+      "correct": "A",
+      "explanation": "Although (Strict, Strict) yields higher payoffs (7 vs 4), each country has incentive to defect to Lax for even higher payoffs (9 or 8), making cooperation unstable without enforcement or repeated games."
+    },
+    {
+      "id": 15,
+      "question": "Regulatory arbitrage occurs when:",
+      "options": {
+        "A": "Regulators coordinate perfectly",
+        "B": "Firms exploit differences between jurisdictions to minimize regulatory costs",
+        "C": "All jurisdictions have identical rules",
+        "D": "Regulation is eliminated globally"
+      },
+      "correct": "B",
+      "explanation": "Regulatory arbitrage involves firms strategically locating operations or structuring activities to exploit regulatory differences across jurisdictions, minimizing compliance costs."
+    },
+    {
+      "id": 16,
+      "question": "What happens to the regulatory perimeter as regulation intensity increases?",
+      "options": {
+        "A": "More firms become compliant",
+        "B": "More firms move to informal sector or exit/relocate",
+        "C": "All firms remain compliant",
+        "D": "Regulation becomes more effective"
+      },
+      "correct": "B",
+      "explanation": "The chart shows that as regulation intensity r increases, compliant firms decrease while informal sector and relocated/exited firms increase, shrinking the effective regulatory perimeter."
+    },
+    {
+      "id": 17,
+      "question": "In the adverse selection model without disclosure regulation, what happens over time?",
+      "options": {
+        "A": "Market size and quality both increase",
+        "B": "Market collapses as good projects exit (lemons problem)",
+        "C": "Quality improves but size decreases",
+        "D": "Both remain stable"
+      },
+      "correct": "B",
+      "explanation": "Without disclosure, buyers offer prices based on average quality. Good projects (quality > price) exit, lowering average quality further, creating a downward spiral that collapses the market."
+    },
+    {
+      "id": 18,
+      "question": "Mandatory disclosure regulation addresses adverse selection by:",
+      "options": {
+        "A": "Prohibiting all token sales",
+        "B": "Allowing buyers to distinguish between high and low quality projects",
+        "C": "Subsidizing poor quality projects",
+        "D": "Eliminating all information asymmetry costs"
+      },
+      "correct": "B",
+      "explanation": "Disclosure regulation mitigates the lemons problem by allowing buyers to observe true project quality, preventing the adverse selection spiral where good projects are driven out."
+    },
+    {
+      "id": 19,
+      "question": "AML/KYC requirements create trade-offs between:",
+      "options": {
+        "A": "Speed and accuracy",
+        "B": "Financial crime prevention and privacy/financial inclusion",
+        "C": "Profits and losses",
+        "D": "Domestic and international transactions"
+      },
+      "correct": "B",
+      "explanation": "AML/KYC regulations aim to prevent financial crime but impose costs through reduced privacy, barriers to financial inclusion (especially for unbanked), and compliance burdens."
+    },
+    {
+      "id": 20,
+      "question": "The innovation-stability trade-off in digital finance regulation suggests:",
+      "options": {
+        "A": "Innovation and stability are always compatible",
+        "B": "Too-strict regulation may stifle innovation; too-lax may create instability",
+        "C": "Stability always requires complete innovation ban",
+        "D": "Innovation never creates risks"
+      },
+      "correct": "B",
+      "explanation": "The optimal regulation framework (r*) reflects this trade-off: under-regulation (below r*) leaves instability risks; over-regulation (above r*) creates deadweight loss by stifling beneficial innovation."
+    }
+  ]
+}

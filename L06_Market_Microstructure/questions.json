@@ -1,0 +1,246 @@
+{
+  "lesson": "L06",
+  "title": "Market Microstructure in Digital Finance",
+  "questions": [
+    {
+      "id": 1,
+      "question": "In a traditional order book, what does the bid-ask spread represent?",
+      "options": {
+        "A": "The difference between the highest bid price and the lowest ask price",
+        "B": "The cumulative volume of all buy orders",
+        "C": "The average price of executed trades",
+        "D": "The volatility of the asset"
+      },
+      "correct": "A",
+      "explanation": "The bid-ask spread is the difference between the best (highest) bid price and the best (lowest) ask price. It represents a transaction cost and measures market liquidity."
+    },
+    {
+      "id": 2,
+      "question": "What is the mid-price in an order book?",
+      "options": {
+        "A": "The last executed trade price",
+        "B": "The average of the best bid and best ask prices",
+        "C": "The most common price in the order book",
+        "D": "The price with the highest volume"
+      },
+      "correct": "B",
+      "explanation": "The mid-price is calculated as (best_bid + best_ask) / 2 and serves as a reference price when no trade has recently occurred."
+    },
+    {
+      "id": 3,
+      "question": "Which side of the order book represents buyers willing to purchase an asset?",
+      "options": {
+        "A": "Ask side",
+        "B": "Bid side",
+        "C": "Spread side",
+        "D": "Depth side"
+      },
+      "correct": "B",
+      "explanation": "Bids represent buy orders - buyers willing to purchase the asset at specified prices. Bids are sorted in descending order with the highest bid at the top."
+    },
+    {
+      "id": 4,
+      "question": "What does cumulative volume in an order book depth chart represent?",
+      "options": {
+        "A": "The number of unique traders",
+        "B": "The total volume available up to a given price level",
+        "C": "The average order size",
+        "D": "The trading frequency"
+      },
+      "correct": "B",
+      "explanation": "Cumulative volume shows the total quantity of assets available for buying or selling up to each price level, illustrating market depth and potential price impact."
+    },
+    {
+      "id": 5,
+      "question": "In an AMM using the constant product formula x·y=k, what happens to k when trades occur?",
+      "options": {
+        "A": "k increases with each trade",
+        "B": "k decreases with each trade",
+        "C": "k remains constant (ignoring fees)",
+        "D": "k fluctuates randomly"
+      },
+      "correct": "C",
+      "explanation": "The constant product formula maintains k constant during trades (ignoring fees). This ensures that x·y=k always holds, where x and y are the token reserves."
+    },
+    {
+      "id": 6,
+      "question": "If an AMM pool has 1000 Token X and 1000 Token Y with k=1,000,000, what is the initial spot price of X in terms of Y?",
+      "options": {
+        "A": "0.5 Y per X",
+        "B": "1.0 Y per X",
+        "C": "2.0 Y per X",
+        "D": "1000 Y per X"
+      },
+      "correct": "B",
+      "explanation": "The spot price is y/x = 1000/1000 = 1.0. This means one unit of Token X can be exchanged for one unit of Token Y at this initial state."
+    },
+    {
+      "id": 7,
+      "question": "In the constant product AMM, when you buy Token X from the pool, what happens to the reserves?",
+      "options": {
+        "A": "Both x and y increase",
+        "B": "x decreases and y increases",
+        "C": "x increases and y decreases",
+        "D": "Both x and y decrease"
+      },
+      "correct": "B",
+      "explanation": "When buying Token X, you remove X from the pool (x decreases) and add Token Y to the pool (y increases), maintaining x·y=k."
+    },
+    {
+      "id": 8,
+      "question": "According to the AMM constant product model, what causes slippage?",
+      "options": {
+        "A": "Network congestion",
+        "B": "The non-linear price curve along x·y=k",
+        "C": "Gas fees",
+        "D": "Exchange rate fluctuations"
+      },
+      "correct": "B",
+      "explanation": "Slippage arises because the price changes along the hyperbolic curve x·y=k. Larger trades move further along this curve, resulting in progressively worse prices."
+    },
+    {
+      "id": 9,
+      "question": "What is price discovery in fragmented markets?",
+      "options": {
+        "A": "The process by which discount prices are found",
+        "B": "The mechanism through which information is incorporated into prices across multiple venues",
+        "C": "The algorithm used to calculate mid-prices",
+        "D": "The fee structure of different exchanges"
+      },
+      "correct": "B",
+      "explanation": "Price discovery is the process through which new information is incorporated into asset prices. In fragmented markets, this occurs across multiple trading venues with varying speeds."
+    },
+    {
+      "id": 10,
+      "question": "In fragmented markets, what is a 'leader' exchange?",
+      "options": {
+        "A": "The exchange with the highest trading volume",
+        "B": "The exchange where price movements occur first",
+        "C": "The exchange with the lowest fees",
+        "D": "The most regulated exchange"
+      },
+      "correct": "B",
+      "explanation": "A leader exchange is one where price shocks and new information are reflected first, with other exchanges following with various time lags."
+    },
+    {
+      "id": 11,
+      "question": "Why might different exchanges show high correlation in their price movements?",
+      "options": {
+        "A": "They use the same trading software",
+        "B": "Arbitrage forces prices to converge across venues",
+        "C": "Regulatory requirements mandate price alignment",
+        "D": "All exchanges share the same order book"
+      },
+      "correct": "B",
+      "explanation": "Arbitrage opportunities arise when prices diverge across exchanges. Arbitrageurs exploit these differences, which forces prices to converge and creates high correlation."
+    },
+    {
+      "id": 12,
+      "question": "If you want to buy a large amount of Token X in an AMM, what trading strategy minimizes price impact?",
+      "options": {
+        "A": "Execute the entire trade at once",
+        "B": "Break the trade into smaller chunks over time",
+        "C": "Wait for the price to change first",
+        "D": "Use leverage to increase buying power"
+      },
+      "correct": "B",
+      "explanation": "Breaking large trades into smaller chunks reduces the immediate price impact along the x·y=k curve. This is the principle behind limit orders and TWAP (Time-Weighted Average Price) strategies."
+    },
+    {
+      "id": 13,
+      "question": "What is impermanent loss?",
+      "options": {
+        "A": "The loss from gas fees in providing liquidity",
+        "B": "The loss from price volatility in the broader market",
+        "C": "The opportunity cost of providing liquidity vs. holding tokens when prices diverge",
+        "D": "The permanent loss when a liquidity pool is exploited"
+      },
+      "correct": "C",
+      "explanation": "Impermanent loss is the difference in value between holding tokens and providing them to a liquidity pool when the price ratio changes. It's called 'impermanent' because it can reverse if prices return to the original ratio."
+    },
+    {
+      "id": 14,
+      "question": "For a liquidity provider in a constant product AMM, when does impermanent loss occur?",
+      "options": {
+        "A": "Only when prices decrease",
+        "B": "Only when prices increase",
+        "C": "When prices diverge in either direction from the initial ratio",
+        "D": "Only during high volatility periods"
+      },
+      "correct": "C",
+      "explanation": "Impermanent loss occurs whenever the price ratio changes from the initial deposit point, regardless of direction. The loss increases with larger price movements."
+    },
+    {
+      "id": 15,
+      "question": "If the price of one token doubles (2x) relative to the other in an AMM pool, approximately what is the impermanent loss?",
+      "options": {
+        "A": "0%",
+        "B": "5.7%",
+        "C": "10%",
+        "D": "25%"
+      },
+      "correct": "B",
+      "explanation": "For a 2x price change, the impermanent loss is approximately 5.7%. The formula is: IL = (2√r)/(1+r) - 1, where r is the price ratio. At r=2, IL ≈ -5.7%."
+    },
+    {
+      "id": 16,
+      "question": "What is the mathematical relationship for calculating LP position value given initial deposit V₀ and price ratio r?",
+      "options": {
+        "A": "V₀ × r",
+        "B": "V₀ × √r",
+        "C": "V₀ × r²",
+        "D": "V₀ / √r"
+      },
+      "correct": "B",
+      "explanation": "The LP position value follows V = V₀ × √r due to the constant product formula. This is why impermanent loss occurs - the square root function grows slower than a linear hold strategy."
+    },
+    {
+      "id": 17,
+      "question": "What does MEV stand for in blockchain trading?",
+      "options": {
+        "A": "Maximum Exchange Value",
+        "B": "Miner Extractable Value",
+        "C": "Market Efficiency Variable",
+        "D": "Minimum Execution Value"
+      },
+      "correct": "B",
+      "explanation": "MEV stands for Miner Extractable Value (or now Maximal Extractable Value). It refers to the value that can be extracted by reordering, inserting, or censoring transactions within blocks."
+    },
+    {
+      "id": 18,
+      "question": "What is a sandwich attack in the context of MEV?",
+      "options": {
+        "A": "Executing three trades simultaneously across different exchanges",
+        "B": "Placing a front-run and back-run transaction around a victim's trade to profit from price movement",
+        "C": "Splitting a large order into multiple smaller orders",
+        "D": "Trading between three different token pairs"
+      },
+      "correct": "B",
+      "explanation": "A sandwich attack involves: (1) front-running the victim's trade to move the price, (2) letting the victim trade at the worse price, (3) back-running to reverse the position and capture profit."
+    },
+    {
+      "id": 19,
+      "question": "In an AMM sandwich attack, what is the attacker's strategy?",
+      "options": {
+        "A": "Buy tokens before the victim and sell after to profit from the price increase",
+        "B": "Sell tokens to crash the price",
+        "C": "Provide liquidity to earn fees",
+        "D": "Wait for arbitrage opportunities"
+      },
+      "correct": "A",
+      "explanation": "The attacker buys tokens (front-runs) before the victim's purchase, which drives the price up. The victim then buys at the inflated price. Finally, the attacker sells back (back-runs) at the higher price for a profit."
+    },
+    {
+      "id": 20,
+      "question": "What determines the optimal front-run size in a sandwich attack?",
+      "options": {
+        "A": "The maximum amount the attacker can afford",
+        "B": "Exactly matching the victim's trade size",
+        "C": "The trade-off between price impact and profit extraction given the victim's trade size",
+        "D": "The current gas price"
+      },
+      "correct": "C",
+      "explanation": "The optimal front-run size balances price manipulation (moving the price enough to profit) against the cost of moving the price too far. There's a profit-maximizing front-run size that depends on the victim's trade size and the pool's liquidity."
+    }
+  ]
+}

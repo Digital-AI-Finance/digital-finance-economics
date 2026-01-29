@@ -1,0 +1,747 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+% Apply custom colors to Madrid theme
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Market Microstructure in Digital Finance}
+\subtitle{L06: AMMs, Order Books, and Price Discovery}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Outline
+\begin{frame}[t]{Lesson Overview}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Today's Topics}
+\begin{enumerate}
+\item Traditional vs. DeFi market structure
+\item Automated Market Makers (AMMs)
+\item Order book mechanics and depth
+\item Price discovery in fragmented markets
+\item Impermanent loss for liquidity providers
+\item MEV and front-running economics
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Learning Objectives}
+\begin{itemize}
+\item Compare order book and AMM mechanisms
+\item Analyze liquidity provision economics
+\item Understand price discovery in crypto markets
+\item Evaluate MEV extraction strategies
+\item Apply microstructure theory to DeFi
+\end{itemize}
+\end{columns}
+
+\bottomnote{This lesson applies market microstructure theory to understand digital asset trading}
+\end{frame}
+
+% Traditional Market Structure
+\begin{frame}[t]{Traditional vs. DeFi Market Structure}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Centralized Exchanges (CEXs)}
+
+\vspace{0.3em}
+\textbf{Characteristics}
+\begin{itemize}
+\item Central limit order book (CLOB)
+\item Custodial trading
+\item Professional market makers
+\item High-frequency trading infrastructure
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Examples}
+\begin{itemize}
+\item Binance, Coinbase, Kraken
+\item NYSE, Nasdaq (traditional)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Decentralized Exchanges (DEXs)}
+
+\vspace{0.3em}
+\textbf{Characteristics}
+\begin{itemize}
+\item Automated market makers (AMMs)
+\item Non-custodial trading
+\item Permissionless liquidity provision
+\item On-chain settlement
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Examples}
+\begin{itemize}
+\item Uniswap, Curve, Balancer
+\item PancakeSwap, SushiSwap
+\end{itemize}
+\end{columns}
+
+\bottomnote{Economic question: Which structure provides better price discovery and lower transaction costs?}
+\end{frame}
+
+% Order Book Mechanics
+\begin{frame}[t]{Order Book Mechanics and Liquidity}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Order Book Structure}
+
+\vspace{0.3em}
+\textbf{Key Components}
+\begin{itemize}
+\item Bid side (buy orders)
+\item Ask side (sell orders)
+\item Spread: ask price - bid price
+\item Depth: volume at each price level
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Price Formation}
+\begin{itemize}
+\item Limit orders provide liquidity
+\item Market orders consume liquidity
+\item Spread compensates market makers
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Economic Theory}
+
+\vspace{0.3em}
+Kyle (1985) model:
+\begin{itemize}
+\item Price impact: $\lambda = \frac{\sigma_v}{2\sigma_u}$
+\item Informed trading depth
+\item Adverse selection costs
+\end{itemize}
+
+\vspace{0.3em}
+Glosten-Milgrom (1985):
+\begin{itemize}
+\item Bid-ask spread reflects asymmetry
+\item Sequential trade learning
+\end{itemize}
+\end{columns}
+
+\bottomnote{Traditional microstructure assumes informed vs. uninformed traders; crypto markets add MEV extractors}
+\end{frame}
+
+% Order Book Depth Chart
+\begin{frame}[t]{Order Book Depth Visualization}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{02_order_book_depth/chart.pdf}
+\end{center}
+
+\bottomnote{Deeper order books reduce price impact for large trades; depth is a key liquidity metric}
+\end{frame}
+
+% AMM Introduction
+\begin{frame}[t]{Automated Market Makers: The Constant Product Formula}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{How AMMs Work}
+
+\vspace{0.3em}
+\textbf{Constant Product Formula}
+$$x \cdot y = k$$
+
+where:
+\begin{itemize}
+\item $x$: reserve of token A
+\item $y$: reserve of token B
+\item $k$: constant (invariant)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Price Determination}
+$$P = \frac{y}{x}$$
+
+\column{0.48\textwidth}
+\textbf{Economic Properties}
+
+\vspace{0.3em}
+\textbf{Advantages}
+\begin{itemize}
+\item Always provides liquidity
+\item Permissionless participation
+\item No order matching needed
+\item Transparent pricing
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Disadvantages}
+\begin{itemize}
+\item Price slippage on large trades
+\item Impermanent loss for LPs
+\item Capital inefficiency
+\item MEV vulnerability
+\end{itemize}
+\end{columns}
+
+\bottomnote{Uniswap pioneered constant product AMM; now the dominant DeFi trading mechanism}
+\end{frame}
+
+% AMM Chart
+\begin{frame}[t]{Constant Product Curve and Price Impact}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{01_amm_constant_product/chart.pdf}
+\end{center}
+
+\bottomnote{Larger trades move farther along the curve, experiencing greater price impact (slippage)}
+\end{frame}
+
+% Liquidity Provision Economics
+\begin{frame}[t]{Economics of Liquidity Provision}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{LP Revenue Streams}
+
+\vspace{0.3em}
+\textbf{Fee Income}
+\begin{itemize}
+\item Uniswap v2: 0.3\% per trade
+\item Uniswap v3: 0.05\%, 0.3\%, 1\% tiers
+\item Proportional to pool share
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Incentive Programs}
+\begin{itemize}
+\item Liquidity mining rewards
+\item Protocol token emissions
+\item Governance rights
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{LP Costs and Risks}
+
+\vspace{0.3em}
+\textbf{Impermanent Loss}
+\begin{itemize}
+\item Loss from price divergence
+\item Compared to holding assets
+\item Amplified by volatility
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Other Risks}
+\begin{itemize}
+\item Smart contract risk
+\item Gas costs for rebalancing
+\item MEV extraction
+\end{itemize}
+\end{columns}
+
+\bottomnote{LPs face a trade-off: fee income vs. impermanent loss; only profitable if fees exceed IL}
+\end{frame}
+
+% Impermanent Loss Chart
+\begin{frame}[t]{Impermanent Loss Analysis}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{04_impermanent_loss/chart.pdf}
+\end{center}
+
+\bottomnote{IL increases non-linearly with price divergence; 2x price change = 5.7\% loss, 5x change = 25.5\% loss}
+\end{frame}
+
+% Price Discovery
+\begin{frame}[t]{Price Discovery in Fragmented Markets}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Market Fragmentation}
+
+\vspace{0.3em}
+\textbf{Sources of Fragmentation}
+\begin{itemize}
+\item Multiple DEXs (Uniswap, Curve, etc.)
+\item Multiple CEXs (Binance, Coinbase, etc.)
+\item Cross-chain markets
+\item Different trading pairs
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Arbitrage Mechanism}
+\begin{itemize}
+\item Arbitrageurs exploit price differences
+\item Drive convergence across venues
+\item Extract value from inefficiencies
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Information Share}
+
+\vspace{0.3em}
+Hasbrouck (1995) information share:
+$$IS_i = \frac{\text{Variance contribution of venue } i}{\text{Total price discovery variance}}$$
+
+\vspace{0.3em}
+\textbf{Empirical Findings}
+\begin{itemize}
+\item CEXs dominate price discovery
+\item DEXs lag by seconds to minutes
+\item Arbitrage costs determine efficiency
+\item MEV complicates traditional metrics
+\end{itemize}
+\end{columns}
+
+\bottomnote{Crypto markets test traditional price discovery theory due to permissionless arbitrage and MEV}
+\end{frame}
+
+% Price Discovery Chart
+\begin{frame}[t]{Price Discovery Across Fragmented Venues}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{03_price_discovery_fragmented/chart.pdf}
+\end{center}
+
+\bottomnote{Information shares vary by market conditions; CEXs typically lead, DEXs follow with lag}
+\end{frame}
+
+% MEV Introduction
+\begin{frame}[t]{Maximal Extractable Value (MEV)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What is MEV?}
+
+\vspace{0.3em}
+\textbf{Definition}
+\begin{itemize}
+\item Value extractable by ordering transactions
+\item Enabled by block producer control
+\item Zero-sum redistribution (mostly)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Types of MEV}
+\begin{itemize}
+\item Front-running
+\item Back-running
+\item Sandwich attacks
+\item Liquidations
+\item Arbitrage
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Economic Impact}
+
+\vspace{0.3em}
+\textbf{MEV Magnitude}
+\begin{itemize}
+\item \$600M+ extracted since 2020
+\item 5-10\% of some DEX trades
+\item Growing with DeFi adoption
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Welfare Effects}
+\begin{itemize}
+\item Transfers wealth from traders to extractors
+\item Increases transaction costs
+\item May improve price efficiency
+\item Potential consensus instability
+\end{itemize}
+\end{columns}
+
+\bottomnote{MEV is a new phenomenon requiring new economic models beyond traditional market microstructure}
+\end{frame}
+
+% MEV Sandwich Attack Chart
+\begin{frame}[t]{Anatomy of a Sandwich Attack}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{05_mev_sandwich_attack/chart.pdf}
+\end{center}
+
+\bottomnote{Searchers front-run victim's buy, then back-run with sell, extracting value via price manipulation}
+\end{frame}
+
+% MEV Economics
+\begin{frame}[t]{Economics of MEV Extraction}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{MEV Supply Chain}
+
+\vspace{0.3em}
+\textbf{Actors}
+\begin{itemize}
+\item Searchers: find MEV opportunities
+\item Builders: construct blocks
+\item Validators: propose blocks
+\item Users: suffer MEV extraction
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Competition Dynamics}
+\begin{itemize}
+\item Priority gas auctions (PGAs)
+\item Flashbots auction mechanism
+\item MEV-Boost infrastructure
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Mitigation Strategies}
+
+\vspace{0.3em}
+\textbf{Protocol-Level}
+\begin{itemize}
+\item Encrypted mempools
+\item Fair ordering protocols
+\item Batch auctions
+\item Threshold encryption
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Application-Level}
+\begin{itemize}
+\item MEV-protected RPCs
+\item Slippage tolerance limits
+\item Time-weighted average pricing
+\item Private order flow
+\end{itemize}
+\end{columns}
+
+\bottomnote{MEV creates tension between validator revenue and user welfare; no clear solution yet}
+\end{frame}
+
+% Market Efficiency
+\begin{frame}[t]{Market Efficiency in Crypto Markets}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Efficiency Metrics}
+
+\vspace{0.3em}
+\textbf{Spread and Depth}
+\begin{itemize}
+\item Bid-ask spreads wider than TradFi
+\item Lower depth for most pairs
+\item Improving over time
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Price Discovery Speed}
+\begin{itemize}
+\item Fast arbitrage (seconds)
+\item Cross-exchange efficiency
+\item 24/7 trading advantage
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Informational Efficiency}
+
+\vspace{0.3em}
+\textbf{Challenges}
+\begin{itemize}
+\item High retail participation
+\item Limited fundamental anchors
+\item Sentiment-driven volatility
+\item Manipulation concerns
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Advantages}
+\begin{itemize}
+\item Transparent on-chain data
+\item Permissionless arbitrage
+\item No trading halts
+\item Global liquidity pools
+\end{itemize}
+\end{columns}
+
+\bottomnote{Crypto markets exhibit mixed efficiency: fast arbitrage but high volatility and manipulation risk}
+\end{frame}
+
+% Comparing AMM and Order Book
+\begin{frame}[t]{AMM vs. Order Book: Economic Comparison}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Automated Market Makers}
+
+\vspace{0.3em}
+\textbf{Strengths}
+\begin{itemize}
+\item Guaranteed liquidity (always tradable)
+\item Simple passive LP participation
+\item Transparent pricing formula
+\item No counterparty matching needed
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Weaknesses}
+\begin{itemize}
+\item High price impact for large trades
+\item Impermanent loss risk
+\item Capital inefficiency (idle reserves)
+\item MEV vulnerability
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Order Books}
+
+\vspace{0.3em}
+\textbf{Strengths}
+\begin{itemize}
+\item Better for large trades (lower slippage)
+\item Sophisticated order types (limit, stop)
+\item Professional market making
+\item Familiar interface
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Weaknesses}
+\begin{itemize}
+\item Requires active market makers
+\item Liquidity can disappear
+\item Higher technical complexity
+\item Custodial risk on CEXs
+\end{itemize}
+\end{columns}
+
+\bottomnote{Optimal structure depends on asset liquidity, trade size, and user preferences; hybrid approaches emerging}
+\end{frame}
+
+% Advanced AMM Designs
+\begin{frame}[t]{Advanced AMM Mechanisms}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Uniswap v3: Concentrated Liquidity}
+
+\vspace{0.3em}
+\textbf{Innovation}
+\begin{itemize}
+\item LPs choose price ranges
+\item Higher capital efficiency
+\item Customizable fee tiers
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Trade-offs}
+\begin{itemize}
+\item Active management required
+\item Higher impermanent loss risk
+\item Complexity barrier
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Curve: Stableswap}
+
+\vspace{0.3em}
+\textbf{Innovation}
+\begin{itemize}
+\item Optimized for low-volatility pairs
+\item Hybrid constant sum + constant product
+\item Lower slippage for stablecoins
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Balancer: Weighted Pools}
+\begin{itemize}
+\item Multi-asset pools
+\item Customizable weights
+\item Index fund functionality
+\end{itemize}
+\end{columns}
+
+\bottomnote{AMM innovation continues; trend toward capital efficiency and specialization by asset type}
+\end{frame}
+
+% Empirical Evidence
+\begin{frame}[t]{Empirical Evidence on DeFi Market Microstructure}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Findings}
+
+\vspace{0.3em}
+\textbf{Liquidity and Trading Costs}
+\begin{itemize}
+\item DEX spreads 2-5x CEX spreads
+\item Improving with liquidity growth
+\item Uniswap v3 narrows gap
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Impermanent Loss}
+\begin{itemize}
+\item Most LPs lose vs. HODL
+\item Fee income often insufficient
+\item Incentive programs crucial
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{MEV Impact}
+
+\vspace{0.3em}
+\textbf{Magnitude}
+\begin{itemize}
+\item 5-10\% implicit cost on some trades
+\item Concentrated in large trades
+\item Growing with DeFi TVL
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Price Discovery}
+\begin{itemize}
+\item CEXs lead by 30-60 seconds
+\item Arbitrage profitable despite costs
+\item Cross-chain discovery slower
+\end{itemize}
+\end{columns}
+
+\bottomnote{Research from Lehar \& Parlour (2021), Barbon \& Ranaldo (2022), Adams et al. (2024) on AMMs and MEV}
+\end{frame}
+
+% Future Directions
+\begin{frame}[t]{Future Directions in DeFi Microstructure}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Technical Innovation}
+
+\vspace{0.3em}
+\textbf{Emerging Mechanisms}
+\begin{itemize}
+\item Dynamic fees (volatility-adjusted)
+\item Just-in-time liquidity
+\item Intent-based architectures
+\item ZK-rollup order books
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{MEV Solutions}
+\begin{itemize}
+\item Encrypted mempools
+\item Fair ordering protocols
+\item MEV redistribution to users
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Economic Research Needs}
+
+\vspace{0.3em}
+\textbf{Open Questions}
+\begin{itemize}
+\item Optimal LP compensation design
+\item MEV welfare impact measurement
+\item Cross-chain price discovery
+\item Decentralized governance efficiency
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy Implications}
+\begin{itemize}
+\item Market manipulation regulation
+\item Investor protection in DeFi
+\item Systemic risk from MEV
+\end{itemize}
+\end{columns}
+
+\bottomnote{DeFi market microstructure is rapidly evolving; economic theory must adapt to new mechanisms}
+\end{frame}
+
+% Key Takeaways
+\begin{frame}[t]{Key Takeaways}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Core Concepts}
+\begin{enumerate}
+\item AMMs use constant product formula for automated trading
+\item Order books rely on active market makers
+\item Impermanent loss is key LP risk
+\item MEV extracts value via transaction ordering
+\item Price discovery faster but less efficient than TradFi
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Economic Insights}
+\begin{itemize}
+\item Trade-offs between decentralization and efficiency
+\item Liquidity provision requires compensation for IL
+\item MEV creates new welfare considerations
+\item Market fragmentation enables arbitrage
+\item Innovation continues with v3, Curve, etc.
+\end{itemize}
+\end{columns}
+
+\vspace{0.5em}
+\textbf{Application to Practice}
+
+Market microstructure theory helps evaluate DEX design, understand LP economics, and assess efficiency of crypto trading venues.
+
+\bottomnote{Next lesson: Regulatory Economics of Digital Finance}
+\end{frame}
+
+% References
+\begin{frame}[t]{Further Reading}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Foundational Papers}
+\begin{itemize}
+\item Kyle (1985): ``Continuous Auctions and Insider Trading''
+\item Hasbrouck (1995): ``One Security, Many Markets''
+\item Adams et al. (2024): ``Uniswap v3: The Economics of Concentrated Liquidity''
+\item Lehar \& Parlour (2021): ``Systemic Fragility in Decentralized Markets''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{MEV Research}
+\begin{itemize}
+\item Daian et al. (2020): ``Flash Boys 2.0''
+\item Qin et al. (2022): ``Quantifying MEV on Ethereum''
+\item Barbon \& Ranaldo (2022): ``On the Quality of Cryptocurrency Markets''
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: L07 Regulatory Economics | Digital Finance & Economics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --mlpurple: #3333B2;
+            --mlblue: #0066CC;
+            --quiz-accent: #8b5cf6;
+            --quiz-light: #ede9fe;
+            --correct: #22c55e;
+            --correct-bg: #dcfce7;
+            --incorrect: #ef4444;
+            --incorrect-bg: #fee2e2;
+            --bg: #f6f8fa;
+            --card-bg: #ffffff;
+            --text: #24292e;
+            --text-secondary: #586069;
+            --border: #e1e4e8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.4;
+            min-height: 100vh;
+        }
+
+        .nav {
+            background: linear-gradient(135deg, var(--mlpurple), var(--mlblue));
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-title { font-weight: 600; font-size: 14px; }
+        .nav-links { display: flex; gap: 16px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 12px; opacity: 0.9; }
+        .nav-links a:hover { opacity: 1; }
+
+        .quiz-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+        .quiz-title { font-size: 16px; font-weight: 600; color: var(--mlpurple); }
+        .quiz-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+        }
+        .stat-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .stat-progress { background: var(--quiz-light); color: var(--quiz-accent); }
+        .stat-score { background: var(--correct-bg); color: var(--correct); }
+
+        .progress-bar-container {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-bottom: 12px;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--quiz-accent);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        /* Three-column layout */
+        .questions-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            min-height: 280px;
+        }
+
+        .question-card.answered { opacity: 0.7; }
+
+        .question-card.correct-card {
+            border: 2px solid var(--correct);
+            background: linear-gradient(to bottom, var(--correct-bg), var(--card-bg));
+        }
+
+        .question-card.incorrect-card {
+            border: 2px solid var(--incorrect);
+            background: linear-gradient(to bottom, var(--incorrect-bg), var(--card-bg));
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .q-number {
+            background: var(--quiz-light);
+            color: var(--quiz-accent);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .q-status { font-size: 14px; }
+
+        .q-text {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            flex-grow: 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 44px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--quiz-accent);
+            background: var(--quiz-light);
+        }
+
+        .option-btn.correct {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+        }
+
+        .option-btn.disabled { cursor: default; }
+
+        .option-letter {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .option-letter {
+            background: var(--correct);
+            color: white;
+        }
+
+        .option-btn.incorrect .option-letter {
+            background: var(--incorrect);
+            color: white;
+        }
+
+        .option-text { flex: 1; }
+
+        .feedback {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            line-height: 1.4;
+            display: none;
+        }
+
+        .feedback.show { display: block; }
+        .feedback.correct { background: var(--correct-bg); color: #166534; }
+        .feedback.incorrect { background: var(--incorrect-bg); color: #991b1b; }
+
+        /* Results */
+        .results-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 32px;
+            text-align: center;
+            max-width: 500px;
+            margin: 40px auto;
+            display: none;
+        }
+        .results-card.show { display: block; }
+        .results-icon { font-size: 48px; margin-bottom: 8px; }
+        .results-score { font-size: 36px; font-weight: 700; color: var(--quiz-accent); }
+        .results-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+        .results-grade {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .grade-a { background: #dcfce7; color: #166534; }
+        .grade-b { background: #dbeafe; color: #1e40af; }
+        .grade-c { background: #fef3c7; color: #92400e; }
+        .grade-d { background: #fed7aa; color: #9a3412; }
+        .grade-f { background: #fee2e2; color: #991b1b; }
+
+        .results-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .btn-primary { background: var(--quiz-accent); color: white; }
+        .btn-primary:hover { background: #7c3aed; }
+        .btn-secondary { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+
+        /* Next button container */
+        .next-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .btn-next {
+            padding: 10px 32px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: var(--quiz-accent);
+            color: white;
+            transition: all 0.2s;
+            display: none;
+        }
+        .btn-next:hover { background: #7c3aed; transform: scale(1.02); }
+        .btn-next.show { display: inline-block; }
+        .btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 900px) {
+            .questions-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .questions-row { grid-template-columns: 1fr; }
+            .question-card { min-height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-title">Quiz: L07 Regulatory Economics</div>
+        <div class="nav-links">
+            <a href="../index.html">Dashboard</a>
+            
+            <a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <main class="quiz-container">
+        <div class="quiz-header">
+            <div class="quiz-title">Quiz: L07 Regulatory Economics</div>
+            <div class="quiz-stats">
+                <span class="stat-badge stat-progress" id="progressBadge">0/20</span>
+                <span class="stat-badge stat-score" id="scoreBadge">Score: 0</span>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <div class="questions-row" id="questionsRow"></div>
+
+        <div class="next-btn-container">
+            <button class="btn-next" id="nextBtn" onclick="loadNextQuestions()">Next</button>
+        </div>
+
+        <div class="results-card" id="resultsCard">
+            <div class="results-icon" id="resultsIcon"></div>
+            <div class="results-score" id="resultsScore"></div>
+            <div class="results-label">Correct Answers</div>
+            <div class="results-grade" id="resultsGrade"></div>
+            <div class="results-buttons">
+                <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+                <a href="../index.html" class="btn btn-secondary">Dashboard</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const quizData = {
+            questions: [
+                {
+                                "id": 1,
+                                "question": "According to the optimal regulation framework, the optimal regulation intensity (r*) occurs where:",
+                                "options": {
+                                                "A": "Marginal cost equals marginal benefit",
+                                                "B": "Total cost equals total benefit",
+                                                "C": "Marginal benefit is maximized",
+                                                "D": "Marginal cost is minimized"
+                                },
+                                "correct": "A",
+                                "explanation": "The optimal regulation intensity r* is found where the marginal cost (MC) curve intersects the marginal benefit (MB) curve, balancing the incremental costs and benefits of additional regulation."
+                },
+                {
+                                "id": 2,
+                                "question": "In the optimal regulation model, what does the area where MC > MB (after r*) represent?",
+                                "options": {
+                                                "A": "Net social benefit",
+                                                "B": "Deadweight loss from over-regulation",
+                                                "C": "Consumer surplus",
+                                                "D": "Regulatory efficiency gains"
+                                },
+                                "correct": "B",
+                                "explanation": "When regulation intensity exceeds r*, marginal costs exceed marginal benefits, creating deadweight loss from over-regulation where the costs outweigh the benefits."
+                },
+                {
+                                "id": 3,
+                                "question": "Which market failure is NOT typically addressed by financial regulation?",
+                                "options": {
+                                                "A": "Information asymmetry",
+                                                "B": "Systemic risk externalities",
+                                                "C": "Perfect competition",
+                                                "D": "Consumer protection failures"
+                                },
+                                "correct": "C",
+                                "explanation": "Financial regulation addresses market failures like information asymmetry, systemic risk, and consumer protection issues. Perfect competition is not a market failure—it's the ideal state that regulation may help achieve."
+                },
+                {
+                                "id": 4,
+                                "question": "What happens to the marginal benefit of regulation as regulation intensity increases?",
+                                "options": {
+                                                "A": "It increases exponentially",
+                                                "B": "It remains constant",
+                                                "C": "It decreases (diminishing returns)",
+                                                "D": "It increases linearly"
+                                },
+                                "correct": "C",
+                                "explanation": "The marginal benefit curve (MB = 1.5 * e^(-2r)) shows exponential decay, reflecting diminishing returns to additional regulation as the most critical risks are addressed first."
+                },
+                {
+                                "id": 5,
+                                "question": "Principles-based regulation differs from rules-based regulation primarily in that it:",
+                                "options": {
+                                                "A": "Has no enforcement mechanism",
+                                                "B": "Sets broad outcomes rather than specific requirements",
+                                                "C": "Only applies to large firms",
+                                                "D": "Eliminates compliance costs"
+                                },
+                                "correct": "B",
+                                "explanation": "Principles-based regulation specifies desired outcomes and leaves firms flexibility in achieving them, whereas rules-based regulation prescribes specific requirements and procedures."
+                },
+                {
+                                "id": 6,
+                                "question": "Regulatory sandboxes are designed to:",
+                                "options": {
+                                                "A": "Permanently exempt fintech firms from all regulation",
+                                                "B": "Allow controlled testing of innovations under regulatory supervision",
+                                                "C": "Reduce consumer protection requirements",
+                                                "D": "Eliminate AML/KYC requirements"
+                                },
+                                "correct": "B",
+                                "explanation": "Regulatory sandboxes provide a controlled environment where firms can test innovative products under regulatory supervision with relaxed requirements, but not permanent exemptions."
+                },
+                {
+                                "id": 7,
+                                "question": "As regulation intensity increases, the proportion of compliant firms:",
+                                "options": {
+                                                "A": "Increases monotonically",
+                                                "B": "Decreases as firms exit or relocate",
+                                                "C": "Remains constant",
+                                                "D": "First increases, then stabilizes"
+                                },
+                                "correct": "B",
+                                "explanation": "The chart shows that as regulation intensity r increases, the proportion of compliant firms decreases (Compliant = max(0, 1-r)), with firms moving to informal sectors or relocating."
+                },
+                {
+                                "id": 8,
+                                "question": "Which regulatory approach would best minimize regulatory arbitrage?",
+                                "options": {
+                                                "A": "Single-jurisdiction regulation",
+                                                "B": "International regulatory harmonization",
+                                                "C": "Lax regulation in all jurisdictions",
+                                                "D": "Complete deregulation"
+                                },
+                                "correct": "B",
+                                "explanation": "International regulatory harmonization reduces opportunities for regulatory arbitrage by creating consistent standards across jurisdictions, eliminating incentives to relocate for lighter regulation."
+                },
+                {
+                                "id": 9,
+                                "question": "The compliance cost curve shows that compliance costs as a percentage of revenue:",
+                                "options": {
+                                                "A": "Are constant across all firm sizes",
+                                                "B": "Decrease as firm size increases (scale economies)",
+                                                "C": "Increase proportionally with firm size",
+                                                "D": "Are zero for large firms"
+                                },
+                                "correct": "B",
+                                "explanation": "The model shows avg_cost_pct = (5e6 / revenue + 0.001) * 100, demonstrating that fixed compliance costs become a smaller percentage of revenue for larger firms, creating scale economies."
+                },
+                {
+                                "id": 10,
+                                "question": "If a 2% compliance cost threshold is imposed, what happens to smaller firms?",
+                                "options": {
+                                                "A": "They receive subsidies",
+                                                "B": "They are excluded from the regulated market",
+                                                "C": "They pay lower compliance costs",
+                                                "D": "They are exempt from all regulation"
+                                },
+                                "correct": "B",
+                                "explanation": "Firms below the revenue level where compliance costs exceed the 2% threshold are effectively excluded from the regulated market as compliance becomes economically unviable."
+                },
+                {
+                                "id": 11,
+                                "question": "The existence of fixed compliance costs creates:",
+                                "options": {
+                                                "A": "Barriers to entry for small firms",
+                                                "B": "Perfect competition",
+                                                "C": "Lower costs for startups",
+                                                "D": "Equal competitive conditions"
+                                },
+                                "correct": "A",
+                                "explanation": "Fixed compliance costs fall disproportionately on smaller firms (higher % of revenue), creating barriers to entry and favoring larger incumbents with scale economies."
+                },
+                {
+                                "id": 12,
+                                "question": "Which policy intervention would most effectively address compliance cost scale effects?",
+                                "options": {
+                                                "A": "Uniform regulation for all firm sizes",
+                                                "B": "Tiered regulation based on firm size or risk",
+                                                "C": "Eliminating all regulation",
+                                                "D": "Increasing compliance costs equally for all"
+                                },
+                                "correct": "B",
+                                "explanation": "Tiered or proportional regulation adjusts requirements based on firm size or systemic importance, reducing the disproportionate burden on smaller firms while maintaining oversight."
+                },
+                {
+                                "id": 13,
+                                "question": "In the regulatory competition game, the Nash equilibrium occurs when both countries choose:",
+                                "options": {
+                                                "A": "Strict regulation",
+                                                "B": "Medium regulation",
+                                                "C": "Lax regulation",
+                                                "D": "Random regulation levels"
+                                },
+                                "correct": "C",
+                                "explanation": "The payoff matrix shows the Nash equilibrium at (Lax, Lax) with payoff 4, where neither country has incentive to unilaterally deviate, demonstrating the 'race to the bottom'."
+                },
+                {
+                                "id": 14,
+                                "question": "Why is the cooperative outcome (Strict, Strict) with payoff 7 not achieved in one-shot games?",
+                                "options": {
+                                                "A": "It requires enforcement mechanisms or repeated interaction",
+                                                "B": "It provides lower payoffs than Nash",
+                                                "C": "Countries cannot communicate",
+                                                "D": "It's technically infeasible"
+                                },
+                                "correct": "A",
+                                "explanation": "Although (Strict, Strict) yields higher payoffs (7 vs 4), each country has incentive to defect to Lax for even higher payoffs (9 or 8), making cooperation unstable without enforcement or repeated games."
+                },
+                {
+                                "id": 15,
+                                "question": "Regulatory arbitrage occurs when:",
+                                "options": {
+                                                "A": "Regulators coordinate perfectly",
+                                                "B": "Firms exploit differences between jurisdictions to minimize regulatory costs",
+                                                "C": "All jurisdictions have identical rules",
+                                                "D": "Regulation is eliminated globally"
+                                },
+                                "correct": "B",
+                                "explanation": "Regulatory arbitrage involves firms strategically locating operations or structuring activities to exploit regulatory differences across jurisdictions, minimizing compliance costs."
+                },
+                {
+                                "id": 16,
+                                "question": "What happens to the regulatory perimeter as regulation intensity increases?",
+                                "options": {
+                                                "A": "More firms become compliant",
+                                                "B": "More firms move to informal sector or exit/relocate",
+                                                "C": "All firms remain compliant",
+                                                "D": "Regulation becomes more effective"
+                                },
+                                "correct": "B",
+                                "explanation": "The chart shows that as regulation intensity r increases, compliant firms decrease while informal sector and relocated/exited firms increase, shrinking the effective regulatory perimeter."
+                },
+                {
+                                "id": 17,
+                                "question": "In the adverse selection model without disclosure regulation, what happens over time?",
+                                "options": {
+                                                "A": "Market size and quality both increase",
+                                                "B": "Market collapses as good projects exit (lemons problem)",
+                                                "C": "Quality improves but size decreases",
+                                                "D": "Both remain stable"
+                                },
+                                "correct": "B",
+                                "explanation": "Without disclosure, buyers offer prices based on average quality. Good projects (quality > price) exit, lowering average quality further, creating a downward spiral that collapses the market."
+                },
+                {
+                                "id": 18,
+                                "question": "Mandatory disclosure regulation addresses adverse selection by:",
+                                "options": {
+                                                "A": "Prohibiting all token sales",
+                                                "B": "Allowing buyers to distinguish between high and low quality projects",
+                                                "C": "Subsidizing poor quality projects",
+                                                "D": "Eliminating all information asymmetry costs"
+                                },
+                                "correct": "B",
+                                "explanation": "Disclosure regulation mitigates the lemons problem by allowing buyers to observe true project quality, preventing the adverse selection spiral where good projects are driven out."
+                },
+                {
+                                "id": 19,
+                                "question": "AML/KYC requirements create trade-offs between:",
+                                "options": {
+                                                "A": "Speed and accuracy",
+                                                "B": "Financial crime prevention and privacy/financial inclusion",
+                                                "C": "Profits and losses",
+                                                "D": "Domestic and international transactions"
+                                },
+                                "correct": "B",
+                                "explanation": "AML/KYC regulations aim to prevent financial crime but impose costs through reduced privacy, barriers to financial inclusion (especially for unbanked), and compliance burdens."
+                },
+                {
+                                "id": 20,
+                                "question": "The innovation-stability trade-off in digital finance regulation suggests:",
+                                "options": {
+                                                "A": "Innovation and stability are always compatible",
+                                                "B": "Too-strict regulation may stifle innovation; too-lax may create instability",
+                                                "C": "Stability always requires complete innovation ban",
+                                                "D": "Innovation never creates risks"
+                                },
+                                "correct": "B",
+                                "explanation": "The optimal regulation framework (r*) reflects this trade-off: under-regulation (below r*) leaves instability risks; over-regulation (above r*) creates deadweight loss by stifling beneficial innovation."
+                }
+]
+        };
+
+        const state = {
+            currentIndex: 0,
+            answers: {},
+            score: 0,
+            displayedQuestions: [],
+            pendingSlots: []
+        };
+
+        const questionsRow = document.getElementById('questionsRow');
+        const progressBar = document.getElementById('progressBar');
+        const progressBadge = document.getElementById('progressBadge');
+        const scoreBadge = document.getElementById('scoreBadge');
+        const resultsCard = document.getElementById('resultsCard');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function initQuiz() {
+            state.currentIndex = 0;
+            state.answers = {};
+            state.score = 0;
+            state.displayedQuestions = [];
+            state.pendingSlots = [];
+
+            resultsCard.classList.remove('show');
+            questionsRow.style.display = 'grid';
+            nextBtn.classList.remove('show');
+
+            // Show first 3 questions
+            for (let i = 0; i < 3 && i < quizData.questions.length; i++) {
+                state.displayedQuestions.push(i);
+            }
+            state.currentIndex = Math.min(3, quizData.questions.length);
+
+            renderQuestions();
+            updateStats();
+        }
+
+        function renderQuestions() {
+            questionsRow.innerHTML = '';
+
+            state.displayedQuestions.forEach((qIdx, slot) => {
+                const q = quizData.questions[qIdx];
+                const answered = state.answers[q.id] !== undefined;
+                const isCorrect = answered && state.answers[q.id] === q.correct;
+                const isIncorrect = answered && state.answers[q.id] !== q.correct;
+
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                if (isCorrect) card.classList.add('correct-card', 'answered');
+                if (isIncorrect) card.classList.add('incorrect-card', 'answered');
+
+                card.innerHTML = `
+                    <div class="q-header">
+                        <span class="q-number">Q${qIdx + 1}</span>
+                        ${answered ? `<span class="q-status">${isCorrect ? '&#10004;' : '&#10008;'}</span>` : ''}
+                    </div>
+                    <div class="q-text">${q.question}</div>
+                    <div class="options" data-qid="${q.id}" data-slot="${slot}">
+                        ${['A','B','C','D'].map(letter => {
+                            let optClass = 'option-btn';
+                            if (answered) {
+                                optClass += ' disabled';
+                                if (letter === q.correct) optClass += ' correct';
+                                else if (letter === state.answers[q.id]) optClass += ' incorrect';
+                            }
+                            return `
+                                <button class="${optClass}" data-letter="${letter}" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letter}</span>
+                                    <span class="option-text">${q.options[letter]}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="feedback ${answered ? 'show' : ''} ${isCorrect ? 'correct' : 'incorrect'}">
+                        ${answered ? (isCorrect ? '&#10004; ' : `&#10008; Answer: ${q.correct}. `) + q.explanation : ''}
+                    </div>
+                `;
+
+                // Add click handlers
+                if (!answered) {
+                    card.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.addEventListener('click', () => handleAnswer(qIdx, slot, btn.dataset.letter));
+                    });
+                }
+
+                questionsRow.appendChild(card);
+            });
+
+            renderMath();
+        }
+
+        function handleAnswer(qIdx, slot, letter) {
+            const q = quizData.questions[qIdx];
+            state.answers[q.id] = letter;
+
+            if (letter === q.correct) state.score++;
+
+            // Track this slot as pending replacement
+            if (!state.pendingSlots.includes(slot)) {
+                state.pendingSlots.push(slot);
+            }
+
+            updateStats();
+            renderQuestions();
+
+            // Check if all questions answered
+            const answered = Object.keys(state.answers).length;
+            if (answered >= quizData.questions.length) {
+                // Short delay then show results
+                setTimeout(showResults, 800);
+            } else if (state.currentIndex < quizData.questions.length && state.pendingSlots.length > 0) {
+                // Show Next button if there are more questions and pending slots
+                nextBtn.classList.add('show');
+            }
+        }
+
+        function loadNextQuestions() {
+            // Replace pending slots with new questions
+            while (state.pendingSlots.length > 0 && state.currentIndex < quizData.questions.length) {
+                const slot = state.pendingSlots.shift();
+                state.displayedQuestions[slot] = state.currentIndex;
+                state.currentIndex++;
+            }
+
+            // Hide Next button
+            nextBtn.classList.remove('show');
+
+            renderQuestions();
+
+            // Check if quiz is complete (all displayed questions answered)
+            const answered = Object.keys(state.answers).length;
+            if (answered >= quizData.questions.length) {
+                setTimeout(showResults, 500);
+            }
+        }
+
+        function updateStats() {
+            const answered = Object.keys(state.answers).length;
+            const total = quizData.questions.length;
+
+            progressBar.style.width = `${(answered / total) * 100}%`;
+            progressBadge.textContent = `${answered}/${total}`;
+            scoreBadge.textContent = `Score: ${state.score}`;
+        }
+
+        function showResults() {
+            questionsRow.style.display = 'none';
+            nextBtn.classList.remove('show');
+            resultsCard.classList.add('show');
+
+            const total = quizData.questions.length;
+            const percentage = Math.round((state.score / total) * 100);
+
+            document.getElementById('resultsScore').textContent = `${state.score}/${total}`;
+
+            let grade, gradeClass, icon;
+            if (percentage >= 90) { grade = 'Excellent! A'; gradeClass = 'grade-a'; icon = '&#127942;'; }
+            else if (percentage >= 80) { grade = 'Great! B'; gradeClass = 'grade-b'; icon = '&#11088;'; }
+            else if (percentage >= 70) { grade = 'Good! C'; gradeClass = 'grade-c'; icon = '&#128077;'; }
+            else if (percentage >= 60) { grade = 'Pass - D'; gradeClass = 'grade-d'; icon = '&#128221;'; }
+            else { grade = 'Keep practicing'; gradeClass = 'grade-f'; icon = '&#128218;'; }
+
+            document.getElementById('resultsIcon').innerHTML = icon;
+            const gradeEl = document.getElementById('resultsGrade');
+            gradeEl.textContent = `${grade} (${percentage}%)`;
+            gradeEl.className = `results-grade ${gradeClass}`;
+        }
+
+        function restartQuiz() {
+            initQuiz();
+        }
+
+        function renderMath() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initQuiz();
+            setTimeout(renderMath, 100);
+        });
+    </script>
+</body>
+</html>

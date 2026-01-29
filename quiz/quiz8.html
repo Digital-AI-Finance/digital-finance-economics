@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: L08 Synthesis | Digital Finance & Economics</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        :root {
+            --mlpurple: #3333B2;
+            --mlblue: #0066CC;
+            --quiz-accent: #8b5cf6;
+            --quiz-light: #ede9fe;
+            --correct: #22c55e;
+            --correct-bg: #dcfce7;
+            --incorrect: #ef4444;
+            --incorrect-bg: #fee2e2;
+            --bg: #f6f8fa;
+            --card-bg: #ffffff;
+            --text: #24292e;
+            --text-secondary: #586069;
+            --border: #e1e4e8;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.4;
+            min-height: 100vh;
+        }
+
+        .nav {
+            background: linear-gradient(135deg, var(--mlpurple), var(--mlblue));
+            color: white;
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-title { font-weight: 600; font-size: 14px; }
+        .nav-links { display: flex; gap: 16px; }
+        .nav-links a { color: white; text-decoration: none; font-size: 12px; opacity: 0.9; }
+        .nav-links a:hover { opacity: 1; }
+
+        .quiz-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 12px;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+        .quiz-title { font-size: 16px; font-weight: 600; color: var(--mlpurple); }
+        .quiz-stats {
+            display: flex;
+            gap: 12px;
+            font-size: 12px;
+        }
+        .stat-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        .stat-progress { background: var(--quiz-light); color: var(--quiz-accent); }
+        .stat-score { background: var(--correct-bg); color: var(--correct); }
+
+        .progress-bar-container {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-bottom: 12px;
+        }
+        .progress-bar {
+            height: 100%;
+            background: var(--quiz-accent);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+
+        /* Three-column layout */
+        .questions-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .question-card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            min-height: 280px;
+        }
+
+        .question-card.answered { opacity: 0.7; }
+
+        .question-card.correct-card {
+            border: 2px solid var(--correct);
+            background: linear-gradient(to bottom, var(--correct-bg), var(--card-bg));
+        }
+
+        .question-card.incorrect-card {
+            border: 2px solid var(--incorrect);
+            background: linear-gradient(to bottom, var(--incorrect-bg), var(--card-bg));
+        }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .q-number {
+            background: var(--quiz-light);
+            color: var(--quiz-accent);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .q-status { font-size: 14px; }
+
+        .q-text {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            flex-grow: 0;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-grow: 1;
+        }
+
+        .option-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            min-height: 44px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--card-bg);
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .option-btn:hover:not(.disabled) {
+            border-color: var(--quiz-accent);
+            background: var(--quiz-light);
+        }
+
+        .option-btn.correct {
+            border-color: var(--correct);
+            background: var(--correct-bg);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--incorrect);
+            background: var(--incorrect-bg);
+        }
+
+        .option-btn.disabled { cursor: default; }
+
+        .option-letter {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 10px;
+            flex-shrink: 0;
+        }
+
+        .option-btn.correct .option-letter {
+            background: var(--correct);
+            color: white;
+        }
+
+        .option-btn.incorrect .option-letter {
+            background: var(--incorrect);
+            color: white;
+        }
+
+        .option-text { flex: 1; }
+
+        .feedback {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            line-height: 1.4;
+            display: none;
+        }
+
+        .feedback.show { display: block; }
+        .feedback.correct { background: var(--correct-bg); color: #166534; }
+        .feedback.incorrect { background: var(--incorrect-bg); color: #991b1b; }
+
+        /* Results */
+        .results-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 32px;
+            text-align: center;
+            max-width: 500px;
+            margin: 40px auto;
+            display: none;
+        }
+        .results-card.show { display: block; }
+        .results-icon { font-size: 48px; margin-bottom: 8px; }
+        .results-score { font-size: 36px; font-weight: 700; color: var(--quiz-accent); }
+        .results-label { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+        .results-grade {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .grade-a { background: #dcfce7; color: #166534; }
+        .grade-b { background: #dbeafe; color: #1e40af; }
+        .grade-c { background: #fef3c7; color: #92400e; }
+        .grade-d { background: #fed7aa; color: #9a3412; }
+        .grade-f { background: #fee2e2; color: #991b1b; }
+
+        .results-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .btn-primary { background: var(--quiz-accent); color: white; }
+        .btn-primary:hover { background: #7c3aed; }
+        .btn-secondary { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); }
+
+        /* Next button container */
+        .next-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .btn-next {
+            padding: 10px 32px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: var(--quiz-accent);
+            color: white;
+            transition: all 0.2s;
+            display: none;
+        }
+        .btn-next:hover { background: #7c3aed; transform: scale(1.02); }
+        .btn-next.show { display: inline-block; }
+        .btn-next:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        @media (max-width: 900px) {
+            .questions-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .questions-row { grid-template-columns: 1fr; }
+            .question-card { min-height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-title">Quiz: L08 Synthesis</div>
+        <div class="nav-links">
+            <a href="../index.html">Dashboard</a>
+            
+            <a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <main class="quiz-container">
+        <div class="quiz-header">
+            <div class="quiz-title">Quiz: L08 Synthesis</div>
+            <div class="quiz-stats">
+                <span class="stat-badge stat-progress" id="progressBadge">0/20</span>
+                <span class="stat-badge stat-score" id="scoreBadge">Score: 0</span>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+        </div>
+
+        <div class="questions-row" id="questionsRow"></div>
+
+        <div class="next-btn-container">
+            <button class="btn-next" id="nextBtn" onclick="loadNextQuestions()">Next</button>
+        </div>
+
+        <div class="results-card" id="resultsCard">
+            <div class="results-icon" id="resultsIcon"></div>
+            <div class="results-score" id="resultsScore"></div>
+            <div class="results-label">Correct Answers</div>
+            <div class="results-grade" id="resultsGrade"></div>
+            <div class="results-buttons">
+                <button class="btn btn-primary" onclick="restartQuiz()">Try Again</button>
+                <a href="../index.html" class="btn btn-secondary">Dashboard</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const quizData = {
+            questions: [
+                {
+                                "id": 1,
+                                "question": "In a financial network contagion simulation, what mechanism causes healthy nodes to become stressed or fail?",
+                                "options": {
+                                                "A": "Cumulative losses from failed neighbors exceed capital buffers",
+                                                "B": "Random market volatility affects all nodes simultaneously",
+                                                "C": "Government intervention forces weak nodes to close",
+                                                "D": "Self-imposed risk limits trigger automatic shutdown"
+                                },
+                                "correct": "A",
+                                "explanation": "The simulation shows that failed nodes spread losses to their neighbors. When cumulative losses from connected failed nodes exceed a node's capital buffer, that node fails. This creates a cascade effect through the network."
+                },
+                {
+                                "id": 2,
+                                "question": "Which factor determines the severity of contagion cascades in interconnected financial networks?",
+                                "options": {
+                                                "A": "The number of regulatory agencies involved",
+                                                "B": "The ratio of capital buffers to interconnection losses",
+                                                "C": "The speed of electronic trading systems",
+                                                "D": "The market capitalization of failed institutions"
+                                },
+                                "correct": "B",
+                                "explanation": "Contagion spreads when losses transmitted through network connections (proportional to failed nodes' original buffers divided by their degree) exceed the receiving nodes' capital buffers. Higher capital buffers relative to interconnection losses limit cascade severity."
+                },
+                {
+                                "id": 3,
+                                "question": "In the network cascade simulation, what role does node 'degree' (number of connections) play in loss propagation?",
+                                "options": {
+                                                "A": "Higher degree nodes fail first",
+                                                "B": "Losses from a failed node are divided among its neighbors",
+                                                "C": "Degree determines capital buffer requirements",
+                                                "D": "Only nodes with degree > 5 can cause contagion"
+                                },
+                                "correct": "B",
+                                "explanation": "The simulation divides a failed node's original buffer by its degree to determine loss per neighbor. This means highly connected nodes spread losses more thinly across neighbors, while poorly connected nodes concentrate losses."
+                },
+                {
+                                "id": 4,
+                                "question": "What distinguishes 'stressed' from 'failed' nodes in the contagion model?",
+                                "options": {
+                                                "A": "Stressed nodes have negative equity; failed nodes are illiquid",
+                                                "B": "Stressed nodes absorb 50%+ of buffer in losses; failed nodes exceed 100%",
+                                                "C": "Stressed nodes face regulatory sanctions; failed nodes face closure",
+                                                "D": "Stressed nodes are pre-crisis; failed nodes are post-crisis"
+                                },
+                                "correct": "B",
+                                "explanation": "Nodes become 'stressed' when cumulative losses exceed 50% of their buffer but remain below 100%. Nodes 'fail' when cumulative losses exceed their entire capital buffer (100%). This creates two distinct vulnerability states."
+                },
+                {
+                                "id": 5,
+                                "question": "In the TradFi-DeFi convergence 'Absorption' scenario, what is the projected long-term outcome?",
+                                "options": {
+                                                "A": "DeFi market share grows to 30% as retail adoption increases",
+                                                "B": "TradFi maintains ~85% market share, DeFi shrinks to 2%, hybrid grows",
+                                                "C": "TradFi and DeFi achieve equal 45% market shares",
+                                                "D": "Hybrid systems displace both TradFi and DeFi completely"
+                                },
+                                "correct": "B",
+                                "explanation": "Scenario A (Absorption) shows traditional finance maintaining dominance at ~85% after 20 years, with DeFi declining to just 2% market share. Hybrid systems capture the remainder as TradFi absorbs DeFi innovations without ceding control."
+                },
+                {
+                                "id": 6,
+                                "question": "Which convergence scenario features the most balanced long-term outcome between TradFi and DeFi?",
+                                "options": {
+                                                "A": "Absorption (TradFi 85%, DeFi 2%)",
+                                                "B": "Coexistence (TradFi 50%, DeFi 30%)",
+                                                "C": "Displacement (TradFi 15%, DeFi 60%)",
+                                                "D": "All scenarios converge to identical outcomes"
+                                },
+                                "correct": "B",
+                                "explanation": "Scenario B (Coexistence) shows a balanced outcome where TradFi declines to 50%, DeFi grows to 30%, and hybrid systems capture 20%. This represents mutual adaptation rather than domination by either paradigm."
+                },
+                {
+                                "id": 7,
+                                "question": "What distinguishes the 'Displacement' scenario from other convergence paths?",
+                                "options": {
+                                                "A": "It assumes regulatory capture by incumbent institutions",
+                                                "B": "DeFi grows to 60% market share while TradFi shrinks to 15%",
+                                                "C": "It predicts complete elimination of hybrid models",
+                                                "D": "It requires no technological advancement"
+                                },
+                                "correct": "B",
+                                "explanation": "Scenario C (Displacement) represents a radical transformation where DeFi captures 60% of the market after 20 years, while traditional finance shrinks to just 15%. This scenario implies fundamental competitive advantages for decentralized finance."
+                },
+                {
+                                "id": 8,
+                                "question": "All three convergence scenarios share which common feature?",
+                                "options": {
+                                                "A": "Hybrid models achieve at least 20% market share in all scenarios",
+                                                "B": "TradFi never falls below 50% market share",
+                                                "C": "DeFi eventually captures majority market share",
+                                                "D": "Government intervention determines the outcome"
+                                },
+                                "correct": "A",
+                                "explanation": "Looking at the long-term outcomes, hybrid models capture 13% (Absorption), 20% (Coexistence), and 25% (Displacement) of market share. All scenarios show significant hybrid adoption as institutions blend traditional and decentralized elements."
+                },
+                {
+                                "id": 9,
+                                "question": "Which digital finance phenomenon scores highest on the Monetary lens in the Four Lenses framework?",
+                                "options": {
+                                                "A": "Bitcoin (score: 9)",
+                                                "B": "Stablecoins (score: 8)",
+                                                "C": "CBDCs (score: 10)",
+                                                "D": "Payment Platforms (score: 2)"
+                                },
+                                "correct": "C",
+                                "explanation": "CBDCs score a perfect 10 on the Monetary lens, reflecting their direct connection to monetary policy, central bank operations, and sovereign currency functions. This is higher than Bitcoin (9) and Stablecoins (8)."
+                },
+                {
+                                "id": 10,
+                                "question": "The Platform lens is most relevant for analyzing which digital finance phenomenon?",
+                                "options": {
+                                                "A": "CBDCs (score: 4)",
+                                                "B": "DeFi/AMMs (score: 8)",
+                                                "C": "Payment Platforms (score: 9)",
+                                                "D": "Bitcoin (score: 3)"
+                                },
+                                "correct": "C",
+                                "explanation": "Payment Platforms score highest (9) on the Platform lens, reflecting network effects, two-sided markets, and platform competition dynamics. DeFi/AMMs score 8, showing strong but slightly lower platform characteristics."
+                },
+                {
+                                "id": 11,
+                                "question": "Which phenomenon demonstrates the highest score on the Microstructure lens?",
+                                "options": {
+                                                "A": "Bitcoin (score: 7)",
+                                                "B": "Stablecoins (score: 6)",
+                                                "C": "DeFi/AMMs (score: 10)",
+                                                "D": "CBDCs (score: 3)"
+                                },
+                                "correct": "C",
+                                "explanation": "DeFi/AMMs achieve a perfect score (10) on the Microstructure lens due to automated market makers, liquidity pools, price discovery mechanisms, and orderbook-free trading. These are quintessentially microstructure phenomena."
+                },
+                {
+                                "id": 12,
+                                "question": "Applying all four lenses, which two phenomena have the most similar analytical profiles?",
+                                "options": {
+                                                "A": "Bitcoin and DeFi/AMMs (both innovation-focused)",
+                                                "B": "Stablecoins and Tokenized Assets (balanced across lenses)",
+                                                "C": "CBDCs and Payment Platforms (both centralized)",
+                                                "D": "Bitcoin and Payment Platforms (both payment-focused)"
+                                },
+                                "correct": "B",
+                                "explanation": "Stablecoins (8,5,6,9) and Tokenized Assets (5,6,8,7) show relatively balanced profiles across all four lenses, each scoring 5-9 on different dimensions. This reflects their multi-faceted nature spanning monetary, platform, market, and regulatory concerns."
+                },
+                {
+                                "id": 13,
+                                "question": "In the Digital Finance Trilemma, which corner does Visa occupy and why?",
+                                "options": {
+                                                "A": "Innovation corner - due to continuous technological advancement",
+                                                "B": "Stability corner - due to decades of operational reliability",
+                                                "C": "Efficiency-Stability edge - high throughput with established safeguards",
+                                                "D": "Center - balancing all three dimensions equally"
+                                },
+                                "correct": "C",
+                                "explanation": "Visa is positioned with barycentric coordinates (0.5, 0.4, 0.1), heavily favoring Efficiency (50%) and Stability (40%) with minimal Innovation (10%). This reflects its focus on transaction speed and system reliability over novel features."
+                },
+                {
+                                "id": 14,
+                                "question": "Which system demonstrates the strongest bias toward Innovation in the trilemma?",
+                                "options": {
+                                                "A": "Ethereum (45% innovation)",
+                                                "B": "Bitcoin (50% innovation)",
+                                                "C": "DeFi (70% innovation)",
+                                                "D": "Stablecoins (35% innovation)"
+                                },
+                                "correct": "C",
+                                "explanation": "DeFi systems score highest on Innovation (70%), with only 15% each for Efficiency and Stability. This reflects rapid protocol experimentation, novel financial primitives, and acceptance of higher risk for innovation gains."
+                },
+                {
+                                "id": 15,
+                                "question": "The Trilemma visualization shows an arrow from Ethereum toward Efficiency. What does this represent?",
+                                "options": {
+                                                "A": "Historical trend - Ethereum was once more efficient",
+                                                "B": "Planned trajectory - Layer 2 scaling and protocol upgrades",
+                                                "C": "Competitor pressure - losing market share to faster chains",
+                                                "D": "Regulatory requirement - mandated performance standards"
+                                },
+                                "correct": "B",
+                                "explanation": "The arrow indicates Ethereum's development path from (0.3, 0.25, 0.45) toward higher Efficiency through Layer 2 rollups, sharding, and protocol improvements. This represents strategic evolution to address the efficiency-innovation trade-off."
+                },
+                {
+                                "id": 16,
+                                "question": "According to the trilemma, what fundamental trade-off do CBDCs face?",
+                                "options": {
+                                                "A": "High Efficiency (35%) and Stability (50%) come at cost of Innovation (15%)",
+                                                "B": "Prioritizing Innovation (50%) sacrifices Stability (25%)",
+                                                "C": "Balanced approach (33% each) is optimal",
+                                                "D": "No trade-offs exist for government-backed systems"
+                                },
+                                "correct": "A",
+                                "explanation": "CBDCs are positioned at (0.35, 0.5, 0.15), prioritizing Stability (50%) and moderate Efficiency (35%) while scoring lowest on Innovation (15%). This reflects central bank mandates for monetary stability over experimental features."
+                },
+                {
+                                "id": 17,
+                                "question": "Which policy tool demonstrates the most comprehensive positive effectiveness across all objectives?",
+                                "options": {
+                                                "A": "Capital Requirements (+2 Stability, but negative on Inclusion/Innovation)",
+                                                "B": "Cross-border Coordination (+1 on all objectives, +2 AML)",
+                                                "C": "Sandbox (+2 Innovation, but mixed on others)",
+                                                "D": "CBDC (+2 Inclusion, +1 on most others)"
+                                },
+                                "correct": "B",
+                                "explanation": "Cross-border coordination scores positively on all five objectives: Stability (+1), Inclusion (+1), Innovation (+1), Consumer Protection (+1), and AML (+2). This makes it the most uniformly beneficial policy tool without major trade-offs."
+                },
+                {
+                                "id": 18,
+                                "question": "The Policy Effectiveness Matrix shows which tool as most harmful to Innovation?",
+                                "options": {
+                                                "A": "Capital Requirements (-1)",
+                                                "B": "Licensing (-2)",
+                                                "C": "Disclosure (0)",
+                                                "D": "Sandbox (+2)"
+                                },
+                                "correct": "B",
+                                "explanation": "Licensing scores -2 on Innovation, the most negative impact in that category. Heavy licensing requirements create barriers to entry, increase compliance costs, and slow down experimental development compared to all other policy tools."
+                },
+                {
+                                "id": 19,
+                                "question": "According to the policy matrix, which objective benefits most from Stablecoin Regulation?",
+                                "options": {
+                                                "A": "Stability (+2)",
+                                                "B": "Consumer Protection (+2)",
+                                                "C": "AML (+2)",
+                                                "D": "All three equally (+2)"
+                                },
+                                "correct": "D",
+                                "explanation": "Stablecoin Regulation scores +2 on three objectives: Stability, Consumer Protection, and AML. This reflects the systemic importance of stablecoins and their vulnerability to runs, fraud, and illicit finance without proper oversight."
+                },
+                {
+                                "id": 20,
+                                "question": "Synthesizing across all frameworks, which future scenario appears most likely by 2045?",
+                                "options": {
+                                                "A": "Pure DeFi dominance (70%+ market share) with minimal regulation",
+                                                "B": "Balanced Coexistence: TradFi ~50%, DeFi ~30%, with hybrid models bridging both",
+                                                "C": "Complete Absorption: TradFi assimilates all innovations, DeFi becomes irrelevant",
+                                                "D": "Regulatory fragmentation prevents any coherent convergence"
+                                },
+                                "correct": "B",
+                                "explanation": "The Coexistence scenario best integrates insights from all frameworks: (1) policies can be effective without eliminating innovation, (2) the trilemma allows different systems to optimize different corners, (3) network effects support multiple equilibria, and (4) hybrid models resolve regulatory-innovation tensions."
+                }
+]
+        };
+
+        const state = {
+            currentIndex: 0,
+            answers: {},
+            score: 0,
+            displayedQuestions: [],
+            pendingSlots: []
+        };
+
+        const questionsRow = document.getElementById('questionsRow');
+        const progressBar = document.getElementById('progressBar');
+        const progressBadge = document.getElementById('progressBadge');
+        const scoreBadge = document.getElementById('scoreBadge');
+        const resultsCard = document.getElementById('resultsCard');
+        const nextBtn = document.getElementById('nextBtn');
+
+        function initQuiz() {
+            state.currentIndex = 0;
+            state.answers = {};
+            state.score = 0;
+            state.displayedQuestions = [];
+            state.pendingSlots = [];
+
+            resultsCard.classList.remove('show');
+            questionsRow.style.display = 'grid';
+            nextBtn.classList.remove('show');
+
+            // Show first 3 questions
+            for (let i = 0; i < 3 && i < quizData.questions.length; i++) {
+                state.displayedQuestions.push(i);
+            }
+            state.currentIndex = Math.min(3, quizData.questions.length);
+
+            renderQuestions();
+            updateStats();
+        }
+
+        function renderQuestions() {
+            questionsRow.innerHTML = '';
+
+            state.displayedQuestions.forEach((qIdx, slot) => {
+                const q = quizData.questions[qIdx];
+                const answered = state.answers[q.id] !== undefined;
+                const isCorrect = answered && state.answers[q.id] === q.correct;
+                const isIncorrect = answered && state.answers[q.id] !== q.correct;
+
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                if (isCorrect) card.classList.add('correct-card', 'answered');
+                if (isIncorrect) card.classList.add('incorrect-card', 'answered');
+
+                card.innerHTML = `
+                    <div class="q-header">
+                        <span class="q-number">Q${qIdx + 1}</span>
+                        ${answered ? `<span class="q-status">${isCorrect ? '&#10004;' : '&#10008;'}</span>` : ''}
+                    </div>
+                    <div class="q-text">${q.question}</div>
+                    <div class="options" data-qid="${q.id}" data-slot="${slot}">
+                        ${['A','B','C','D'].map(letter => {
+                            let optClass = 'option-btn';
+                            if (answered) {
+                                optClass += ' disabled';
+                                if (letter === q.correct) optClass += ' correct';
+                                else if (letter === state.answers[q.id]) optClass += ' incorrect';
+                            }
+                            return `
+                                <button class="${optClass}" data-letter="${letter}" ${answered ? 'disabled' : ''}>
+                                    <span class="option-letter">${letter}</span>
+                                    <span class="option-text">${q.options[letter]}</span>
+                                </button>
+                            `;
+                        }).join('')}
+                    </div>
+                    <div class="feedback ${answered ? 'show' : ''} ${isCorrect ? 'correct' : 'incorrect'}">
+                        ${answered ? (isCorrect ? '&#10004; ' : `&#10008; Answer: ${q.correct}. `) + q.explanation : ''}
+                    </div>
+                `;
+
+                // Add click handlers
+                if (!answered) {
+                    card.querySelectorAll('.option-btn').forEach(btn => {
+                        btn.addEventListener('click', () => handleAnswer(qIdx, slot, btn.dataset.letter));
+                    });
+                }
+
+                questionsRow.appendChild(card);
+            });
+
+            renderMath();
+        }
+
+        function handleAnswer(qIdx, slot, letter) {
+            const q = quizData.questions[qIdx];
+            state.answers[q.id] = letter;
+
+            if (letter === q.correct) state.score++;
+
+            // Track this slot as pending replacement
+            if (!state.pendingSlots.includes(slot)) {
+                state.pendingSlots.push(slot);
+            }
+
+            updateStats();
+            renderQuestions();
+
+            // Check if all questions answered
+            const answered = Object.keys(state.answers).length;
+            if (answered >= quizData.questions.length) {
+                // Short delay then show results
+                setTimeout(showResults, 800);
+            } else if (state.currentIndex < quizData.questions.length && state.pendingSlots.length > 0) {
+                // Show Next button if there are more questions and pending slots
+                nextBtn.classList.add('show');
+            }
+        }
+
+        function loadNextQuestions() {
+            // Replace pending slots with new questions
+            while (state.pendingSlots.length > 0 && state.currentIndex < quizData.questions.length) {
+                const slot = state.pendingSlots.shift();
+                state.displayedQuestions[slot] = state.currentIndex;
+                state.currentIndex++;
+            }
+
+            // Hide Next button
+            nextBtn.classList.remove('show');
+
+            renderQuestions();
+
+            // Check if quiz is complete (all displayed questions answered)
+            const answered = Object.keys(state.answers).length;
+            if (answered >= quizData.questions.length) {
+                setTimeout(showResults, 500);
+            }
+        }
+
+        function updateStats() {
+            const answered = Object.keys(state.answers).length;
+            const total = quizData.questions.length;
+
+            progressBar.style.width = `${(answered / total) * 100}%`;
+            progressBadge.textContent = `${answered}/${total}`;
+            scoreBadge.textContent = `Score: ${state.score}`;
+        }
+
+        function showResults() {
+            questionsRow.style.display = 'none';
+            nextBtn.classList.remove('show');
+            resultsCard.classList.add('show');
+
+            const total = quizData.questions.length;
+            const percentage = Math.round((state.score / total) * 100);
+
+            document.getElementById('resultsScore').textContent = `${state.score}/${total}`;
+
+            let grade, gradeClass, icon;
+            if (percentage >= 90) { grade = 'Excellent! A'; gradeClass = 'grade-a'; icon = '&#127942;'; }
+            else if (percentage >= 80) { grade = 'Great! B'; gradeClass = 'grade-b'; icon = '&#11088;'; }
+            else if (percentage >= 70) { grade = 'Good! C'; gradeClass = 'grade-c'; icon = '&#128077;'; }
+            else if (percentage >= 60) { grade = 'Pass - D'; gradeClass = 'grade-d'; icon = '&#128221;'; }
+            else { grade = 'Keep practicing'; gradeClass = 'grade-f'; icon = '&#128218;'; }
+
+            document.getElementById('resultsIcon').innerHTML = icon;
+            const gradeEl = document.getElementById('resultsGrade');
+            gradeEl.textContent = `${grade} (${percentage}%)`;
+            gradeEl.className = `results-grade ${gradeClass}`;
+        }
+
+        function restartQuiz() {
+            initQuiz();
+        }
+
+        function renderMath() {
+            if (typeof renderMathInElement !== 'undefined') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initQuiz();
+            setTimeout(renderMath, 100);
+        });
+    </script>
+</body>
+</html>

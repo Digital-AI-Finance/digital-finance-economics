@@ -1,0 +1,647 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+% Apply custom colors to Madrid theme
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Platform and Token Economics}
+\subtitle{L05: Network Effects and Tokenomics}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Outline
+\begin{frame}[t]{Lesson Overview}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Today's Topics}
+\begin{enumerate}
+\item Platform economics foundations
+\item Network effects and externalities
+\item Critical mass and tipping points
+\item Token velocity and value mechanisms
+\item Tokenomics supply schedules
+\item Winner-take-all market dynamics
+\item Two-sided markets in digital finance
+\item Governance and voting mechanisms
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Learning Objectives}
+\begin{itemize}
+\item Understand network effects in digital platforms
+\item Analyze token velocity and its impact on value
+\item Apply platform economics to blockchain adoption
+\item Evaluate tokenomics design trade-offs
+\item Assess governance mechanisms
+\end{itemize}
+\end{columns}
+
+\bottomnote{This lesson applies platform economics to understand cryptocurrency and token systems}
+\end{frame}
+
+% Platform Economics Introduction
+\begin{frame}[t]{Platform Economics: Introduction}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What is a Platform?}
+
+A platform is a two-sided or multi-sided market that:
+\begin{itemize}
+\item Facilitates interactions between distinct user groups
+\item Creates value through network effects
+\item Exhibits cross-side externalities
+\item Often displays winner-take-all dynamics
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Examples in Digital Finance}
+\begin{itemize}
+\item Ethereum: developers and users
+\item Exchanges: buyers and sellers
+\item Payment networks: merchants and consumers
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Key Economic Features}
+\begin{itemize}
+\item Network externalities (direct and indirect)
+\item Multi-homing costs and switching costs
+\item Platform competition vs. cooperation
+\item Governance and control
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Why Platform Economics Matters}
+
+Blockchain systems are inherently platforms:
+\begin{itemize}
+\item Validators, developers, users interact
+\item Token value depends on network size
+\item Adoption follows platform dynamics
+\end{itemize}
+\end{columns}
+
+\bottomnote{Platform economics explains why some cryptocurrencies succeed while others fail}
+\end{frame}
+
+% Network Effects and Externalities
+\begin{frame}[t]{Network Effects: Theory and Dynamics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Types of Network Effects}
+
+\vspace{0.3em}
+\textbf{1. Direct Network Effects}
+\begin{itemize}
+\item Value increases with same-side users
+\item Example: More Bitcoin holders $\rightarrow$ more liquidity
+\item Katz-Shapiro (1985): $V_i = v(n)$ where $v'(n) > 0$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Indirect Network Effects}
+\begin{itemize}
+\item Value increases with other-side users
+\item Example: More Ethereum users $\rightarrow$ more dApps
+\item Cross-side externalities drive adoption
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Economic Implications}
+\begin{itemize}
+\item Positive feedback loops
+\item Multiple equilibria possible
+\item Coordination problems in early stages
+\item Path dependence and lock-in
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Measurement Challenge}
+
+How to quantify network effects?
+\begin{itemize}
+\item Active addresses (users)
+\item Transaction volume (activity)
+\item Developer activity (ecosystem)
+\item Metcalfe's Law: $V \propto n^2$
+\end{itemize}
+\end{columns}
+
+\bottomnote{Katz \& Shapiro (1985): Network externalities create strategic complementarities in adoption}
+\end{frame}
+
+% Chart: Platform Adoption Dynamics
+\begin{frame}[t]{Platform Adoption Dynamics}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{01_platform_adoption_dynamics/chart.pdf}
+\end{center}
+
+\bottomnote{S-curve adoption patterns reflect network effects: slow start, rapid growth, eventual saturation}
+\end{frame}
+
+% Critical Mass and Tipping Points
+\begin{frame}[t]{Critical Mass and Tipping Points}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Critical Mass Problem}
+
+\vspace{0.3em}
+A platform needs critical mass to become self-sustaining:
+\begin{itemize}
+\item Below critical mass: adoption stalls
+\item Above critical mass: positive feedback drives growth
+\item Tipping point: inflection in adoption curve
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Strategic Implications}
+\begin{itemize}
+\item Early subsidies to reach critical mass
+\item Free services to attract one side
+\item Cross-subsidization strategies
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Theoretical Foundation}
+
+Schelling (1978): Coordination games with multiple equilibria
+\begin{itemize}
+\item High adoption: stable equilibrium
+\item Low adoption: stable equilibrium
+\item Critical mass: unstable equilibrium
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Application to Tokens}
+\begin{itemize}
+\item Initial coin offerings (ICOs) reduce bootstrapping costs
+\item Token airdrops create initial user base
+\item Liquidity mining accelerates adoption
+\end{itemize}
+\end{columns}
+
+\bottomnote{Schelling (1978): Critical mass creates tipping dynamics in social and economic systems}
+\end{frame}
+
+% Chart: Network Effects and Critical Mass
+\begin{frame}[t]{Network Effects and Critical Mass}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{02_network_effects_critical_mass/chart.pdf}
+\end{center}
+
+\bottomnote{Value per user increases with network size; critical mass is where adoption becomes self-reinforcing}
+\end{frame}
+
+% Token Velocity and Value
+\begin{frame}[t]{Token Velocity and Value}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Quantity Equation for Tokens}
+
+Fisher's equation applied to tokens:
+\[
+MV = PQ
+\]
+\begin{itemize}
+\item $M$: Token supply (monetary base)
+\item $V$: Velocity (transactions per period)
+\item $P$: Price level in token terms
+\item $Q$: Real output (network activity)
+\end{itemize}
+
+\vspace{0.3em}
+Solving for token value:
+\[
+P_{\text{token}} = \frac{PQ}{MV}
+\]
+
+\column{0.48\textwidth}
+\textbf{The Velocity Problem}
+
+High velocity reduces token value:
+\begin{itemize}
+\item Tokens used only for transactions
+\item No incentive to hold
+\item Limited value capture
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Velocity Sinks}
+
+Mechanisms to reduce velocity:
+\begin{itemize}
+\item Staking requirements (lock-up periods)
+\item Governance rights (voting power)
+\item Fee discounts for holders
+\item Burn mechanisms (deflationary)
+\end{itemize}
+\end{columns}
+
+\bottomnote{Samuelson (2017): Token velocity is central challenge in cryptoeconomics design}
+\end{frame}
+
+% Chart: Token Velocity Sink
+\begin{frame}[t]{Token Velocity Sinks}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{03_token_velocity_sink/chart.pdf}
+\end{center}
+
+\bottomnote{Staking and governance create holding incentives, reducing velocity and supporting token value}
+\end{frame}
+
+% Tokenomics Supply Schedules
+\begin{frame}[t]{Tokenomics: Supply Schedules}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Supply Design Choices}
+
+\vspace{0.3em}
+\textbf{1. Fixed Supply}
+\begin{itemize}
+\item Example: Bitcoin (21M cap)
+\item Deflationary if adoption grows
+\item Reduces inflation risk
+\item May limit flexibility
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Inflationary Supply}
+\begin{itemize}
+\item Example: Ethereum (no hard cap)
+\item Rewards validators/miners
+\item Funds ecosystem development
+\item Dilutes existing holders
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{3. Algorithmic Adjustment}
+\begin{itemize}
+\item Supply responds to demand
+\item Example: Stablecoins (DAI, Terra)
+\item Attempts price stability
+\item Complex mechanism design
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Trade-offs}
+\begin{itemize}
+\item Credibility vs. flexibility
+\item Early adopters vs. late adopters
+\item Short-term incentives vs. long-term value
+\end{itemize}
+\end{columns}
+
+\bottomnote{Token supply schedules balance incentive alignment with long-term sustainability}
+\end{frame}
+
+% Chart: Tokenomics Supply Schedule
+\begin{frame}[t]{Tokenomics Supply Schedules}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{04_tokenomics_supply_schedule/chart.pdf}
+\end{center}
+
+\bottomnote{Different supply schedules create distinct inflation dynamics and holder incentives}
+\end{frame}
+
+% Winner-Take-All Dynamics
+\begin{frame}[t]{Winner-Take-All Market Dynamics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Why Winner-Take-All?}
+
+Platform markets often concentrate:
+\begin{itemize}
+\item Network effects favor largest player
+\item Multi-homing costs create lock-in
+\item Liquidity begets liquidity
+\item Switching costs preserve dominance
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Evidence in Crypto Markets}
+\begin{itemize}
+\item Bitcoin dominance in store of value
+\item Ethereum dominance in smart contracts
+\item Exchange concentration (Binance, Coinbase)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Theoretical Foundation}
+
+Gibrat's Law: proportional growth leads to concentration
+\[
+\frac{dS_i}{dt} = \alpha S_i + \epsilon_i
+\]
+Where $S_i$ is firm $i$'s market share.
+
+\vspace{0.3em}
+\textbf{Policy Implications}
+\begin{itemize}
+\item Antitrust concerns in platform markets
+\item Interoperability requirements
+\item Challenges to decentralization narrative
+\end{itemize}
+\end{columns}
+
+\bottomnote{Shapiro \& Varian (1999): Winner-take-all is common in information economies}
+\end{frame}
+
+% Chart: Winner-Take-All Market Share
+\begin{frame}[t]{Winner-Take-All Market Concentration}
+\begin{center}
+\includegraphics[width=0.65\textwidth]{05_winner_take_all_market_share/chart.pdf}
+\end{center}
+
+\bottomnote{Network effects and switching costs lead to market concentration around dominant platform}
+\end{frame}
+
+% Two-Sided Markets
+\begin{frame}[t]{Two-Sided Markets in Digital Finance}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Defining Two-Sided Markets}
+
+Rochet \& Tirole (2003): A market is two-sided if:
+\begin{itemize}
+\item Platform serves two distinct groups
+\item Cross-side externalities exist
+\item Price structure matters (not just level)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Examples}
+\begin{itemize}
+\item Exchanges: traders and liquidity providers
+\item Payment networks: merchants and consumers
+\item DeFi protocols: borrowers and lenders
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Pricing Strategies}
+
+Platform can subsidize one side:
+\begin{itemize}
+\item Loss leaders to attract one group
+\item Extract surplus from other side
+\item Example: Free wallets, fee-paying traders
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Implications for Tokenomics}
+\begin{itemize}
+\item Fee structures affect both sides
+\item Subsidy design critical for bootstrapping
+\item Governance must balance interests
+\end{itemize}
+\end{columns}
+
+\bottomnote{Rochet \& Tirole (2003, 2006): Two-sided market theory explains platform pricing}
+\end{frame}
+
+% Governance and Voting
+\begin{frame}[t]{Governance and Voting Mechanisms}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Why Governance Matters}
+
+Token holders often have governance rights:
+\begin{itemize}
+\item Protocol parameter changes
+\item Treasury fund allocation
+\item Upgrade decisions
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Voting Mechanisms}
+\begin{itemize}
+\item One-token-one-vote (plutocracy risk)
+\item Quadratic voting (Weyl \& Lalley)
+\item Delegated voting (representation)
+\item Futarchy (prediction markets)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Challenges}
+\begin{itemize}
+\item Low voter turnout (rational apathy)
+\item Plutocracy: wealth concentration
+\item Governance attacks (hostile takeovers)
+\item Short-term vs. long-term interests
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Mechanism Design}
+
+How to align incentives?
+\begin{itemize}
+\item Time-weighted voting (long-term holders)
+\item Skin-in-the-game requirements
+\item Reputation systems
+\end{itemize}
+\end{columns}
+
+\bottomnote{Weyl \& Lalley (2018): Quadratic voting mitigates plutocracy in token governance}
+\end{frame}
+
+% Platform Competition
+\begin{frame}[t]{Platform Competition Dynamics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Compete or Cooperate?}
+
+Platforms face strategic choices:
+\begin{itemize}
+\item Proprietary standards vs. open protocols
+\item Exclusivity vs. interoperability
+\item Walled gardens vs. ecosystems
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Blockchain Context}
+\begin{itemize}
+\item L1 blockchains compete for users
+\item L2 solutions cooperate with L1s
+\item Cross-chain bridges enable multi-homing
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Strategic Trade-offs}
+
+\vspace{0.3em}
+\textbf{Exclusivity Benefits}
+\begin{itemize}
+\item Capture full value from users
+\item Differentiation and branding
+\item Control over user experience
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Interoperability Benefits}
+\begin{itemize}
+\item Larger network effects
+\item Reduced user friction
+\item Ecosystem growth
+\end{itemize}
+\end{columns}
+
+\bottomnote{Farrell \& Saloner (1985): Standardization and compatibility in platform markets}
+\end{frame}
+
+% Tokenomics Design Principles
+\begin{frame}[t]{Tokenomics Design: Key Principles}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{1. Incentive Alignment}
+
+Token design must align stakeholders:
+\begin{itemize}
+\item Users: utility and low fees
+\item Developers: rewards and funding
+\item Validators: security incentives
+\item Investors: value appreciation
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Velocity Management}
+\begin{itemize}
+\item Create holding incentives (staking)
+\item Avoid pure transaction tokens
+\item Add non-financial utility
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{3. Supply Credibility}
+\begin{itemize}
+\item Clear, predictable issuance
+\item Algorithmic enforcement
+\item Resist arbitrary changes
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{4. Governance Design}
+\begin{itemize}
+\item Avoid plutocracy
+\item Ensure long-term focus
+\item Balance efficiency and inclusiveness
+\end{itemize}
+\end{columns}
+
+\vspace{0.5em}
+\textbf{Core Message}
+
+Good tokenomics balances short-term adoption incentives with long-term value sustainability.
+
+\bottomnote{Effective tokenomics requires careful mechanism design informed by platform economics}
+\end{frame}
+
+% Key Takeaways
+\begin{frame}[t]{Key Takeaways}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What We Covered}
+\begin{enumerate}
+\item Platform economics foundations
+\item Network effects and critical mass
+\item Token velocity and value mechanisms
+\item Supply schedule design
+\item Winner-take-all dynamics
+\item Two-sided markets
+\item Governance mechanisms
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Core Insights}
+\begin{itemize}
+\item Network effects drive crypto adoption
+\item Token value depends on velocity management
+\item Supply schedules balance incentives
+\item Governance is a mechanism design problem
+\item Winner-take-all is common but not inevitable
+\end{itemize}
+\end{columns}
+
+\vspace{0.5em}
+\textbf{Looking Ahead}
+
+Next lesson (L06): Market microstructure---how crypto markets discover prices and provide liquidity.
+
+\bottomnote{Platform economics explains the success and failure patterns in cryptocurrency markets}
+\end{frame}
+
+% Further Reading
+\begin{frame}[t]{Further Reading}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Foundational Papers}
+\begin{itemize}
+\item Katz \& Shapiro (1985): ``Network Externalities, Competition, and Compatibility''
+\item Rochet \& Tirole (2003): ``Platform Competition in Two-Sided Markets''
+\item Catalini \& Gans (2020): ``Some Simple Economics of the Blockchain''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Tokenomics}
+\begin{itemize}
+\item Samuelson (2017): ``Velocity of Tokens'' (Medium)
+\item Buterin (2017): ``On Medium-of-Exchange Token Valuations''
+\item Weyl \& Lalley (2018): ``Quadratic Voting''
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform}
+\end{frame}
+
+\end{document}
