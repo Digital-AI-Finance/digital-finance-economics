@@ -1,4 +1,11 @@
-"""Token Velocity and Value Capture"""
+"""Token Velocity and Value Capture - Equation of Exchange Application
+
+Demonstrates how staking mechanisms reduce token velocity and increase market capitalization.
+Based on the Equation of Exchange (MV=PQ) applied to tokenomics, where velocity sinks
+through staking create value capture for token holders.
+
+Citation: Fisher (1911) - The Purchasing Power of Money; adapted to token economics
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path

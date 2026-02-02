@@ -1,4 +1,7 @@
-"""Network Effects: Critical Mass and Multiple Equilibria"""
+"""Network Effects: Critical Mass and Multiple Equilibria
+
+Based on: Katz & Shapiro (1985) - Network Externalities
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -97,6 +100,12 @@ ax.legend(loc='upper right')
 ax.grid(True, alpha=0.3, linestyle='--')
 ax.set_xlim(0.05, 0.5)
 ax.set_ylim(0, 1)
+
+# Add Metcalfe's Law annotation
+ax.text(0.02, 0.98, r"Metcalfe's Law: $V = n(n-1)/2$" + "\n" + r"Network value $\propto$ $n^2$",
+        transform=ax.transAxes, fontsize=11,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')
 plt.savefig(Path(__file__).parent / 'chart.png', dpi=150, bbox_inches='tight')

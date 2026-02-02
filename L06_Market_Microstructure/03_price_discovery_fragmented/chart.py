@@ -2,6 +2,8 @@
 
 Multi-venue price discovery with Hasbrouck information share calculation.
 Theory: Hasbrouck (1995) "One Security, Many Markets: Determining the Contributions to Price Discovery"
+
+Based on: Hasbrouck (1995) - Information Shares
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -121,11 +123,26 @@ ax1.axvline(x=100, color=MLRED, linestyle=':', alpha=0.5, linewidth=1.5)
 ax1.axvline(x=200, color=MLRED, linestyle=':', alpha=0.5, linewidth=1.5)
 ax1.text(100, ax1.get_ylim()[1], 'Info Shock', ha='center', va='bottom', fontsize=10, color=MLRED)
 
-ax1.set_xlabel('Time Steps')
+ax1.set_xlabel('Time Steps (steps)')
 ax1.set_ylabel('Price ($)')
 ax1.set_title('Multi-Venue Price Discovery: Lead-Lag Relationships', fontweight='bold')
 ax1.legend(loc='upper left', framealpha=0.95)
 ax1.grid(alpha=0.3, linestyle='--')
+
+# B5: Add annotation highlighting information shock response
+ax1.annotate('Info shock:\nCEX leads response',
+            xy=(100, true_price[100]), xytext=(110, true_price[100] + 2),
+            fontsize=10, fontweight='bold', color=MLBLUE,
+            arrowprops=dict(arrowstyle='->', color=MLBLUE, lw=1.5),
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLBLUE, alpha=0.8))
+
+# Add information share formula annotation
+ax1.text(0.98, 0.98, r'Hasbrouck Information Share:' + '\n' +
+         r'$IS_i = \frac{\text{Cov}(\Delta p_i, \Delta m)^2}{\sum_j \text{Cov}(\Delta p_j, \Delta m)^2}$' + '\n' +
+         r'Measures venue contribution to price discovery',
+         transform=ax1.transAxes, fontsize=10,
+         verticalalignment='top', horizontalalignment='right',
+         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 # Panel 2: Information Share by Venue
 ax2 = fig.add_subplot(gs[1, 0])

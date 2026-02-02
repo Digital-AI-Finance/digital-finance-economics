@@ -1,7 +1,9 @@
 """Token Supply Schedule: Vesting Economics
 
 Modeling token unlock schedules and their market impact.
-Theory: Token vesting economics and selling pressure dynamics.
+Theory: Token vesting economics and selling pressure dynamics showing cliff-and-linear vesting patterns.
+
+Citation: Cong et al. (2021) - Tokenomics: Dynamic Adoption and Valuation; Liu et al. (2023) - Risks and Returns of Cryptocurrency
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -114,11 +116,18 @@ for category, schedule in vesting_schedules.items():
     ax1.plot(t_months, schedule / 1e6, linewidth=2, color=colors[category],
              label=category, alpha=0.8)
 
-ax1.set_xlabel('Months Since Launch')
+ax1.set_xlabel('Months Since Launch (months)')
 ax1.set_ylabel('Monthly Token Unlock (millions)')
 ax1.set_title('Token Vesting Schedule: Monthly Unlock Rate by Category')
-ax1.legend(loc='upper right', ncol=5)
+ax1.legend(loc='best', fontsize=10, ncol=5)
 ax1.grid(True, alpha=0.3, linestyle='--')
+
+# B5: Add annotation highlighting investor cliff event
+ax1.annotate('Investor cliff:\nMajor unlock event',
+            xy=(6, 10), xytext=(10, 13),
+            fontsize=9, fontweight='bold', color=MLBLUE,
+            arrowprops=dict(arrowstyle='->', color=MLBLUE, lw=1.5),
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLBLUE, alpha=0.8))
 
 # Mark major cliff events
 for category, params in ALLOCATIONS.items():
@@ -140,7 +149,7 @@ ax2.plot(t_months, total_circulating / 1e6, linewidth=3, color='black',
 ax2.set_xlabel('Months Since Launch')
 ax2.set_ylabel('Cumulative Tokens (millions)')
 ax2.set_title('Circulating Supply Over Time')
-ax2.legend(loc='upper left', fontsize=9)
+ax2.legend(loc='best', fontsize=10)
 ax2.grid(True, alpha=0.3, linestyle='--')
 ax2.axhline(TOTAL_SUPPLY / 1e6, color='red', linestyle=':', alpha=0.3, linewidth=1.5)
 ax2.text(months * 0.98, TOTAL_SUPPLY / 1e6 * 1.02, 'Max Supply',
@@ -180,7 +189,7 @@ for month, unlock, price in major_unlocks:
 ax4.set_xlabel('Months Since Launch')
 ax4.set_ylabel('Token Price (USD)')
 ax4.set_title('Simulated Price Impact from Token Unlocks')
-ax4.legend(loc='upper left')
+ax4.legend(loc='best', fontsize=10)
 ax4.grid(True, alpha=0.3, linestyle='--')
 
 # Add annotation box explaining the simulation

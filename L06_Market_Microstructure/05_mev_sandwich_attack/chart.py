@@ -2,6 +2,8 @@
 
 Profit maximization in blockchain front-running attacks.
 Theory: Daian et al. (2020) "Flash Boys 2.0: Frontrunning in DEXes"
+
+Based on: Daian et al. (2020) - Flash Boys 2.0
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -141,9 +143,11 @@ ax_inset.grid(alpha=0.3, linestyle='--')
 ax_inset.tick_params(labelsize=10)
 
 # Add profit equation annotation
-ax_inset.text(0.5, 0.15, r'π = Q_f(P′ - P) - 2·gas',
-         transform=ax_inset.transAxes, fontsize=10, ha='center',
-         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3))
+ax_inset.text(0.5, 0.15, r'MEV Extraction:' + '\n' +
+              r'$\pi = Q_f(P^\prime - P) - 2 \cdot \text{gas}$' + '\n' +
+              r'$P^\prime = \frac{y + \Delta y}{x - \Delta x}$ (manipulated price)',
+         transform=ax_inset.transAxes, fontsize=9, ha='center',
+         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 # Welfare analysis panel (bottom right)
 ax_welfare = plt.subplot2grid((3, 3), (2, 2))

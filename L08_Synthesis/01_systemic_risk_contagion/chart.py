@@ -1,4 +1,7 @@
-"""Financial Contagion: Network Cascade Simulation"""
+"""Financial Contagion: Network Cascade Simulation
+
+Based on: Acemoglu et al. (2015) - Systemic Risk and Network Topology
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -103,7 +106,7 @@ ax1.set_xlim(-1.3, 1.3)
 ax1.set_ylim(-1.3, 1.3)
 ax1.set_aspect('equal')
 ax1.axis('off')
-ax1.set_title('Network Contagion Map')
+ax1.set_title('Financial Network Contagion Map of Systemic Risk')
 
 # Add legend
 from matplotlib.patches import Patch
@@ -117,13 +120,29 @@ ax1.legend(handles=legend_elements, loc='upper left')
 # Right panel: Failures per round
 rounds = np.arange(len(round_failures))
 ax2.bar(rounds, round_failures, color=MLRED, alpha=0.7, edgecolor='black')
-ax2.set_xlabel('Cascade Round')
-ax2.set_ylabel('New Failures')
-ax2.set_title('Contagion Cascade Dynamics')
-ax2.grid(axis='y', alpha=0.3)
+ax2.set_xlabel('Cascade Round (round number)')
+ax2.set_ylabel('New Failures (count)')
+ax2.set_title('Financial Contagion Cascade Dynamics Over Time')
+ax2.grid(True, alpha=0.3, linestyle='--')
 ax2.set_xticks(rounds)
 
+# B5: Add annotation highlighting cascade total
+total_failures = failed.sum()
+if len(round_failures) > 1:
+    ax2.annotate(f'Total cascade:\n{total_failures} nodes failed',
+                xy=(1, round_failures[1]), xytext=(3, max(round_failures) * 0.7),
+                fontsize=10, fontweight='bold', color=MLRED,
+                arrowprops=dict(arrowstyle='->', color=MLRED, lw=1.5),
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLRED, alpha=0.8))
+
 plt.suptitle('Financial Contagion: Network Cascade Simulation', fontsize=16, fontweight='bold')
+
+# Add educational annotation to network panel
+ax1.text(0.02, 0.02, 'Contagion: Li,t = Σj Lj,t-1 / degj\nFail if Li,t > Bi (buffer)',
+        transform=ax1.transAxes, fontsize=10,
+        verticalalignment='bottom',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
+
 plt.tight_layout()
 
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')

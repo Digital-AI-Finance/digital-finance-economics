@@ -1,4 +1,10 @@
-"""Digital Finance Phenomena x Economic Lenses"""
+"""Digital Finance Phenomena x Economic Lenses
+
+Heatmap showing relevance scores of digital finance phenomena across four analytical dimensions:
+monetary, platform, microstructure, and regulatory economics.
+
+Citation: Course Framework - Osterrieder & Lorenz (2024) - Digital Finance Economics
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -54,11 +60,31 @@ for i in range(len(phenomena)):
 
 # Colorbar
 cbar = plt.colorbar(im, ax=ax)
-cbar.set_label('Relevance Score', rotation=270, labelpad=20)
+cbar.set_label('Relevance Score (0-10)', rotation=270, labelpad=20)
 
-ax.set_title('Four Lenses Integration Map', pad=20, fontweight='bold')
-ax.set_xlabel('Economic Lenses')
-ax.set_ylabel('Digital Finance Phenomena')
+ax.set_title('Four Economic Lenses Integration Map for Digital Finance', pad=20, fontweight='bold')
+ax.set_xlabel('Economic Lenses (category)')
+ax.set_ylabel('Digital Finance Phenomena (category)')
+ax.grid(True, alpha=0.3, linestyle='--')
+
+# B5: Add annotation highlighting DeFi microstructure strength
+defi_idx = phenomena.index('DeFi/AMMs')
+micro_idx = lenses.index('Microstructure')
+defi_micro_score = scores[defi_idx, micro_idx]
+ax.annotate(f'DeFi peak:\nMicrostructure',
+           xy=(micro_idx, defi_idx), xytext=(micro_idx + 0.5, defi_idx - 0.8),
+           fontsize=9, fontweight='bold', color='white',
+           arrowprops=dict(arrowstyle='->', color='white', lw=1.5),
+           bbox=dict(boxstyle='round,pad=0.3', facecolor=MLRED, edgecolor='white', alpha=0.9))
+
+# Add legend explaining the lenses
+legend_elements = [
+    plt.Line2D([0], [0], color=MLPURPLE, linewidth=4, label='Monetary: Money & central banking'),
+    plt.Line2D([0], [0], color=MLBLUE, linewidth=4, label='Platform: Network effects & competition'),
+    plt.Line2D([0], [0], color=MLORANGE, linewidth=4, label='Microstructure: Trading & price formation'),
+    plt.Line2D([0], [0], color=MLRED, linewidth=4, label='Regulatory: Policy & compliance')
+]
+ax.legend(handles=legend_elements, loc='upper left', bbox_to_anchor=(0, -0.15), fontsize=10, ncol=2)
 
 plt.tight_layout()
 

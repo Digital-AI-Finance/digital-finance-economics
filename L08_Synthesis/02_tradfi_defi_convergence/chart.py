@@ -2,6 +2,8 @@
 
 Coupled S-curve model showing mutual influence and convergence dynamics.
 Theory: Rogers (1962) Diffusion of Innovations, Moore (1991) Technology Adoption Lifecycle.
+
+Based on: Zetzsche et al. (2020) - DeFi Decentralized Finance
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -150,8 +152,14 @@ ax.set_title('TradFi-DeFi Convergence: Dual Technology Adoption\n' +
              fontsize=16, fontweight='bold', pad=20)
 ax.set_xlim(1990, 2035)
 ax.set_ylim(0, 100)
-ax.grid(alpha=0.3, linestyle='--')
+ax.grid(True, alpha=0.3, linestyle='--')
 ax.legend(loc='upper left', fontsize=12, framealpha=0.95)
+
+# Educational annotation
+ax.text(0.02, 0.98, 'S-Curve: S(t) = K/(1+e^(-r(t-t₀)))\nConvergence when |ST - SD| < ε',
+        transform=ax.transAxes, fontsize=10,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.6))
 
 # Citations
 ax.text(0.98, 0.02,

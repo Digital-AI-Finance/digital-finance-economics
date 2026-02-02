@@ -2,6 +2,8 @@
 
 Emergence of market concentration through stochastic growth.
 Theory: Gibrat (1931) "Law of Proportionate Effect"
+
+Based on: Arthur (1989) - Increasing Returns and Path Dependence
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -145,15 +147,36 @@ for idx, period in enumerate(periods_to_show):
                 f'T={period}\n({len(active_sizes)} firms)',
                 ha='center', fontsize=12, fontweight='bold')
 
-ax_main.set_xlabel('Firm Rank (Top 20)', fontsize=13)
-ax_main.set_ylabel('Market Share', fontsize=13)
-ax_main.set_title('Winner-Take-All Emergence via Gibrat\'s Law (1931)', fontsize=16, fontweight='bold')
+ax_main.set_xlabel('Firm Rank (Top 20, rank)', fontsize=13)
+ax_main.set_ylabel('Market Share (fraction)', fontsize=13)
+ax_main.set_title('Winner-Take-All Market Emergence via Gibrat\'s Law (1931)', fontsize=16, fontweight='bold')
 ax_main.grid(True, alpha=0.3, linestyle='--', axis='y')
 ax_main.set_ylim(0, max([max(sizes_history[p][sizes_history[p] > 0] / np.sum(sizes_history[p][sizes_history[p] > 0]))
                          for p in periods_to_show]) * 1.2)
 
+# B5: Add annotation highlighting winner dominance at T=50
+sizes_t50 = sizes_history[50]
+active_sizes_t50 = sizes_t50[sizes_t50 > 0]
+shares_t50 = active_sizes_t50 / np.sum(active_sizes_t50)
+max_share = np.max(shares_t50)
+x_offset_t50 = x_positions[2] * (20 + 5)
+ax_main.annotate(f'Leader:\n{max_share*100:.1f}%',
+                xy=(x_offset_t50, max_share), xytext=(x_offset_t50 + 5, max_share * 0.7),
+                fontsize=10, fontweight='bold', color=MLGREEN,
+                arrowprops=dict(arrowstyle='->', color=MLGREEN, lw=1.5),
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLGREEN, alpha=0.8))
+
 # Remove x-ticks (not meaningful across periods)
 ax_main.set_xticks([])
+
+# Add legend for time periods
+from matplotlib.patches import Patch
+legend_elements = [
+    Patch(facecolor=MLBLUE, alpha=0.7, label='T=0 (Equal start)'),
+    Patch(facecolor=MLORANGE, alpha=0.7, label='T=25 (Diverging)'),
+    Patch(facecolor=MLGREEN, alpha=0.7, label='T=50 (Winner emerges)')
+]
+ax_main.legend(handles=legend_elements, loc='upper right', frameon=True, fancybox=True)
 
 # Subplot 1: HHI over time
 ax1 = fig.add_subplot(gs[1, 0])

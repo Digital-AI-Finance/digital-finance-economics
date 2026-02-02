@@ -2,6 +2,8 @@
 
 Agent-based model demonstrating how bad money drives out good.
 Agents choose which currency to spend based on depreciation rates.
+
+Citation: Selgin (1996) - Salvaging Gresham's Law: The Good, the Bad, and the Illegal
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -88,7 +90,7 @@ ax.annotate('Currency B (appreciating)\nis hoarded',
 # Labels and title
 ax.set_xlabel('Time Period', fontweight='bold')
 ax.set_ylabel('Circulation Share (%)', fontweight='bold')
-ax.set_title("Gresham's Law: Bad Money Drives Out Good", fontweight='bold', pad=15)
+ax.set_title("Gresham Law: How Bad Money Drives Out Good Money", fontweight='bold', pad=15)
 ax.legend(loc='center right', framealpha=0.95)
 ax.grid(True, alpha=0.3, linestyle='--')
 

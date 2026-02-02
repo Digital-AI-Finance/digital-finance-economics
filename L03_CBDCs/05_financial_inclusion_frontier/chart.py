@@ -1,7 +1,9 @@
 """Financial Inclusion Frontier: Production Possibility Analysis
 
 Cost-inclusion tradeoff with CBDC technology shift.
-Theory: Standard microeconomic production possibility frontier.
+Theory: Standard microeconomic production possibility frontier showing technology-driven efficiency gains.
+
+Citation: World Bank (2017) - The Global Findex Database; Auer et al. (2020) - Central bank digital currencies: motives, economic implications and research agenda
 """
 import matplotlib.pyplot as plt
 import numpy as np

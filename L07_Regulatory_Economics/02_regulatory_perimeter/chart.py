@@ -1,4 +1,10 @@
-"""Regulatory Perimeter: Firm Response to Regulation Intensity"""
+"""Regulatory Perimeter: Firm Response to Regulation Intensity
+
+Illustrates how firms respond to increasing regulatory burden through compliance,
+informalization, or exit/relocation decisions based on cost-benefit analysis.
+
+Citation: De Soto (1989) - The Other Path; Porta & Shleifer (2014) - Informality and Development
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -41,6 +47,12 @@ ax.legend(loc='best')
 ax.grid(True, alpha=0.3)
 ax.set_xlim(0, 1)
 ax.set_ylim(0, 1.1)
+
+# Add educational annotation
+ax.text(0.02, 0.98, 'Perimeter Effect: π(inside) - C(r) ≥ π(outside)\nFirms exit when compliance cost > profit',
+        transform=ax.transAxes, fontsize=10,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')
 plt.savefig(Path(__file__).parent / 'chart.png', dpi=150, bbox_inches='tight')

@@ -113,6 +113,14 @@ sdg_target = 3.0
 ax.axhline(y=sdg_target, color=MLBLUE, linestyle=':', linewidth=2,
           label=f'UN SDG Target: {sdg_target}%', alpha=0.7)
 
+# Add annotation about SDG target
+ax.annotate('UN SDG 10.c Target:\nReduce remittance costs to 3% by 2030\n'
+           'Current global average: ~6%',
+           xy=(12, sdg_target), xytext=(8, 1.5),
+           fontsize=10, ha='center',
+           bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.7),
+           arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.2', lw=1.5))
+
 # Monopoly price marker
 monopoly_price = bertrand_price(1, marginal_cost, monopoly_markup, differentiation)
 ax.plot(1, monopoly_price, marker='o', markersize=12, color=MLRED,

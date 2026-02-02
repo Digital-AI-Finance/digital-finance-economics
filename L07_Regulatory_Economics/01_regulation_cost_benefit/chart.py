@@ -2,6 +2,8 @@
 
 Welfare economics of financial regulation with Harberger triangles.
 Theory: Harberger (1954), Welfare Analysis of Taxation.
+
+Based on: Stigler (1971) - Theory of Economic Regulation
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -133,11 +135,17 @@ ax1.annotate(f'With Regulation\nQ = {Q_light:.1f}\nP = ${P_light:.1f}',
 
 ax1.set_xlabel('Quantity (Q)')
 ax1.set_ylabel('Price (P)')
-ax1.set_title(f'Light Touch Regulation (τ = ${tau_light})\nTotal Surplus = ${Total_light:.0f} (Loss = ${Total_free - Total_light:.0f})')
+ax1.set_title('Light Touch Financial Regulation Compliance Cost Analysis', fontsize=14)
 ax1.legend(loc='upper right', fontsize=10)
 ax1.grid(True, alpha=0.3)
 ax1.set_xlim(0, 100)
 ax1.set_ylim(0, 110)
+
+# Add educational annotation
+ax1.text(0.02, 0.98, 'DWL = ½(b+s)(Q*-Q)²\nOptimal when MB = MSC',
+        transform=ax1.transAxes, fontsize=9,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 # ========== RIGHT PANEL: Heavy Regulation ==========
 ax2.plot(Q, P_demand, color=MLBLUE, linewidth=2.5, label='Demand (WTP)', zorder=3)
@@ -184,11 +192,17 @@ ax2.annotate(f'With Regulation\nQ = {Q_heavy:.1f}\nP = ${P_heavy:.1f}',
 
 ax2.set_xlabel('Quantity (Q)')
 ax2.set_ylabel('Price (P)')
-ax2.set_title(f'Heavy Regulation (τ = ${tau_heavy})\nTotal Surplus = ${Total_heavy:.0f} (Loss = ${Total_free - Total_heavy:.0f})')
+ax2.set_title('Heavy Financial Regulation Compliance Cost Analysis', fontsize=14)
 ax2.legend(loc='upper right', fontsize=10)
 ax2.grid(True, alpha=0.3)
 ax2.set_xlim(0, 100)
 ax2.set_ylim(0, 110)
+
+# Add educational annotation
+ax2.text(0.02, 0.98, 'Cost-Benefit: Regulate if\nSocial Benefit > DWL + τ',
+        transform=ax2.transAxes, fontsize=9,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 plt.tight_layout()
 

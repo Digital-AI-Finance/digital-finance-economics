@@ -73,7 +73,7 @@
 \item Order book mechanics and depth
 \item Price discovery in fragmented markets
 \item Impermanent loss for liquidity providers
-\item MEV and front-running economics
+\item MEV (Maximal Extractable Value---profit from reordering transactions) and front-running economics
 \end{enumerate}
 
 \column{0.48\textwidth}
@@ -99,7 +99,7 @@
 \vspace{0.3em}
 \textbf{Characteristics}
 \begin{itemize}
-\item Central limit order book (CLOB)
+\item CLOB (Central Limit Order Book---matches buy/sell orders by price)
 \item Custodial trading
 \item Professional market makers
 \item High-frequency trading infrastructure
@@ -151,6 +151,10 @@
 \end{itemize}
 
 \vspace{0.3em}
+\textbf{Example}
+If you buy 100 ETH and the order book is thin, you might pay \$1800 for first 50 and \$1850 for next 50.
+
+\vspace{0.3em}
 \textbf{Price Formation}
 \begin{itemize}
 \item Limit orders provide liquidity
@@ -164,9 +168,9 @@
 \vspace{0.3em}
 Kyle (1985) model:
 \begin{itemize}
-\item Price impact: $\lambda = \frac{\sigma_v}{2\sigma_u}$
+\item Price impact: $\lambda = \frac{\sigma_v}{2\sigma_u}$ (higher $\lambda$ = bigger price move per trade)
 \item Informed trading depth
-\item Adverse selection costs
+\item Adverse selection (informed traders profit at uninformed traders' expense)
 \end{itemize}
 
 \vspace{0.3em}
@@ -206,9 +210,13 @@ where:
 \item $k$: constant (invariant)
 \end{itemize}
 
+This formula sets prices automatically: as traders buy token A, $x$ decreases, so $y$ must increase (keeping $k$ constant), which raises the price $P = \frac{y}{x}$.
+
 \vspace{0.3em}
 \textbf{Price Determination}
 $$P = \frac{y}{x}$$
+
+\textbf{Example:} In a pool with 100 ETH and 180,000 USDC, the price is $\frac{180,000}{100} = 1800$ USDC/ETH.
 
 \column{0.48\textwidth}
 \textbf{Economic Properties}
@@ -225,8 +233,8 @@ $$P = \frac{y}{x}$$
 \vspace{0.3em}
 \textbf{Disadvantages}
 \begin{itemize}
-\item Price slippage on large trades
-\item Impermanent loss for LPs
+\item Slippage (price change between order and execution) on large trades
+\item Impermanent loss for LPs (Liquidity Providers---people who deposit tokens)
 \item Capital inefficiency
 \item MEV vulnerability
 \end{itemize}
@@ -277,6 +285,8 @@ $$P = \frac{y}{x}$$
 \item Amplified by volatility
 \end{itemize}
 
+\textbf{Example:} If you provide ETH/USDC liquidity and ETH doubles in price, you lose 5.7\% vs just holding ETH and USDC.
+
 \vspace{0.3em}
 \textbf{Other Risks}
 \begin{itemize}
@@ -295,7 +305,7 @@ $$P = \frac{y}{x}$$
 \includegraphics[width=0.65\textwidth]{04_impermanent_loss/chart.pdf}
 \end{center}
 
-\bottomnote{IL increases non-linearly with price divergence; 2x price change = 5.7\% loss, 5x change = 25.5\% loss}
+\bottomnote{IL (Impermanent Loss) increases non-linearly with price divergence; 2x price change = 5.7\% loss, 5x change = 25.5\% loss}
 \end{frame}
 
 % Price Discovery
@@ -314,7 +324,7 @@ $$P = \frac{y}{x}$$
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Arbitrage Mechanism}
+\textbf{Arbitrage (profiting from price differences) Mechanism}
 \begin{itemize}
 \item Arbitrageurs exploit price differences
 \item Drive convergence across venues
@@ -325,8 +335,10 @@ $$P = \frac{y}{x}$$
 \textbf{Information Share}
 
 \vspace{0.3em}
-Hasbrouck (1995) information share:
+Hasbrouck (1995) information share (measures how much each venue contributes to price discovery---finding the "true" price):
 $$IS_i = \frac{\text{Variance contribution of venue } i}{\text{Total price discovery variance}}$$
+
+Higher $IS_i$ means venue $i$ leads in price discovery.
 
 \vspace{0.3em}
 \textbf{Empirical Findings}
@@ -367,9 +379,9 @@ $$IS_i = \frac{\text{Variance contribution of venue } i}{\text{Total price disco
 \vspace{0.3em}
 \textbf{Types of MEV}
 \begin{itemize}
-\item Front-running
+\item Front-running (trading ahead of someone else's order)
 \item Back-running
-\item Sandwich attacks
+\item Sandwich attacks (buying before and selling after a victim's trade)
 \item Liquidations
 \item Arbitrage
 \end{itemize}
@@ -464,7 +476,7 @@ $$IS_i = \frac{\text{Variance contribution of venue } i}{\text{Total price disco
 \vspace{0.3em}
 \textbf{Spread and Depth}
 \begin{itemize}
-\item Bid-ask spreads wider than TradFi
+\item Bid-ask spreads wider than TradFi (Traditional Finance---banks, stock exchanges)
 \item Lower depth for most pairs
 \item Improving over time
 \end{itemize}
@@ -613,7 +625,7 @@ $$IS_i = \frac{\text{Variance contribution of venue } i}{\text{Total price disco
 \vspace{0.3em}
 \textbf{Impermanent Loss}
 \begin{itemize}
-\item Most LPs lose vs. HODL
+\item Most LPs lose vs. HODL (Hold On for Dear Life---crypto slang for holding)
 \item Fee income often insufficient
 \item Incentive programs crucial
 \end{itemize}
@@ -626,7 +638,7 @@ $$IS_i = \frac{\text{Variance contribution of venue } i}{\text{Total price disco
 \begin{itemize}
 \item 5-10\% implicit cost on some trades
 \item Concentrated in large trades
-\item Growing with DeFi TVL
+\item Growing with DeFi TVL (Total Value Locked---money deposited in DeFi)
 \end{itemize}
 
 \vspace{0.3em}
@@ -718,6 +730,107 @@ $$IS_i = \frac{\text{Variance contribution of venue } i}{\text{Total price disco
 Market microstructure theory helps evaluate DEX design, understand LP economics, and assess efficiency of crypto trading venues.
 
 \bottomnote{Next lesson: Regulatory Economics of Digital Finance}
+\end{frame}
+
+% Key Terms
+\begin{frame}[t]{Key Terms (1/2)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{AMM (Automated Market Maker)}
+Smart contract providing liquidity through algorithmic pricing (e.g., constant product formula $x \cdot y = k$).
+
+\vspace{0.3em}
+\textbf{Order Book}
+Traditional market structure listing buy and sell orders at various prices.
+
+\vspace{0.3em}
+\textbf{Liquidity Provider (LP)}
+Party depositing assets into AMM pool to enable trading, earning fees in return.
+
+\vspace{0.3em}
+\textbf{Impermanent Loss}
+Loss LPs experience when asset prices diverge from deposit ratio, compared to simply holding.
+
+\vspace{0.3em}
+\textbf{MEV (Maximal Extractable Value)}
+Profit extractable by reordering, inserting, or censoring transactions within a block.
+
+\vspace{0.3em}
+\textbf{Price Discovery}
+Process by which market determines asset prices through trading activity and information aggregation.
+
+\vspace{0.3em}
+\textbf{Market Microstructure}
+How trading actually works at the detailed level (order matching, price formation, liquidity provision).
+
+\column{0.48\textwidth}
+\textbf{Adverse Selection}
+Informed traders profit at uninformed traders' expense, causing market makers to widen spreads.
+
+\vspace{0.3em}
+\textbf{Slippage}
+Price change between when you submit an order and when it executes, especially on large trades.
+
+\vspace{0.3em}
+\textbf{Price Impact}
+How much your trade moves the market price; larger trades have higher price impact.
+
+\vspace{0.3em}
+\textbf{Arbitrage}
+Profiting from price differences across markets (e.g., buying ETH on one exchange and selling on another).
+
+\vspace{0.3em}
+\textbf{Front-Running}
+Trading ahead of someone else's order to profit from the expected price change.
+
+\vspace{0.3em}
+\textbf{Sandwich Attack}
+MEV strategy: buy before victim's trade, then sell after, profiting from price manipulation.
+
+\vspace{0.3em}
+\textbf{CLOB (Central Limit Order Book)}
+Order book matching system that pairs buy and sell orders by price-time priority.
+\end{columns}
+
+\bottomnote{Market microstructure concepts are essential for understanding DeFi efficiency and risks}
+\end{frame}
+
+\begin{frame}[t]{Key Terms (2/2)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Constant Product Formula}
+AMM pricing rule $x \cdot y = k$ that automatically adjusts prices as traders swap tokens.
+
+\vspace{0.3em}
+\textbf{TradFi (Traditional Finance)}
+Banks, stock exchanges, and conventional financial institutions (vs. DeFi).
+
+\vspace{0.3em}
+\textbf{TVL (Total Value Locked)}
+Total amount of money deposited in DeFi protocols, a measure of adoption and liquidity.
+
+\vspace{0.3em}
+\textbf{Gas Fees}
+Transaction fees paid to blockchain validators for processing transactions (high gas = expensive trades).
+
+\column{0.48\textwidth}
+\textbf{Block Time}
+Time between new blocks added to blockchain (e.g., 12 seconds on Ethereum); determines MEV opportunities.
+
+\vspace{0.3em}
+\textbf{Bid-Ask Spread}
+Difference between highest buy price and lowest sell price; narrower spreads = more liquid markets.
+
+\vspace{0.3em}
+\textbf{Order Book Depth}
+Volume of buy/sell orders at each price level; deeper books absorb large trades without price impact.
+
+\vspace{0.3em}
+\textbf{HODL (Hold On for Dear Life)}
+Crypto slang for holding assets long-term instead of trading; origin of "impermanent loss vs. HODL" comparison.
+\end{columns}
+
+\bottomnote{Understanding these terms is crucial for analyzing DeFi trading efficiency and risks}
 \end{frame}
 
 % References

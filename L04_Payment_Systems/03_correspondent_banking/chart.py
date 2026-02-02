@@ -258,7 +258,10 @@ metrics_text = (
     f"Vulnerability Analysis:\n"
     f"• If top hub fails:\n"
     f"  Path length: {mean_path_before:.2f} → {mean_path_after:.2f}\n"
-    f"  ({((mean_path_after/mean_path_before - 1) * 100):.0f}% increase)"
+    f"  ({((mean_path_after/mean_path_before - 1) * 100):.0f}% increase)\n\n"
+    f"Correspondent Banking Flow:\n"
+    f"Bank A → Correspondent → Bank B\n"
+    f"Hub concentration creates systemic risk"
 )
 
 ax1.text(0.02, 0.98, metrics_text, transform=ax1.transAxes,
@@ -312,7 +315,7 @@ ax2.set_xlabel('Degree (k)', fontweight='bold')
 ax2.set_ylabel('Frequency', fontweight='bold')
 ax2.set_title('Degree Distribution\n(Scale-Free Property)', fontsize=13,
              fontweight='bold', color=MLPURPLE)
-ax2.grid(True, alpha=0.3, linestyle='--', linewidth=0.5)
+ax2.grid(True, alpha=0.3, linestyle='--')
 ax2.legend(framealpha=0.9, fontsize=10)
 
 # Annotate hub region

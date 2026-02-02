@@ -4,6 +4,8 @@ This chart demonstrates how network value grows with the number of users
 according to different models: Metcalfe's Law (quadratic), Odlyzko-Tilly
 (n*log(n)), and linear growth. It shows the critical mass threshold where
 network value exceeds switching costs.
+
+Citation: Metcalfe (2013) - Metcalfe's Law after 40 Years of Ethernet; Odlyzko and Tilly (2005)
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -76,12 +78,12 @@ ax.text(critical_linear, 50, f'  {critical_linear}',
 # Labels and title
 ax.set_xlabel('Network Size (users)')
 ax.set_ylabel('Network Value (log scale)')
-ax.set_title('Network Value Growth Models')
+ax.set_title('Network Value Growth Models in Payment Systems')
 ax.set_yscale('log')
 ax.set_ylim(1, 1200)
 ax.set_xlim(0, 1000)
 ax.legend(loc='upper left', framealpha=0.95)
-ax.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
+ax.grid(True, alpha=0.3, linestyle='--')
 
 plt.tight_layout()
 

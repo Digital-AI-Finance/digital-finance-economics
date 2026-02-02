@@ -2,6 +2,8 @@
 
 Monte Carlo simulation with confidence intervals for payment market growth.
 Models: Exponential growth Y(t) = Y0 * (1 + g)^t and logistic saturation.
+
+Based on: McKinsey (2022) - Global Payments Report, digital payments growth trends
 """
 import matplotlib.pyplot as plt
 import numpy as np

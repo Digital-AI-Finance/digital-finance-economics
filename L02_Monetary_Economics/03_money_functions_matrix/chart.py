@@ -1,4 +1,7 @@
-"""Money Functions Assessment Matrix - Comparing crypto vs fiat"""
+"""Money Functions Assessment Matrix - Comparing crypto vs fiat
+
+Based on: Menger (1892) - On the origin of money, classical functions of money
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -47,6 +50,17 @@ for i, (asset, color) in enumerate(zip(assets, colors)):
 # Reference lines
 ax.axhline(y=7, color='gray', linestyle='--', alpha=0.5)
 ax.text(2.6, 7.2, 'Good threshold', fontsize=9, color='gray')
+
+# Add annotation about money functions
+ax.text(0.02, 0.98,
+        'Three Functions of Money:\n'
+        '• Medium of Exchange: Facilitates transactions\n'
+        '• Unit of Account: Measuring value\n'
+        '• Store of Value: Preserving purchasing power\n\n'
+        'Good money scores ≥7 on all dimensions',
+        transform=ax.transAxes, fontsize=9,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.7))
 
 ax.set_xlabel('Money Function', fontweight='bold')
 ax.set_ylabel('Score (0-10)', fontweight='bold')

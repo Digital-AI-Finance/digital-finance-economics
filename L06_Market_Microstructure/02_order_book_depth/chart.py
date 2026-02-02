@@ -2,6 +2,8 @@
 
 Measuring market liquidity through price impact coefficient.
 Theory: Kyle (1985) "Continuous Auctions and Insider Trading"
+
+Based on: Glosten & Milgrom (1985) - Market Microstructure
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -68,11 +70,19 @@ for market, params in markets.items():
 
 ax_main.set_xlabel('Order Size (units)', fontsize=14)
 ax_main.set_ylabel('Price Impact ΔP (%)', fontsize=14)
-ax_main.set_title("Kyle's Lambda: Price Impact Across Markets\nΔP = λ × Q",
+ax_main.set_title("Kyle Lambda: Price Impact Coefficient Across Digital Asset Markets",
                  fontsize=16, pad=15)
 ax_main.legend(loc='upper left', framealpha=0.95)
 ax_main.grid(alpha=0.3, linestyle='--')
 ax_main.set_xlim(0, 100)
+
+# Add bid-ask spread annotation
+ax_main.text(0.02, 0.98, r'Bid-Ask Spread: $S = P_{ask} - P_{bid}$' + '\n' +
+             r'Depth: Cumulative volume at price' + '\n' +
+             r'Higher $\lambda$ $\Rightarrow$ Less liquid market',
+             transform=ax_main.transAxes, fontsize=11,
+             verticalalignment='top',
+             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 # Add theory box
 theory_text = (

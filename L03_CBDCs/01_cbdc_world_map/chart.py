@@ -1,4 +1,10 @@
-"""CBDC Project Status Worldwide - Country-level implementation status"""
+"""CBDC Project Status Worldwide - Country-level implementation status
+
+Global survey of central bank digital currency development stages across countries,
+showing launched, pilot, development, research, and inactive projects.
+
+Citation: Atlantic Council (2024) - CBDC Tracker; BIS (2021) - CBDCs: an opportunity for the monetary system
+"""
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
@@ -44,12 +50,22 @@ for i, (bar, count, example) in enumerate(zip(bars, counts, examples)):
 
 ax.set_yticks(y_pos)
 ax.set_yticklabels(categories)
-ax.set_xlabel('Number of Countries', fontweight='bold')
+ax.set_xlabel('Number of Countries (count)', fontweight='bold')
+ax.set_ylabel('Development Stage (category)', fontweight='bold')
 ax.set_title('Global CBDC Development Status (2024)', fontsize=16,
              fontweight='bold', color=MLPURPLE)
 
 ax.set_xlim(0, 100)
 ax.grid(True, alpha=0.3, axis='x')
+
+# B5: Add annotation highlighting pilot stage momentum
+pilot_idx = categories.index('Pilot')
+pilot_count = counts[pilot_idx]
+ax.annotate('Pilot:\nKey momentum',
+           xy=(pilot_count, pilot_idx), xytext=(pilot_count + 15, pilot_idx + 0.5),
+           fontsize=10, fontweight='bold', color=MLBLUE,
+           arrowprops=dict(arrowstyle='->', color=MLBLUE, lw=1.5),
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLBLUE, alpha=0.8))
 
 # Add note
 ax.text(50, -0.8, 'Source: Atlantic Council CBDC Tracker (2024)',

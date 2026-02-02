@@ -1,4 +1,7 @@
-"""Digital Finance Taxonomy - Economic perspective on digital finance components"""
+"""Digital Finance Taxonomy - Economic perspective on digital finance components
+
+Based on: Auer et al. (2020) - BIS taxonomy of digital finance and fintech innovations
+"""
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
@@ -65,9 +68,25 @@ for x, y, _, _, color in categories:
 
 ax.set_xlim(0, 1)
 ax.set_ylim(0, 1)
+ax.set_xlabel('Dimension (normalized)', fontsize=10, color='gray')
+ax.set_ylabel('Dimension (normalized)', fontsize=10, color='gray')
 ax.axis('off')
 ax.set_title('Four Economic Lenses for Digital Finance', fontsize=16,
              fontweight='bold', color=MLPURPLE, pad=10)
+ax.grid(True, alpha=0.3)
+
+# B5: Add annotation for framework integration
+ax.text(0.5, 0.05, 'Each lens provides complementary analysis',
+       ha='center', fontsize=9, style='italic', color=MLPURPLE,
+       bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', alpha=0.7))
+
+# Add educational annotation
+ax.text(0.02, 0.98,
+        'Taxonomy Framework:\nEach domain applies distinct economic theory\n'
+        'to analyze digital finance innovations.',
+        transform=ax.transAxes, fontsize=10,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.6))
 
 plt.tight_layout()
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')

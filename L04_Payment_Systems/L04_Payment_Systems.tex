@@ -103,7 +103,7 @@ Payment systems enable:
 \vspace{0.3em}
 \textbf{Key Economic Properties}
 \begin{itemize}
-\item Network goods (value $\uparrow$ with users)
+\item Network goods (products that become more valuable as more people use them)
 \item Infrastructure characteristics
 \item Significant fixed costs
 \end{itemize}
@@ -114,21 +114,21 @@ Payment systems enable:
 \vspace{0.3em}
 \textbf{Large Value (Wholesale)}
 \begin{itemize}
-\item Fedwire, TARGET2
-\item RTGS: Real-time gross settlement
+\item Fedwire (US large-value transfer), TARGET2 (EU equivalent)
+\item RTGS (Real-Time Gross Settlement): each payment settles individually and immediately
 \item Low volume, high value
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Retail}
 \begin{itemize}
-\item Cards, ACH, instant payments
+\item Cards, ACH (Automated Clearing House---batch processing), instant payments
 \item High volume, lower value
 \item Consumer-facing
 \end{itemize}
 \end{columns}
 
-\bottomnote{Payment systems exhibit natural monopoly characteristics due to network effects}
+\bottomnote{Payment systems exhibit natural monopoly characteristics (one provider can serve everyone cheaper) due to network effects}
 \end{frame}
 
 % Network Effects
@@ -139,12 +139,14 @@ Payment systems enable:
 
 Value increases with users:
 $$V(n) = n \cdot v(n)$$
+\textit{(Total value = number of users times value per user. More users means each user gets more value---a virtuous cycle.)}
 
 where $v(n)$ is per-user value.
 
 \vspace{0.3em}
 \textbf{Metcalfe's Law (simplified)}
 $$V \propto n^2$$
+\textit{(Value grows with the square of users: 10 users = 100 units of value, 100 users = 10,000 units. This explains why dominant networks stay dominant.)}
 \begin{itemize}
 \item Each user can transact with $n-1$ others
 \item Creates positive feedback loops
@@ -156,8 +158,8 @@ $$V \propto n^2$$
 \vspace{0.3em}
 \textbf{Adoption Dynamics}
 \begin{itemize}
-\item Critical mass threshold
-\item Tipping points
+\item Critical mass threshold (minimum users needed before network becomes self-sustaining)
+\item Tipping points (moments when adoption suddenly accelerates)
 \item Winner-take-most markets
 \end{itemize}
 
@@ -208,9 +210,11 @@ Card networks connect:
 
 Optimal pricing:
 $$p_B + p_S = c + m$$
+\textit{(Total price to both sides (buyers + sellers) equals cost plus margin---standard economics.)}
 $$\frac{p_B - c_B}{p_S - c_S} = \frac{\eta_S}{\eta_B}$$
+\textit{(Charge more to the side that's less price-sensitive. Cardholders barely notice 2\% fees; merchants feel it keenly. So: low/zero fees to cardholders, higher fees to merchants.)}
 
-where $\eta$ = price elasticity
+where $\eta$ = price elasticity (how much demand changes when price changes)
 
 \vspace{0.3em}
 \textbf{Key Insight}
@@ -235,9 +239,9 @@ Price structure matters, not just level:
 \begin{enumerate}
 \item Consumer pays \$100
 \item Merchant receives \$97-98
-\item Interchange: 1.5-2\% to issuer
+\item Interchange: 1.5-2\% to issuer (bank that gave you the card)
 \item Network fee: 0.1-0.2\%
-\item Acquirer margin: 0.2-0.5\%
+\item Acquirer (merchant's bank) margin: 0.2-0.5\%
 \end{enumerate}
 
 \vspace{0.3em}
@@ -255,7 +259,7 @@ Price structure matters, not just level:
 \textbf{Against High Interchange}
 \begin{itemize}
 \item Merchants pass costs to prices
-\item Regressive: cash users subsidize card users
+\item Regressive (poorer cash users subsidize wealthier card users through higher prices)
 \item Anti-competitive coordination
 \end{itemize}
 
@@ -268,7 +272,7 @@ Price structure matters, not just level:
 \end{itemize}
 \end{columns}
 
-\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment capped debit at 0.05\%+21c}
+\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment capped debit at 0.05\%{}+21c}
 \end{frame}
 
 % Cross-Border Payments
@@ -279,7 +283,7 @@ Price structure matters, not just level:
 
 Cross-border payments are:
 \begin{itemize}
-\item Expensive: 6\%+ average cost
+\item Expensive: 6\%{}+ average cost
 \item Slow: 2-5 days settlement
 \item Opaque: uncertain fees
 \item Fragmented: many intermediaries
@@ -291,16 +295,16 @@ Cross-border payments are:
 \item Lack of common infrastructure
 \item Regulatory fragmentation
 \item Legacy technology
-\item Correspondent banking model
+\item Correspondent banking model (payments routed through intermediary banks)
 \end{itemize}
 
 \column{0.48\textwidth}
 \textbf{Economic Inefficiencies}
 
 \vspace{0.3em}
-\textbf{FX Costs}
+\textbf{FX (Foreign Exchange) Costs}
 \begin{itemize}
-\item Wide bid-ask spreads
+\item Wide bid-ask spreads (gap between buy and sell prices)
 \item Hidden markups in rates
 \item Multiple conversions
 \end{itemize}
@@ -308,13 +312,13 @@ Cross-border payments are:
 \vspace{0.3em}
 \textbf{Compliance Costs}
 \begin{itemize}
-\item AML/KYC at each hop
+\item AML (Anti-Money Laundering) / KYC (Know Your Customer) checks at each hop
 \item Sanctions screening
 \item Data format inconsistencies
 \end{itemize}
 \end{columns}
 
-\bottomnote{G20 target: reduce average cost to 3\% by 2027; currently at 6\%+}
+\bottomnote{G20 target: reduce average cost to 3\% by 2027; currently at 6\%{}+}
 \end{frame}
 
 % Correspondent Banking
@@ -345,7 +349,7 @@ Characteristics:
 \begin{itemize}
 \item Immediate, final settlement
 \item Each transaction settled individually
-\item High liquidity requirement
+\item High liquidity requirement (banks must hold more cash)
 \end{itemize}
 
 \vspace{0.3em}
@@ -354,7 +358,7 @@ Examples: Fedwire, TARGET2
 \vspace{0.3em}
 Trade-offs:
 \begin{itemize}
-\item[\textcolor{mlgreen}{+}] Eliminates settlement risk
+\item[\textcolor{mlgreen}{+}] Eliminates settlement risk (risk one party pays but other defaults)
 \item[\textcolor{mlred}{-}] High liquidity cost
 \end{itemize}
 
@@ -364,7 +368,7 @@ Trade-offs:
 Characteristics:
 \begin{itemize}
 \item Batch settlement at intervals
-\item Payments netted against each other
+\item Payments netted (offsetting opposite payments so only difference settles)
 \item Lower liquidity needs
 \end{itemize}
 
@@ -391,8 +395,8 @@ Trade-offs:
 Major systems:
 \begin{itemize}
 \item UK: Faster Payments (2008)
-\item India: UPI (2016)
-\item EU: SEPA Instant (2017)
+\item India: UPI (Unified Payments Interface, 2016)
+\item EU: SEPA (Single Euro Payments Area) Instant (2017)
 \item US: FedNow (2023)
 \end{itemize}
 
@@ -411,7 +415,7 @@ For consumers:
 \begin{itemize}
 \item Improved cash flow management
 \item Emergency transfers
-\item P2P payments
+\item P2P (person-to-person) payments
 \end{itemize}
 
 For businesses:
@@ -470,6 +474,8 @@ M-Pesa (Kenya) model:
 \item Women especially benefited
 \item Improved risk sharing
 \end{itemize}
+
+\textit{Why it works: When someone's crops fail, relatives can send money instantly via phone. Before M-Pesa, they'd have to physically travel with cash or use expensive services.}
 \end{columns}
 
 \bottomnote{Mobile money shows technology can reduce barriers; requires complementary ecosystem}
@@ -483,7 +489,7 @@ M-Pesa (Kenya) model:
 \begin{itemize}
 \item Ripple/XRP for cross-border
 \item Stablecoins for remittances
-\item DeFi payment rails
+\item DeFi (Decentralized Finance) payment rails
 \end{itemize}
 
 Advantages:
@@ -496,8 +502,8 @@ Advantages:
 \column{0.48\textwidth}
 \textbf{Traditional Innovation}
 \begin{itemize}
-\item SWIFT gpi improvements
-\item ISO 20022 messaging standard
+\item SWIFT gpi (Global Payments Innovation) improvements
+\item ISO 20022 (new global messaging standard for financial data)
 \item Linked instant payment systems
 \end{itemize}
 
@@ -582,6 +588,100 @@ Payment system economics explains both why incumbents dominate and why digital d
 \bottomnote{Next lesson: Platform Economics and Token Economics}
 \end{frame}
 
+% Key Terms Part 1
+\begin{frame}[t]{Key Terms (1/2)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{RTGS (Real-Time Gross Settlement)}
+Payment system settling transactions individually and immediately, eliminating settlement risk.
+
+\vspace{0.3em}
+\textbf{DNS (Deferred Net Settlement)}
+System accumulating transactions and settling net positions at end of day, requiring less liquidity but more risk.
+
+\vspace{0.3em}
+\textbf{Interchange Fee}
+Fee paid by merchant's bank to cardholder's bank for each card transaction---funds rewards programs.
+
+\vspace{0.3em}
+\textbf{Correspondent Banking}
+Arrangement where banks hold accounts with each other to facilitate cross-border payments through intermediaries.
+
+\vspace{0.3em}
+\textbf{Two-Sided Market}
+Platform connecting two user groups (e.g., cardholders and merchants) who provide value to each other.
+
+\column{0.48\textwidth}
+\textbf{Network Effects}
+Value of payment network increases as more users and merchants participate---why dominant networks stay dominant.
+
+\vspace{0.3em}
+\textbf{Natural Monopoly}
+Market where one provider can serve everyone at lower cost than multiple competitors---common in payment infrastructure.
+
+\vspace{0.3em}
+\textbf{Critical Mass}
+Minimum number of users needed before a network becomes self-sustaining---typically around 16\% adoption.
+
+\vspace{0.3em}
+\textbf{Issuer}
+Bank that provides cards to consumers and extends credit (e.g., the bank that gave you your Visa card).
+
+\vspace{0.3em}
+\textbf{Acquirer}
+Bank that processes card payments for merchants and deposits funds into their accounts.
+\end{columns}
+
+\bottomnote{Terms continued on next slide}
+\end{frame}
+
+% Key Terms Part 2
+\begin{frame}[t]{Key Terms (2/2)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Settlement Risk}
+Risk that one party delivers but the other defaults---eliminated by RTGS, present in deferred systems.
+
+\vspace{0.3em}
+\textbf{Liquidity}
+Having cash available when needed---RTGS requires banks to hold more liquidity than netting systems.
+
+\vspace{0.3em}
+\textbf{Float}
+Money in transit between accounts---delay benefits whoever holds it (earns interest) at the other's expense.
+
+\vspace{0.3em}
+\textbf{Remittances}
+Money sent home by workers abroad---often to developing countries, with high fees (average 6\%).
+
+\vspace{0.3em}
+\textbf{Netting}
+Offsetting payments in opposite directions so only the net difference settles---reduces liquidity needs.
+
+\column{0.48\textwidth}
+\textbf{Price Elasticity}
+How much demand changes when price changes---card users are less price-sensitive than merchants.
+
+\vspace{0.3em}
+\textbf{Bid-Ask Spread}
+Difference between buy and sell prices for currency---wider spreads mean higher hidden costs.
+
+\vspace{0.3em}
+\textbf{Metcalfe's Law}
+A network's value grows with the square of its users---10x users means 100x value, explaining network dominance.
+
+\vspace{0.3em}
+\textbf{Financial Inclusion}
+Ensuring all people have access to useful and affordable financial services---1.4 billion adults lack bank accounts.
+
+\vspace{0.3em}
+\textbf{Mobile Money}
+Financial services via mobile phone without a bank account---M-Pesa in Kenya pioneered this model.
+\end{columns}
+
+\bottomnote{Payment system economics involves trade-offs between efficiency, risk, and access}
+\end{frame}
+
 % References
 \begin{frame}[t]{Further Reading}
 \begin{columns}[T]
@@ -596,8 +696,8 @@ Payment system economics explains both why incumbents dominate and why digital d
 \column{0.48\textwidth}
 \textbf{Policy Reports}
 \begin{itemize}
-\item BIS (2020): ``Enhancing Cross-border Payments''
-\item FSB (2020): ``Cross-border Payments Roadmap''
+\item BIS -- Bank for International Settlements (2020): ``Enhancing Cross-border Payments''
+\item FSB -- Financial Stability Board (2020): ``Cross-border Payments Roadmap''
 \item World Bank Remittance Reports
 \end{itemize}
 \end{columns}
