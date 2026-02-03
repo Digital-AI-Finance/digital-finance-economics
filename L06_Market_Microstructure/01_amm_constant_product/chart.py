@@ -1,4 +1,7 @@
-"""AMM Constant Product Market Maker (x*y=k)"""
+"""AMM Constant Product Market Maker (x*y=k)
+
+Based on: Adams et al. (2021) - Uniswap v3 Core
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -66,13 +69,28 @@ for dx_out, col in zip(trades, trade_colors):
                      arrowprops=dict(arrowstyle='->', color=col, lw=1),
                      bbox=dict(boxstyle='round,pad=0.3', fc='white', ec=col, alpha=0.9))
 
-ax_main.set_xlabel('Token X reserve')
-ax_main.set_ylabel('Token Y reserve')
+ax_main.set_xlabel('Token X reserve (tokens)')
+ax_main.set_ylabel('Token Y reserve (tokens)')
 ax_main.set_title('AMM Constant Product Market Maker ($x \\cdot y = k$)')
 ax_main.legend(loc='upper right', fontsize=11)
+
+# B5: Add annotation for constant product constraint
+ax_main.annotate(f'Constant product:\nk = {k:,}',
+                xy=(1000, 1000), xytext=(1500, 2500),
+                fontsize=10, fontweight='bold', color=MLPURPLE,
+                arrowprops=dict(arrowstyle='->', color=MLPURPLE, lw=1.5),
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLPURPLE, alpha=0.8))
 ax_main.set_xlim(200, 3500)
 ax_main.set_ylim(200, 3500)
 ax_main.grid(True, alpha=0.3)
+
+# Add constant product formula annotation
+ax_main.text(0.02, 0.98, r'$x \cdot y = k$ (Constant Product)' + '\n' +
+             r'Price: $P = y/x$' + '\n' +
+             r'Slippage: $\Delta P \propto$ trade size',
+             transform=ax_main.transAxes, fontsize=11,
+             verticalalignment='top',
+             bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 # --- Inset: slippage bar chart ---
 ax_ins = fig.add_axes([0.58, 0.45, 0.30, 0.30])

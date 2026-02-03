@@ -98,6 +98,8 @@ Economic rationale:
 \item Eliminates barter inefficiency
 \item Reduces search and matching costs
 \item Transaction cost = $c_b - c_m$ where $c_m \ll c_b$
+
+\textit{(Transaction cost with barter minus cost with money; money makes trading much cheaper)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -115,6 +117,8 @@ Economic rationale:
 \begin{itemize}
 \item Reduces cognitive costs
 \item With $n$ goods: $\frac{n(n-1)}{2} \rightarrow n-1$ prices
+
+\textit{(With n goods, barter needs n(n-1)/2 exchange rates; money needs only n-1 prices)}
 \item Enables economic calculation
 \end{itemize}
 
@@ -125,11 +129,13 @@ Requirements:
 \begin{itemize}
 \item Stable purchasing power
 \item Low volatility: $\sigma_{\text{money}} < \sigma_{\text{goods}}$
+
+\textit{(Money's price volatility must be lower than goods for it to work as stable measuring stick)}
 \item Inflation protection
 \end{itemize}
 \end{columns}
 
-\bottomnote{Trade-offs exist: a good medium of exchange may not be ideal store of value}
+\bottomnote{These functions matter because digital currencies must satisfy all three to replace traditional money effectively}
 \end{frame}
 
 % Quantity Theory
@@ -138,6 +144,9 @@ Requirements:
 \column{0.48\textwidth}
 \textbf{Classical Equation of Exchange}
 $$MV = PY$$
+
+\textit{(Money supply times velocity equals price level times real output---how money flows through economy)}
+
 \begin{itemize}
 \item $M$ = Money supply
 \item $V$ = Velocity of circulation
@@ -149,7 +158,11 @@ $$MV = PY$$
 \textbf{Implications}
 \begin{itemize}
 \item If $V$ stable: $\Delta M \rightarrow \Delta P$
+
+\textit{(If velocity is stable, increasing money supply leads to higher prices---more money chasing same goods)}
 \item Seigniorage = $\frac{\dot{M}}{P}$
+
+\textit{(Rate of money creation divided by price level---profit from printing money)}
 \item Inflation tax on money holders
 \end{itemize}
 
@@ -172,7 +185,7 @@ Bitcoin example:
 \end{itemize}
 \end{columns}
 
-\bottomnote{Fixed supply creates deflationary pressure; incompatible with MoE function}
+\bottomnote{Quantity theory matters because it explains how Bitcoin's fixed supply creates deflationary pressure, making it impractical as everyday money}
 \end{frame}
 
 % Bitcoin Volatility
@@ -181,7 +194,7 @@ Bitcoin example:
 \includegraphics[width=0.65\textwidth]{01_bitcoin_volatility/chart.pdf}
 \end{center}
 
-\bottomnote{Bitcoin's 50-85\% volatility vs EUR/USD's 5-10\% makes it unsuitable as unit of account}
+\bottomnote{High volatility (50-85\% annually) makes Bitcoin impractical as a unit of account---imagine if the dollar's value changed 50\% per year}
 \end{frame}
 
 % Cryptocurrency Assessment
@@ -223,7 +236,7 @@ Bitcoin example:
 \end{itemize}
 \end{columns}
 
-\bottomnote{Bitcoin fails key money functions; better characterized as speculative asset}
+\bottomnote{These poor grades matter because they explain why Bitcoin hasn't replaced traditional money despite 15+ years of existence}
 \end{frame}
 
 % Money Functions Matrix
@@ -253,6 +266,8 @@ Bitcoin example:
 \textbf{2. Crypto-backed (DAI)}
 \begin{itemize}
 \item Over-collateralized (150\%+)
+
+\textit{(e.g., deposit \$150 in ETH to borrow \$100 in DAI)}
 \item Smart contract enforcement
 \item Liquidation mechanisms
 \end{itemize}
@@ -283,7 +298,7 @@ Bitcoin example:
 \includegraphics[width=0.65\textwidth]{02_stablecoin_market/chart.pdf}
 \end{center}
 
-\bottomnote{Market concentrated in USDT; Terra collapse caused \$40B+ losses in May 2022}
+\bottomnote{The Terra/UST collapse in May 2022 showed algorithmic stablecoins can fail catastrophically when confidence breaks (\$40B+ lost)}
 \end{frame}
 
 % Gresham's Law
@@ -315,6 +330,8 @@ Dollarization analogy:
 \item Weak local currency replaced
 \item ``Crypto-ization'' in high-inflation countries
 \item Argentina, Venezuela, Turkey cases
+
+\textit{(countries where high inflation drove citizens to hold USD or crypto instead of local currency)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -335,9 +352,14 @@ Dollarization analogy:
 \column{0.48\textwidth}
 \textbf{Traditional Money Demand}
 $$M^d/P = L(Y, i)$$
+
+\textit{(Real money demand depends on income Y (positive) and interest rate i (negative))}
+
 \begin{itemize}
 \item $L_Y > 0$: Transaction motive
 \item $L_i < 0$: Opportunity cost
+
+\textit{(Higher income means more money needed for transactions; higher interest means higher cost of holding money)}
 \item Baumol-Tobin inventory model
 \end{itemize}
 
@@ -378,6 +400,9 @@ Additional factors:
 \column{0.48\textwidth}
 \textbf{Traditional Seigniorage}
 $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
+
+\textit{(Seigniorage = growth rate of money times real money balances---how much value the money issuer extracts)}
+
 \begin{itemize}
 \item Revenue from money creation
 \item Accrues to central bank/government
@@ -397,6 +422,8 @@ $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
 \begin{itemize}
 \item Interest on reserves kept by issuer
 \item Tether earns billions annually
+
+\textit{(Tether holds user deposits in Treasury bonds earning 4-5\% interest, keeping the yield for itself)}
 \item Users bear opportunity cost
 \end{itemize}
 
@@ -435,6 +462,8 @@ $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
 \textbf{Central Bank Responses}
 \begin{itemize}
 \item CBDC development (defensive)
+
+\textit{(central banks developing CBDCs to prevent private stablecoins from undermining monetary control)}
 \item Stablecoin regulation
 \item Reserve requirements for crypto banks
 \end{itemize}
@@ -479,6 +508,105 @@ $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
 Monetary economics reveals why cryptocurrencies struggle as money: they optimize for speculation, not monetary functions. Stablecoins address some issues but create new ones.
 
 \bottomnote{Next lesson: Central Bank Digital Currencies (CBDCs)}
+\end{frame}
+
+% Key Terms
+\begin{frame}[t]{Key Terms}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Velocity of Money}
+Rate at which money circulates in economy.
+
+\vspace{0.3em}
+\textbf{Gresham's Law}
+``Bad money drives out good''; overvalued currency circulates, undervalued hoarded.
+
+\vspace{0.3em}
+\textbf{Stablecoin}
+Cryptocurrency maintaining stable value, typically pegged to fiat.
+
+\vspace{0.3em}
+\textbf{Fiat-Backed Stablecoin}
+Stablecoin backed 1:1 by fiat reserves.
+
+\vspace{0.3em}
+\textbf{Algorithmic Stablecoin}
+Stablecoin using supply adjustments without full collateral.
+
+\vspace{0.3em}
+\textbf{Quantity Theory of Money}
+MV = PY relationship linking money, velocity, prices, output.
+
+\vspace{0.3em}
+\textbf{Seigniorage}
+Profit from issuing money; face value minus production cost.
+
+\vspace{0.3em}
+\textbf{Barter}
+Direct goods exchange without money; requires double coincidence of wants.
+
+\vspace{0.3em}
+\textbf{Collateral}
+Assets pledged as security for loan or stablecoin.
+
+\vspace{0.3em}
+\textbf{Over-collateralization}
+Pledging more collateral than loan value for safety.
+
+\column{0.48\textwidth}
+\textbf{Liquidation}
+Forced sale of collateral when value drops below threshold.
+
+\vspace{0.3em}
+\textbf{Arbitrage}
+Profiting from price differences; maintains stablecoin pegs.
+
+\vspace{0.3em}
+\textbf{Death Spiral}
+Self-reinforcing collapse where falling prices trigger more selling.
+
+\vspace{0.3em}
+\textbf{HODL}
+Hold despite price drops; crypto slang resisting sales.
+
+\vspace{0.3em}
+\textbf{Dollarization}
+Country adopting foreign currency instead of own.
+
+\vspace{0.3em}
+\textbf{Opportunity Cost}
+Value of next best alternative foregone when choosing.
+
+\vspace{0.3em}
+\textbf{Inflation Tax}
+Hidden tax reducing purchasing power when government prints money.
+
+\vspace{0.3em}
+\textbf{Deflationary}
+Prices falling over time; fixed-supply currencies trend deflationary.
+
+\vspace{0.3em}
+\textbf{Money Multiplier}
+Bank lending amplifies deposits into larger money supply.
+
+\vspace{0.3em}
+\textbf{TradFi}
+Traditional Finance; conventional banks versus DeFi.
+
+\vspace{0.3em}
+\textbf{Medium of Exchange}
+Money's function as accepted payment for transactions.
+
+\vspace{0.3em}
+\textbf{Unit of Account}
+Money's function as standard measure for pricing.
+
+\vspace{0.3em}
+\textbf{Store of Value}
+Money's function preserving purchasing power over time.
+\end{columns}
+
+\bottomnote{Master these terms before proceeding to subsequent lessons}
 \end{frame}
 
 % References

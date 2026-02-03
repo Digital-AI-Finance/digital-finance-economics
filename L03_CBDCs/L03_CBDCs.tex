@@ -105,7 +105,7 @@ A CBDC is a digital form of central bank money:
 \begin{itemize}
 \item Bank reserves (already digital)
 \item Commercial bank money
-\item Stablecoins (private liability)
+\item Stablecoins (private liability---can collapse, as Terra/UST did in 2022 losing \$40B+)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -113,7 +113,7 @@ A CBDC is a digital form of central bank money:
 
 Central banks cite multiple goals:
 \begin{itemize}
-\item Maintain monetary sovereignty
+\item Maintain monetary sovereignty (control over the nations money supply)
 \item Improve payment efficiency
 \item Promote financial inclusion
 \item Counter private digital currencies
@@ -134,7 +134,7 @@ Does public benefit exceed costs and risks?
 \includegraphics[width=0.65\textwidth]{01_cbdc_world_map/chart.pdf}
 \end{center}
 
-\bottomnote{130+ countries exploring CBDCs; China's e-CNY is most advanced large-economy pilot}
+\bottomnote{130+ countries exploring CBDCs; China's e-CNY (digital yuan) is most advanced large-economy pilot}
 \end{frame}
 
 % CBDC Design Space
@@ -163,7 +163,7 @@ For general public use:
 Economic considerations:
 \begin{itemize}
 \item High operational costs
-\item Privacy vs. AML trade-off
+\item Privacy vs. AML (Anti-Money Laundering) trade-off
 \item Competition with banks
 \end{itemize}
 
@@ -172,7 +172,7 @@ Economic considerations:
 
 For financial institutions:
 \begin{itemize}
-\item Interbank settlement
+\item Interbank settlement (transferring money between banks)
 \item Securities transactions
 \item Cross-border payments
 \end{itemize}
@@ -217,7 +217,7 @@ Like bank accounts:
 \begin{itemize}
 \item Verify the identity of holder
 \item Full transaction records
-\item Programmable features possible
+\item Programmable features possible (money with built-in rules, like expiration dates)
 \end{itemize}
 
 \vspace{0.3em}
@@ -240,6 +240,7 @@ Economic implications:
 
 Interest rate channel:
 $$i_{\text{policy}} \rightarrow i_{\text{deposit}} \rightarrow C, I$$
+\textit{(When the central bank changes its policy rate ($i_{\text{policy}}$), banks adjust deposit rates ($i_{\text{deposit}}$), affecting consumption (C) and investment (I).)}
 \begin{itemize}
 \item Works through bank intermediation
 \item Banks pass rate changes to customers
@@ -251,6 +252,7 @@ $$i_{\text{policy}} \rightarrow i_{\text{deposit}} \rightarrow C, I$$
 
 If CBDC is interest-bearing:
 $$i_{\text{CBDC}} \rightarrow i_{\text{deposit}}$$
+\textit{(If CBDC pays 2\% interest, banks must match or exceed this to keep deposits---CBDC rate sets a floor.)}
 \begin{itemize}
 \item Direct transmission to public
 \item Floor on deposit rates
@@ -261,8 +263,8 @@ $$i_{\text{CBDC}} \rightarrow i_{\text{deposit}}$$
 
 Interest-bearing CBDC enables:
 \begin{itemize}
-\item Negative rates on retail holdings
-\item Helicopter money (direct transfers)
+\item Negative interest rates (charging people to hold money, to encourage spending)
+\item Helicopter money (direct cash from central bank to citizens---named for the image of dropping money from helicopters)
 \item Time-limited money (expiring)
 \end{itemize}
 
@@ -270,6 +272,7 @@ Interest-bearing CBDC enables:
 \textbf{Concerns}
 \begin{itemize}
 \item Political resistance to negative rates
+\textit{(Why accept losing money? Without physical cash, people cannot escape---some see this as coercive.)}
 \item Privacy implications of targeting
 \item Complexity of implementation
 \end{itemize}
@@ -284,7 +287,7 @@ Interest-bearing CBDC enables:
 \includegraphics[width=0.70\textwidth]{03_bank_disintermediation/chart.pdf}
 \end{center}
 
-\bottomnote{Deposit flight to CBDC could force banks to rely on costlier wholesale funding}
+\bottomnote{Deposit flight to CBDC could force banks to rely on costlier wholesale funding (borrowing from other banks instead of using deposits)}
 \end{frame}
 
 % Disintermediation Economics
@@ -300,8 +303,10 @@ If CBDC is attractive:
 \item Credit supply may contract
 \end{itemize}
 
+\textit{Example: If 20\% of deposits move to CBDC, banks must borrow elsewhere at higher rates, meaning fewer or costlier loans.}
+
 \vspace{0.3em}
-\textbf{Andolfatto (2021) Model}
+\textbf{Andolfatto (2021), a Federal Reserve economist, modeled this:}
 \begin{itemize}
 \item CBDC as outside option
 \item Forces competitive deposit rates
@@ -314,15 +319,15 @@ If CBDC is attractive:
 Design features to limit migration:
 \begin{itemize}
 \item Holding limits (e.g., 3000 EUR)
-\item Tiered remuneration (lower for large)
+\item Tiered remuneration (different rates for different amounts---e.g., 0\% up to 3000 EUR, negative above)
 \item No interest on CBDC
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Financial Stability}
 \begin{itemize}
-\item Digital bank runs faster
-\item Flight to safety amplified
+\item Digital bank runs faster (instant CBDC transfers vs. slow cash withdrawals)
+\item Flight to safety amplified (the rush to safe assets is faster when transfers are instant)
 \item Requires careful design
 \end{itemize}
 \end{columns}
@@ -346,7 +351,7 @@ Globally 1.4 billion unbanked adults:
 \vspace{0.3em}
 \textbf{CBDC Potential}
 \begin{itemize}
-\item Lower KYC for small values
+\item Lower KYC (Know Your Customer) requirements for small values
 \item Mobile-based access
 \item No minimum balance required
 \end{itemize}
@@ -390,8 +395,8 @@ CBDCs could intensify:
 \textbf{China's Strategy}
 \begin{itemize}
 \item e-CNY for domestic use
-\item mBridge for wholesale cross-border
-\item Reduce SWIFT dependence
+\item mBridge (a multi-CBDC platform connecting central banks) for wholesale cross-border
+\item Reduce dependence on SWIFT (the global interbank messaging system)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -423,14 +428,16 @@ CBDCs could intensify:
 \item High costs (average 6\%)
 \item Slow settlement (2-5 days)
 \item Limited transparency
-\item Correspondent banking dependencies
+\item Correspondent banking (international payments through intermediary banks)
 \end{itemize}
+
+\textit{Example: A worker sending \$200 home may lose \$12 in fees and wait 3 days.}
 
 \vspace{0.3em}
 \textbf{Wholesale CBDC Solution}
 \begin{itemize}
 \item Direct central bank settlement
-\item Atomic swap mechanisms
+\item Atomic swap (both sides of exchange happen together, or neither happens)
 \item 24/7 operation possible
 \end{itemize}
 
@@ -445,7 +452,7 @@ CBDCs could intensify:
 \vspace{0.3em}
 \textbf{Economic Benefits}
 \begin{itemize}
-\item Reduced FX settlement risk
+\item Reduced FX (foreign exchange) settlement risk
 \item Lower remittance costs
 \item Faster trade finance
 \end{itemize}
@@ -469,14 +476,14 @@ CBDCs could intensify:
 \textbf{Design Options}
 \begin{itemize}
 \item Tiered privacy (small = anonymous)
-\item Zero-knowledge proofs
+\item Zero-knowledge proofs (proving you meet a requirement without revealing your data)
 \item Third-party anonymity services
 \end{itemize}
 
 \column{0.48\textwidth}
 \textbf{Policy Control Benefits}
 \begin{itemize}
-\item AML/CFT compliance
+\item AML/CFT (Combating the Financing of Terrorism) compliance
 \item Tax enforcement
 \item Targeted stimulus
 \end{itemize}
@@ -486,20 +493,21 @@ CBDCs could intensify:
 
 Trade-off function:
 $$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
+\textit{(Usefulness (U) depends on both privacy and policy control---more of one often means less of the other.)}
 \begin{itemize}
 \item Social preferences vary by country
 \item No one-size-fits-all design
 \end{itemize}
 \end{columns}
 
-\bottomnote{Privacy preferences differ: Europeans prioritize privacy; China accepts surveillance}
+\bottomnote{Privacy preferences differ: Germany (with Stasi memories) values privacy; China's social credit system reflects different norms}
 \end{frame}
 
 % Digital Euro Case
 \begin{frame}[t]{Case Study: The Digital Euro}
 \begin{columns}[T]
 \column{0.48\textwidth}
-\textbf{ECB Design Principles}
+\textbf{ECB (European Central Bank) Design Principles}
 \begin{itemize}
 \item Complement to cash, not replacement
 \item Privacy by design (small payments)
@@ -518,7 +526,7 @@ $$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
 \column{0.48\textwidth}
 \textbf{Economic Rationale}
 \begin{itemize}
-\item Strategic autonomy (vs. US big tech)
+\item Strategic autonomy (not dependent on Visa, Mastercard, or US tech giants)
 \item Payment system resilience
 \item Declining cash usage
 \end{itemize}
@@ -565,6 +573,100 @@ CBDCs are not simply ``digital cash''---they require careful economic analysis o
 \bottomnote{Next lesson: Payment Systems Economics}
 \end{frame}
 
+% Key Terms Part 1
+\begin{frame}[t]{Key Terms (1/2)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{CBDC (Central Bank Digital Currency)}
+Digital form of central bank money, a liability of the central bank denominated in the national unit of account.
+
+\vspace{0.3em}
+\textbf{Retail CBDC}
+CBDC available to the general public for everyday transactions.
+
+\vspace{0.3em}
+\textbf{Wholesale CBDC}
+CBDC restricted to financial institutions for interbank settlements.
+
+\vspace{0.3em}
+\textbf{Token-Based CBDC}
+CBDC where validity is verified by the instrument itself (like cash), enabling offline transactions.
+
+\vspace{0.3em}
+\textbf{Account-Based CBDC}
+CBDC where validity requires verification of the holder's identity against an account.
+
+\column{0.48\textwidth}
+\textbf{Bank Disintermediation}
+Risk that CBDC adoption draws deposits away from commercial banks, reducing their lending capacity.
+
+\vspace{0.3em}
+\textbf{Monetary Sovereignty}
+A nation's ability to control its own money supply and monetary policy independently.
+
+\vspace{0.3em}
+\textbf{Seigniorage}
+The profit a government earns from issuing currency---the difference between the face value of money and its production cost.
+
+\vspace{0.3em}
+\textbf{AML (Anti-Money Laundering)}
+Laws and regulations designed to prevent criminals from disguising illegally obtained money as legitimate income.
+
+\vspace{0.3em}
+\textbf{KYC (Know Your Customer)}
+The process of verifying the identity of customers, required by financial regulations.
+\end{columns}
+
+\bottomnote{Terms continued on next slide}
+\end{frame}
+
+% Key Terms Part 2
+\begin{frame}[t]{Key Terms (2/2)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Correspondent Banking}
+An arrangement where one bank provides services on behalf of another, commonly used for international payments.
+
+\vspace{0.3em}
+\textbf{Atomic Swap}
+A technology enabling exchange of different currencies simultaneously---both transfers complete or neither does.
+
+\vspace{0.3em}
+\textbf{Wholesale Funding}
+Money banks borrow from other financial institutions (rather than customer deposits) to fund operations.
+
+\vspace{0.3em}
+\textbf{Tiered Remuneration}
+Different interest rates for different amounts held---e.g., 0\% on first 3000 EUR, negative rates above.
+
+\vspace{0.3em}
+\textbf{Helicopter Money}
+Direct cash transfers from central bank to citizens, bypassing banks---named for the image of dropping money from helicopters.
+
+\column{0.48\textwidth}
+\textbf{Negative Interest Rates}
+A policy where depositors pay to keep money in accounts rather than earning interest---used to encourage spending.
+
+\vspace{0.3em}
+\textbf{Interbank Settlement}
+The process by which banks transfer money between themselves to complete transactions.
+
+\vspace{0.3em}
+\textbf{Flight to Safety}
+When investors move money from risky assets to safe ones during uncertainty---with CBDC, could mean moving from bank deposits to CBDC.
+
+\vspace{0.3em}
+\textbf{Financial Inclusion}
+Ensuring all people have access to useful and affordable financial services.
+
+\vspace{0.3em}
+\textbf{Zero-Knowledge Proofs}
+Cryptography that proves you meet a requirement without revealing your data---like proving you're over 18 without showing your birthdate.
+\end{columns}
+
+\bottomnote{CBDC design choices have profound implications for monetary policy and financial stability}
+\end{frame}
+
 % References
 \begin{frame}[t]{Further Reading}
 \begin{columns}[T]
@@ -580,8 +682,8 @@ CBDCs are not simply ``digital cash''---they require careful economic analysis o
 \textbf{Central Bank Publications}
 \begin{itemize}
 \item ECB (2023): ``A Stocktake on the Digital Euro''
-\item BIS (2021): ``CBDCs: An Opportunity for the Monetary System''
-\item Fed (2022): ``Money and Payments''
+\item BIS -- Bank for International Settlements (2021): ``CBDCs: An Opportunity for the Monetary System''
+\item Fed -- Federal Reserve (2022): ``Money and Payments''
 \end{itemize}
 \end{columns}
 

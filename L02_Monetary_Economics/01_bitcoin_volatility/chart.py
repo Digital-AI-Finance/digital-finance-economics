@@ -4,6 +4,8 @@ Modeling volatility clustering in cryptocurrency markets.
 Theory: Bollerslev (1986) GARCH model.
 Reference: Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity.
 Journal of Econometrics, 31(3), 307-327.
+
+Based on: Baur & Dimpfl (2021) - Asymmetric volatility in cryptocurrencies
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -130,6 +132,16 @@ for start, end in cluster_regions:
 ax2.annotate('Volatility\nClusters', xy=(275, sigma_btc_pct[275]), xytext=(350, 3.5),
             arrowprops=dict(arrowstyle='->', color='red', lw=1.5),
             fontsize=10, color='red', fontweight='bold', ha='center')
+
+# Add GARCH formula annotation
+ax1.text(0.02, 0.98,
+        'GARCH(1,1) Model:\n'
+        'σ²ₜ = ω + α·ε²ₜ₋₁ + β·σ²ₜ₋₁\n'
+        'where α+β < 1 for stationarity\n'
+        'High persistence (α+β ≈ 1) → volatility clustering',
+        transform=ax1.transAxes, fontsize=9,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
 
 plt.tight_layout()
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')

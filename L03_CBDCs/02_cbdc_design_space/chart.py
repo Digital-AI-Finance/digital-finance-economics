@@ -2,6 +2,8 @@
 
 Pareto frontier showing tradeoffs between privacy, programmability, accessibility.
 Theory: Keeney & Raiffa (1976) Multi-Attribute Utility Theory.
+
+Based on: Auer & Böhme (2020) - The technology of retail central bank digital currency
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,7 +12,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from scipy.spatial import ConvexHull
 
 plt.rcParams.update({
-    'font.size': 11, 'axes.labelsize': 12, 'axes.titlesize': 14,
+    'font.size': 14, 'axes.labelsize': 12, 'axes.titlesize': 14,
     'xtick.labelsize': 10, 'ytick.labelsize': 10, 'legend.fontsize': 10,
     'figure.figsize': (14, 6), 'figure.dpi': 150
 })
@@ -113,12 +115,18 @@ for name, attrs in cbdc_examples.items():
                c=example_colors[name], s=150, marker='D', edgecolors='black', linewidths=1,
                label=name, zorder=9)
 
-ax1.set_xlabel('Privacy (P)', fontsize=11, labelpad=8)
-ax1.set_ylabel('Programmability (R)', fontsize=11, labelpad=8)
-ax1.set_zlabel('Accessibility (A)', fontsize=11, labelpad=8)
-ax1.set_title('CBDC Design Space\n(Multi-Attribute Utility)', fontsize=12, fontweight='bold', pad=15)
+ax1.set_xlabel('Privacy (P, score 0-1)', fontsize=11, labelpad=8)
+ax1.set_ylabel('Programmability (R, score 0-1)', fontsize=11, labelpad=8)
+ax1.set_zlabel('Accessibility (A, score 0-1)', fontsize=11, labelpad=8)
+ax1.set_title('CBDC Design Space: Multi-Attribute Utility Trade-offs', fontsize=12, fontweight='bold', pad=15)
 ax1.legend(loc='upper left', fontsize=8, framealpha=0.9)
 ax1.view_init(elev=20, azim=45)
+
+# B5: Add annotation for e-CNY balanced design
+ecny_attrs = cbdc_examples['e-CNY']
+ax1.text(ecny_attrs[0], ecny_attrs[1], ecny_attrs[2] + 0.08,
+        'e-CNY:\nBalanced', fontsize=9, ha='center', color=MLRED,
+        bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
 
 # Right: 2D projection (Privacy vs Programmability, size = Accessibility)
 ax2 = fig.add_subplot(122)
@@ -165,11 +173,30 @@ ax2.grid(True, alpha=0.3)
 ax2.set_xlim(-0.05, 1.05)
 ax2.set_ylim(-0.05, 1.05)
 
+# B5: Add annotation highlighting e-CNY's balanced tradeoffs
+ecny_attrs = cbdc_examples['e-CNY']
+ax2.annotate('e-CNY:\nBalanced\ntradeoffs',
+            xy=(ecny_attrs[0], ecny_attrs[1]), xytext=(ecny_attrs[0] + 0.15, ecny_attrs[1] + 0.15),
+            fontsize=9, fontweight='bold', color=MLRED,
+            arrowprops=dict(arrowstyle='->', color=MLRED, lw=1.5),
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='yellow', alpha=0.7))
+
 # Add annotation for theory
 fig.text(0.5, 0.02,
         'Theory: Keeney & Raiffa (1976) Multi-Attribute Utility Theory | '
         'Constraint: Cannot maximize all three attributes simultaneously',
         ha='center', fontsize=9, style='italic', color='gray')
+
+# Add design dimensions annotation on 3D plot
+ax1.text2D(0.02, 0.95,
+          'Design Space Constraint:\n'
+          'P + R + A ≤ 2.4\n'
+          'Pareto frontier shows optimal\n'
+          'tradeoffs given stakeholder\n'
+          'utility functions',
+          transform=ax1.transAxes, fontsize=9,
+          verticalalignment='top',
+          bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.7))
 
 plt.tight_layout(rect=[0, 0.04, 1, 1])
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')

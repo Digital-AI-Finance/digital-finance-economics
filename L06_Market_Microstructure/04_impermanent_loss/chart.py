@@ -1,4 +1,7 @@
-"""Impermanent Loss for Liquidity Providers"""
+"""Impermanent Loss for Liquidity Providers
+
+Based on: Pintail (2019) - Impermanent Loss in Uniswap
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -43,11 +46,27 @@ IL_5x = (10000 * np.sqrt(r_5x) / (5000 * (1 + r_5x)) - 1) * 100
 ax1.plot(r_2x, IL_2x, 'o', color=MLORANGE, markersize=8, label=f'2x: {IL_2x:.1f}%')
 ax1.plot(r_5x, IL_5x, 'o', color=MLBLUE, markersize=8, label=f'5x: {IL_5x:.1f}%')
 
-ax1.set_xlabel('Price Ratio (Final/Initial)')
+# B5: Add annotation highlighting the 5x loss point
+ax1.annotate(f'5x price change:\n{IL_5x:.1f}% loss',
+            xy=(r_5x, IL_5x), xytext=(r_5x * 1.5, IL_5x + 5),
+            fontsize=10, fontweight='bold', color=MLBLUE,
+            arrowprops=dict(arrowstyle='->', color=MLBLUE, lw=1.5),
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLBLUE, alpha=0.8))
+
+ax1.set_xlabel('Price Ratio (Final/Initial, ratio)')
 ax1.set_ylabel('Impermanent Loss (%)')
 ax1.set_title('Impermanent Loss: LP Position vs Hold Strategy')
 ax1.legend()
 ax1.grid(alpha=0.3)
+
+# Add impermanent loss formula annotation
+ax1.text(0.02, 0.02, r'Impermanent Loss:' + '\n' +
+         r'$IL = \frac{2\sqrt{p}}{1+p} - 1$' + '\n' +
+         r'where $p = $ price ratio' + '\n' +
+         r'$V_{LP} = V_0 \sqrt{p}$, $V_{hold} = V_0(1+p)/2$',
+         transform=ax1.transAxes, fontsize=10,
+         verticalalignment='bottom',
+         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 # Bottom subplot: Dollar values
 ax2.plot(r, lp_value, color=MLPURPLE, linewidth=2, label='LP Position')

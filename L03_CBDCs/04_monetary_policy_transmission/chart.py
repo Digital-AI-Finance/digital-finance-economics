@@ -1,4 +1,10 @@
-"""CBDC Monetary Policy Transmission - impulse response comparison"""
+"""CBDC Monetary Policy Transmission - impulse response comparison
+
+Compares policy rate pass-through between traditional banking channels and direct CBDC channels,
+showing faster and more complete transmission with CBDCs.
+
+Citation: Bindseil (2020) - Tiered CBDC and the financial system; Bordo & Levin (2017)
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path

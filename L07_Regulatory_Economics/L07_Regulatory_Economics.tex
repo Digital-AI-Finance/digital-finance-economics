@@ -97,8 +97,10 @@
 \column{0.48\textwidth}
 \textbf{Market Failures in Digital Finance}
 
+\textit{Market failure}: when free markets fail to allocate resources efficiently.
+
 \vspace{0.3em}
-\textbf{1. Information Asymmetry}
+\textbf{1. Information Asymmetry (one party knows more)}
 \begin{itemize}
 \item Complex technical protocols
 \item Opaque risk disclosures
@@ -106,9 +108,9 @@
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{2. Externalities}
+\textbf{2. Externalities (costs/benefits affecting uninvolved parties)}
 \begin{itemize}
-\item Systemic risk contagion
+\item Systemic risk contagion (cascading failures)
 \item Money laundering spillovers
 \item Environmental costs (energy use)
 \end{itemize}
@@ -122,7 +124,7 @@
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{4. Consumer Protection}
+\textbf{4. Consumer Protection (shielding individuals from exploitation)}
 \begin{itemize}
 \item Fraud and scams
 \item Irreversible transactions
@@ -147,7 +149,10 @@
 \includegraphics[width=0.65\textwidth]{01_regulation_cost_benefit/chart.pdf}
 \end{center}
 
-\bottomnote{Optimal regulation balances marginal costs against marginal benefits---Harberger deadweight loss minimization}
+\vspace{0.3em}
+\textbf{Marginal Analysis}: Optimal regulation occurs where the additional (marginal) cost of one more unit of regulation equals its additional benefit. Too little regulation leaves market failures uncorrected; too much creates deadweight loss (value destroyed by excessive rules).
+
+\bottomnote{Harberger (1964): Minimize deadweight loss---the welfare triangle representing foregone efficient transactions}
 \end{frame}
 
 % Regulatory Benefits
@@ -163,14 +168,16 @@
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Akerlof's Lemons Problem}
+\textbf{Akerlof's Lemons Problem (Adverse Selection)}
 
 Without regulation:
 \begin{itemize}
 \item Good projects cannot signal quality
-\item Bad projects dominate (adverse selection)
+\item Bad projects dominate (adverse selection: bad drives out good)
 \item Market unravels
 \end{itemize}
+
+\textit{Example}: FTX collapse (2022)---no licensing requirements allowed fraudulent exchange to mix customer funds.
 
 \column{0.48\textwidth}
 \textbf{Difficult-to-Measure Benefits}
@@ -210,7 +217,7 @@ Without regulation:
 \begin{itemize}
 \item Licensing application fees
 \item Ongoing supervisory costs
-\item Regulatory technology (RegTech)
+\item RegTech (Regulatory Technology---software for compliance automation)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -223,12 +230,15 @@ Without regulation:
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Harberger Deadweight Loss}
+\textbf{Harberger Deadweight Loss (Welfare Triangle)}
+
 \begin{itemize}
 \item Foregone efficient transactions
-\item Producer and consumer surplus loss
+\item Producer and consumer surplus loss (value destroyed)
 \item Optimal regulation minimizes total loss
 \end{itemize}
+
+The welfare loss triangle: area between supply and demand curves representing transactions killed by regulation.
 \end{columns}
 
 \bottomnote{Harberger (1964): Regulation creates deadweight loss when marginal cost exceeds marginal benefit}
@@ -239,6 +249,9 @@ Without regulation:
 \begin{center}
 \includegraphics[width=0.65\textwidth]{02_regulatory_perimeter/chart.pdf}
 \end{center}
+
+\vspace{0.3em}
+\textbf{Regulatory Perimeter}: The boundary between regulated and unregulated activities. Firms just outside the perimeter avoid compliance costs but pose similar risks.
 
 \bottomnote{Determining what falls inside vs. outside the regulatory perimeter is a critical policy choice}
 \end{frame}
@@ -268,9 +281,9 @@ Without regulation:
 \column{0.48\textwidth}
 \textbf{Perimeter Ambiguities}
 \begin{itemize}
-\item Are DeFi protocols financial institutions?
-\item Are NFTs securities or commodities?
-\item Are DAOs legal entities?
+\item Are DeFi (Decentralized Finance) protocols financial institutions?
+\item Are NFTs (Non-Fungible Tokens) securities or commodities?
+\item Are DAOs (Decentralized Autonomous Organizations) legal entities?
 \item Are validators financial intermediaries?
 \end{itemize}
 
@@ -300,7 +313,7 @@ Without regulation:
 \column{0.48\textwidth}
 \textbf{Why Compliance Costs Are Fixed}
 \begin{itemize}
-\item Core systems (KYC, AML, reporting)
+\item Core systems: KYC (Know Your Customer) / AML (Anti-Money Laundering) / reporting
 \item Legal and compliance teams
 \item Technology infrastructure
 \item Audit and certification
@@ -327,7 +340,7 @@ Without regulation:
 \textbf{Policy Responses}
 \begin{itemize}
 \item Tiered regulation (proportionality)
-\item Regulatory sandboxes
+\item Regulatory sandboxes (controlled experimentation zones)
 \item Shared compliance infrastructure
 \item RegTech innovation support
 \end{itemize}
@@ -341,6 +354,11 @@ Without regulation:
 \begin{center}
 \includegraphics[width=0.65\textwidth]{04_regulatory_arbitrage_game/chart.pdf}
 \end{center}
+
+\vspace{0.3em}
+\textbf{Regulatory Arbitrage}: Moving to jurisdictions with looser rules to avoid compliance costs.
+
+\textbf{Nash Equilibrium}: Outcome where no player can improve by changing strategy alone. Here: all jurisdictions compete by lowering standards.
 
 \bottomnote{Regulatory arbitrage is a Nash equilibrium when jurisdictions compete for mobile capital}
 \end{frame}
@@ -358,6 +376,8 @@ Without regulation:
 \item Tax haven incorporation
 \item Regulatory shopping
 \end{itemize}
+
+\textit{Example}: Bitcoin mining operations moved from China (2021 ban) to Kazakhstan, then to US/Canada when Kazakhstan tightened rules.
 
 \vspace{0.3em}
 \textbf{2. Structural Arbitrage}
@@ -415,10 +435,12 @@ Two jurisdictions:
 \vspace{0.3em}
 \textbf{1. International Agreements}
 \begin{itemize}
-\item FATF standards for AML
+\item FATF (Financial Action Task Force) standards for AML
 \item Basel accords for capital
-\item IOSCO principles for securities
+\item IOSCO (International Organization of Securities Commissions) principles
 \end{itemize}
+
+\textit{Example}: FATF grey-listing (e.g., UAE 2022) forces jurisdictions to strengthen AML rules or face financial exclusion.
 
 \vspace{0.3em}
 \textbf{2. Extraterritorial Enforcement}
@@ -472,9 +494,11 @@ Two jurisdictions:
 \begin{itemize}
 \item Advertising restrictions
 \item Prohibited practices (pump-and-dump)
-\item Custody standards
+\item Custody standards (self-custody: holding own private keys)
 \item Fiduciary duties
 \end{itemize}
+
+\textit{Example}: QuadrigaCX collapse (2019)---\$190M lost when CEO died with sole custody of private keys. No custody standards.
 
 \vspace{0.3em}
 \textbf{Redress Mechanisms}
@@ -509,6 +533,8 @@ Two jurisdictions:
 \item FOMO (fear of missing out)
 \item Herd behavior
 \end{itemize}
+
+\textit{Moral Hazard}: Taking more risk because someone else bears the cost (e.g., expecting bailouts).
 
 \column{0.48\textwidth}
 \textbf{When Conduct Rules Are Needed}
@@ -559,9 +585,9 @@ Two jurisdictions:
 \vspace{0.3em}
 \textbf{Standard-Setting Bodies}
 \begin{itemize}
-\item Financial Stability Board (FSB)
-\item Basel Committee (BCBS)
-\item FATF for AML/CFT
+\item FSB (Financial Stability Board---global coordination body)
+\item BCBS (Basel Committee on Banking Supervision---capital standards)
+\item FATF for AML/CFT (Combating Financing of Terrorism)
 \item IOSCO for securities
 \end{itemize}
 
@@ -586,7 +612,7 @@ Two jurisdictions:
 \vspace{0.3em}
 Coordination achieved through:
 \begin{itemize}
-\item Clear standards (originator/beneficiary info)
+\item Clear standards: Travel Rule (originator/beneficiary info for transactions >1000 USD)
 \item Peer review and grey-listing
 \item Private sector engagement
 \item Technology-neutral approach
@@ -665,7 +691,7 @@ Fragmentation due to:
 \item Real-time compliance monitoring
 \item Automated reporting (RegTech)
 \item Smart contract-based rules
-\item Supervisory technology (SupTech)
+\item SupTech (Supervisory Technology---tools for regulators to monitor markets)
 \end{itemize}
 \end{columns}
 
@@ -762,6 +788,166 @@ Optimal regulation occurs where:
 Regulatory economics provides tools to design efficient regulation: balancing market failure correction against compliance costs, while managing arbitrage and coordination challenges.
 
 \bottomnote{Next lesson: Synthesis and Integration of Economic Frameworks}
+\end{frame}
+
+% Key Terms
+\begin{frame}[t]{Key Terms (1/3)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Market Failure}
+Situation where free markets fail to allocate resources efficiently, justifying regulatory intervention.
+
+\vspace{0.3em}
+\textbf{Information Asymmetry}
+Situation where one party has more information than another, potentially leading to adverse selection or moral hazard.
+
+\vspace{0.3em}
+\textbf{Adverse Selection}
+When information asymmetry causes bad products/actors to dominate markets (Akerlof's lemons problem).
+
+\vspace{0.3em}
+\textbf{Moral Hazard}
+Taking excessive risk because someone else bears the cost (e.g., expecting bailouts).
+
+\vspace{0.3em}
+\textbf{Externality}
+Cost or benefit affecting parties not directly involved in a transaction.
+
+\vspace{0.3em}
+\textbf{Systemic Risk}
+Risk that one failure triggers cascading failures across the financial system.
+
+\column{0.48\textwidth}
+\textbf{Regulatory Perimeter}
+Boundary defining which activities and entities fall under regulatory oversight.
+
+\vspace{0.3em}
+\textbf{Regulatory Arbitrage}
+Exploiting differences in rules across jurisdictions or asset classifications to avoid regulation.
+
+\vspace{0.3em}
+\textbf{Regulatory Capture}
+When regulated industry gains control over its regulator, leading to rules favoring industry over public interest.
+
+\vspace{0.3em}
+\textbf{Deadweight Loss}
+Economic inefficiency representing value destroyed by regulation or market distortions (Harberger triangle).
+
+\vspace{0.3em}
+\textbf{Compliance Costs}
+Direct and indirect expenses of meeting regulatory requirements.
+
+\vspace{0.3em}
+\textbf{Consumer Protection}
+Rules and standards designed to shield individuals from exploitation, fraud, or harm.
+
+\end{columns}
+
+\bottomnote{Regulatory economics provides framework for evaluating when and how to regulate digital finance}
+\end{frame}
+
+% Key Terms Page 2
+\begin{frame}[t]{Key Terms (2/3)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Nash Equilibrium}
+Game theory outcome where no player can improve by changing strategy alone; all players' choices are mutual best responses.
+
+\vspace{0.3em}
+\textbf{Prisoner's Dilemma}
+Situation where individual rationality leads to collectively suboptimal outcome (e.g., regulatory race to the bottom).
+
+\vspace{0.3em}
+\textbf{Proportionality}
+Principle that regulatory intensity should match risk level and firm size/complexity.
+
+\vspace{0.3em}
+\textbf{Sandbox}
+Controlled regulatory environment allowing limited experimentation with relaxed rules for innovation.
+
+\vspace{0.3em}
+\textbf{RegTech}
+Regulatory Technology---software tools automating compliance (KYC, AML, reporting).
+
+\vspace{0.3em}
+\textbf{SupTech}
+Supervisory Technology---tools enabling regulators to monitor markets in real-time.
+
+\column{0.48\textwidth}
+\textbf{KYC (Know Your Customer)}
+Identity verification process required to prevent fraud and money laundering.
+
+\vspace{0.3em}
+\textbf{AML (Anti-Money Laundering)}
+Rules preventing financial system use for laundering illicit funds.
+
+\vspace{0.3em}
+\textbf{Travel Rule}
+FATF requirement to transmit originator/beneficiary information for transactions exceeding threshold (typically USD 1000).
+
+\vspace{0.3em}
+\textbf{Grey-listing}
+FATF designation of jurisdictions with strategic AML/CFT deficiencies, triggering enhanced scrutiny.
+
+\vspace{0.3em}
+\textbf{Self-Custody}
+Holding private keys directly without intermediary (vs. custodial services like exchanges).
+
+\vspace{0.3em}
+\textbf{Prudential Regulation}
+Rules ensuring financial institutions' safety and soundness (capital, liquidity, risk management).
+
+\end{columns}
+
+\bottomnote{Understanding these terms is essential for analyzing regulatory economics of digital finance}
+\end{frame}
+
+% Key Terms Page 3
+\begin{frame}[t]{Key Terms (3/3)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Technology-Neutral Regulation}
+Rules focused on function/activity rather than specific technology, avoiding picking winners.
+
+\vspace{0.3em}
+\textbf{Functional Regulation}
+Regulating activities (lending, custody) rather than entity types (banks, exchanges).
+
+\vspace{0.3em}
+\textbf{Institutional Regulation}
+Regulating entity types with clear jurisdictional boundaries (traditional banking model).
+
+\vspace{0.3em}
+\textbf{Same Risk, Same Regulation}
+Principle that activities posing similar risks should face equivalent regulatory treatment.
+
+\vspace{0.3em}
+\textbf{Extraterritorial Jurisdiction}
+Applying domestic laws to foreign entities accessing domestic markets.
+
+\column{0.48\textwidth}
+\textbf{Principles-Based Regulation}
+Flexible approach setting high-level objectives with supervisory judgment (UK model).
+
+\vspace{0.3em}
+\textbf{Rules-Based Regulation}
+Precise requirements approach with clear enforcement but less flexibility (US model).
+
+\vspace{0.3em}
+\textbf{FATF (Financial Action Task Force)}
+Global standard-setter for AML/CFT policies and international coordination.
+
+\vspace{0.3em}
+\textbf{FSB (Financial Stability Board)}
+International body coordinating financial regulation to address systemic risks.
+
+\vspace{0.3em}
+\textbf{Economies of Scale}
+Cost advantages achieved with increased production volume; in regulation, large firms spread fixed compliance costs over more users.
+
+\end{columns}
+
+\bottomnote{Mastery of terminology enables precise analysis of regulatory trade-offs}
 \end{frame}
 
 % Further Reading

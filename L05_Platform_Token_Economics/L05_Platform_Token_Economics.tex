@@ -98,11 +98,11 @@
 \column{0.48\textwidth}
 \textbf{What is a Platform?}
 
-A platform is a two-sided or multi-sided market that:
+A platform is a two-sided market (platform connecting two user groups who need each other) or multi-sided market that:
 \begin{itemize}
 \item Facilitates interactions between distinct user groups
-\item Creates value through network effects
-\item Exhibits cross-side externalities
+\item Creates value through network effects (when a product becomes more valuable as more people use it)
+\item Exhibits cross-side externalities (effects on third parties not involved in a transaction)
 \item Often displays winner-take-all dynamics
 \end{itemize}
 
@@ -149,15 +149,26 @@ Blockchain systems are inherently platforms:
 \item Value increases with same-side users
 \item Example: More Bitcoin holders $\rightarrow$ more liquidity
 \item Katz-Shapiro (1985): $V_i = v(n)$ where $v'(n) > 0$
+
+\textit{(The value for user $i$ is a function of total users $n$, and this value increases as $n$ grows)}
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{2. Indirect Network Effects}
 \begin{itemize}
 \item Value increases with other-side users
-\item Example: More Ethereum users $\rightarrow$ more dApps
+\item Example: More Ethereum users $\rightarrow$ more dApps (decentralized applications)
 \item Cross-side externalities drive adoption
 \end{itemize}
+
+\vspace{0.3em}
+\textbf{Real Example: Ethereum}
+
+2020: 1M addresses $\rightarrow$ 200 dApps
+
+2023: 2M addresses $\rightarrow$ 3000+ dApps
+
+More users attract developers; more dApps attract users.
 
 \column{0.48\textwidth}
 \textbf{Economic Implications}
@@ -177,6 +188,8 @@ How to quantify network effects?
 \item Transaction volume (activity)
 \item Developer activity (ecosystem)
 \item Metcalfe's Law: $V \propto n^2$
+
+\textit{(Network value grows with the square of users: doubling users quadruples value)}
 \end{itemize}
 \end{columns}
 
@@ -199,7 +212,7 @@ How to quantify network effects?
 \textbf{The Critical Mass Problem}
 
 \vspace{0.3em}
-A platform needs critical mass to become self-sustaining:
+A platform needs critical mass (minimum users needed for network to become self-sustaining) to succeed:
 \begin{itemize}
 \item Below critical mass: adoption stalls
 \item Above critical mass: positive feedback drives growth
@@ -227,7 +240,7 @@ Schelling (1978): Coordination games with multiple equilibria
 \vspace{0.3em}
 \textbf{Application to Tokens}
 \begin{itemize}
-\item Initial coin offerings (ICOs) reduce bootstrapping costs
+\item ICOs (Initial Coin Offerings---token fundraising) reduce bootstrapping costs
 \item Token airdrops create initial user base
 \item Liquidity mining accelerates adoption
 \end{itemize}
@@ -255,6 +268,9 @@ Fisher's equation applied to tokens:
 \[
 MV = PQ
 \]
+
+\textit{(Money supply times velocity equals price level times transactions---if tokens circulate faster, each is worth less)}
+
 \begin{itemize}
 \item $M$: Token supply (monetary base)
 \item $V$: Velocity (transactions per period)
@@ -267,6 +283,8 @@ Solving for token value:
 \[
 P_{\text{token}} = \frac{PQ}{MV}
 \]
+
+\textit{(Token price increases with network activity but decreases with supply and velocity)}
 
 \column{0.48\textwidth}
 \textbf{The Velocity Problem}
@@ -281,13 +299,22 @@ High velocity reduces token value:
 \vspace{0.3em}
 \textbf{Velocity Sinks}
 
-Mechanisms to reduce velocity:
+Mechanisms to reduce velocity (mechanism that slows how fast tokens change hands):
 \begin{itemize}
-\item Staking requirements (lock-up periods)
-\item Governance rights (voting power)
+\item Staking (locking tokens to earn rewards and secure the network) requirements (lock-up periods)
+\item Governance (how decisions are made about the protocol) rights (voting power)
 \item Fee discounts for holders
 \item Burn mechanisms (deflationary)
 \end{itemize}
+
+\vspace{0.3em}
+\textbf{Real Example: Token Velocity}
+
+Token A: V=50/year (pure payment)
+
+Token B: V=5/year (staking rewards)
+
+With equal $M$ and $PQ$, Token B is worth 10x more.
 \end{columns}
 
 \bottomnote{Samuelson (2017): Token velocity is central challenge in cryptoeconomics design}
@@ -330,7 +357,7 @@ Mechanisms to reduce velocity:
 \textbf{3. Algorithmic Adjustment}
 \begin{itemize}
 \item Supply responds to demand
-\item Example: Stablecoins (DAI, Terra)
+\item Example: Stablecoins (DAI (a decentralized stablecoin), Terra)
 \item Attempts price stability
 \item Complex mechanism design
 \end{itemize}
@@ -385,6 +412,9 @@ Gibrat's Law: proportional growth leads to concentration
 \[
 \frac{dS_i}{dt} = \alpha S_i + \epsilon_i
 \]
+
+\textit{(Larger platforms grow faster on average, leading to market concentration over time)}
+
 Where $S_i$ is firm $i$'s market share.
 
 \vspace{0.3em}
@@ -426,7 +456,7 @@ Rochet \& Tirole (2003): A market is two-sided if:
 \begin{itemize}
 \item Exchanges: traders and liquidity providers
 \item Payment networks: merchants and consumers
-\item DeFi protocols: borrowers and lenders
+\item DeFi (Decentralized Finance) protocols: borrowers and lenders
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -467,8 +497,8 @@ Token holders often have governance rights:
 \vspace{0.3em}
 \textbf{Voting Mechanisms}
 \begin{itemize}
-\item One-token-one-vote (plutocracy risk)
-\item Quadratic voting (Weyl \& Lalley)
+\item One-token-one-vote (plutocracy (rule by the wealthy---those with most tokens have most votes) risk)
+\item Quadratic voting (voting power increases with square root of tokens, not linearly) (Weyl \& Lalley)
 \item Delegated voting (representation)
 \item Futarchy (prediction markets)
 \end{itemize}
@@ -491,6 +521,17 @@ How to align incentives?
 \item Skin-in-the-game requirements
 \item Reputation systems
 \end{itemize}
+
+\vspace{0.3em}
+\textbf{Real Example: DAO Voting}
+
+Proposal: Change protocol fee from 0.3\% to 0.5\%
+
+Whale with 100K tokens: 100K votes
+
+100 users with 100 tokens: 10K votes
+
+Whale wins despite majority opposition.
 \end{columns}
 
 \bottomnote{Weyl \& Lalley (2018): Quadratic voting mitigates plutocracy in token governance}
@@ -512,8 +553,8 @@ Platforms face strategic choices:
 \vspace{0.3em}
 \textbf{Blockchain Context}
 \begin{itemize}
-\item L1 blockchains compete for users
-\item L2 solutions cooperate with L1s
+\item L1 (Layer 1---base blockchains like Ethereum) blockchains compete for users
+\item L2 (Layer 2---solutions built on top of L1) solutions cooperate with L1s
 \item Cross-chain bridges enable multi-homing
 \end{itemize}
 
@@ -619,6 +660,116 @@ Good tokenomics balances short-term adoption incentives with long-term value sus
 Next lesson (L06): Market microstructure---how crypto markets discover prices and provide liquidity.
 
 \bottomnote{Platform economics explains the success and failure patterns in cryptocurrency markets}
+\end{frame}
+
+% Key Terms (Page 1 of 2)
+\begin{frame}[t]{Key Terms (1/2)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Network Externality}
+Benefit or cost imposed on users when another user joins the network.
+
+\vspace{0.3em}
+\textbf{Critical Mass}
+Minimum adoption level needed for network effects to become self-sustaining.
+
+\vspace{0.3em}
+\textbf{Token Velocity}
+Rate at which tokens change hands; high velocity can depress token value.
+
+\vspace{0.3em}
+\textbf{Tokenomics}
+Economic design of token systems including supply schedules, incentives, and governance rights.
+
+\vspace{0.3em}
+\textbf{Winner-Take-All}
+Market dynamic where network effects lead to one dominant platform capturing most market share.
+
+\vspace{0.3em}
+\textbf{Platform Governance}
+Rules and mechanisms for decision-making about platform evolution and resource allocation.
+
+\vspace{0.3em}
+\textbf{Two-Sided Market}
+Platform connecting two user groups who need each other (e.g., merchants and consumers).
+
+\vspace{0.3em}
+\textbf{Cross-Side Externalities}
+Effects on one user group when the other group grows (e.g., more users attract more developers).
+
+\column{0.48\textwidth}
+\textbf{Multi-Homing Costs}
+Costs of using multiple competing platforms simultaneously.
+
+\vspace{0.3em}
+\textbf{Switching Costs}
+Costs (financial or behavioral) of moving from one platform to another.
+
+\vspace{0.3em}
+\textbf{Path Dependence}
+Current state depends on historical choices, not just current conditions.
+
+\vspace{0.3em}
+\textbf{Lock-In}
+Situation where switching costs make users captive to existing platform.
+
+\vspace{0.3em}
+\textbf{Velocity Sink}
+Mechanism that slows how fast tokens change hands, supporting value.
+
+\vspace{0.3em}
+\textbf{Staking}
+Locking tokens to earn rewards and secure the network.
+
+\vspace{0.3em}
+\textbf{Burn Mechanism}
+Process of permanently removing tokens from circulation to create scarcity.
+
+\vspace{0.3em}
+\textbf{Metcalfe's Law}
+Network value grows with the square of users: $V \propto n^2$.
+\end{columns}
+
+\bottomnote{Platform economics explains why some crypto networks thrive while others fail}
+\end{frame}
+
+% Key Terms (Page 2 of 2)
+\begin{frame}[t]{Key Terms (2/2)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Plutocracy}
+Rule by the wealthy---those with most tokens have most votes.
+
+\vspace{0.3em}
+\textbf{Quadratic Voting}
+Voting power increases with square root of tokens, not linearly, to mitigate plutocracy.
+
+\vspace{0.3em}
+\textbf{Liquidity Mining}
+Distributing tokens to users who provide liquidity to protocols, accelerating adoption.
+
+\vspace{0.3em}
+\textbf{Airdrops}
+Free distribution of tokens to wallet addresses to bootstrap network or reward loyalty.
+
+\column{0.48\textwidth}
+\textbf{dApps}
+Decentralized applications built on blockchain platforms.
+
+\vspace{0.3em}
+\textbf{ICO}
+Initial Coin Offering---token fundraising mechanism for blockchain projects.
+
+\vspace{0.3em}
+\textbf{Layer 1 (L1)}
+Base blockchain protocols (e.g., Ethereum, Bitcoin).
+
+\vspace{0.3em}
+\textbf{Layer 2 (L2)}
+Scaling solutions built on top of Layer 1 blockchains.
+\end{columns}
+
+\bottomnote{Understanding these terms is essential for analyzing platform and token economics}
 \end{frame}
 
 % Further Reading

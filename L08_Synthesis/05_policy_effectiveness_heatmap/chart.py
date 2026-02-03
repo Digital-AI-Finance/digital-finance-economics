@@ -2,6 +2,8 @@
 
 Quantifying policy impacts across multiple objectives and stakeholders.
 Theory: Multi-criteria welfare economics.
+
+Citation: Bank for International Settlements (2021) - Policy Framework Analysis
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -10,7 +12,7 @@ from pathlib import Path
 np.random.seed(42)
 
 plt.rcParams.update({
-    'font.size': 11, 'axes.labelsize': 11, 'axes.titlesize': 13,
+    'font.size': 14, 'axes.labelsize': 11, 'axes.titlesize': 13,
     'xtick.labelsize': 10, 'ytick.labelsize': 10, 'legend.fontsize': 10,
     'figure.figsize': (10, 6), 'figure.dpi': 150
 })
@@ -79,12 +81,22 @@ for i in range(len(policies)):
 
 ax_heat.set_title('Policy Effectiveness Matrix\n(Effect on Each Objective)',
                  pad=15, fontweight='bold')
-ax_heat.set_xlabel('Policy Objectives', fontweight='bold')
-ax_heat.set_ylabel('Policy Instruments', fontweight='bold')
+ax_heat.set_xlabel('Policy Objectives (category)', fontweight='bold')
+ax_heat.set_ylabel('Policy Instruments (category)', fontweight='bold')
+ax_heat.grid(True, alpha=0.2, linestyle='-', linewidth=0.5, color='gray')
+
+# B5: Add annotation highlighting KYC/AML innovation tradeoff
+kycaml_idx = policies.index('KYC/AML')
+innovation_idx = objectives.index('Innovation')
+ax_heat.annotate('Hinders\ninnovation',
+                xy=(innovation_idx, kycaml_idx),
+                xytext=(innovation_idx + 0.6, kycaml_idx - 0.6),
+                fontsize=9, fontweight='bold', color='yellow',
+                arrowprops=dict(arrowstyle='->', color='yellow', lw=1.5))
 
 # Add colorbar
 cbar = plt.colorbar(im, ax=ax_heat, fraction=0.046, pad=0.04)
-cbar.set_label('Effectiveness\n(-1: Harmful, +1: Highly Effective)',
+cbar.set_label('Effectiveness (score)\n(-1: Harmful, +1: Highly Effective)',
               rotation=270, labelpad=25, fontsize=10)
 
 # Welfare impact panel

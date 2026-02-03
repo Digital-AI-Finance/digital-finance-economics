@@ -111,9 +111,16 @@ ax1.axhline(y=CONFIDENCE_THRESHOLD * 100, color='gray', linestyle='--',
 ax1.axhline(y=DEPEG_THRESHOLD * 100, color=MLRED, linestyle='--',
            linewidth=2, alpha=0.8, label='De-peg Threshold (50%)')
 
+# B5: Add annotation highlighting key data point - fractional reserve rapid depletion
+ax1.annotate('Fractional reserve\nrapid depletion',
+            xy=(30, 20), xytext=(40, 40),
+            fontsize=10, fontweight='bold', color=MLORANGE,
+            arrowprops=dict(arrowstyle='->', color=MLORANGE, lw=1.5),
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLORANGE, alpha=0.8))
+
 ax1.set_xlabel('Days', fontweight='bold')
 ax1.set_ylabel('Reserve Ratio (%)', fontweight='bold')
-ax1.set_title('Reserve Dynamics Under Stress', fontsize=16, fontweight='bold', color=MLPURPLE)
+ax1.set_title('Stablecoin Reserve Dynamics Under Bank Run Stress', fontsize=16, fontweight='bold', color=MLPURPLE)
 ax1.legend(loc='upper right', framealpha=0.95, fontsize=11)
 ax1.grid(True, alpha=0.3)
 ax1.set_xlim(0, T_DAYS)
@@ -122,7 +129,7 @@ ax1.set_ylim(0, 105)
 # Second plot: De-peg probability
 ax2.set_xlabel('Days', fontweight='bold')
 ax2.set_ylabel('De-peg Probability (%)', fontweight='bold')
-ax2.set_title('Cumulative De-peg Risk', fontsize=16, fontweight='bold', color=MLPURPLE)
+ax2.set_title('Cumulative De-peg Risk Over Simulation Period', fontsize=16, fontweight='bold', color=MLPURPLE)
 ax2.legend(loc='upper left', framealpha=0.95, fontsize=11)
 ax2.grid(True, alpha=0.3)
 ax2.set_xlim(0, T_DAYS)

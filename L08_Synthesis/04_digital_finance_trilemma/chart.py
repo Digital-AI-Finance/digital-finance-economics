@@ -3,6 +3,8 @@
 Impossible trinity in blockchain design - decentralization, security, scalability.
 Theory: Adapted from monetary policy trilemma (Mundell-Fleming).
 Constraint: Systems cannot simultaneously maximize all three properties.
+
+Based on: Auer et al. (2021) - CBDC Trilemma
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -84,7 +86,7 @@ ax.text(constraint_center[0], constraint_center[1] - 0.15,
 # Plot systems
 for name, (dec, sec, scal, color) in systems.items():
     x, y = barycentric_to_cartesian(dec, sec, scal)
-    ax.scatter(x, y, s=250, c=color, alpha=0.8, edgecolors='black', linewidth=2.5, zorder=5)
+    ax.scatter(x, y, s=250, c=color, alpha=0.8, edgecolors='black', linewidth=2.5, zorder=5, label=name)
 
     # Position labels to avoid overlap
     if name == 'Bitcoin':
@@ -97,6 +99,9 @@ for name, (dec, sec, scal, color) in systems.items():
     ax.text(x, y + offset_y, name, ha='center',
             va='bottom' if offset_y > 0 else 'top',
             fontsize=11, fontweight='bold', zorder=6)
+
+# Add legend
+ax.legend(loc='upper left', framealpha=0.95, fontsize=11, title='Systems', title_fontsize=12)
 
 # Draw tradeoff arrows showing impossible movements
 # Arrow 1: Bitcoin cannot easily increase scalability without sacrificing D or S
@@ -119,7 +124,14 @@ ax.text((visa_x + visa_target_x)/2 + 0.08, (visa_y + visa_target_y)/2,
         'Decentralization\ntradeoff', fontsize=9, style='italic', color='blue',
         ha='left', va='center')
 
-# Add grid lines (optional)
+# Add educational annotation - Trilemma principle
+ax.text(0.5, 0.05, 'Trilemma: Choose 2 of 3\nD + S + Sc ≤ K (constraint)',
+        transform=ax.transAxes, fontsize=11, fontweight='bold',
+        ha='center', va='bottom',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
+
+# Add grid lines
+ax.grid(True, alpha=0.3, linestyle='--')
 for i in np.linspace(0, 1, 6):
     # Lines parallel to BC (constant efficiency)
     p1 = i * A + (1-i) * B
@@ -166,9 +178,26 @@ ax.text(mid_AC[0] + 0.12, mid_AC[1], 'D + Sc\n(rare)', fontsize=edge_annotation_
 ax.set_xlim(-0.2, 1.35)
 ax.set_ylim(-0.15, 1.0)
 ax.set_aspect('equal')
-ax.axis('off')
-ax.set_title('Blockchain Trilemma: Constraint Optimization',
+ax.set_xlabel('Trilemma Space (normalized)', fontsize=13, labelpad=10)
+ax.set_ylabel('Trade-off Dimension (normalized)', fontsize=13, labelpad=10)
+ax.xaxis.set_visible(True)
+ax.yaxis.set_visible(True)
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.spines['bottom'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.set_xticks([])
+ax.set_yticks([])
+ax.set_title('Blockchain Trilemma: Constraint Optimization in Digital Finance',
              fontsize=17, fontweight='bold', pad=20)
+
+# B5: Add annotation highlighting Bitcoin's decentralization-security tradeoff
+btc_x, btc_y = barycentric_to_cartesian(0.45, 0.45, 0.10)
+ax.annotate('Bitcoin:\nD+S optimized',
+           xy=(btc_x, btc_y), xytext=(btc_x - 0.25, btc_y + 0.12),
+           fontsize=9, fontweight='bold', color=MLORANGE,
+           arrowprops=dict(arrowstyle='->', color=MLORANGE, lw=1.5),
+           bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLORANGE, alpha=0.8))
 
 plt.tight_layout()
 

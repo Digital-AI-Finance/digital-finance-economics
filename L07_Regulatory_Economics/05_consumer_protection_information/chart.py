@@ -10,7 +10,7 @@ from pathlib import Path
 np.random.seed(42)
 
 plt.rcParams.update({
-    'font.size': 11, 'axes.labelsize': 12, 'axes.titlesize': 13,
+    'font.size': 14, 'axes.labelsize': 12, 'axes.titlesize': 13,
     'xtick.labelsize': 10, 'ytick.labelsize': 10, 'legend.fontsize': 10,
     'figure.figsize': (14, 9), 'figure.dpi': 150
 })
@@ -139,14 +139,23 @@ for idx, round_num in enumerate(rounds_to_show):
                         label=f'Round {round_num}' if round_num > 0 else 'Initial',
                         edgecolor='black', linewidth=0.5)
 
-ax_main.set_xlabel('Project Quality (q)')
-ax_main.set_ylabel('Number of Projects')
+ax_main.set_xlabel('Project Quality (q, score 0-1)')
+ax_main.set_ylabel('Number of Projects (count)')
 ax_main.set_title('Market Unraveling: Quality Distribution Shifts Left Over Time\n(No Regulation Scenario)',
                   fontweight='bold')
 ax_main.legend(loc='upper right')
 ax_main.grid(True, alpha=0.3, axis='y')
 ax_main.axvline(quality.mean(), color=MLGREEN, linestyle='--', linewidth=2,
                label='Initial Mean', alpha=0.7)
+
+# B5: Add annotation highlighting market failure
+initial_mean = quality.mean()
+final_mean = avg_quality_no_reg[-1] if avg_quality_no_reg[-1] > 0 else avg_quality_no_reg[30]
+ax_main.annotate(f'Quality collapse:\n{initial_mean:.2f} → {final_mean:.2f}',
+                xy=(final_mean, 50), xytext=(final_mean + 0.15, 80),
+                fontsize=10, fontweight='bold', color=MLRED,
+                arrowprops=dict(arrowstyle='->', color=MLRED, lw=1.5),
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLRED, alpha=0.8))
 
 # Inset: Average quality and price over rounds
 ax_inset = ax_main.inset_axes([0.05, 0.55, 0.35, 0.4])
@@ -214,6 +223,12 @@ ax3.set_ylim(0, 1)
 # Overall title with citation
 fig.suptitle('Akerlof (1970) Market for Lemons: Regulatory Interventions to Prevent Market Unraveling',
              fontsize=14, fontweight='bold', y=0.98)
+
+# Add educational annotation to main plot
+ax_main.text(0.60, 0.30, 'Asymmetric Information:\nE[q|trade] < q̄ → adverse selection\nHigh-q sellers exit when p < c·q',
+            transform=ax_main.transAxes, fontsize=10,
+            verticalalignment='top',
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.6))
 
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')
 plt.savefig(Path(__file__).parent / 'chart.png', dpi=150, bbox_inches='tight')

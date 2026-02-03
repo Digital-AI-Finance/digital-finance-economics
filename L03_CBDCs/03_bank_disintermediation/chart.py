@@ -2,6 +2,8 @@
 
 Differential equation model of deposit flight to CBDC.
 Theory: Brunnermeier & Niepelt (2019) on CBDC and monetary policy.
+
+Based on: Bindseil (2020) - Tiered CBDC and the financial system
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -106,7 +108,7 @@ ax1.annotate('CB Intervention:\nRate Ceiling +\nQuantity Limits',
 
 ax1.set_xlabel('Time (Quarters)', fontweight='bold')
 ax1.set_ylabel('Bank Deposits (% of Pre-CBDC Level)', fontweight='bold')
-ax1.set_title('CBDC-Induced Bank Disintermediation Dynamics',
+ax1.set_title('Bank Disintermediation Dynamics Induced by CBDC Introduction',
               fontsize=14, fontweight='bold', color=MLPURPLE, pad=15)
 ax1.legend(loc='lower left', framealpha=0.95)
 ax1.grid(True, alpha=0.3, linestyle='--')
@@ -181,6 +183,17 @@ fig.text(0.5, -0.02,
          'Theory: Brunnermeier & Niepelt (2019) - CBDC and Private Banks\n'
          'Model: dD/dt = -α(r_CBDC - r_D)D + β·confidence(t) | α=0.8, β=1.2, r_D=0.5%',
          ha='center', fontsize=9, style='italic', color='gray')
+
+# Add disintermediation formula annotation on top panel
+ax1.text(0.72, 0.98,
+        'Disintermediation Dynamics:\n'
+        'dD/dt = -α(rCBDC - rD)D + β·confidence(t)\n\n'
+        'Rate differential drives deposit flight\n'
+        'Accelerates as bank stability weakens\n'
+        'Policy tools: rate ceiling or quantity limits',
+        transform=ax1.transAxes, fontsize=9,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.7))
 
 plt.tight_layout()
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')

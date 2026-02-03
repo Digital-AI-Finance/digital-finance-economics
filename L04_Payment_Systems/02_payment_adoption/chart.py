@@ -117,7 +117,7 @@ ax.set_ylabel('Cumulative Adoption (%)', fontweight='bold')
 ax.set_title('Payment System Adoption: Bass Diffusion Model\nInnovation (p) vs. Imitation (q) Effects',
              fontsize=16, fontweight='bold', color=MLPURPLE, pad=15)
 ax.legend(loc='upper left', framealpha=0.95, fontsize=10)
-ax.grid(True, alpha=0.3)
+ax.grid(True, alpha=0.3, linestyle='--')
 ax.set_xlim(0, 30)
 ax.set_ylim(0, 100)
 

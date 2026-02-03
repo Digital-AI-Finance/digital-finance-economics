@@ -3,8 +3,7 @@
 Decomposing fintech sector growth into technology infrastructure, adoption,
 network effects, and total factor productivity (TFP) components.
 
-Citation: Solow, R. M. (1957). Technical change and the aggregate production function.
-The Review of Economics and Statistics, 39(3), 312-320.
+Citation: Solow (1957) - Technical change and the aggregate production function
 """
 import matplotlib.pyplot as plt
 import numpy as np

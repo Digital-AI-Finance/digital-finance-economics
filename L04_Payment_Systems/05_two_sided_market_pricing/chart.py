@@ -4,6 +4,8 @@ This chart demonstrates the Rochet-Tirole two-sided market model applied to
 payment systems. It shows how the platform balances merchant acceptance and
 consumer adoption through interchange fee optimization to maximize transaction
 volume and profit.
+
+Citation: Rochet & Tirole (2003) - Platform Competition in Two-Sided Markets
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -77,7 +79,16 @@ ax1.set_title('Two-Sided Market: Balancing Merchants and Consumers')
 ax1.set_xlim(0, 5)
 ax1.set_ylim(0, 1.05)
 ax1.legend(loc='upper right', framealpha=0.95)
-ax1.grid(True, alpha=0.3, linestyle='-', linewidth=0.5)
+ax1.grid(True, alpha=0.3, linestyle='--')
+
+# C3: Add theory explanation annotation
+theory_text = ('Rochet-Tirole Two-Sided Market Model:\n'
+               'Platform must balance two sides with opposing fee preferences.\n'
+               'Optimal interchange fee maximizes total platform profit\n'
+               'by balancing merchant acceptance vs consumer adoption.')
+ax1.text(0.5, -0.15, theory_text, transform=ax1.transAxes,
+        fontsize=9, ha='center', va='top',
+        bbox=dict(boxstyle='round,pad=0.5', facecolor=MLLAVENDER, edgecolor=MLPURPLE, alpha=0.7))
 
 plt.tight_layout()
 

@@ -2,6 +2,8 @@
 
 Visualizes the Fisher equation MV=PY with different velocity regimes.
 Shows how digital currencies with higher velocity affect price levels.
+
+Citation: Fisher (1911) - The Purchasing Power of Money
 """
 import matplotlib.pyplot as plt
 import numpy as np

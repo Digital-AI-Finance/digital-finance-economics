@@ -1,4 +1,10 @@
-"""Regulatory Arbitrage: Game Theory"""
+"""Regulatory Arbitrage: Game Theory Analysis of Regulatory Competition
+
+Demonstrates strategic interaction between jurisdictions in regulatory competition.
+Shows Nash equilibrium in race-to-the-bottom vs cooperative outcomes using payoff matrices.
+
+Citation: Kanbur & Keen (1993) - Jeux Sans Frontières: Tax Competition and Tax Coordination
+"""
 import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
@@ -50,13 +56,20 @@ ax1.set_xticks(range(3))
 ax1.set_yticks(range(3))
 ax1.set_xticklabels(strategies)
 ax1.set_yticklabels(strategies)
-ax1.set_xlabel('Country B Strategy')
-ax1.set_ylabel('Country A Strategy')
-ax1.set_title('Payoff Matrix\n(Red=Nash, Green=Cooperative)')
+ax1.set_xlabel('Country B Strategy (category)')
+ax1.set_ylabel('Country A Strategy (category)')
+ax1.set_title('Regulatory Competition Payoff Matrix Showing Nash Equilibrium')
+
+# B5: Add annotation highlighting Nash equilibrium payoff
+ax1.annotate('Nash: Low payoff (4)',
+            xy=(2, 2), xytext=(1.2, 0.5),
+            fontsize=10, fontweight='bold', color=MLRED,
+            arrowprops=dict(arrowstyle='->', color=MLRED, lw=1.5),
+            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLRED, alpha=0.8))
 
 # Colorbar
 cbar = plt.colorbar(im, ax=ax1)
-cbar.set_label('Payoff', rotation=270, labelpad=20)
+cbar.set_label('Payoff (utility)', rotation=270, labelpad=20)
 
 # Right plot: Repeated game dynamics
 rounds = 50
@@ -81,7 +94,7 @@ ax2.plot(time, tft_cumulative, color=MLGREEN, linewidth=2.5, label='Tit-for-Tat'
 
 ax2.set_xlabel('Round')
 ax2.set_ylabel('Cumulative Payoff')
-ax2.set_title('Repeated Game: Cumulative Payoffs')
+ax2.set_title('Repeated Game Dynamics with Cumulative Payoff Analysis')
 ax2.legend(loc='best')
 ax2.grid(True, alpha=0.3)
 
