@@ -84,7 +84,7 @@
 \end{itemize}
 \end{columns}
 
-\bottomnote{Payment systems are infrastructure for economic activity; their economics matter}
+\bottomnote{Payment systems are infrastructure for economic activity; their economics matter. No prior economics required---all terms explained.}
 \end{frame}
 
 % Payment System Basics
@@ -104,8 +104,8 @@ Payment systems enable:
 \textbf{Key Economic Properties}
 \begin{itemize}
 \item Network goods (products that become more valuable as more people use them)
-\item Infrastructure characteristics
-\item Significant fixed costs
+\item Infrastructure characteristics (shared systems everyone uses, like roads or power grids)
+\item Significant fixed costs (costs that don\'t change with volume---building the system costs the same for 1 or 1 million payments)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -147,9 +147,10 @@ where $v(n)$ is per-user value.
 \textbf{Metcalfe's Law (simplified)}
 $$V \propto n^2$$
 \textit{(Value grows with the square of users: 10 users = 100 units of value, 100 users = 10,000 units. This explains why dominant networks stay dominant.)}
+\textit{(Real example: Venmo 2012: 10,000 users. Venmo 2023: 90 million users. Same app, 9,000x more useful.)}
 \begin{itemize}
 \item Each user can transact with $n-1$ others
-\item Creates positive feedback loops
+\item Creates positive feedback loops (success breeds success---more users attract more users)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -160,19 +161,20 @@ $$V \propto n^2$$
 \begin{itemize}
 \item Critical mass threshold (minimum users needed before network becomes self-sustaining)
 \item Tipping points (moments when adoption suddenly accelerates)
-\item Winner-take-most markets
+\textit{(Below 16\%: must convince each user individually. Above 16\%: ``everyone uses it''---adoption accelerates)}
+\item Winner-take-most markets (where one or two players capture most market share)
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Entry Barriers}
 \begin{itemize}
-\item Incumbents have user base advantage
+\item Incumbents (existing dominant players) have user base advantage
 \item New entrants need to ``buy'' network
 \item Interoperability can reduce barriers
 \end{itemize}
 \end{columns}
 
-\bottomnote{Network effects explain why few payment networks dominate each market segment}
+\bottomnote{Network effects explain why few payment networks dominate---and why you use Venmo/PayPal not because they're best, but because your friends use them}
 \end{frame}
 
 % Payment Adoption
@@ -181,7 +183,7 @@ $$V \propto n^2$$
 \includegraphics[width=0.65\textwidth]{02_payment_adoption/chart.pdf}
 \end{center}
 
-\bottomnote{S-curve adoption: slow start, rapid growth after critical mass (\textasciitilde16\%), then saturation}
+\bottomnote{S-curve adoption: slow start, rapid growth after critical mass (\textasciitilde16\%---once 1 in 6 people use something, social proof accelerates adoption), then saturation}
 \end{frame}
 
 % Two-Sided Markets
@@ -224,7 +226,10 @@ Price structure matters, not just level:
 \item Subsidize price-sensitive side
 \item Charge price-insensitive side
 \item ``Get both sides on board''
+\textit{(Fee breakdown: Of \$2 merchant fee on \$100 purchase, \$1.80 goes to your bank as interchange, \$0.20 to Visa)}
 \end{itemize}
+
+\textit{(This framework explains Uber, Airbnb, Amazon, dating apps---any platform connecting two groups)}
 \end{columns}
 
 \bottomnote{Rochet \& Tirole (2006): Two-sided markets require analysis beyond standard economics}
@@ -247,7 +252,7 @@ Price structure matters, not just level:
 \vspace{0.3em}
 \textbf{Economic Rationale}
 \begin{itemize}
-\item Issuer bears fraud risk
+\item Issuer bears fraud risk (refunds you when your card is stolen---needs compensation for that risk)
 \item Subsidizes cardholder rewards
 \item Balances two-sided market
 \end{itemize}
@@ -260,7 +265,8 @@ Price structure matters, not just level:
 \begin{itemize}
 \item Merchants pass costs to prices
 \item Regressive (poorer cash users subsidize wealthier card users through higher prices)
-\item Anti-competitive coordination
+\textit{(Mechanism: Merchant raises all prices 2\%; cash customer pays higher price but gets no rewards)}
+\item Anti-competitive coordination (competitors secretly agreeing on prices instead of competing)
 \end{itemize}
 
 \vspace{0.3em}
@@ -272,7 +278,7 @@ Price structure matters, not just level:
 \end{itemize}
 \end{columns}
 
-\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment capped debit at 0.05\%{}+21c}
+\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment capped debit at 0.05\%{}+21c. EU caps are lower due to stronger regulator intervention.}
 \end{frame}
 
 % Cross-Border Payments
@@ -283,7 +289,7 @@ Price structure matters, not just level:
 
 Cross-border payments are:
 \begin{itemize}
-\item Expensive: 6\%{}+ average cost
+\item Expensive: 6\%{}+ average cost (send \$100, only \$94 arrives)
 \item Slow: 2-5 days settlement
 \item Opaque: uncertain fees
 \item Fragmented: many intermediaries
@@ -296,6 +302,7 @@ Cross-border payments are:
 \item Regulatory fragmentation
 \item Legacy technology
 \item Correspondent banking model (payments routed through intermediary banks)
+\textit{(Each bank: maintains relationship, holds capital, performs compliance, takes profit = costs multiply)}
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -313,7 +320,7 @@ Cross-border payments are:
 \textbf{Compliance Costs}
 \begin{itemize}
 \item AML (Anti-Money Laundering) / KYC (Know Your Customer) checks at each hop
-\item Sanctions screening
+\item Sanctions screening (checking if recipients are on government blacklists of terrorists or banned countries)
 \item Data format inconsistencies
 \end{itemize}
 \end{columns}
@@ -327,7 +334,7 @@ Cross-border payments are:
 \includegraphics[width=0.58\textwidth]{03_correspondent_banking/chart.pdf}
 \end{center}
 
-\bottomnote{Hub-and-spoke model adds costs and delays; each intermediary takes fees}
+\bottomnote{Hub-and-spoke model adds costs and delays; each intermediary takes fees. Example: \$1,000 US to Kenya = \$80+ lost across 4 intermediaries}
 \end{frame}
 
 % Remittance Costs
@@ -359,6 +366,7 @@ Examples: Fedwire, TARGET2
 Trade-offs:
 \begin{itemize}
 \item[\textcolor{mlgreen}{+}] Eliminates settlement risk (risk one party pays but other defaults)
+\textit{(Your rent payment: RTGS = clears instantly; DNS = might take days, risk if bank fails mid-batch)}
 \item[\textcolor{mlred}{-}] High liquidity cost
 \end{itemize}
 
@@ -370,6 +378,7 @@ Characteristics:
 \item Batch settlement at intervals
 \item Payments netted (offsetting opposite payments so only difference settles)
 \item Lower liquidity needs
+\textit{(Example: A owes B \$5M, B owes A \$4M. DNS: settle net \$1M. RTGS: two separate \$9M total transfers)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -398,6 +407,7 @@ Major systems:
 \item India: UPI (Unified Payments Interface, 2016)
 \item EU: SEPA (Single Euro Payments Area) Instant (2017)
 \item US: FedNow (2023)
+\textit{(US was late: thousands of fragmented banks made coordination hard; existing systems were ``good enough'' for incumbents)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -420,14 +430,14 @@ For consumers:
 
 For businesses:
 \begin{itemize}
-\item Working capital optimization
+\item Working capital (cash needed for daily operations) optimization
 \item Reduced float costs
 \item Real-time reconciliation
 \end{itemize}
 
 For economy:
 \begin{itemize}
-\item Velocity of money increase
+\item Velocity of money (how fast money circulates---faster = more economic activity) increase
 \item Reduced payment friction
 \end{itemize}
 \end{columns}
@@ -454,7 +464,8 @@ For economy:
 \begin{itemize}
 \item Check cashing fees (2-5\%)
 \item No savings accumulation
-\item Excluded from credit
+\item Excluded from credit (cannot get loans, credit cards, or mortgages without a bank account)
+\textit{(Even in rich countries: 5.4\% of US households are unbanked and pay \$40+/month in check-cashing fees)}
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -465,12 +476,13 @@ M-Pesa (Kenya) model:
 \item Agent network (not branches)
 \item Phone-based (no smartphone needed)
 \item Low-value, low-cost transactions
+\textit{(M-Pesa fees: Sending \$8 costs \$0.09 (1.1\%) vs Western Union \$5 minimum = 62\% on small amounts)}
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Impact Evidence}
 \begin{itemize}
-\item Suri \& Jack (2016): 2\% poverty reduction
+\item Suri \& Jack (2016): 2\% poverty reduction (approximately 400,000 Kenyan households lifted out of poverty)
 \item Women especially benefited
 \item Improved risk sharing
 \end{itemize}
@@ -489,7 +501,8 @@ M-Pesa (Kenya) model:
 \begin{itemize}
 \item Ripple/XRP for cross-border
 \item Stablecoins for remittances
-\item DeFi (Decentralized Finance) payment rails
+\textit{(How it works: Buy stablecoins, send instantly, recipient converts locally---\$1-2 total vs \$6 traditional)}
+\item DeFi (Decentralized Finance---financial services on blockchain without traditional banks) payment rails
 \end{itemize}
 
 Advantages:
@@ -504,6 +517,7 @@ Advantages:
 \begin{itemize}
 \item SWIFT gpi (Global Payments Innovation) improvements
 \item ISO 20022 (new global messaging standard for financial data)
+\textit{(Structured data enables automation---like the difference between email and handwritten letters)}
 \item Linked instant payment systems
 \end{itemize}
 
@@ -534,7 +548,7 @@ Advantages:
 \textbf{Regulatory Responses}
 \begin{itemize}
 \item Interchange caps (EU, US)
-\item Open banking mandates
+\item Open banking mandates (regulations requiring banks to share customer data with authorized apps)
 \item Access to payment systems
 \end{itemize}
 
@@ -544,13 +558,14 @@ Advantages:
 \item Apple Pay, Google Pay
 \item Alipay, WeChat Pay
 \item Meta (stablecoin attempt)
+\textit{(Why Big Tech is different: They already have your phone, your data, your habits---banks never had that relationship)}
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Policy Concerns}
 \begin{itemize}
 \item Data concentration
-\item Systemic risk
+\item Systemic risk (risk that one failure causes chain reaction---if a major payment system fails, the entire economy could freeze)
 \item Competitive fairness
 \end{itemize}
 \end{columns}
