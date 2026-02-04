@@ -157,7 +157,7 @@ Analyze the FTX collapse (November 2022) through the regulatory economics lens. 
 | Element | Estimation |
 |---------|------------|
 | **Cost of No Regulation** | $8B+ direct customer losses; $200B+ market cap destruction; contagion losses; reputational damage |
-| **Cost of Regulation** | Compliance costs: ~$10-50M/year for FTX-sized exchange; reduced product innovation |
+| **Cost of Regulation** | Compliance costs: ~$10-50M/year for FTX-sized exchange (approximate estimate); reduced product innovation |
 | **Benefit of Regulation** | Prevented fraud; customer asset protection; market confidence |
 
 **Welfare Calculation:**
@@ -255,7 +255,7 @@ Structured debate on the motion: **"DeFi protocols should be regulated like trad
 
 **Argument 1: Compliance Costs Would Destroy DeFi**
 - L07 Concept: *Economies of scale in compliance*
-- Bank compliance costs: $270M/year average for large banks
+- Bank compliance costs: $270M/year average for large banks (approximate industry estimates)
 - DeFi protocols are often 5-person teams with $1M budgets
 - Fixed compliance costs favor incumbents - regulation would entrench TradFi dominance
 - Result: Innovation stops; users lose access to financial services
@@ -264,7 +264,7 @@ Structured debate on the motion: **"DeFi protocols should be regulated like trad
 - L07 Concept: *Regulatory perimeter*
 - Banks do maturity transformation (short deposits, long loans) - DeFi doesn't (overcollateralized, instant liquidation)
 - Banks have deposit insurance because deposits aren't backed - DeFi collateral is on-chain and verifiable
-- Bank runs happen because of fractional reserves - DeFi has 150%+ collateralization
+- Bank runs happen because of fractional reserves - DeFi has 150%+ collateralization (typical ratios)
 - Same label ("lending") doesn't mean same risk
 
 **Argument 3: Technology Enables Better Solutions**
@@ -330,6 +330,8 @@ L07 Exercise - Regulatory Economics of Digital Finance
 
 Models strategic interaction between jurisdictions competing for crypto firms.
 Demonstrates race-to-the-bottom dynamics and coordination solutions.
+
+Data as of February 2025
 
 Requirements: pip install numpy matplotlib
 """
@@ -835,6 +837,8 @@ L07 Exercise - Regulatory Economics of Digital Finance
 
 Applies Harberger deadweight loss framework to proposed stablecoin reserve requirements.
 
+Data as of February 2025
+
 Requirements: pip install numpy matplotlib
 """
 
@@ -1248,7 +1252,7 @@ Compare the EU's comprehensive MiCA (Markets in Crypto-Assets) regulation with t
 | **Legal Fees** | One set of rules to analyze | Multiple overlapping regimes; constant litigation |
 | **Reporting** | Standardized across EU | Different requirements per regulator |
 | **Capital Requirements** | Proportional (EUR 50K-150K for CASPs) | Varies by state and activity; often higher |
-| **Estimated Annual Cost (Medium Firm)** | ~EUR 500K-1M | ~USD 2-5M (legal + multi-state compliance) |
+| **Estimated Annual Cost (Medium Firm)** | ~EUR 500K-1M (approximate) | ~USD 2-5M (approximate; legal + multi-state compliance) |
 
 **Economies of Scale**: US approach heavily favors large firms who can afford multi-jurisdictional compliance
 
@@ -1363,13 +1367,15 @@ You're a consultant advising a crypto startup on regulatory strategy. Using the 
 | Cost Component | Year 1 | Year 2 | Year 3 | Notes |
 |----------------|--------|--------|--------|-------|
 | **Capital Requirement** | EUR 125K | EUR 125K | EUR 125K | Class 2 CASP (custody + lending) |
-| **Legal/Application Fees** | EUR 150K | EUR 20K | EUR 20K | Initial application, then maintenance |
-| **Compliance Staff** | EUR 180K | EUR 240K | EUR 300K | 2 FTE Year 1, 3 FTE Year 3 |
-| **Technology (RegTech)** | EUR 100K | EUR 50K | EUR 60K | KYC/AML systems, reporting |
-| **Audit & Reporting** | EUR 50K | EUR 60K | EUR 75K | Annual audits, regulatory reporting |
-| **Insurance** | EUR 30K | EUR 40K | EUR 50K | Professional indemnity |
+| **Legal/Application Fees** | EUR 150K | EUR 20K | EUR 20K | Initial application, then maintenance (approx.) |
+| **Compliance Staff** | EUR 180K | EUR 240K | EUR 300K | 2 FTE Year 1, 3 FTE Year 3 (approx.) |
+| **Technology (RegTech)** | EUR 100K | EUR 50K | EUR 60K | KYC/AML systems, reporting (approx.) |
+| **Audit & Reporting** | EUR 50K | EUR 60K | EUR 75K | Annual audits, regulatory reporting (approx.) |
+| **Insurance** | EUR 30K | EUR 40K | EUR 50K | Professional indemnity (approx.) |
 | **TOTAL** | **EUR 635K** | **EUR 535K** | **EUR 630K** |
 | **3-Year Total** | | | **EUR 1.8M** |
+
+*Note: All cost estimates are approximate and vary by jurisdiction, firm size, and specific activities.*
 
 **Compliance Cost as % of Revenue:**
 - Year 1: 635K / 10M = 6.4%
@@ -1383,16 +1389,18 @@ You're a consultant advising a crypto startup on regulatory strategy. Using the 
 
 | Cost Component | Year 1 | Year 2 | Year 3 | Notes |
 |----------------|--------|--------|--------|-------|
-| **State Licenses (5 states)** | $300K | $100K | $100K | Varies: NY BitLicense alone ~$100K |
-| **Federal Registrations** | $50K | $20K | $20K | FinCEN MSB, potentially SEC/CFTC |
-| **Legal (Multi-Jurisdiction)** | $400K | $200K | $250K | 5 different legal regimes |
-| **Compliance Staff** | $350K | $450K | $550K | Need specialists for each jurisdiction |
-| **Technology (RegTech)** | $200K | $100K | $120K | State-specific reporting requirements |
-| **Surety Bonds** | $75K | $75K | $75K | Required by most states |
-| **Audit & Reporting** | $100K | $120K | $150K | State examinations |
-| **Legal Reserve (Litigation)** | $200K | $200K | $200K | Defense against enforcement actions |
+| **State Licenses (5 states)** | $300K | $100K | $100K | Varies: NY BitLicense alone ~$100K (approx.) |
+| **Federal Registrations** | $50K | $20K | $20K | FinCEN MSB, potentially SEC/CFTC (approx.) |
+| **Legal (Multi-Jurisdiction)** | $400K | $200K | $250K | 5 different legal regimes (approx.) |
+| **Compliance Staff** | $350K | $450K | $550K | Need specialists for each jurisdiction (approx.) |
+| **Technology (RegTech)** | $200K | $100K | $120K | State-specific reporting requirements (approx.) |
+| **Surety Bonds** | $75K | $75K | $75K | Required by most states (approx.) |
+| **Audit & Reporting** | $100K | $120K | $150K | State examinations (approx.) |
+| **Legal Reserve (Litigation)** | $200K | $200K | $200K | Defense against enforcement actions (approx.) |
 | **TOTAL** | **$1.675M** | **$1.265M** | **$1.465M** |
 | **3-Year Total** | | | **$4.4M** |
+
+*Note: All cost estimates are approximate and vary significantly by state, firm size, and specific activities.*
 
 **Compliance Cost as % of Revenue:**
 - Year 1: 1.675M / 10M = 16.8%
@@ -1406,14 +1414,16 @@ You're a consultant advising a crypto startup on regulatory strategy. Using the 
 
 | Cost Component | Year 1 | Year 2 | Year 3 | Notes |
 |----------------|--------|--------|--------|-------|
-| **DARE License** | $50K | $25K | $25K | Digital Assets License |
-| **Local Presence** | $150K | $150K | $150K | Office, directors, local staff |
-| **Legal** | $80K | $40K | $50K | Simpler regime |
-| **Compliance Staff** | $100K | $120K | $150K | Lighter requirements |
-| **Technology** | $80K | $40K | $50K | Basic KYC/AML |
-| **Geo-blocking Systems** | $50K | $20K | $25K | Block US/EU users |
+| **DARE License** | $50K | $25K | $25K | Digital Assets License (approx.) |
+| **Local Presence** | $150K | $150K | $150K | Office, directors, local staff (approx.) |
+| **Legal** | $80K | $40K | $50K | Simpler regime (approx.) |
+| **Compliance Staff** | $100K | $120K | $150K | Lighter requirements (approx.) |
+| **Technology** | $80K | $40K | $50K | Basic KYC/AML (approx.) |
+| **Geo-blocking Systems** | $50K | $20K | $25K | Block US/EU users (approx.) |
 | **TOTAL** | **$510K** | **$395K** | **$450K** |
 | **3-Year Total** | | | **$1.35M** |
+
+*Note: All cost estimates are approximate and vary by jurisdiction, firm size, and specific activities.*
 
 **Compliance Cost as % of Revenue:**
 - Year 1: 510K / 10M = 5.1%

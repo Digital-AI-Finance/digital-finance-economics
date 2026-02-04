@@ -58,12 +58,14 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
+# Data as of February 2025
 # =============================================================================
 # SIMULATED DATA (representing real patterns from 2024-2025)
 # In practice, you would fetch this from APIs like CoinGecko, Etherscan, etc.
 # =============================================================================
 
 # Annual data for different token types
+# Note: Illustrative data for educational purposes
 token_data = {
     'Token': ['ETH', 'ETH (Staked)', 'BNB', 'SOL', 'USDT', 'USDC', 'UNI', 'AAVE'],
     'Type': ['L1 Platform', 'Staked L1', 'L1 Platform', 'L1 Platform',
@@ -147,7 +149,10 @@ for _, row in df[['Token', 'Velocity', 'Value_Capture_Score']].sort_values('Valu
 # PUBLICATION-READY CHARTS
 # =============================================================================
 
-plt.style.use('seaborn-v0_8-whitegrid')
+try:
+    plt.style.use('seaborn-v0_8-whitegrid')
+except:
+    plt.style.use('seaborn-whitegrid')
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
 # Color scheme
@@ -1029,7 +1034,10 @@ print(f"  Equilibria at: {eq_weak}")
 # VISUALIZATION
 # =============================================================================
 
-plt.style.use('seaborn-v0_8-whitegrid')
+try:
+    plt.style.use('seaborn-v0_8-whitegrid')
+except:
+    plt.style.use('seaborn-whitegrid')
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
 # Colors
@@ -1269,6 +1277,7 @@ import pandas as pd
 
 np.random.seed(42)
 
+# Note: Illustrative data for educational purposes
 # Create a realistic token distribution (highly skewed)
 # 5 whales, 50 medium holders, 500 small holders
 
@@ -1396,7 +1405,10 @@ Quadratic voting gives minorities a voice.
 # VISUALIZATION
 # =============================================================================
 
-plt.style.use('seaborn-v0_8-whitegrid')
+try:
+    plt.style.use('seaborn-v0_8-whitegrid')
+except:
+    plt.style.use('seaborn-whitegrid')
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 
 MLBLUE = '#0066CC'

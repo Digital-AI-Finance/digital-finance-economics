@@ -35,12 +35,17 @@
 
 Build a network visualization of the 2022 crypto contagion, showing how failures spread from Terra/LUNA through the ecosystem. Calculate network centrality metrics to identify systemically important nodes and discuss implications for systemic risk monitoring in digital finance.
 
+**As covered in L02 (Monetary Economics)**: Private money creation without proper backing creates run risk.
+**Building on L04 concepts (Payment Systems)**: Contagion spreads through interconnected payment and settlement networks.
+
 ### Complete Code
 
 ```python
 """
 Crypto Contagion Network Analysis: 2022 Crisis Visualization
 L08 Exercise - Economics of Digital Finance
+
+# Data as of February 2025
 
 Requirements: pip install networkx matplotlib pandas numpy
 """
@@ -52,6 +57,7 @@ import pandas as pd
 
 # =============================================================================
 # NETWORK DATA: 2022 Crypto Contagion
+# Events occurred May-November 2022; facts documented as of February 2025
 # =============================================================================
 
 # Define entities and their types
@@ -360,6 +366,10 @@ Three Arrows Capital (3AC) had the **highest systemic importance** despite not b
 
 The EU has just passed MiCA (Markets in Crypto-Assets Regulation). Your group is a policy advisory team that must analyze the stablecoin provisions using ALL FOUR economic lenses from the course. For each lens, identify: (1) the key economic concern addressed, (2) the specific MiCA provision that addresses it, and (3) remaining gaps or unintended consequences.
 
+**Cross-reference**: Apply the four lenses framework from L01 (Introduction) systematically.
+**As covered in L03**: CBDCs and stablecoin competition presents monetary sovereignty challenges.
+**Building on L07**: Regulatory economics requires balancing innovation with consumer protection.
+
 **MiCA Stablecoin Provisions to Analyze:**
 1. Reserve requirement: 1:1 backing with high-quality liquid assets
 2. Redemption right: Holders can redeem at par at any time
@@ -461,12 +471,19 @@ The EU has just passed MiCA (Markets in Crypto-Assets Regulation). Your group is
 
 Reconstruct the complete contagion chain of the 2022 crypto crisis. For each stage, identify: (1) the triggering event, (2) the transmission channel, (3) the economic mechanism at work, and (4) why existing safeguards failed.
 
-**The Chain to Trace:**
+**The Chain to Trace (events of 2022, documented as of February 2025):**
 Terra/LUNA (May 2022) --> Three Arrows Capital (June 2022) --> Celsius/Voyager (June-July 2022) --> FTX/Alameda (November 2022)
+
+**Cross-reference**:
+- **L02**: Bank run dynamics and lender of last resort concepts
+- **L04**: Payment system interconnections amplify contagion
+- **L06**: Market microstructure, liquidity spirals, and price impact
+- **L07**: Regulatory gaps and systemic risk monitoring
 
 ### Model Answer / Expected Output
 
 **STAGE 1: TERRA/LUNA COLLAPSE (May 7-13, 2022)**
+*As covered in L02: Algorithmic stablecoins represent unbacked private money - inherently unstable.*
 
 | Element | Analysis |
 |---------|----------|
@@ -481,6 +498,7 @@ Terra/LUNA (May 2022) --> Three Arrows Capital (June 2022) --> Celsius/Voyager (
 ---
 
 **STAGE 2: THREE ARROWS CAPITAL COLLAPSE (June 2022)**
+*Building on L06 concepts: Leverage and counterparty risk amplify market shocks.*
 
 | Element | Analysis |
 |---------|----------|
@@ -495,6 +513,7 @@ Terra/LUNA (May 2022) --> Three Arrows Capital (June 2022) --> Celsius/Voyager (
 ---
 
 **STAGE 3: CELSIUS/VOYAGER COLLAPSE (June-July 2022)**
+*As covered in L02: Diamond-Dybvig bank run model applies to crypto lenders.*
 
 | Element | Analysis |
 |---------|----------|
@@ -509,6 +528,7 @@ Terra/LUNA (May 2022) --> Three Arrows Capital (June 2022) --> Celsius/Voyager (
 ---
 
 **STAGE 4: FTX/ALAMEDA COLLAPSE (November 2022)**
+*Building on L07 concepts: Regulatory gaps enable fraud and systemic risk concentration.*
 
 | Element | Analysis |
 |---------|----------|
@@ -568,6 +588,8 @@ $40B lost                   $10B in defaults            $6B frozen              
 Full-course synthesis debate using ALL FOUR economic lenses. Each team must use at least one argument from each lens.
 
 **Motion**: "By 2040, decentralized finance will handle the majority of global financial transactions, making traditional banks and intermediaries obsolete."
+
+**Required**: Each team must cite concepts from at least three different lessons (L02-L07) to support their position.
 
 **Team A (Pro)**: DeFi will replace TradFi
 **Team B (Con)**: TradFi will adapt and survive
@@ -700,6 +722,12 @@ The economically strongest position is **TradFi transforms but doesn't disappear
 ### Task
 
 Your group is a founding team launching a new financial institution that combines the best of TradFi and DeFi. Design the institution using insights from all four economic lenses. You must address the Digital Finance Trilemma (Decentralization, Efficiency, Compliance - pick two and explain the trade-off for the third).
+
+**Cross-reference**:
+- **L02**: Monetary policy implications of private money creation
+- **L03**: CBDC integration opportunities
+- **L05**: Platform economics and network effects
+- **L07**: Regulatory compliance strategy
 
 **Design Requirements:**
 1. Name and one-sentence mission
@@ -958,6 +986,8 @@ Map 10 crypto/digital finance projects onto the Digital Finance Trilemma triangl
 
 Using ALL frameworks from the course (four lenses, trilemma, network effects, contagion models), predict the state of digital finance in 2030. Make specific, falsifiable predictions for each category.
 
+**Context**: Predictions made as of February 2025; evaluate plausibility based on current trends and course frameworks.
+
 **Prediction Categories:**
 1. CBDCs - Which countries will have retail CBDCs? How widely used?
 2. Stablecoins - Market structure: how many major stablecoins? Regulated or unregulated?
@@ -976,11 +1006,11 @@ Using ALL frameworks from the course (four lenses, trilemma, network effects, co
 
 | Prediction | Confidence | Framework Justification |
 |------------|------------|------------------------|
-| China's digital yuan will have 500M+ active users | High (85%) | **Platform economics**: First-mover network effects + government mandate = adoption. Already at 150M+ in 2024. |
-| EU Digital Euro launched (2027) with modest adoption (50M users) | Medium (65%) | **Monetary economics**: ECB committed but bank lobby will impose holding limits. Slow adoption like SEPA was. |
-| US Fed will NOT have retail CBDC | High (80%) | **Regulatory economics**: Political opposition (privacy concerns, bank lobby). Fed prefers FedNow + regulated stablecoins. |
-| 20+ countries with retail CBDCs | High (75%) | **Monetary economics**: Emerging markets leapfrog to CBDCs for financial inclusion (Bahamas, Nigeria model). |
-| Interoperable CBDC corridors exist (mBridge expanded) | Medium (60%) | **Market microstructure**: Settlement efficiency demands drive cross-border CBDC links. BIS leading this work. |
+| China's digital yuan will have 500M+ active users | High (85%) | **Platform economics (L05)**: First-mover network effects + government mandate = adoption. Already at 150M+ in 2024. |
+| EU Digital Euro launched (2027) with modest adoption (50M users) | Medium (65%) | **Monetary economics (L02/L03)**: ECB committed but bank lobby will impose holding limits. Slow adoption like SEPA was. |
+| US Fed will NOT have retail CBDC | High (80%) | **Regulatory economics (L07)**: Political opposition (privacy concerns, bank lobby). Fed prefers FedNow + regulated stablecoins. |
+| 20+ countries with retail CBDCs | High (75%) | **Monetary economics (L03)**: Emerging markets leapfrog to CBDCs for financial inclusion (Bahamas, Nigeria model). |
+| Interoperable CBDC corridors exist (mBridge expanded) | Medium (60%) | **Market microstructure (L06)**: Settlement efficiency demands drive cross-border CBDC links. BIS leading this work. |
 
 ---
 
@@ -1089,8 +1119,15 @@ Using the four lenses to predict the STRUCTURE of digital finance in 2030:
 This is the capstone exercise. Your group will analyze a complex, real-world case using ALL FOUR economic lenses simultaneously. Each group member takes primary responsibility for one lens, but the final analysis must be INTEGRATED - showing how the lenses interact.
 
 **Case: The March 2023 USDC Depeg Event**
+*Event occurred March 2023; analysis conducted as of February 2025 with full hindsight.*
 
 On March 10, 2023, Circle announced $3.3B of USDC reserves were held at Silicon Valley Bank, which had just failed. USDC depegged to $0.87 before recovering when the Fed announced depositor protection.
+
+**Apply concepts from**:
+- **L02**: Money as store of value, lender of last resort
+- **L05**: Platform network effects, two-sided markets
+- **L06**: Market microstructure, price discovery, liquidity
+- **L07**: Regulatory gaps and systemic risk
 
 **Required Analysis:**
 1. Each lens perspective (4 separate analyses)

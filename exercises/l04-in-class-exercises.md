@@ -43,6 +43,9 @@ Remittance Corridor Analysis: Cost Comparison and SDG Progress
 L04 Exercise - Payment Systems Economics
 
 Requirements: pip install pandas matplotlib numpy
+
+# Data as of February 2025
+# Note: Illustrative data for educational purposes
 """
 
 import pandas as pd
@@ -51,9 +54,10 @@ import matplotlib.pyplot as plt
 
 # =============================================================================
 # SIMULATED WORLD BANK REMITTANCE DATA
+# Note: Illustrative data for educational purposes, based on real-world patterns
 # =============================================================================
 
-# Real-world inspired data: Q4 2023 estimates by corridor
+# Real-world inspired data: simulated corridor estimates
 # Format: (sending_country, receiving_country, avg_cost_%, provider_count, digital_share_%)
 corridors = [
     # High-volume corridors
@@ -346,7 +350,7 @@ print("""
 
 Apply the Rochet-Tirole two-sided market model to calculate optimal interchange fees for a new payment network. You are the economics team advising a startup card network entering the European market.
 
-**Given Parameters:**
+**Given Parameters (Note: Illustrative data for educational purposes):**
 - Merchant price elasticity: -2.0 (sensitive to fees)
 - Consumer price elasticity: -0.5 (less sensitive - rewards offset fees)
 - Total marginal cost to platform: 0.8% per transaction
@@ -452,7 +456,7 @@ If competitor offers 0.5% lower merchant fees:
 
 Analyze M-Pesa's success through the network effects and platform economics frameworks from L04. Explain why M-Pesa succeeded in Kenya but failed in South Africa.
 
-**Case Data Provided:**
+**Case Data Provided (Note: Illustrative data for educational purposes):**
 
 **Kenya M-Pesa:**
 - Launch: March 2007
@@ -660,7 +664,7 @@ Most likely future: Cash usage declines to 5-10% of transactions but remains leg
 
 Your group is the economic advisory team for a development organization. Design a payment system for a fictional country "Ruritania" with these characteristics:
 
-**Ruritania Profile:**
+**Ruritania Profile (Note: Fictional country with illustrative data for educational purposes):**
 - Population: 30 million
 - GDP per capita: $1,500/year
 - Banked population: 15%
@@ -840,6 +844,9 @@ Network Effects Calculator: Payment System Adoption Dynamics
 L04 Exercise - Payment Systems Economics
 
 Requirements: pip install matplotlib numpy
+
+# Data as of February 2025
+# Note: Illustrative data for educational purposes
 """
 
 import numpy as np

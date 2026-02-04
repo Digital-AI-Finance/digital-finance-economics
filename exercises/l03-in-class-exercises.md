@@ -34,6 +34,8 @@
 
 Create a visualization showing the current state of CBDC development worldwide. Analyze regional patterns and answer: Which regions are leading CBDC adoption, and what explains the variation?
 
+**Note:** CBDC status data as of February 2025. Check [cbdctracker.org](https://www.cbdctracker.org) for current status.
+
 ### Complete Code
 
 ```python
@@ -54,6 +56,7 @@ from collections import defaultdict
 
 # =============================================================================
 # CBDC STATUS DATA (2024)
+# Data as of February 2025
 # Source: Atlantic Council CBDC Tracker
 # =============================================================================
 
@@ -402,6 +405,8 @@ There is NO universally optimal CBDC design. The "best" design depends on:
 Compare three real CBDC implementations across economic dimensions. Identify what each design reveals about the issuing country's priorities and assess the likelihood of success.
 
 **Case Data Provided:**
+
+**Note:** CBDC status data as of February 2025. Check [cbdctracker.org](https://www.cbdctracker.org) for current status.
 
 | Dimension | e-CNY (China) | Digital Euro (EU) | Sand Dollar (Bahamas) |
 |-----------|---------------|-------------------|----------------------|
@@ -767,6 +772,8 @@ Build a simple model to simulate bank deposit flight under different CBDC design
 """
 Bank Disintermediation Risk Calculator
 L03 Exercise - Economics of Digital Finance
+
+# Data as of February 2025
 
 Requirements: pip install numpy matplotlib scipy
 

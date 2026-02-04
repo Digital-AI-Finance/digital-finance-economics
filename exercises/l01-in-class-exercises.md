@@ -43,6 +43,7 @@ Bitcoin Volatility Analysis: Store of Value Assessment
 L01 Exercise - Economics of Digital Finance
 
 Requirements: pip install yfinance pandas matplotlib numpy
+Data as of February 2025
 """
 
 import yfinance as yf
@@ -136,7 +137,10 @@ print(f"Bitcoin is {btc_eurusd_ratio:.1f}x more volatile than EUR/USD")
 # =============================================================================
 
 # Set style for publication quality
-plt.style.use('seaborn-v0_8-whitegrid')
+try:
+    plt.style.use('seaborn-v0_8-whitegrid')
+except:
+    plt.style.use('seaborn-whitegrid')
 fig, ax = plt.subplots(figsize=(12, 7), dpi=100)
 
 # Plot volatility series
@@ -365,7 +369,7 @@ Structured debate on the motion: **"Digital finance will make traditional banks 
 - Banks exist because they reduce transaction costs (screening, monitoring, liquidity transformation)
 - DeFi protocols automate these functions: smart contracts for lending, AMMs for liquidity, algorithmic credit scoring
 - Just as the internet disintermediated travel agents, record stores, and newspapers, it will disintermediate banks
-- Evidence: DeFi TVL grew from $1B (2020) to $200B+ (2024) without any banks
+- Evidence: DeFi TVL grew from $1B (2020) to $200B+ (2024) without any banks [Note: Data as of 2025]
 
 **Argument 2: Network Effects Favor Digital Platforms**
 - L01 Concept: *Network effects*
@@ -407,12 +411,12 @@ Structured debate on the motion: **"Digital finance will make traditional banks 
 **Argument 3: Market Failures Require Regulated Entities**
 - L01 Concept: *Market failure and regulation*
 - Finance has information asymmetry, systemic risk, consumer protection needs
-- 2022 crypto winter: FTX, Terra/LUNA, Celsius - $2 trillion lost
+- 2022 crypto winter: FTX, Terra/LUNA, Celsius - $2 trillion lost [Note: Historical data as of 2025]
 - Public will demand regulated, insured institutions
 - CBDCs will be distributed through banks, not replace them
 
 **Rebuttal Points Against Pro:**
-- "DeFi grew fast" - From zero, and crashed 75% in 2022; still <1% of global finance
+- "DeFi grew fast" - From zero, and crashed 75% in 2022; still <1% of global finance [Note: Historical data as of 2025]
 - "Transaction costs collapse" - But compliance costs, KYC/AML, fraud prevention don't
 - "Young people prefer digital" - They also prefer deposit insurance and someone to call when hacked
 
@@ -442,9 +446,9 @@ The economically strongest position is that banks will **transform, not disappea
 Apply the "Four Economic Lenses" framework from L01 to analyze a real digital finance case.
 
 **Case Options** (instructor assigns one per group):
-- **Case A**: Stablecoin Collapse (Terra/LUNA 2022)
-- **Case B**: El Salvador Bitcoin Adoption (2021)
-- **Case C**: PayPal's Crypto Integration (2020-2024)
+- **Case A**: Stablecoin Collapse (Terra/LUNA 2022) [Historical case as of 2025]
+- **Case B**: El Salvador Bitcoin Adoption (2021) [Historical case as of 2025]
+- **Case C**: PayPal's Crypto Integration (2020-2024) [Historical case as of 2025]
 - **Case D**: European Digital Euro Proposal
 
 ### Model Answer / Expected Output
@@ -453,10 +457,10 @@ Apply the "Four Economic Lenses" framework from L01 to analyze a real digital fi
 
 | Lens | Key Question | Analysis |
 |------|--------------|----------|
-| **Monetary Economics** | How does this affect money supply, monetary policy? | Terra (UST) was an algorithmic stablecoin - attempted to maintain $1 peg through arbitrage with LUNA token. This was essentially **private money creation** without reserves. When confidence collapsed, the "money supply" (UST) expanded hyperinflation-style from 18B to worthless. Demonstrated why monetary economists distrust unbacked private money - no lender of last resort, no reserve requirement, pure confidence game. |
-| **Platform Economics** | What network effects are at play? Who benefits? | Terra had strong **network effects** in DeFi - 20% yield on Anchor protocol attracted $14B TVL. But network effects work in reverse too: as users withdrew, yield collapsed, more withdrew (death spiral). Two-sided market failure: when one side (depositors) fled, the other (borrowers/protocols) had no counterparty. **Winner:** Those who exited early. **Loser:** Retail investors, protocols built on Terra. |
+| **Monetary Economics** | How does this affect money supply, monetary policy? | Terra (UST) was an algorithmic stablecoin - attempted to maintain $1 peg through arbitrage with LUNA token. This was essentially **private money creation** without reserves. When confidence collapsed, the "money supply" (UST) expanded hyperinflation-style from 18B to worthless. Demonstrated why monetary economists distrust unbacked private money - no lender of last resort, no reserve requirement, pure confidence game. [Data as of 2025] |
+| **Platform Economics** | What network effects are at play? Who benefits? | Terra had strong **network effects** in DeFi - 20% yield on Anchor protocol attracted $14B TVL. But network effects work in reverse too: as users withdrew, yield collapsed, more withdrew (death spiral). Two-sided market failure: when one side (depositors) fled, the other (borrowers/protocols) had no counterparty. **Winner:** Those who exited early. **Loser:** Retail investors, protocols built on Terra. [Data as of 2025] |
 | **Market Microstructure** | How does trading/pricing work? What frictions exist? | The peg mechanism relied on **arbitrage**: if UST < $1, burn UST for $1 of LUNA, sell LUNA. But during stress, LUNA price crashed faster than arbitrage could work - market microstructure broke down. **Liquidity spirals**: selling LUNA lowered its price, requiring more LUNA to be minted, further lowering price. Classic microstructure failure - market makers (arbitrageurs) withdrew when needed most. |
-| **Regulatory Economics** | What market failures exist? How should regulators respond? | Multiple market failures: (1) **Information asymmetry** - retail didn't understand algorithmic stablecoin risks; (2) **Systemic risk** - $40B collapse rippled through crypto; (3) **Consumer protection** - no deposit insurance, no recourse. Regulatory response: SEC now classifies algorithmic stablecoins as securities; EU MiCA bans unbacked algorithmic stablecoins; calls for reserve requirements on all stablecoins. |
+| **Regulatory Economics** | What market failures exist? How should regulators respond? | Multiple market failures: (1) **Information asymmetry** - retail didn't understand algorithmic stablecoin risks; (2) **Systemic risk** - $40B collapse rippled through crypto; (3) **Consumer protection** - no deposit insurance, no recourse. Regulatory response: SEC now classifies algorithmic stablecoins as securities; EU MiCA bans unbacked algorithmic stablecoins; calls for reserve requirements on all stablecoins. [Regulatory data as of 2025] |
 
 **Most Important Lens for This Case:** **Monetary Economics** - At its core, Terra was an attempt at private money creation without backing. All other failures (network effects reversal, liquidity spirals, regulatory gaps) flow from this fundamental monetary design flaw.
 
@@ -466,8 +470,8 @@ Apply the "Four Economic Lenses" framework from L01 to analyze a real digital fi
 
 | Lens | Key Question | Analysis |
 |------|--------------|----------|
-| **Monetary Economics** | How does this affect money supply, monetary policy? | El Salvador was already dollarized (no monetary policy). Bitcoin as legal tender means: (1) Currency substitution dynamics - Gresham's Law predicts bad money (volatile BTC) won't circulate, people hold USD; (2) Fiscal risk - government bought BTC, now underwater; (3) Seigniorage attempt - hoped to capture value from BTC appreciation instead of paying for USD. Result: BTC is <5% of transactions, failed to become medium of exchange. |
-| **Platform Economics** | What network effects are at play? Who benefits? | Government mandated merchant acceptance (forced network effect). But network effects must be organic to be valuable. **Chivo wallet** launched with $30 bonus - 70% of users withdrew bonus and abandoned wallet. Two-sided market failure: merchants forced to accept, consumers didn't want to pay. Real beneficiary: Crypto exchanges, remittance companies charging lower fees. Loser: Government credibility, taxpayers funding losses. |
+| **Monetary Economics** | How does this affect money supply, monetary policy? | El Salvador was already dollarized (no monetary policy). Bitcoin as legal tender means: (1) Currency substitution dynamics - Gresham's Law predicts bad money (volatile BTC) won't circulate, people hold USD; (2) Fiscal risk - government bought BTC, now underwater; (3) Seigniorage attempt - hoped to capture value from BTC appreciation instead of paying for USD. Result: BTC is <5% of transactions, failed to become medium of exchange. [Data as of 2025] |
+| **Platform Economics** | What network effects are at play? Who benefits? | Government mandated merchant acceptance (forced network effect). But network effects must be organic to be valuable. **Chivo wallet** launched with $30 bonus - 70% of users withdrew bonus and abandoned wallet. Two-sided market failure: merchants forced to accept, consumers didn't want to pay. Real beneficiary: Crypto exchanges, remittance companies charging lower fees. Loser: Government credibility, taxpayers funding losses. [Data as of 2025] |
 | **Market Microstructure** | How does trading/pricing work? What frictions exist? | Lightning Network deployed for fast BTC payments. But: (1) Liquidity constraints - merchants need BTC liquidity channels; (2) Pricing friction - prices still in USD, converted to BTC at volatile rate; (3) Settlement uncertainty - BTC price can move during transaction. Tourists occasionally use BTC, locals overwhelmingly prefer USD. Market microstructure not designed for daily payments. |
 | **Regulatory Economics** | What market failures exist? How should regulators respond? | Reversed regulatory story - government MANDATED adoption (market "success" by decree). IMF opposed due to: fiscal risk, financial stability concerns, AML/CFT gaps. Creates regulatory arbitrage opportunity - money launderers have legal tender BTC country. Consumer protection concerns: Chivo wallet had fraud, security issues. Lesson: Mandates can't force adoption of economically inferior money. |
 
@@ -655,7 +659,7 @@ Create a detailed timeline for ONE specific region showing the evolution of paym
 
 | Element | Details |
 |---------|---------|
-| **What changed** | M-Pesa reaches critical mass: 15 million users by 2011 (40% of adult population) |
+| **What changed** | M-Pesa reaches critical mass: 15 million users by 2011 (40% of adult population) [Historical data as of 2025] |
 | **When** | 2008-2012 |
 | **Economic driver** | **Network effects**: Value of M-Pesa increased exponentially as more people joined. "Everyone has M-Pesa" became self-fulfilling. Agent network reached 40,000 points (more than all bank branches + ATMs combined). |
 | **Who benefited** | Safaricom (near-monopoly), users (universal acceptance), merchants (reduced cash risk) |
@@ -680,8 +684,8 @@ Create a detailed timeline for ONE specific region showing the evolution of paym
 | Element | Details |
 |---------|---------|
 | **What changed** | Regulatory intervention for interoperability (mobile money services must interoperate), new entrants (Airtel Money, T-Kash), fintech integration |
-| **When** | 2018-Present |
-| **Economic driver** | **Regulatory economics**: Central Bank of Kenya mandated interoperability to prevent monopoly abuse. Competition policy to reduce fees. But M-Pesa retains ~99% market share due to **incumbent network effects**. |
+| **When** | 2018-Present [Data as of 2025] |
+| **Economic driver** | **Regulatory economics**: Central Bank of Kenya mandated interoperability to prevent monopoly abuse. Competition policy to reduce fees. But M-Pesa retains ~99% market share due to **incumbent network effects**. [Market share data as of 2025] |
 | **Who benefited** | Consumers (lower fees due to competition threat), fintechs (can build on M-Pesa rails), regulatory goal achieved (more competition) |
 | **Who lost** | Safaricom (some margin compression), competitors (still can't break network effects) |
 
@@ -701,7 +705,7 @@ The 2% of GDP flowing through M-Pesa annually demonstrates how payment innovatio
 - Each transition should identify specific economic forces (transaction costs, network effects, regulatory changes)
 - Note winners AND losers - digital finance always has distributional consequences
 - M-Pesa's success wasn't just technology - it was agent network (reduced transaction costs) + first-mover (network effects)
-- The "surprising finding" might be: despite regulation, M-Pesa still has 99% share - network effects are extremely sticky
+- The "surprising finding" might be: despite regulation, M-Pesa still has 99% share - network effects are extremely sticky [Market share data as of 2025]
 - Key economic insight: Payment innovation follows the pattern - new technology reduces transaction costs, early mover captures network effects, regulation follows to address market failures
 
 ---
@@ -728,7 +732,7 @@ Compare how network effects work differently across three digital finance platfo
 | | Indirect: More users = more services (exchanges, wallets, ATMs) | Classic two-sided market | Also indirect: more tokens listed = more useful |
 | **Critical Mass** | **~1,000 nodes minimum** | **~10% merchant coverage** | **~$10M TVL per pool** |
 | | For security, needs distributed mining/validation | Cardholders won't carry card nobody accepts | Below this, slippage too high for meaningful trades |
-| | Market cap critical mass ~$10B for institutional interest | For Visa, achieved decades ago | Uniswap V2 achieved this in 2020 |
+| | Market cap critical mass ~$10B for institutional interest | For Visa, achieved decades ago | Uniswap V2 achieved this in 2020 [Historical milestone as of 2025] |
 | **Switching Costs** | **Low for users, High for miners** | **Low for users, Medium for merchants** | **Very Low** |
 | | Users can hold BTC anywhere | Users can easily get new card | No lock-in, can move tokens instantly |
 | | Miners have sunk hardware costs | Merchants have POS terminal integration | Liquidity providers can withdraw anytime |
@@ -810,8 +814,8 @@ L01 emphasized distinguishing economic from technical questions. Classify each q
 | 5 | What is the block size limit on Bitcoin? | **T** | Technical parameter - 1MB base block, ~4MB with SegWit |
 | 6 | Why do users pay higher fees when the network is congested? | **E** | Price mechanism / scarcity - block space is scarce; users bid (via fees) for limited slots; basic supply and demand determines fee market clearing price |
 | 7 | How does a hash function work? | **T** | Algorithm description - takes input, produces fixed-length output, one-way (can't reverse) |
-| 8 | Why is proof-of-work considered secure? | **E** | About incentives for attack - attacking requires 51% of hash power; cost of attack (~$10B+) exceeds potential gain; rational actors won't attack. Economic security, not just technical. |
-| 9 | What consensus mechanism does Ethereum use? | **T** | Mechanism identification - proof-of-stake (since Sept 2022) |
+| 8 | Why is proof-of-work considered secure? | **E** | About incentives for attack - attacking requires 51% of hash power; cost of attack (~$10B+) exceeds potential gain; rational actors won't attack. Economic security, not just technical. [Cost estimates as of 2025] |
+| 9 | What consensus mechanism does Ethereum use? | **T** | Mechanism identification - proof-of-stake (since Sept 2022) [Historical transition date as of 2025] |
 | 10 | Why did Ethereum switch from proof-of-work to proof-of-stake? | **E** | Complex economic reasoning: (1) Environmental externalities - PoW energy use created negative externalities and PR problems; (2) Security economics - PoS can achieve similar security at lower cost; (3) Scalability economics - enables sharding for higher throughput; (4) Governance/politics - community valued sustainability |
 
 ---
@@ -828,10 +832,10 @@ L01 emphasized distinguishing economic from technical questions. Classify each q
 > Bitcoin block space is a scarce resource (~4MB every 10 minutes). Users bid for inclusion via transaction fees - a price mechanism allocates scarce block space to highest-value transactions. During congestion, the market-clearing price rises as demand exceeds supply. This is efficient: high-value transfers (institutional, large) outbid low-value (coffee purchase), ensuring scarce capacity goes to highest-value uses.
 
 **Q8: Why is proof-of-work considered secure?**
-> Security is economic, not just technical. A 51% attack requires controlling majority hash power - currently costing ~$10B+ in hardware alone, plus ongoing electricity costs of ~$40M/day. The expected gain from attacking (double-spending) is less than the cost for any plausible attacker. Additionally, attacking devalues the attacker's own Bitcoin holdings and hardware. Incentives align against attack.
+> Security is economic, not just technical. A 51% attack requires controlling majority hash power - currently costing ~$10B+ in hardware alone, plus ongoing electricity costs of ~$40M/day. The expected gain from attacking (double-spending) is less than the cost for any plausible attacker. Additionally, attacking devalues the attacker's own Bitcoin holdings and hardware. Incentives align against attack. [Cost estimates as of February 2025]
 
 **Q10: Why did Ethereum switch from proof-of-work to proof-of-stake?**
-> Four economic reasons: (1) **Externalities**: PoW consumed ~80 TWh/year (Belgium's electricity consumption), creating negative environmental externalities and regulatory pressure; (2) **Cost efficiency**: PoS achieves similar economic security at ~99.9% lower energy cost - security doesn't require physical work; (3) **Monetary policy**: PoS enables lower issuance (ETH became deflationary) - reduced "tax" on holders; (4) **Scalability**: Enables sharding, increasing throughput from ~15 TPS to potentially thousands - economic necessity for DeFi growth.
+> Four economic reasons: (1) **Externalities**: PoW consumed ~80 TWh/year (Belgium's electricity consumption), creating negative environmental externalities and regulatory pressure; (2) **Cost efficiency**: PoS achieves similar economic security at ~99.9% lower energy cost - security doesn't require physical work; (3) **Monetary policy**: PoS enables lower issuance (ETH became deflationary) - reduced "tax" on holders; (4) **Scalability**: Enables sharding, increasing throughput from ~15 TPS to potentially thousands - economic necessity for DeFi growth. [Energy and performance data as of February 2025]
 
 ### Presentation Talking Points
 - Economic questions ask "why" (incentives, trade-offs, welfare); technical questions ask "how" (mechanism, implementation)

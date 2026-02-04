@@ -48,6 +48,10 @@ Stablecoin Peg Deviation Analysis
 L02 Exercise - Monetary Economics of Digital Currencies
 
 Requirements: pip install yfinance pandas matplotlib numpy
+
+Data as of February 2025
+Note: This code fetches live data from Yahoo Finance. Historical patterns
+and volatility will reflect market conditions at time of execution.
 """
 
 import yfinance as yf
@@ -148,7 +152,10 @@ find_depeg_events(dai, "DAI")
 # PUBLICATION-READY CHART
 # =============================================================================
 
-plt.style.use('seaborn-v0_8-whitegrid')
+try:
+    plt.style.use('seaborn-v0_8-whitegrid')
+except:
+    plt.style.use('seaborn-whitegrid')
 fig, axes = plt.subplots(2, 1, figsize=(14, 10), dpi=100)
 
 # Panel A: Time series of deviations
@@ -306,6 +313,9 @@ Fiat-backed stablecoins (USDC, USDT) are more stable than crypto-backed (DAI) be
 Apply the Quantity Theory of Money (MV = PY) to analyze Bitcoin and Ethereum. Calculate velocity, interpret what it means, and assess whether these cryptocurrencies function as money based on your findings.
 
 **Given Data (approximate 2024/2025 figures):**
+
+Note: These figures are historical/approximate and used for educational purposes.
+Actual market data varies daily.
 
 | Metric | Bitcoin | Ethereum |
 |--------|---------|----------|
@@ -777,6 +787,8 @@ Apply Gresham's Law ("bad money drives out good") to cryptocurrency markets. Ana
 
 **Part 1: Velocity as Proxy for Spending vs Hoarding**
 
+Note: Data as of February 2025. Figures are approximate/historical for educational analysis.
+
 | Crypto | Annual Volume / Market Cap | Velocity | Interpretation |
 |--------|---------------------------|----------|----------------|
 | Bitcoin | ~$2.9T / $800B | ~3.6 | **Hoarded** - Low velocity, HODL culture |
@@ -816,6 +828,8 @@ Gresham's Law reveals a paradox for cryptocurrency adoption:
 3. **The Inversion:** In crypto, "bad money" (stablecoins) is actually better money (for transactions), while "good money" (Bitcoin) is bad for transactions.
 
 **Part 4: Evidence from On-Chain Data**
+
+Note: Data as of February 2025. Approximate figures for educational purposes.
 
 | Metric | Bitcoin | USDC |
 |--------|---------|------|
@@ -864,6 +878,8 @@ Calculate and visualize seigniorage across different money systems: the US Feder
 
 **Given Data:**
 
+Note: Data as of February 2025. All figures are approximate/historical for educational purposes.
+
 | System | Key Figures |
 |--------|-------------|
 | **US Federal Reserve** | M2 money supply: $21 trillion; Annual growth: ~5%; Fed remits profits to Treasury |
@@ -878,6 +894,10 @@ Seigniorage Analysis Across Money Systems
 L02 Exercise - Monetary Economics of Digital Currencies
 
 Requirements: pip install pandas matplotlib numpy
+
+Data as of February 2025
+Note: All market data below are approximate/simulated for educational purposes.
+Actual figures vary with market conditions and policy changes.
 """
 
 import pandas as pd
@@ -900,14 +920,15 @@ print("\n--- US FEDERAL RESERVE ---")
 
 # Seigniorage = revenue from money creation
 # For Fed: M2 growth * velocity adjustment + interest on reserves
+# Data as of February 2025 (approximate figures for educational purposes)
 
-m2_supply = 21_000_000_000_000  # $21 trillion
-m2_growth_rate = 0.05  # 5% annual growth
+m2_supply = 21_000_000_000_000  # $21 trillion (approximate)
+m2_growth_rate = 0.05  # 5% annual growth (approximate)
 new_money_created = m2_supply * m2_growth_rate
 
 # Fed earns interest on assets (Treasury securities) purchased with new money
-fed_assets = 7_500_000_000_000  # $7.5 trillion balance sheet
-avg_yield = 0.03  # ~3% average yield on Fed portfolio
+fed_assets = 7_500_000_000_000  # $7.5 trillion balance sheet (approximate)
+avg_yield = 0.03  # ~3% average yield on Fed portfolio (approximate)
 
 fed_interest_income = fed_assets * avg_yield
 fed_operating_costs = 5_000_000_000  # ~$5 billion operating costs
@@ -926,10 +947,11 @@ print(f"\nSeigniorage Beneficiary: US Treasury (public)")
 
 print("\n--- TETHER (USDT) ---")
 
-usdt_market_cap = 95_000_000_000  # $95 billion
-reserve_yield = 0.05  # 5% yield on T-bill reserves
+# Data as of February 2025 (approximate figures for educational purposes)
+usdt_market_cap = 95_000_000_000  # $95 billion (approximate)
+reserve_yield = 0.05  # 5% yield on T-bill reserves (approximate)
 tether_gross_income = usdt_market_cap * reserve_yield
-tether_operating_costs = 50_000_000  # $50 million
+tether_operating_costs = 50_000_000  # $50 million (estimated)
 tether_net_profit = tether_gross_income - tether_operating_costs
 
 # Users' opportunity cost
@@ -949,10 +971,11 @@ print(f"\nSeigniorage Beneficiary: Tether Limited (private company)")
 
 print("\n--- BITCOIN MINING ---")
 
+# Data as of February 2025 (approximate figures for educational purposes)
 block_reward = 3.125  # BTC per block (post-2024 halving)
 blocks_per_day = 144
-btc_price = 42_000
-mining_cost_per_btc = 30_000
+btc_price = 42_000  # Approximate price for calculation
+mining_cost_per_btc = 30_000  # Estimated average mining cost
 
 daily_btc_issued = block_reward * blocks_per_day
 annual_btc_issued = daily_btc_issued * 365
@@ -1001,7 +1024,10 @@ print(comparison.to_string(index=False))
 # VISUALIZATION
 # =============================================================================
 
-plt.style.use('seaborn-v0_8-whitegrid')
+try:
+    plt.style.use('seaborn-v0_8-whitegrid')
+except:
+    plt.style.use('seaborn-whitegrid')
 fig, axes = plt.subplots(1, 3, figsize=(15, 5), dpi=100)
 
 # Chart 1: Total Seigniorage Comparison
@@ -1151,6 +1177,9 @@ Apply the currency substitution and dollarization framework from L02 to analyze 
 ---
 
 **Background:**
+
+Note: Data represents 2023-2024 conditions for educational case study purposes.
+
 - Inflation rate: ~140% (2023)
 - Capital controls ("cepo") restrict USD access
 - Parallel exchange rate: Official ~350 ARS/USD, Blue dollar ~1000 ARS/USD

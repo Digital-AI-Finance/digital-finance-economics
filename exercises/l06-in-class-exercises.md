@@ -51,6 +51,7 @@ L06 Exercise - Market Microstructure in Digital Finance
 
 Demonstrates: Constant product formula (x*y=k), price impact, slippage
 Requirements: pip install numpy matplotlib
+# Data as of February 2025
 """
 
 import numpy as np
@@ -346,6 +347,7 @@ L06 Exercise - Market Microstructure in Digital Finance
 
 Demonstrates: Impermanent loss formula, LP profitability analysis
 Requirements: pip install numpy matplotlib
+# Data as of February 2025
 """
 
 import numpy as np
