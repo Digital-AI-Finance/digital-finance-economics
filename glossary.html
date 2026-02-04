@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Course Glossary | Digital Finance & Economics</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f6f8fa;color:#24292e;font-size:13px;line-height:1.5}
+a{color:#0366d6;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Navigation */
+.nav{background:#24292e;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-title{color:#fff;font-weight:600;font-size:15px}
+.nav-links{display:flex;gap:20px}
+.nav-links a{color:#fff;font-size:12px;opacity:0.85;transition:opacity 0.15s}
+.nav-links a:hover{opacity:1;text-decoration:none}
+
+/* Container */
+.container{max-width:1400px;margin:0 auto;padding:20px}
+
+/* Header */
+.glossary-header{background:linear-gradient(135deg,#24292e 0%,#0366d6 100%);color:#fff;padding:24px 32px;border-radius:6px;margin-bottom:20px}
+.glossary-header h1{font-size:24px;font-weight:700;margin-bottom:6px}
+.glossary-header .stats{font-size:14px;opacity:0.85;margin-bottom:8px}
+.glossary-header .description{font-size:13px;opacity:0.75;max-width:700px}
+
+/* Search and Filter Section */
+.search-filter{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:16px;margin-bottom:16px}
+.search-box{position:relative;margin-bottom:14px}
+.search-box input{width:100%;padding:10px 14px 10px 40px;font-size:14px;border:1px solid #e1e4e8;border-radius:6px;background:#f6f8fa;transition:all 0.15s}
+.search-box input:focus{outline:none;border-color:#0366d6;background:#fff;box-shadow:0 0 0 3px rgba(3,102,214,0.1)}
+.search-box::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23586069' viewBox='0 0 16 16'%3E%3Cpath d='M11.5 7a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm-.82 4.74a6 6 0 1 1 1.06-1.06l3.04 3.04a.75.75 0 1 1-1.06 1.06l-3.04-3.04Z'/%3E%3C/svg%3E") no-repeat center}
+
+.filter-section{margin-bottom:10px}
+.filter-label{font-size:11px;font-weight:600;color:#586069;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.filter-buttons{display:flex;flex-wrap:wrap;gap:6px}
+.filter-btn{padding:6px 12px;font-size:12px;font-weight:500;border:1px solid #e1e4e8;border-radius:20px;background:#fff;cursor:pointer;transition:all 0.15s}
+.filter-btn:hover{border-color:#0366d6;color:#0366d6}
+.filter-btn.active{background:#0366d6;color:#fff;border-color:#0366d6}
+
+/* Lesson filter colors */
+.filter-btn[data-lesson="L01"],.filter-btn[data-lesson="L02"]{border-color:#22c55e}
+.filter-btn[data-lesson="L01"].active,.filter-btn[data-lesson="L02"].active{background:#22c55e;border-color:#22c55e}
+.filter-btn[data-lesson="L03"],.filter-btn[data-lesson="L04"],.filter-btn[data-lesson="L05"]{border-color:#f59e0b}
+.filter-btn[data-lesson="L03"].active,.filter-btn[data-lesson="L04"].active,.filter-btn[data-lesson="L05"].active{background:#f59e0b;border-color:#f59e0b}
+.filter-btn[data-lesson="L06"],.filter-btn[data-lesson="L07"],.filter-btn[data-lesson="L08"]{border-color:#ef4444}
+.filter-btn[data-lesson="L06"].active,.filter-btn[data-lesson="L07"].active,.filter-btn[data-lesson="L08"].active{background:#ef4444;border-color:#ef4444}
+
+/* Category filter colors */
+.filter-btn[data-category]{border-color:#8b5cf6}
+.filter-btn[data-category].active{background:#8b5cf6;border-color:#8b5cf6}
+
+/* Alphabet Navigation */
+.alphabet-nav{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:10px 16px;margin-bottom:16px;position:sticky;top:48px;z-index:50;display:flex;flex-wrap:wrap;gap:4px;justify-content:center}
+.alphabet-nav a{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;font-size:12px;font-weight:600;color:#586069;border-radius:4px;transition:all 0.15s}
+.alphabet-nav a:hover{background:#f6f8fa;color:#0366d6;text-decoration:none}
+.alphabet-nav a.active{background:#0366d6;color:#fff}
+.alphabet-nav a.disabled{opacity:0.3;pointer-events:none}
+
+/* Terms Display */
+.letter-section{margin-bottom:24px}
+.letter-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #e1e4e8}
+.letter-header span{width:36px;height:36px;background:linear-gradient(135deg,#24292e,#0366d6);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.letter-header h2{font-size:14px;color:#586069;font-weight:600}
+
+.terms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+.term-card{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:14px;transition:all 0.15s}
+.term-card:hover{border-color:#0366d6;box-shadow:0 3px 12px rgba(0,0,0,0.08)}
+.term-card.hidden{display:none}
+.term-name{font-size:14px;font-weight:600;color:#24292e;margin-bottom:6px}
+.term-name mark{background:#fff3cd;padding:0 2px;border-radius:2px}
+.term-definition{font-size:12px;color:#586069;line-height:1.5;margin-bottom:10px}
+.term-definition mark{background:#fff3cd;padding:0 2px;border-radius:2px}
+.term-tags{display:flex;flex-wrap:wrap;gap:4px}
+.tag{font-size:10px;font-weight:600;padding:3px 8px;border-radius:12px}
+.tag-l01,.tag-l02{background:#dcfce7;color:#166534}
+.tag-l03,.tag-l04,.tag-l05{background:#fef3c7;color:#92400e}
+.tag-l06,.tag-l07,.tag-l08{background:#fee2e2;color:#991b1b}
+.tag-category{background:#ede9fe;color:#5b21b6}
+
+/* Results count */
+.results-count{font-size:12px;color:#586069;margin-bottom:16px;padding:8px 12px;background:#f6f8fa;border-radius:4px;display:inline-block}
+
+/* No results */
+.no-results{text-align:center;padding:48px 24px;color:#586069}
+.no-results h3{font-size:16px;margin-bottom:8px;color:#24292e}
+.no-results p{font-size:13px}
+
+/* Footer */
+.foot{text-align:center;padding:24px;font-size:11px;color:#586069;margin-top:32px;border-top:1px solid #e1e4e8}
+.foot a{margin:0 12px;color:#0366d6}
+
+/* Responsive */
+@media(max-width:1000px){
+  .terms-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .terms-grid{grid-template-columns:1fr}
+  .container{padding:12px}
+  .glossary-header{padding:16px 20px}
+  .glossary-header h1{font-size:20px}
+  .alphabet-nav{padding:8px 10px}
+  .alphabet-nav a{width:24px;height:24px;font-size:11px}
+  .filter-buttons{gap:4px}
+  .filter-btn{padding:5px 10px;font-size:11px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+<span class="nav-title">Digital Finance & Economics</span>
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="#terms">Terms</a>
+<a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a>
+</div>
+</nav>
+
+<div class="container">
+
+<header class="glossary-header">
+<h1>Course Glossary</h1>
+<p class="stats" id="stats-display">Loading terms...</p>
+<p class="description">Comprehensive reference of key concepts, terminology, and economic principles covered across all eight lessons of the Digital Finance & Economics course.</p>
+</header>
+
+<div class="search-filter">
+<div class="search-box">
+<input type="search" id="search" placeholder="Search terms or definitions..." autocomplete="off">
+</div>
+
+<div class="filter-section">
+<div class="filter-label">Filter by Lesson</div>
+<div class="filter-buttons" id="lesson-filters">
+<button class="filter-btn active" data-lesson="all">All</button>
+<button class="filter-btn" data-lesson="L01">L01 Introduction</button>
+<button class="filter-btn" data-lesson="L02">L02 Monetary</button>
+<button class="filter-btn" data-lesson="L03">L03 CBDCs</button>
+<button class="filter-btn" data-lesson="L04">L04 Payments</button>
+<button class="filter-btn" data-lesson="L05">L05 Platforms</button>
+<button class="filter-btn" data-lesson="L06">L06 Microstructure</button>
+<button class="filter-btn" data-lesson="L07">L07 Regulation</button>
+<button class="filter-btn" data-lesson="L08">L08 Synthesis</button>
+</div>
+</div>
+
+<div class="filter-section">
+<div class="filter-label">Filter by Category</div>
+<div class="filter-buttons" id="category-filters">
+<button class="filter-btn active" data-category="all">All Categories</button>
+</div>
+</div>
+</div>
+
+<nav class="alphabet-nav" id="alphabet-nav">
+<!-- Generated by JavaScript -->
+</nav>
+
+<div class="results-count" id="results-count"></div>
+
+<main id="terms">
+<!-- Terms populated by JavaScript -->
+</main>
+
+<div class="no-results" id="no-results" style="display:none">
+<h3>No terms found</h3>
+<p>Try adjusting your search or filters to find what you're looking for.</p>
+</div>
+
+</div>
+
+<footer class="foot">
+<a href="index.html">Course Home</a>
+<a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub Repository</a>
+<span>&copy; Joerg Osterrieder 2025</span>
+</footer>
+
+<script>
+// State
+let allTerms = [];
+let activeLesson = 'all';
+let activeCategory = 'all';
+let searchQuery = '';
+
+// DOM Elements
+const termsContainer = document.getElementById('terms');
+const searchInput = document.getElementById('search');
+const lessonFilters = document.getElementById('lesson-filters');
+const categoryFilters = document.getElementById('category-filters');
+const alphabetNav = document.getElementById('alphabet-nav');
+const resultsCount = document.getElementById('results-count');
+const noResults = document.getElementById('no-results');
+const statsDisplay = document.getElementById('stats-display');
+
+// Load terms from JSON
+async function loadTerms() {
+  try {
+    const response = await fetch('glossary/terms.json');
+    const data = await response.json();
+    allTerms = data.terms.sort((a, b) => a.term.localeCompare(b.term));
+
+    // Update stats
+    const totalTerms = allTerms.length;
+    const lessonsSet = new Set();
+    allTerms.forEach(t => t.lessons.forEach(l => lessonsSet.add(l)));
+    statsDisplay.textContent = `${totalTerms} terms from ${lessonsSet.size} lessons`;
+
+    // Build category filters
+    buildCategoryFilters();
+
+    // Build alphabet nav
+    buildAlphabetNav();
+
+    // Render terms
+    renderTerms();
+  } catch (error) {
+    console.error('Error loading terms:', error);
+    termsContainer.innerHTML = '<div class="no-results"><h3>Error loading glossary</h3><p>Please try refreshing the page.</p></div>';
+  }
+}
+
+// Build category filter buttons
+function buildCategoryFilters() {
+  const categories = [...new Set(allTerms.map(t => t.category))].sort();
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.dataset.category = cat;
+    btn.textContent = cat;
+    categoryFilters.appendChild(btn);
+  });
+}
+
+// Build alphabet navigation
+function buildAlphabetNav() {
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  const existingLetters = new Set(allTerms.map(t => t.term[0].toUpperCase()));
+
+  alphabetNav.innerHTML = letters.map(letter => {
+    const hasTerms = existingLetters.has(letter);
+    return `<a href="#letter-${letter}" class="${hasTerms ? '' : 'disabled'}">${letter}</a>`;
+  }).join('');
+}
+
+// Filter terms based on current state
+function filterTerms() {
+  return allTerms.filter(term => {
+    // Lesson filter
+    if (activeLesson !== 'all' && !term.lessons.includes(activeLesson)) {
+      return false;
+    }
+
+    // Category filter
+    if (activeCategory !== 'all' && term.category !== activeCategory) {
+      return false;
+    }
+
+    // Search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      const termMatch = term.term.toLowerCase().includes(query);
+      const defMatch = term.definition.toLowerCase().includes(query);
+      if (!termMatch && !defMatch) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}
+
+// Highlight search matches
+function highlightText(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
+// Render terms grouped by letter
+function renderTerms() {
+  const filteredTerms = filterTerms();
+
+  // Update results count
+  resultsCount.textContent = `Showing ${filteredTerms.length} of ${allTerms.length} terms`;
+
+  // Show/hide no results message
+  if (filteredTerms.length === 0) {
+    noResults.style.display = 'block';
+    termsContainer.innerHTML = '';
+    return;
+  }
+  noResults.style.display = 'none';
+
+  // Group by first letter
+  const grouped = {};
+  filteredTerms.forEach(term => {
+    const letter = term.term[0].toUpperCase();
+    if (!grouped[letter]) grouped[letter] = [];
+    grouped[letter].push(term);
+  });
+
+  // Render sections
+  const letters = Object.keys(grouped).sort();
+  termsContainer.innerHTML = letters.map(letter => `
+    <section class="letter-section" id="letter-${letter}">
+      <div class="letter-header">
+        <span>${letter}</span>
+        <h2>${grouped[letter].length} term${grouped[letter].length > 1 ? 's' : ''}</h2>
+      </div>
+      <div class="terms-grid">
+        ${grouped[letter].map(term => renderTermCard(term)).join('')}
+      </div>
+    </section>
+  `).join('');
+
+  // Update alphabet nav active states
+  updateAlphabetNav(letters);
+}
+
+// Render single term card
+function renderTermCard(term) {
+  const highlightedTerm = highlightText(term.term, searchQuery);
+  const highlightedDef = highlightText(term.definition, searchQuery);
+
+  const lessonTags = term.lessons.map(l => {
+    const num = l.replace('L0', '').replace('L', '');
+    const tagClass = parseInt(num) <= 2 ? 'tag-l01' :
+                     parseInt(num) <= 5 ? 'tag-l03' : 'tag-l06';
+    return `<span class="tag ${tagClass}">${l}</span>`;
+  }).join('');
+
+  return `
+    <div class="term-card" data-lessons="${term.lessons.join(',')}" data-category="${term.category}">
+      <h3 class="term-name">${highlightedTerm}</h3>
+      <p class="term-definition">${highlightedDef}</p>
+      <div class="term-tags">
+        ${lessonTags}
+        <span class="tag tag-category">${term.category}</span>
+      </div>
+    </div>
+  `;
+}
+
+// Update alphabet nav
+function updateAlphabetNav(activeLetters) {
+  const links = alphabetNav.querySelectorAll('a');
+  links.forEach(link => {
+    const letter = link.textContent;
+    link.classList.toggle('active', activeLetters.includes(letter));
+  });
+}
+
+// Event Listeners
+searchInput.addEventListener('input', (e) => {
+  searchQuery = e.target.value.trim();
+  renderTerms();
+});
+
+lessonFilters.addEventListener('click', (e) => {
+  if (e.target.classList.contains('filter-btn')) {
+    const lesson = e.target.dataset.lesson;
+
+    // Update active state
+    lessonFilters.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    e.target.classList.add('active');
+
+    activeLesson = lesson;
+    renderTerms();
+  }
+});
+
+categoryFilters.addEventListener('click', (e) => {
+  if (e.target.classList.contains('filter-btn')) {
+    const category = e.target.dataset.category;
+
+    // Update active state
+    categoryFilters.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    e.target.classList.add('active');
+
+    activeCategory = category;
+    renderTerms();
+  }
+});
+
+alphabetNav.addEventListener('click', (e) => {
+  if (e.target.tagName === 'A' && !e.target.classList.contains('disabled')) {
+    e.preventDefault();
+    const targetId = e.target.getAttribute('href').slice(1);
+    const target = document.getElementById(targetId);
+    if (target) {
+      const offset = 120; // Account for sticky nav
+      const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }
+});
+
+// Scroll spy for alphabet nav
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    const sections = document.querySelectorAll('.letter-section');
+    const navHeight = 120;
+
+    sections.forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top <= navHeight + 50 && rect.bottom > navHeight) {
+        const letter = section.id.replace('letter-', '');
+        alphabetNav.querySelectorAll('a').forEach(link => {
+          link.classList.toggle('active', link.textContent === letter);
+        });
+      }
+    });
+  }, 50);
+});
+
+// Initialize
+loadTerms();
+</script>
+
+</body>
+</html>
