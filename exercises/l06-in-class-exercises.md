@@ -1,0 +1,1379 @@
+# L06 In-Class Exercises: Market Microstructure in Digital Finance
+
+## Plan Metadata
+- **Created**: 2026-02-04
+- **Lesson**: L06 - Market Microstructure in Digital Finance (AMMs, Order Books, Price Discovery)
+- **Target Audience**: BSc students (just completed L06)
+- **Time Allocation**: 30 minutes work + 5 minutes presentation per exercise
+- **Instructor Choice**: Select 1-2 exercises per session based on class size and learning goals
+
+---
+
+## Exercise Overview
+
+| # | Title | Category | Group Size | Materials |
+|---|-------|----------|------------|-----------|
+| 1 | AMM Price Impact Simulator | Python/Data | Individual or Pairs | Laptop with Python |
+| 2 | Impermanent Loss Calculator | Python/Data | Individual or Pairs | Laptop with Python |
+| 3 | CEX vs DEX Battle Matrix | Framework Application | Groups of 3-4 | Worksheet |
+| 4 | Sandwich Attack Anatomy | Case Study | Groups of 3-4 | Case Data |
+| 5 | MEV Ethics Debate | Debate/Discussion | Two Teams (4-6 each) | None |
+| 6 | Design an MEV-Resistant AMM | Creative/Design | Groups of 3-4 | Whiteboard/Paper |
+| 7 | LP Profitability Analysis | Quantitative Analysis | Pairs | Calculator/Spreadsheet |
+| 8 | Order Book vs AMM Trade Execution | Comparative Analysis | Groups of 3-4 | Worksheet |
+
+---
+
+## Exercise 1: AMM Price Impact Simulator
+
+**Category**: Python/Data
+**Time**: 30 min work + 5 min presentation
+**Group Size**: Individual or Pairs
+**Materials Needed**: Laptop with Python (numpy, matplotlib), internet access
+
+### Task
+
+Build a constant product AMM simulator that demonstrates how trade size affects price impact and slippage. Use the x*y=k formula to show why large trades are expensive on AMMs.
+
+**Specific Requirements:**
+1. Implement the constant product formula x*y=k
+2. Calculate price impact for trades of varying sizes (10, 50, 100, 500, 1000 tokens)
+3. Compare effective price vs. spot price
+4. Visualize the relationship between trade size and slippage
+5. Answer: At what trade size does slippage exceed 5%? 10%?
+
+### Complete Code
+
+```python
+"""
+AMM Price Impact Simulator
+L06 Exercise - Market Microstructure in Digital Finance
+
+Demonstrates: Constant product formula (x*y=k), price impact, slippage
+Requirements: pip install numpy matplotlib
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# =============================================================================
+# AMM POOL SETUP
+# =============================================================================
+
+# Initial pool reserves (ETH/USDC pool)
+x_initial = 1000  # ETH in pool
+y_initial = 1_800_000  # USDC in pool (implies ETH price = $1800)
+k = x_initial * y_initial  # Constant product invariant
+
+spot_price = y_initial / x_initial
+print(f"Initial Pool State:")
+print(f"  ETH Reserve: {x_initial:,} ETH")
+print(f"  USDC Reserve: {y_initial:,} USDC")
+print(f"  Constant k: {k:,}")
+print(f"  Spot Price: ${spot_price:,.2f} per ETH")
+print()
+
+# =============================================================================
+# TRADE EXECUTION FUNCTION
+# =============================================================================
+
+def execute_buy_eth(eth_to_buy, x_pool, y_pool, k_constant):
+    """
+    Buy ETH from the pool by paying USDC.
+
+    Returns: (usdc_cost, effective_price, slippage_pct, new_x, new_y)
+    """
+    # After trade: (x - eth_to_buy) * new_y = k
+    new_x = x_pool - eth_to_buy
+    new_y = k_constant / new_x
+
+    # USDC cost = new_y - y_pool (we need to add USDC to maintain k)
+    usdc_cost = new_y - y_pool
+
+    # Effective price = total cost / amount bought
+    effective_price = usdc_cost / eth_to_buy
+
+    # Slippage = (effective_price - spot_price) / spot_price
+    current_spot = y_pool / x_pool
+    slippage_pct = (effective_price - current_spot) / current_spot * 100
+
+    return usdc_cost, effective_price, slippage_pct, new_x, new_y
+
+# =============================================================================
+# ANALYZE TRADES OF DIFFERENT SIZES
+# =============================================================================
+
+print("="*70)
+print("TRADE ANALYSIS: Buying ETH from the Pool")
+print("="*70)
+print(f"{'Trade Size':>12} | {'USDC Cost':>14} | {'Eff. Price':>12} | {'Slippage':>10} | {'Pool Impact':>12}")
+print("-"*70)
+
+trade_sizes = [1, 10, 50, 100, 200, 500, 1000]
+results = []
+
+for eth_amount in trade_sizes:
+    if eth_amount >= x_initial:
+        print(f"{eth_amount:>12} ETH | {'IMPOSSIBLE - exceeds pool':>50}")
+        continue
+
+    cost, eff_price, slip, new_x, new_y = execute_buy_eth(
+        eth_amount, x_initial, y_initial, k
+    )
+
+    pool_impact = (x_initial - new_x) / x_initial * 100
+
+    results.append({
+        'size': eth_amount,
+        'cost': cost,
+        'eff_price': eff_price,
+        'slippage': slip,
+        'pool_impact': pool_impact
+    })
+
+    print(f"{eth_amount:>12} ETH | ${cost:>13,.2f} | ${eff_price:>11,.2f} | {slip:>9.2f}% | {pool_impact:>11.1f}%")
+
+# =============================================================================
+# FIND CRITICAL SLIPPAGE THRESHOLDS
+# =============================================================================
+
+print()
+print("="*70)
+print("SLIPPAGE THRESHOLD ANALYSIS")
+print("="*70)
+
+# Fine-grained search for slippage thresholds
+test_sizes = np.linspace(1, 500, 1000)
+slippages = []
+
+for size in test_sizes:
+    _, _, slip, _, _ = execute_buy_eth(size, x_initial, y_initial, k)
+    slippages.append(slip)
+
+slippages = np.array(slippages)
+
+# Find thresholds
+idx_5pct = np.argmax(slippages >= 5)
+idx_10pct = np.argmax(slippages >= 10)
+
+size_5pct = test_sizes[idx_5pct] if slippages[idx_5pct] >= 5 else None
+size_10pct = test_sizes[idx_10pct] if slippages[idx_10pct] >= 10 else None
+
+print(f"5% slippage threshold:  {size_5pct:.1f} ETH (${size_5pct * spot_price:,.0f} notional)" if size_5pct else "5% threshold not reached")
+print(f"10% slippage threshold: {size_10pct:.1f} ETH (${size_10pct * spot_price:,.0f} notional)" if size_10pct else "10% threshold not reached")
+
+# As percentage of pool
+print(f"\n5% slippage at {size_5pct/x_initial*100:.1f}% of pool reserves" if size_5pct else "")
+print(f"10% slippage at {size_10pct/x_initial*100:.1f}% of pool reserves" if size_10pct else "")
+
+# =============================================================================
+# VISUALIZATION
+# =============================================================================
+
+fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+
+# Plot 1: Constant Product Curve
+ax1 = axes[0, 0]
+x_curve = np.linspace(100, 2000, 500)
+y_curve = k / x_curve
+
+ax1.plot(x_curve, y_curve, 'b-', linewidth=2, label=r'$x \cdot y = k$')
+ax1.plot(x_initial, y_initial, 'go', markersize=12, label='Initial State', zorder=5)
+
+# Show a trade
+trade_example = 100
+_, _, _, new_x_ex, new_y_ex = execute_buy_eth(trade_example, x_initial, y_initial, k)
+ax1.plot(new_x_ex, new_y_ex, 'ro', markersize=10, label=f'After {trade_example} ETH buy', zorder=5)
+ax1.annotate('', xy=(new_x_ex, new_y_ex), xytext=(x_initial, y_initial),
+            arrowprops=dict(arrowstyle='->', color='red', lw=2))
+
+ax1.set_xlabel('ETH Reserve (x)')
+ax1.set_ylabel('USDC Reserve (y)')
+ax1.set_title('Constant Product Curve (x*y=k)')
+ax1.legend()
+ax1.grid(alpha=0.3)
+ax1.set_xlim(0, 2000)
+
+# Plot 2: Slippage vs Trade Size
+ax2 = axes[0, 1]
+ax2.plot(test_sizes, slippages, 'b-', linewidth=2)
+ax2.axhline(y=5, color='orange', linestyle='--', label='5% threshold')
+ax2.axhline(y=10, color='red', linestyle='--', label='10% threshold')
+if size_5pct:
+    ax2.axvline(x=size_5pct, color='orange', linestyle=':', alpha=0.5)
+if size_10pct:
+    ax2.axvline(x=size_10pct, color='red', linestyle=':', alpha=0.5)
+
+ax2.set_xlabel('Trade Size (ETH)')
+ax2.set_ylabel('Slippage (%)')
+ax2.set_title('Price Slippage vs. Trade Size')
+ax2.legend()
+ax2.grid(alpha=0.3)
+
+# Plot 3: Effective Price vs Trade Size
+ax3 = axes[1, 0]
+sizes_plot = [r['size'] for r in results]
+eff_prices = [r['eff_price'] for r in results]
+
+ax3.bar(range(len(sizes_plot)), eff_prices, color='steelblue', alpha=0.7)
+ax3.axhline(y=spot_price, color='green', linestyle='--', linewidth=2, label=f'Spot: ${spot_price:,.0f}')
+ax3.set_xticks(range(len(sizes_plot)))
+ax3.set_xticklabels([f'{s} ETH' for s in sizes_plot], rotation=45)
+ax3.set_ylabel('Effective Price ($/ETH)')
+ax3.set_title('Effective Price by Trade Size')
+ax3.legend()
+ax3.grid(axis='y', alpha=0.3)
+
+# Add price labels on bars
+for i, (size, price) in enumerate(zip(sizes_plot, eff_prices)):
+    ax3.text(i, price + 20, f'${price:,.0f}', ha='center', fontsize=9)
+
+# Plot 4: Pool Depletion
+ax4 = axes[1, 1]
+pool_impacts = [r['pool_impact'] for r in results]
+
+ax4.bar(range(len(sizes_plot)), pool_impacts, color='coral', alpha=0.7)
+ax4.set_xticks(range(len(sizes_plot)))
+ax4.set_xticklabels([f'{s} ETH' for s in sizes_plot], rotation=45)
+ax4.set_ylabel('Pool Depletion (%)')
+ax4.set_title('Pool Reserve Impact by Trade Size')
+ax4.grid(axis='y', alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('amm_price_impact_analysis.png', dpi=150, bbox_inches='tight')
+plt.show()
+
+print("\nChart saved as 'amm_price_impact_analysis.png'")
+
+# =============================================================================
+# ECONOMIC CONCLUSIONS
+# =============================================================================
+
+print()
+print("="*70)
+print("ECONOMIC CONCLUSIONS")
+print("="*70)
+print("""
+KEY FINDINGS:
+
+1. NONLINEAR PRICE IMPACT:
+   - Slippage grows nonlinearly with trade size
+   - Small trades (<1% of pool): minimal slippage (<0.5%)
+   - Large trades (>10% of pool): severe slippage (>10%)
+
+2. CONSTANT PRODUCT MECHANICS:
+   - x*y=k means removing X requires adding more Y (and vice versa)
+   - Price is always y/x (changes with every trade)
+   - Larger trades move farther along the curve = more slippage
+
+3. PRACTICAL IMPLICATIONS:
+   - Traders should split large orders across time/venues
+   - Pool size matters: larger pools = lower slippage
+   - This is why "concentrated liquidity" (Uniswap v3) was invented
+
+4. WHY AMMs HAVE SLIPPAGE BUT ORDER BOOKS DON'T (NECESSARILY):
+   - AMM: Price determined by formula, not market makers
+   - Order book: Can have limit orders at various prices
+   - AMM slippage is GUARANTEED; order book slippage depends on depth
+""")
+```
+
+### Model Answer / Expected Output
+
+**Expected Console Output (approximate):**
+```
+Initial Pool State:
+  ETH Reserve: 1,000 ETH
+  USDC Reserve: 1,800,000 USDC
+  Constant k: 1,800,000,000
+  Spot Price: $1,800.00 per ETH
+
+TRADE ANALYSIS: Buying ETH from the Pool
+   Trade Size |      USDC Cost |   Eff. Price |   Slippage | Pool Impact
+----------------------------------------------------------------------
+        1 ETH |      $1,801.80 |    $1,801.80 |      0.10% |        0.1%
+       10 ETH |     $18,181.82 |    $1,818.18 |      1.01% |        1.0%
+       50 ETH |     $94,736.84 |    $1,894.74 |      5.26% |        5.0%
+      100 ETH |    $200,000.00 |    $2,000.00 |     11.11% |       10.0%
+      200 ETH |    $450,000.00 |    $2,250.00 |     25.00% |       20.0%
+      500 ETH |  $1,800,000.00 |    $3,600.00 |    100.00% |       50.0%
+
+5% slippage threshold:  47.2 ETH ($84,960 notional)
+10% slippage threshold: 91.3 ETH ($164,340 notional)
+
+5% slippage at 4.7% of pool reserves
+10% slippage at 9.1% of pool reserves
+```
+
+**Key Quantitative Insights:**
+1. **5% slippage** occurs at approximately 4.7% of pool reserves
+2. **10% slippage** occurs at approximately 9.1% of pool reserves
+3. The relationship is approximately: slippage % = trade_size / (pool_size - trade_size)
+4. A $90,000 trade in a $3.6M pool already incurs 5% slippage
+
+### Presentation Talking Points
+- The constant product formula (x*y=k) creates GUARANTEED slippage - this is not a bug, it's how AMMs work
+- Slippage is the "price" of guaranteed liquidity - you can always trade, but large trades are expensive
+- Pool depth (TVL) is the key metric: a 10x larger pool has ~10x less slippage for the same trade
+- This explains why professional traders prefer order books for large trades, but retail prefers AMMs for convenience
+- Economic insight: AMM slippage is predictable and transparent (formula-based) vs. order book slippage which depends on hidden depth
+
+---
+
+## Exercise 2: Impermanent Loss Calculator
+
+**Category**: Python/Data
+**Time**: 30 min work + 5 min presentation
+**Group Size**: Individual or Pairs
+**Materials Needed**: Laptop with Python (numpy, matplotlib), calculator
+
+### Task
+
+Build an impermanent loss calculator that shows when providing liquidity is profitable vs. simply holding assets. Determine the breakeven fee APY needed to compensate for IL at different price movements.
+
+**Specific Requirements:**
+1. Implement the IL formula: IL = 2*sqrt(r)/(1+r) - 1, where r = price_ratio
+2. Calculate IL for price changes: 0.5x, 0.75x, 1.25x, 1.5x, 2x, 3x, 5x
+3. Determine the fee APY needed to break even at each price ratio
+4. Create a "should I LP?" decision framework
+
+### Complete Code
+
+```python
+"""
+Impermanent Loss Calculator
+L06 Exercise - Market Microstructure in Digital Finance
+
+Demonstrates: Impermanent loss formula, LP profitability analysis
+Requirements: pip install numpy matplotlib
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# =============================================================================
+# IMPERMANENT LOSS FORMULA
+# =============================================================================
+
+def impermanent_loss(price_ratio):
+    """
+    Calculate impermanent loss given price ratio (final/initial).
+
+    Formula: IL = 2*sqrt(r)/(1+r) - 1
+
+    Returns: IL as a decimal (negative = loss relative to holding)
+    """
+    r = price_ratio
+    return 2 * np.sqrt(r) / (1 + r) - 1
+
+def portfolio_values(initial_value, price_ratio):
+    """
+    Calculate LP position value vs. hold value.
+
+    Assumes 50/50 initial split (standard for most AMM pools).
+
+    Returns: (lp_value, hold_value)
+    """
+    # Hold strategy: half in token A (appreciates with price_ratio), half in stable
+    hold_value = initial_value * (1 + price_ratio) / 2
+
+    # LP strategy: value scales with sqrt(price_ratio) due to rebalancing
+    lp_value = initial_value * np.sqrt(price_ratio)
+
+    return lp_value, hold_value
+
+# =============================================================================
+# ANALYZE SPECIFIC PRICE SCENARIOS
+# =============================================================================
+
+print("="*80)
+print("IMPERMANENT LOSS ANALYSIS")
+print("="*80)
+print()
+
+# Initial investment
+initial_investment = 10000  # $10,000 total ($5k ETH + $5k USDC)
+
+price_ratios = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 3.0, 5.0]
+
+print(f"Initial Investment: ${initial_investment:,} (50% ETH, 50% USDC)")
+print(f"Initial ETH Price: $1,800 (assumed)")
+print()
+print(f"{'Price Change':>14} | {'LP Value':>12} | {'Hold Value':>12} | {'IL':>10} | {'$ Lost to IL':>12}")
+print("-"*80)
+
+results = []
+
+for ratio in price_ratios:
+    lp_val, hold_val = portfolio_values(initial_investment, ratio)
+    il = impermanent_loss(ratio)
+    dollar_loss = hold_val - lp_val  # Positive means LP lost money vs holding
+
+    results.append({
+        'ratio': ratio,
+        'lp_value': lp_val,
+        'hold_value': hold_val,
+        'il': il,
+        'dollar_loss': dollar_loss
+    })
+
+    # Format price change
+    if ratio < 1:
+        change_str = f"{ratio:.0%} ({1/ratio:.1f}x down)"
+    elif ratio > 1:
+        change_str = f"{ratio:.0%} ({ratio:.1f}x up)"
+    else:
+        change_str = "100% (no change)"
+
+    print(f"{change_str:>14} | ${lp_val:>10,.2f} | ${hold_val:>10,.2f} | {il:>9.2%} | ${dollar_loss:>10,.2f}")
+
+# =============================================================================
+# BREAKEVEN FEE ANALYSIS
+# =============================================================================
+
+print()
+print("="*80)
+print("BREAKEVEN FEE APY ANALYSIS")
+print("="*80)
+print()
+print("Question: What fee APY do you need to BREAK EVEN with IL?")
+print()
+
+# Assume 1-year holding period
+holding_period_days = 365
+
+print(f"{'Price Change':>14} | {'IL Loss':>10} | {'Daily Fee Needed':>16} | {'Annual APY Needed':>18}")
+print("-"*80)
+
+for r in results:
+    if r['ratio'] == 1.0:
+        print(f"{'No change':>14} | {'0.00%':>10} | {'0.000%':>16} | {'0.00%':>18}")
+        continue
+
+    il_pct = abs(r['il']) * 100
+
+    # To break even: fee_income = IL_loss
+    # If IL is 5.72%, you need 5.72% in fees over the period
+    # Daily fee needed = IL / holding_period
+    daily_fee_needed = il_pct / holding_period_days
+
+    # Annualized APY (compounding)
+    annual_apy_needed = il_pct  # Simple approximation for breakeven
+
+    change_str = f"{r['ratio']:.1f}x"
+    print(f"{change_str:>14} | {il_pct:>9.2f}% | {daily_fee_needed:>15.4f}% | {annual_apy_needed:>17.2f}%")
+
+# =============================================================================
+# LP PROFITABILITY DECISION FRAMEWORK
+# =============================================================================
+
+print()
+print("="*80)
+print("LP PROFITABILITY DECISION FRAMEWORK")
+print("="*80)
+print()
+
+# Typical fee APYs on major pools
+typical_fees = {
+    'ETH/USDC 0.3%': 5,
+    'ETH/USDC 0.05%': 2,
+    'Stablecoin pools': 1,
+    'Volatile pairs': 15,
+}
+
+print("Typical Fee APYs on Major Pools:")
+for pool, apy in typical_fees.items():
+    print(f"  {pool}: ~{apy}% APY")
+
+print()
+print("DECISION MATRIX:")
+print("-"*60)
+print(f"{'Expected Price Move':>20} | {'IL':>8} | {'Typical Fees Win?':>20}")
+print("-"*60)
+
+scenarios = [
+    (0.9, 1.1, "Small (0.9x-1.1x)"),
+    (0.75, 1.33, "Medium (0.75x-1.33x)"),
+    (0.5, 2.0, "Large (0.5x-2x)"),
+    (0.33, 3.0, "Very Large (0.33x-3x)"),
+]
+
+for low, high, label in scenarios:
+    il_low = abs(impermanent_loss(low)) * 100
+    il_high = abs(impermanent_loss(high)) * 100
+    max_il = max(il_low, il_high)
+
+    # Compare to typical 5% fee APY
+    if max_il < 2:
+        verdict = "YES (fees > IL)"
+    elif max_il < 5:
+        verdict = "MAYBE (close call)"
+    else:
+        verdict = "NO (IL > fees)"
+
+    print(f"{label:>20} | {max_il:>7.2f}% | {verdict:>20}")
+
+# =============================================================================
+# VISUALIZATION
+# =============================================================================
+
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+
+# Plot 1: IL vs Price Ratio
+ax1 = axes[0, 0]
+ratios = np.linspace(0.1, 5, 500)
+ils = [impermanent_loss(r) * 100 for r in ratios]
+
+ax1.plot(ratios, ils, 'b-', linewidth=2.5)
+ax1.axhline(y=0, color='black', linestyle='-', linewidth=1)
+ax1.axvline(x=1, color='green', linestyle='--', linewidth=1, label='No price change')
+
+# Mark specific points
+markers = [(0.5, 'r'), (2.0, 'r'), (0.75, 'orange'), (1.5, 'orange')]
+for ratio, color in markers:
+    il = impermanent_loss(ratio) * 100
+    ax1.plot(ratio, il, 'o', color=color, markersize=10)
+    ax1.annotate(f'{ratio}x: {il:.1f}%', xy=(ratio, il),
+                xytext=(10, 10), textcoords='offset points', fontsize=9)
+
+ax1.set_xlabel('Price Ratio (Final / Initial)')
+ax1.set_ylabel('Impermanent Loss (%)')
+ax1.set_title('Impermanent Loss vs. Price Movement')
+ax1.legend()
+ax1.grid(alpha=0.3)
+ax1.set_xscale('log')
+ax1.set_xticks([0.25, 0.5, 1, 2, 4])
+ax1.set_xticklabels(['0.25x', '0.5x', '1x', '2x', '4x'])
+
+# Plot 2: LP vs Hold Value
+ax2 = axes[0, 1]
+ratios_lin = np.linspace(0.2, 3, 200)
+lp_vals = [portfolio_values(10000, r)[0] for r in ratios_lin]
+hold_vals = [portfolio_values(10000, r)[1] for r in ratios_lin]
+
+ax2.plot(ratios_lin, lp_vals, 'b-', linewidth=2, label='LP Position')
+ax2.plot(ratios_lin, hold_vals, 'g--', linewidth=2, label='Hold Strategy')
+ax2.fill_between(ratios_lin, lp_vals, hold_vals,
+                 where=[l < h for l, h in zip(lp_vals, hold_vals)],
+                 alpha=0.3, color='red', label='IL Zone')
+
+ax2.axvline(x=1, color='black', linestyle=':', alpha=0.5)
+ax2.set_xlabel('Price Ratio (Final / Initial)')
+ax2.set_ylabel('Portfolio Value ($)')
+ax2.set_title('LP Position vs. Hold Strategy')
+ax2.legend()
+ax2.grid(alpha=0.3)
+
+# Plot 3: Breakeven Fee APY
+ax3 = axes[1, 0]
+price_moves = [abs(1 - r['ratio']) * 100 for r in results if r['ratio'] != 1.0]
+ils_needed = [abs(r['il']) * 100 for r in results if r['ratio'] != 1.0]
+
+ax3.bar(range(len(ils_needed)), ils_needed, color='coral', alpha=0.7)
+ax3.axhline(y=5, color='blue', linestyle='--', linewidth=2, label='Typical 0.3% pool APY (~5%)')
+ax3.axhline(y=2, color='green', linestyle='--', linewidth=2, label='Typical 0.05% pool APY (~2%)')
+
+labels = ['0.5x', '0.75x', '1.25x', '1.5x', '2x', '3x', '5x']
+ax3.set_xticks(range(len(labels)))
+ax3.set_xticklabels(labels)
+ax3.set_xlabel('Price Movement')
+ax3.set_ylabel('Fee APY Needed to Break Even (%)')
+ax3.set_title('Required Fee APY to Offset Impermanent Loss')
+ax3.legend()
+ax3.grid(axis='y', alpha=0.3)
+
+# Plot 4: Decision Heatmap
+ax4 = axes[1, 1]
+
+# Create decision matrix
+fee_apys = [1, 2, 5, 10, 20]
+price_movements = [1.1, 1.25, 1.5, 2.0, 3.0]
+
+decision_matrix = np.zeros((len(fee_apys), len(price_movements)))
+
+for i, fee in enumerate(fee_apys):
+    for j, price in enumerate(price_movements):
+        il = abs(impermanent_loss(price)) * 100
+        # Net profit = fee APY - IL
+        decision_matrix[i, j] = fee - il
+
+im = ax4.imshow(decision_matrix, cmap='RdYlGn', aspect='auto', vmin=-20, vmax=20)
+
+ax4.set_xticks(range(len(price_movements)))
+ax4.set_xticklabels([f'{p}x' for p in price_movements])
+ax4.set_yticks(range(len(fee_apys)))
+ax4.set_yticklabels([f'{f}%' for f in fee_apys])
+ax4.set_xlabel('Price Movement')
+ax4.set_ylabel('Fee APY')
+ax4.set_title('LP Profit/Loss Matrix (Fee APY - IL)')
+
+# Add value annotations
+for i in range(len(fee_apys)):
+    for j in range(len(price_movements)):
+        val = decision_matrix[i, j]
+        color = 'white' if abs(val) > 10 else 'black'
+        ax4.text(j, i, f'{val:+.1f}%', ha='center', va='center', color=color, fontsize=9)
+
+plt.colorbar(im, ax=ax4, label='Net Profit (%)')
+
+plt.tight_layout()
+plt.savefig('impermanent_loss_analysis.png', dpi=150, bbox_inches='tight')
+plt.show()
+
+print("\nChart saved as 'impermanent_loss_analysis.png'")
+
+# =============================================================================
+# FINAL ECONOMIC CONCLUSIONS
+# =============================================================================
+
+print()
+print("="*80)
+print("ECONOMIC CONCLUSIONS: WHEN TO PROVIDE LIQUIDITY")
+print("="*80)
+print("""
+1. IMPERMANENT LOSS IS SYMMETRIC:
+   - 2x up and 0.5x down have the SAME IL (5.72%)
+   - IL depends on magnitude of price change, not direction
+   - Formula: IL = 2*sqrt(r)/(1+r) - 1
+
+2. RULE OF THUMB:
+   - 1.25x or 0.8x price change: ~0.6% IL (usually fine)
+   - 1.5x or 0.67x price change: ~2.0% IL (borderline)
+   - 2x or 0.5x price change: ~5.7% IL (need high fees)
+   - 3x or 0.33x price change: ~13.4% IL (rarely profitable)
+
+3. WHEN TO LP:
+   - GOOD: Stable pairs (USDC/USDT), correlated assets (ETH/stETH)
+   - RISKY: Volatile pairs (MEME/ETH), during high volatility periods
+   - CHECK: Pool TVL (fees concentrated?), historical fee APY
+
+4. KEY INSIGHT:
+   - IL is the "cost of market making" in an AMM
+   - You're effectively selling the winning asset, buying the losing one
+   - LP is profitable when: Fee APY > Expected IL + opportunity cost
+""")
+```
+
+### Model Answer / Expected Output
+
+**Key Numerical Results:**
+
+| Price Change | IL | Dollar Loss on $10k |
+|--------------|-----|---------------------|
+| 0.5x (50% down) | -5.72% | $381.97 |
+| 0.75x (25% down) | -1.26% | $111.46 |
+| 1.25x (25% up) | -0.62% | $55.73 |
+| 1.5x (50% up) | -2.02% | $204.12 |
+| 2x (100% up) | -5.72% | $857.86 |
+| 3x (200% up) | -13.40% | $2,679.49 |
+| 5x (400% up) | -25.46% | $7,639.32 |
+
+**Decision Framework:**
+- If expected price movement < 25%: LP is usually profitable with standard 0.3% fee pools
+- If expected price movement 25-50%: Need higher fee tier or liquidity mining rewards
+- If expected price movement > 50%: LP is likely unprofitable - just hold
+
+### Presentation Talking Points
+- Impermanent loss is "impermanent" only if prices return to initial ratio - otherwise it's very permanent
+- IL is symmetric: 2x up and 0.5x down have identical IL because the AMM rebalances the same way
+- The key economic insight: LPs are selling options on price divergence - IL is the option premium they pay
+- Most retail LPs lose money because they underestimate IL and overestimate fee income
+- Professional LPs use concentrated liquidity (Uniswap v3) and active management to mitigate IL
+
+---
+
+## Exercise 3: CEX vs DEX Battle Matrix
+
+**Category**: Framework Application
+**Time**: 30 min work + 5 min presentation
+**Group Size**: Groups of 3-4
+**Materials Needed**: Printed worksheet, pens
+
+### Task
+
+Create a comprehensive comparison matrix evaluating Centralized Exchanges (CEXs) vs. Decentralized Exchanges (DEXs) across six key dimensions. Reach group consensus on ratings and identify the optimal exchange type for different user profiles.
+
+**Dimensions to Compare:**
+1. Speed (execution, settlement)
+2. Cost (fees, slippage)
+3. Custody (who holds assets)
+4. Transparency (order flow, pricing)
+5. Accessibility (KYC, geography)
+6. Capital Efficiency (for liquidity providers)
+
+**Rating Scale:** 1-5 (5 = excellent, 1 = poor)
+
+### Model Answer / Expected Output
+
+**Completed Comparison Matrix:**
+
+| Dimension | CEX (e.g., Binance) | DEX (e.g., Uniswap) | Winner | Justification |
+|-----------|---------------------|---------------------|--------|---------------|
+| **Speed** | **5** | **3** | CEX | CEX: millisecond execution, instant settlement to exchange wallet. DEX: 12-second block times (Ethereum), potential mempool delays, MEV extraction slows effective execution |
+| **Cost** | **4** | **3** | CEX | CEX: 0.1% maker/taker, no gas fees. DEX: 0.3% swap fee + $5-50 gas (Ethereum), MEV extraction can add 1-5% implicit cost. DEX wins on very small trades with L2s |
+| **Custody** | **2** | **5** | DEX | CEX: Exchange holds your assets (counterparty risk - see FTX). DEX: Non-custodial, you control keys, smart contract risk only |
+| **Transparency** | **2** | **5** | DEX | CEX: Order flow opaque, potential front-running, wash trading concerns. DEX: All trades on-chain, verifiable, open-source smart contracts |
+| **Accessibility** | **2** | **5** | DEX | CEX: KYC required, geographic restrictions, account bans possible. DEX: Permissionless, no KYC, anyone with wallet can trade |
+| **Capital Efficiency** | **5** | **2** | CEX | CEX: Professional market makers use leverage, concentrated positions. DEX: Constant product requires 2x capital vs. actual trading range (v3 improves this) |
+
+**Overall Scores:**
+- CEX: 20/30
+- DEX: 23/30
+
+**User Profile Recommendations:**
+
+| User Profile | Recommended | Reasoning |
+|--------------|-------------|-----------|
+| Day trader, large volume | **CEX** | Speed and cost matter most; can tolerate custody risk with good security practices |
+| Long-term holder, privacy-conscious | **DEX** | Custody and accessibility matter most; doesn't need speed |
+| Institutional investor | **CEX** | Needs capital efficiency, regulatory compliance, customer support |
+| Resident of sanctioned country | **DEX** | Only option - CEXs won't serve them |
+| DeFi yield farmer | **DEX** | Composability with other DeFi protocols, no withdrawal delays |
+| New crypto user | **CEX** | Better UX, fiat on-ramps, customer support |
+
+**Key Trade-off Insight:**
+
+The CEX vs. DEX choice fundamentally trades off **efficiency** (speed, cost, capital efficiency) against **decentralization** (custody, transparency, accessibility). There is no universally superior option - it depends on what the user values most.
+
+### Presentation Talking Points
+- CEXs excel at efficiency metrics (speed, cost, capital efficiency) because centralization enables optimization
+- DEXs excel at decentralization metrics (custody, transparency, accessibility) because that's their design goal
+- The FTX collapse (2022) dramatically shifted sentiment toward DEX custody benefits
+- Capital efficiency is DEXs' biggest weakness - Uniswap v3's concentrated liquidity is an attempt to close this gap
+- Economic insight: This mirrors the classic centralization vs. decentralization trade-off seen throughout economics (planned economies vs. markets, big firms vs. small firms)
+
+---
+
+## Exercise 4: Sandwich Attack Anatomy
+
+**Category**: Case Study
+**Time**: 30 min work + 5 min presentation
+**Group Size**: Groups of 3-4
+**Materials Needed**: Case data handout, calculators
+
+### Task
+
+Analyze a real sandwich attack transaction and calculate the exact profit extraction. Identify who wins, who loses, and whether this is "theft" or "market efficiency."
+
+**Case Data: Actual Sandwich Attack (Simplified)**
+
+**Initial Pool State (ETH/USDC on Uniswap v2):**
+- ETH Reserve: 10,000 ETH
+- USDC Reserve: 18,000,000 USDC
+- k = 180,000,000,000
+- Spot Price: $1,800/ETH
+
+**Victim Transaction:**
+- Victim wants to buy 50 ETH
+- Victim's slippage tolerance: 1%
+- Victim's maximum acceptable price: $1,818/ETH
+
+**Attacker's Strategy:**
+- Front-run: Buy ETH before victim
+- Back-run: Sell ETH after victim
+- Gas cost per transaction: $20
+
+**Questions to Answer:**
+1. Calculate the optimal front-run size
+2. What price does the victim actually pay?
+3. What is the attacker's profit?
+4. What is the victim's loss vs. a non-attacked scenario?
+5. Is this "theft" or "market efficiency"?
+
+### Model Answer / Expected Output
+
+**Step 1: Optimal Front-Run Calculation**
+
+To maximize profit, the attacker wants to buy as much as possible without pushing the price beyond the victim's slippage tolerance.
+
+Victim's max price: $1,818 (1% above $1,800)
+
+Let's calculate what front-run size pushes the price to exactly $1,818:
+
+```
+After front-run: Price = y'/x' = 1818
+k = x' * y' = 180,000,000,000
+
+Solving: y' = 1818 * x' and x' * y' = k
+x' * 1818 * x' = 180,000,000,000
+x'^2 = 99,009,900.99
+x' = 9,950.4 ETH
+
+Front-run size = 10,000 - 9,950.4 = 49.6 ETH
+```
+
+**Optimal front-run: ~50 ETH**
+
+**Step 2: Transaction Sequence Calculations**
+
+**Initial State:**
+- x = 10,000 ETH, y = 18,000,000 USDC
+- Price = $1,800/ETH
+
+**After Front-Run (Attacker buys 50 ETH):**
+```
+USDC paid = k/(x-50) - y = 180B/9950 - 18M = $90,452.26
+New state: x = 9,950 ETH, y = 18,090,452 USDC
+New price = $1,818.13/ETH
+```
+
+**After Victim Trade (Victim buys 50 ETH):**
+```
+USDC paid = k/(9950-50) - 18,090,452 = 180B/9900 - 18,090,452 = $90,910.16
+New state: x = 9,900 ETH, y = 18,181,362 USDC
+New price = $1,836.50/ETH
+Victim's effective price: $90,910 / 50 = $1,818.20/ETH
+```
+
+**After Back-Run (Attacker sells 50 ETH):**
+```
+USDC received = y - k/(x+50) = 18,181,362 - 180B/9950 = $90,910.16
+New state: x = 9,950 ETH, y = 18,090,452 USDC
+Price returns to $1,818.13/ETH
+```
+
+**Step 3: Profit/Loss Calculation**
+
+**Attacker:**
+- USDC spent (front-run): $90,452.26
+- USDC received (back-run): $90,910.16
+- Gross profit: $457.90
+- Gas costs: $40 (2 transactions)
+- **Net profit: $417.90**
+
+**Victim:**
+- Price paid: $1,818.20/ETH
+- Price without attack: $1,809.05/ETH (direct calculation)
+- Overpayment: $9.15/ETH x 50 = **$457.50 loss**
+
+**Verification:** Attacker profit ($457.90) ~ Victim loss ($457.50) + small pool imbalance. This is approximately zero-sum minus gas.
+
+**Step 4: Is This "Theft" or "Market Efficiency"?**
+
+| Argument: "This is Theft" | Argument: "This is Market Efficiency" |
+|---------------------------|---------------------------------------|
+| Victim did not consent to worse price | Victim set 1% slippage tolerance - they consented to any price up to $1,818 |
+| Attacker adds no value, pure extraction | Arbitrageurs provide price discovery by linking mempool info to prices faster |
+| Uses information asymmetry (sees pending tx) | All traders should monitor mempool - it's public information |
+| Analogous to front-running in TradFi (illegal) | DeFi has different rules - code is law |
+| Transfers wealth from uninformed to informed | Markets have always rewarded informed participants |
+
+**Consensus View:**
+- **Economically**: It's a wealth transfer from those who don't optimize (set tight slippage, use MEV protection) to those who do
+- **Ethically**: Most would consider it unfair, but it's not "illegal" in a permissionless system
+- **Practically**: It creates an arms race that wastes resources (gas wars) and degrades user experience
+
+### Presentation Talking Points
+- Sandwich attacks are possible because the mempool is PUBLIC - everyone can see pending transactions
+- The attack is precisely calibrated to the victim's slippage tolerance (this is why tight slippage matters)
+- Total value extracted: ~$500 on a $90k trade = 0.5% implicit cost on top of the 0.3% AMM fee
+- MEV is estimated at $600M+ extracted from Ethereum users since 2020
+- Solutions being developed: private mempools (Flashbots Protect), MEV auctions, encrypted transactions
+- Economic insight: MEV is an "invisible tax" on DeFi users that flows to searchers and validators
+
+---
+
+## Exercise 5: MEV Ethics Debate
+
+**Category**: Debate/Discussion
+**Time**: 30 min work + 5 min presentation
+**Group Size**: Two teams of 4-6 students each
+**Materials Needed**: None (timer helpful)
+
+### Task
+
+Structured debate on the motion: **"MEV extraction is economically equivalent to theft and should be eliminated through protocol design."**
+
+**Team A (Pro)**: MEV is theft and should be eliminated
+**Team B (Con)**: MEV improves market efficiency and is a feature, not a bug
+
+**Debate Structure:**
+| Phase | Time | Activity |
+|-------|------|----------|
+| Preparation | 15 min | Teams prepare 3 main arguments using L06 concepts |
+| Opening | 3 min each | Each team presents main arguments |
+| Rebuttal Prep | 5 min | Teams prepare responses |
+| Rebuttals | 2 min each | Each team responds to opponent |
+| Closing | 1 min each | Final summary |
+
+**Required L06 Concepts**: Use at least 2 per team from:
+- Price discovery
+- Market efficiency (weak, semi-strong, strong)
+- Adverse selection
+- Transaction costs
+- Welfare economics (Pareto efficiency)
+- Information asymmetry
+
+### Model Answer / Expected Output
+
+**Team A (Pro - MEV is Theft):**
+
+**Argument 1: Information Asymmetry Creates Unfair Advantage**
+- L06 Concept: *Information asymmetry and adverse selection*
+- MEV extractors have privileged access to pending transaction information (mempool visibility + compute power)
+- This is exactly the "adverse selection" problem from Glosten-Milgrom (1985) - informed traders profit at expense of uninformed
+- Traditional finance BANS front-running for this reason (it's illegal under SEC Rule 10b-5)
+- Analogy: It's like a casino employee who can see other players' cards - the game is rigged
+
+**Argument 2: MEV is a Deadweight Loss, Not Value Creation**
+- L06 Concept: *Welfare economics and Pareto efficiency*
+- MEV extraction is NOT Pareto-improving - victims are strictly worse off
+- Resources wasted: Gas wars between competing searchers burn billions in fees
+- Zero-sum (or negative-sum): Total value extracted = victim losses + wasted gas
+- Compare to productive trading: Arbitrage that MOVES prices toward efficiency creates value; sandwiching does not
+
+**Argument 3: MEV Undermines Trust and Adoption**
+- L06 Concept: *Transaction costs*
+- MEV adds hidden transaction costs (5-10% on some trades per L06 slides)
+- Users don't understand they're being exploited - this undermines informed consent
+- Long-term: Rational users will avoid DeFi, reducing liquidity and welfare
+- Comparison: Would you shop at a store where employees can legally pickpocket you?
+
+**Rebuttal Points Against Con:**
+- "Arbitrage provides price discovery" - Sandwich attacks don't move prices toward fundamental value
+- "Mempool is public" - Just because something is visible doesn't mean exploiting it is ethical
+- "Users can protect themselves" - This is victim-blaming; most users don't have technical knowledge
+
+---
+
+**Team B (Con - MEV is Market Efficiency):**
+
+**Argument 1: MEV is Information-Based Trading (Legal and Normal)**
+- L06 Concept: *Market efficiency and price discovery*
+- Efficient markets incorporate ALL available information quickly
+- Mempool information is PUBLIC - anyone can read it (not insider info)
+- MEV searchers are performing a service: rapidly incorporating order flow information into prices
+- Kyle (1985) model shows informed trading is essential for price discovery
+
+**Argument 2: MEV Extracts Only the "Slack" Users Voluntarily Provided**
+- L06 Concept: *Transaction costs and slippage tolerance*
+- Users set their own slippage tolerance - they CONSENT to any price within that range
+- If victim sets 5% slippage, they're saying "I'm willing to pay up to 5% more"
+- MEV extracts exactly this declared willingness to pay - it's revealed preference
+- Solution is user education, not protocol-level bans
+
+**Argument 3: Eliminating MEV Centralizes Power**
+- L06 Concept: *Market microstructure and decentralization*
+- Encrypted mempools and private order flow = CENTRALIZATION
+- Someone still sees the orders (the encryptor, the sequencer) - just hidden from public
+- Current system is transparent: all MEV is visible on-chain
+- "Elimination" really means "capture by privileged parties" (validators, sequencers)
+
+**Rebuttal Points Against Pro:**
+- "Front-running is illegal in TradFi" - DeFi operates under different rules; code is law
+- "Deadweight loss" - Gas costs fund network security; not purely wasted
+- "Users don't understand" - That's an education problem, not a protocol problem
+
+---
+
+**Balanced Verdict (for instructor):**
+
+The strongest economic position is nuanced:
+
+1. **Arbitrage MEV** (e.g., DEX-CEX arb) is genuinely efficiency-enhancing - it aligns prices across venues
+2. **Sandwich MEV** is pure extraction - it adds no information and transfers wealth from uninformed to informed
+3. **Liquidation MEV** is necessary for DeFi to function - someone must liquidate underwater positions
+
+The debate should conclude that **not all MEV is equal** - some is valuable, some is extractive. The protocol design challenge is enabling good MEV while minimizing bad MEV.
+
+### Presentation Talking Points
+- Both teams should distinguish between types of MEV (arbitrage vs. sandwich vs. liquidation)
+- The core tension: transparency (public mempool) vs. fairness (first-come-first-served)
+- Historical parallel: This debate echoes the HFT controversy in traditional markets
+- No blockchain has "solved" MEV - Ethereum's Flashbots is mitigation, not elimination
+- Key economic insight: MEV is the "cost of decentralization" - centralized systems can prevent it but sacrifice trustlessness
+
+---
+
+## Exercise 6: Design an MEV-Resistant AMM
+
+**Category**: Creative/Design
+**Time**: 30 min work + 5 min presentation
+**Group Size**: Groups of 3-4
+**Materials Needed**: Whiteboard, flip chart, or paper; colored markers
+
+### Task
+
+Your team is designing the next generation AMM that minimizes MEV extraction while maintaining liquidity and usability. Create a detailed mechanism design that addresses sandwich attacks, front-running, and arbitrage extraction.
+
+**Design Requirements:**
+1. Must maintain constant liquidity (can't just "pause trading during attacks")
+2. Must be economically sustainable (LPs need to earn fees)
+3. Must be implementable on a blockchain (can't require trusted third parties)
+4. Must clearly explain the trade-offs
+
+**Evaluation Criteria:**
+- Creativity of mechanism
+- Economic soundness (incentive compatibility)
+- Practical implementability
+- Honest assessment of trade-offs
+
+### Model Answer / Expected Output
+
+**Model Design Brief: "TimeShield AMM"**
+
+---
+
+**MECHANISM NAME:** TimeShield AMM
+
+**CORE INNOVATION:** Time-Weighted Batch Auctions with Commit-Reveal
+
+---
+
+**HOW IT WORKS:**
+
+**Phase 1: COMMIT (Block N)**
+- Traders submit encrypted order commitments: `commit = hash(order_details + secret)`
+- No one (including validators) can see order details
+- Commit fee: small fixed fee to prevent spam
+
+**Phase 2: REVEAL (Block N+1)**
+- Traders reveal their orders by submitting `order_details + secret`
+- Orders that don't match their commit are rejected
+- All orders in the batch are now visible
+
+**Phase 3: EXECUTE (Block N+2)**
+- All orders execute at a SINGLE clearing price
+- Price determined by: weighted average of where supply = demand
+- No ordering advantage - all trades in batch treated equally
+
+---
+
+**MATHEMATICAL FORMULATION:**
+
+**Single Clearing Price:**
+```
+P* = argmin[ |sum(buy_orders at P) - sum(sell_orders at P)| ]
+```
+
+All buys execute at P*, all sells execute at P*.
+
+**Batch Interval:** 3 blocks (~36 seconds on Ethereum)
+
+---
+
+**WHY THIS DEFEATS MEV:**
+
+| Attack Type | How TimeShield Blocks It |
+|-------------|--------------------------|
+| **Front-running** | Attacker can't see orders during commit phase; by reveal phase, attacker's commit deadline has passed |
+| **Sandwich** | No ordering within batch - everyone gets same price; can't buy before and sell after victim |
+| **JIT Liquidity** | Liquidity commits must also be batched; can't add/remove liquidity between seeing order and execution |
+
+---
+
+**TRADE-OFFS (HONEST ASSESSMENT):**
+
+| Benefit | Cost |
+|---------|------|
+| No sandwich attacks | 36-second execution delay (vs. 12 seconds on Uniswap) |
+| Fair pricing | More complex UX (commit + reveal) |
+| LP protection | Lower capital efficiency (price uncertainty during batch) |
+| MEV goes to traders | Arbitrage now batch-delayed (prices can drift from CEX) |
+
+---
+
+**INCENTIVE ANALYSIS:**
+
+**For Traders:**
+- Benefit: No MEV extraction (save 1-5% on large trades)
+- Cost: Slower execution, price uncertainty during batch
+- Net: Positive for large traders, negative for time-sensitive traders
+
+**For LPs:**
+- Benefit: No JIT liquidity stealing their fees, no IL from MEV
+- Cost: Less fee income per trade (no MEV premium)
+- Net: Probably positive - more sustainable, less adversarial
+
+**For Arbitrageurs:**
+- Can still arbitrage, but batched - must predict clearing price
+- Reduces pure speed advantage, increases prediction skill advantage
+- Some arbitrage still happens (good for price discovery)
+
+---
+
+**IMPLEMENTABILITY:**
+
+| Component | Implementation |
+|-----------|----------------|
+| Commit-reveal | Standard cryptographic scheme (already used in ENS) |
+| Batch auctions | Implemented by CoW Protocol (Gnosis), CrocSwap |
+| Clearing price | Requires on-chain computation (expensive but feasible) |
+| Smart contract | ~500 lines of Solidity, auditable |
+
+**Existing Protocols Using Similar Ideas:**
+- CowSwap: Batch auctions with off-chain solvers
+- Chainlink Fair Sequencing Services: Encrypted mempools
+- Flashbots Protect: Private transaction submission
+
+---
+
+**EXPECTED RESULTS:**
+
+| Metric | Uniswap v2 | TimeShield (Projected) |
+|--------|------------|------------------------|
+| MEV extracted | 1-5% of large trades | ~0% |
+| Execution time | 12 seconds | 36 seconds |
+| Gas per trade | ~150k | ~200k (extra commit tx) |
+| LP profitability | Often negative (IL + MEV) | More sustainable |
+
+---
+
+### Presentation Talking Points
+- There is no perfect MEV solution - all designs involve trade-offs
+- The core insight: MEV exists because of ORDERING - remove ordering, remove MEV
+- Batch auctions are the economist's favorite solution (used in stock market opens/closes)
+- Challenge: DeFi users want instant execution, not 36-second delays
+- Practical implementations exist (CowSwap, Flashbots Protect) - this isn't just theory
+- Key economic insight: The "price" of MEV protection is execution delay and complexity
+
+---
+
+## Exercise 7: LP Profitability Analysis
+
+**Category**: Quantitative Analysis
+**Time**: 30 min work + 5 min presentation
+**Group Size**: Pairs
+**Materials Needed**: Calculator or spreadsheet
+
+### Task
+
+Analyze whether being a liquidity provider in a specific pool is profitable, comparing LP returns against simply holding the assets ("hodling"). Use real fee and volume data to make a recommendation.
+
+**Pool Data (ETH/USDC on Uniswap v3):**
+- Pool TVL: $100,000,000
+- Daily volume: $50,000,000
+- Fee tier: 0.3%
+- Your position: $10,000 (50% ETH at $1,800, 50% USDC)
+- Time horizon: 30 days
+- Expected ETH price scenarios: -20%, 0%, +20%, +50%
+
+**Calculate for each scenario:**
+1. Fee income earned (assume your share of pool is proportional)
+2. Impermanent loss (if any)
+3. Net profit/loss vs. holding
+4. Equivalent APY
+
+### Model Answer / Expected Output
+
+**Step 1: Fee Income Calculation**
+
+```
+Daily fees generated by pool = $50,000,000 * 0.003 = $150,000
+Your pool share = $10,000 / $100,000,000 = 0.01%
+Your daily fee income = $150,000 * 0.0001 = $15
+Your 30-day fee income = $15 * 30 = $450
+Fee APY = ($15 * 365) / $10,000 = 54.75%
+```
+
+**Step 2: Impermanent Loss for Each Scenario**
+
+| ETH Price Change | Price Ratio | IL Formula | IL % | IL $ |
+|------------------|-------------|------------|------|------|
+| -20% ($1,440) | 0.80 | 2*sqrt(0.8)/(1+0.8)-1 | -0.62% | -$62 |
+| 0% ($1,800) | 1.00 | 0 | 0% | $0 |
+| +20% ($2,160) | 1.20 | 2*sqrt(1.2)/(1+1.2)-1 | -0.46% | -$46 |
+| +50% ($2,700) | 1.50 | 2*sqrt(1.5)/(1+1.5)-1 | -2.02% | -$202 |
+
+**Step 3: Net Profit/Loss vs. Holding**
+
+| Scenario | Fee Income | IL | Net vs Hold | Verdict |
+|----------|------------|-----|-------------|---------|
+| -20% | +$450 | -$62 | **+$388** | LP WINS |
+| 0% | +$450 | $0 | **+$450** | LP WINS |
+| +20% | +$450 | -$46 | **+$404** | LP WINS |
+| +50% | +$450 | -$202 | **+$248** | LP WINS |
+
+**Step 4: Equivalent APY Comparison**
+
+| Scenario | LP 30-Day Return | LP Annualized APY | Hold 30-Day Return | Hold Annualized |
+|----------|------------------|-------------------|--------------------| --------------- |
+| -20% | +$388 (3.88%) | 47.3% APY | -$1,000 (-10%) | -120% |
+| 0% | +$450 (4.50%) | 54.8% APY | $0 (0%) | 0% |
+| +20% | +$404 (4.04%) | 49.2% APY | +$1,000 (+10%) | +122% |
+| +50% | +$248 (2.48%) | 30.2% APY | +$2,500 (+25%) | +304% |
+
+**Step 5: Recommendation**
+
+**RECOMMENDATION: LP is profitable in all scenarios due to high fee APY (54.75%)**
+
+However, important caveats:
+1. In the +50% scenario, HOLDING outperforms LP ($2,500 vs $248) in absolute terms
+2. The fee APY assumes consistent volume - volume can drop significantly
+3. This analysis ignores gas costs for entering/exiting (~$50-100)
+4. This analysis ignores smart contract risk
+
+**When LP beats Hold:**
+- Sideways markets (low IL, full fee capture)
+- High volume pools (high fee APY)
+- Low volatility assets (stablecoin pairs)
+
+**When Hold beats LP:**
+- Strong directional moves (high IL erodes gains)
+- Low volume periods (fee income drops)
+- Very volatile assets (IL can exceed fees)
+
+### Presentation Talking Points
+- The key metric is: Fee APY vs. Expected IL - in this pool, 54.75% fee APY easily covers IL up to ~50% price moves
+- Most LP analysis ignores that fee income is NOT guaranteed - volume fluctuates
+- This pool has unusually high volume/TVL ratio - most pools are less profitable
+- Real LPs also face: gas costs, smart contract risk, opportunity cost
+- The comparison baseline matters: LP vs. Hold vs. stable yield (e.g., 5% on USDC)
+- Key economic insight: LP profitability is pool-specific - high volume pools can be very profitable, low volume pools are often not
+
+---
+
+## Exercise 8: Order Book vs AMM Trade Execution
+
+**Category**: Comparative Analysis
+**Time**: 30 min work + 5 min presentation
+**Group Size**: Groups of 3-4
+**Materials Needed**: Worksheet with order book data, calculators
+
+### Task
+
+Compare trade execution quality between an order book (Binance) and an AMM (Uniswap) for different trade sizes. Determine which venue is better for retail vs. institutional traders.
+
+**Order Book Data (Binance ETH/USDC):**
+| Price Level | Bid Quantity | Ask Quantity |
+|-------------|--------------|--------------|
+| $1,799 | 100 ETH | - |
+| $1,800 | 200 ETH | - |
+| $1,801 | - | 150 ETH |
+| $1,802 | - | 200 ETH |
+| $1,805 | - | 500 ETH |
+
+Mid price: $1,800.50, Spread: $1 (0.056%)
+
+**AMM Data (Uniswap ETH/USDC):**
+- ETH Reserve: 50,000 ETH
+- USDC Reserve: 90,000,000 USDC
+- k = 4,500,000,000,000
+- Spot price: $1,800
+- Fee: 0.3%
+
+**Calculate for trade sizes: 1 ETH, 10 ETH, 100 ETH, 500 ETH:**
+1. Execution price on each venue
+2. Total cost (including fees/spread)
+3. Which venue is better?
+
+### Model Answer / Expected Output
+
+**Order Book Execution Analysis:**
+
+**Buy 1 ETH:**
+- Fills at best ask: $1,801
+- Total cost: $1,801
+- Slippage: 0%
+
+**Buy 10 ETH:**
+- Fills at best ask: $1,801 (10 ETH available at this level)
+- Total cost: $18,010
+- Effective price: $1,801
+- Slippage: 0%
+
+**Buy 100 ETH:**
+- 150 ETH at $1,801, fills 100 at $1,801
+- Total cost: $180,100
+- Effective price: $1,801
+- Slippage: 0%
+
+**Buy 500 ETH:**
+- 150 at $1,801 = $270,150
+- 200 at $1,802 = $360,400
+- 150 at $1,805 = $270,750
+- Total: $901,300
+- Effective price: $1,802.60
+- Slippage: 0.14%
+
+---
+
+**AMM Execution Analysis:**
+
+For a buy of `dx` ETH:
+- New ETH reserve: x - dx
+- New USDC reserve: k / (x - dx)
+- USDC cost: new_USDC - old_USDC
+- Plus 0.3% fee
+
+**Buy 1 ETH:**
+- USDC cost = 90M - k/(50000-1) = $1,800.04
+- Fee: $5.40
+- Total: $1,805.44
+- Slippage: 0.002%
+
+**Buy 10 ETH:**
+- USDC cost = 90M - k/(50000-10) = $18,003.60
+- Fee: $54.01
+- Total: $18,057.61
+- Effective price: $1,805.76
+- Slippage: 0.02%
+
+**Buy 100 ETH:**
+- USDC cost = 90M - k/(50000-100) = $180,360.72
+- Fee: $541.08
+- Total: $180,901.80
+- Effective price: $1,809.02
+- Slippage: 0.5%
+
+**Buy 500 ETH:**
+- USDC cost = 90M - k/(50000-500) = $909,090.91
+- Fee: $2,727.27
+- Total: $911,818.18
+- Effective price: $1,823.64
+- Slippage: 1.31%
+
+---
+
+**Comparison Summary:**
+
+| Trade Size | Order Book Total | AMM Total | Better Venue | Savings |
+|------------|------------------|-----------|--------------|---------|
+| 1 ETH | $1,801 | $1,805.44 | **Order Book** | $4.44 (0.25%) |
+| 10 ETH | $18,010 | $18,057.61 | **Order Book** | $47.61 (0.26%) |
+| 100 ETH | $180,100 | $180,901.80 | **Order Book** | $801.80 (0.44%) |
+| 500 ETH | $901,300 | $911,818.18 | **Order Book** | $10,518 (1.17%) |
+
+**Winner: Order Book (Binance) for ALL trade sizes**
+
+---
+
+**Why Order Book Wins:**
+
+1. **Spread is tighter**: Order book spread of $1 (0.056%) beats AMM's 0.3% fee
+2. **Depth at specific prices**: Order book has concentrated liquidity at best prices
+3. **Slippage scales better**: Order book slippage is step-function (hits price levels), AMM is continuous curve
+
+**When AMM Might Win:**
+
+| Scenario | Why AMM Could Be Better |
+|----------|-------------------------|
+| Exotic pairs | Order book may have no depth for obscure tokens |
+| Non-custodial | Don't want to trust Binance with funds |
+| 24/7 liquidity | Order book depth thin overnight/weekends |
+| Composability | Need on-chain execution for DeFi strategies |
+| Censorship resistance | Binance can freeze accounts |
+
+---
+
+**User Profile Recommendations:**
+
+| User Type | Best Venue | Reasoning |
+|-----------|------------|-----------|
+| Retail (<$10k trades) | Either | Difference is small; CEX has better UX |
+| Active trader | Order Book | Speed and cost matter; can manage custody risk |
+| Whale (>$100k) | Order Book | Significant cost savings from depth |
+| DeFi native | AMM | Composability with other protocols |
+| Privacy-conscious | AMM | No KYC, no tracking |
+
+### Presentation Talking Points
+- Order books beat AMMs on execution quality for liquid pairs - this is the "cost of decentralization"
+- The 0.3% AMM fee is substantial - order books often charge 0.1% or less
+- But this comparison ignores non-monetary factors: custody risk, censorship resistance, composability
+- Real traders use BOTH: CEX for large trades, DEX for DeFi composability
+- Key economic insight: The efficient market would use each venue for what it's best at - order books for execution, AMMs for permissionless access
+- Uniswap v3's concentrated liquidity was designed to close this gap - and it partially succeeds
+
+---
+
+**PLAN_READY: .omc/plans/l06-in-class-exercises.md**
