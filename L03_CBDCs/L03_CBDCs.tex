@@ -87,6 +87,80 @@
 \bottomnote{CBDCs represent central banks' response to private digital currencies}
 \end{frame}
 
+% Background Frame A
+\begin{frame}[t]{Background: The Banking System}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Central Bank vs. Commercial Bank}
+
+\textbf{Central bank} (e.g., ECB, Federal Reserve):
+\begin{itemize}
+\item The government's bank
+\item Creates the national currency
+\item Sets interest rates for the economy
+\item Lender of last resort in crises
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Commercial bank} (e.g., Deutsche Bank, Chase):
+\begin{itemize}
+\item Private companies where you have accounts
+\item Accept deposits, make loans
+\item Can fail (unlike central banks)
+\item Must hold reserves at central bank
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key Point}: Your savings account is at a commercial bank. The central bank is the bank for banks.
+\end{columns}
+
+\bottomnote{Understanding this distinction is essential for CBDC analysis}
+\end{frame}
+
+% Background Frame B
+\begin{frame}[t]{Background: How Banks Work}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Money Creation Through Lending}
+
+Banks don't lend from a vault of cash:
+\begin{itemize}
+\item When a bank lends you 100 EUR, it \textit{creates} 100 EUR in your account
+\item Most money in modern economies is created this way
+\item This is called \textbf{fractional reserve banking}
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Why Deposits Matter to Banks}
+\begin{itemize}
+\item Banks borrow from depositors at low rates (e.g., 1\%)
+\item Banks lend at higher rates (e.g., 5\%)
+\item The difference is their profit
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Bank Runs}
+
+A \textbf{bank run} occurs when:
+\begin{itemize}
+\item Many depositors withdraw simultaneously
+\item They fear the bank will fail
+\item Banks don't keep all deposits as cash
+\item Mass withdrawal causes collapse
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Why Interest Rates Affect Spending}
+\begin{itemize}
+\item Lower rates = cheaper loans
+\item Mortgages at 3\% vs 6\% = more homebuyers
+\item Cheap business loans = more investment
+\end{itemize}
+\end{columns}
+
+\bottomnote{These mechanics explain why CBDCs could disrupt traditional banking}
+\end{frame}
+
 % What is a CBDC?
 \begin{frame}[t]{What is a Central Bank Digital Currency?}
 \begin{columns}[T]
@@ -95,7 +169,7 @@
 
 A CBDC is a digital form of central bank money:
 \begin{itemize}
-\item Direct liability of central bank
+\item Direct liability of central bank (a legal obligation---the central bank owes you that value)
 \item Digital (not physical)
 \item Widely accessible (retail) or restricted (wholesale)
 \end{itemize}
@@ -103,8 +177,8 @@ A CBDC is a digital form of central bank money:
 \vspace{0.3em}
 \textbf{Not a CBDC}
 \begin{itemize}
-\item Bank reserves (already digital)
-\item Commercial bank money
+\item Bank reserves (money banks hold at the central bank---like a bank's own bank account) are already digital
+\item Commercial bank money \textit{(Your bank deposit is a promise from your bank, which can fail. CBDC is a promise from the central bank, backed by the state---it cannot fail.)}
 \item Stablecoins (private liability---can collapse, as Terra/UST did in 2022 losing \$40B+)
 \end{itemize}
 
@@ -113,10 +187,10 @@ A CBDC is a digital form of central bank money:
 
 Central banks cite multiple goals:
 \begin{itemize}
-\item Maintain monetary sovereignty (control over the nations money supply)
+\item Maintain monetary sovereignty---without it, a country cannot fight recessions independently (like Greece in 2010, which couldn't devalue its currency)
 \item Improve payment efficiency
 \item Promote financial inclusion
-\item Counter private digital currencies
+\item Counter private digital currencies---if citizens abandon national currency for Bitcoin or stablecoins, the central bank loses its ability to stabilize the economy
 \end{itemize}
 
 \vspace{0.3em}
@@ -163,7 +237,7 @@ For general public use:
 Economic considerations:
 \begin{itemize}
 \item High operational costs
-\item Privacy vs. AML (Anti-Money Laundering) trade-off
+\item Privacy vs. AML (Anti-Money Laundering---criminals using untraceable money enables drug trafficking, terrorism financing, and tax evasion) trade-off
 \item Competition with banks
 \end{itemize}
 
@@ -173,7 +247,7 @@ Economic considerations:
 For financial institutions:
 \begin{itemize}
 \item Interbank settlement (transferring money between banks)
-\item Securities transactions
+\item Securities transactions (buying/selling stocks and bonds between institutions)
 \item Cross-border payments
 \end{itemize}
 
@@ -217,7 +291,7 @@ Like bank accounts:
 \begin{itemize}
 \item Verify the identity of holder
 \item Full transaction records
-\item Programmable features possible (money with built-in rules, like expiration dates)
+\item Programmable features possible---e.g., stimulus payments that can only be spent at small businesses, or rent subsidies that can only pay landlords
 \end{itemize}
 
 \vspace{0.3em}
@@ -244,7 +318,7 @@ $$i_{\text{policy}} \rightarrow i_{\text{deposit}} \rightarrow C, I$$
 \begin{itemize}
 \item Works through bank intermediation
 \item Banks pass rate changes to customers
-\item Time lags in transmission
+\item Time lags in transmission (months can pass before rate changes affect consumer behavior)
 \end{itemize}
 
 \vspace{0.3em}
@@ -265,7 +339,7 @@ Interest-bearing CBDC enables:
 \begin{itemize}
 \item Negative interest rates (charging people to hold money, to encourage spending)
 \item Helicopter money (direct cash from central bank to citizens---named for the image of dropping money from helicopters)
-\item Time-limited money (expiring)
+\item Time-limited money---e.g., China's Chengdu pilot gave citizens digital yuan that expired in 3 months, forcing spending to boost local businesses
 \end{itemize}
 
 \vspace{0.3em}
@@ -300,7 +374,7 @@ If CBDC is attractive:
 \begin{itemize}
 \item Deposits migrate to CBDC
 \item Banks lose cheap funding
-\item Credit supply may contract
+\item Credit supply (total loans available) may contract
 \end{itemize}
 
 \textit{Example: If 20\% of deposits move to CBDC, banks must borrow elsewhere at higher rates, meaning fewer or costlier loans.}
@@ -308,9 +382,9 @@ If CBDC is attractive:
 \vspace{0.3em}
 \textbf{Andolfatto (2021), a Federal Reserve economist, modeled this:}
 \begin{itemize}
-\item CBDC as outside option
+\item CBDC as outside option (an alternative that improves your bargaining power---if you can switch to CBDC, banks must treat you better)
 \item Forces competitive deposit rates
-\item Net welfare effect ambiguous
+\item Net welfare effect ambiguous (welfare = total well-being of society---economists cannot agree if everyone is better or worse off overall)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -326,7 +400,7 @@ Design features to limit migration:
 \vspace{0.3em}
 \textbf{Financial Stability}
 \begin{itemize}
-\item Digital bank runs faster (instant CBDC transfers vs. slow cash withdrawals)
+\item Digital bank runs faster---in 2023, Silicon Valley Bank lost \$42 billion in 24 hours via mobile apps; traditional runs took days as people queued at branches
 \item Flight to safety amplified (the rush to safe assets is faster when transfers are instant)
 \item Requires careful design
 \end{itemize}
@@ -363,13 +437,13 @@ Benefits:
 \begin{itemize}
 \item Lower transaction costs
 \item Entry to formal finance
-\item Government transfer efficiency
+\item Government transfer efficiency \textit{(Example: During COVID, US paper stimulus checks took weeks. Direct CBDC transfers could reach citizens in seconds at near-zero cost.)}
 \end{itemize}
 
 \vspace{0.3em}
 Challenges:
 \begin{itemize}
-\item Digital divide persists
+\item Digital divide persists \textit{(Example: In India, 300 million people lack smartphones---CBDC only on phones would exclude them, worsening inequality.)}
 \item Infrastructure requirements
 \item Financial literacy needs
 \end{itemize}
@@ -387,7 +461,7 @@ Challenges:
 CBDCs could intensify:
 \begin{itemize}
 \item Cross-border CBDC use
-\item Challenge to dollar dominance
+\item Challenge to dollar dominance \textit{(The US gains immense power from dollar dominance: ability to sanction enemies, borrow cheaply, and export inflation. Challengers want these privileges.)}
 \item Regional currency blocs
 \end{itemize}
 
@@ -410,9 +484,9 @@ CBDCs could intensify:
 \vspace{0.3em}
 \textbf{Economic Implications}
 \begin{itemize}
-\item Seigniorage redistribution
+\item Seigniorage redistribution \textit{(If people worldwide use digital yuan instead of dollars, China earns the profit from money creation that previously went to the US.)}
 \item Sanctions effectiveness
-\item Monetary policy spillovers
+\item Monetary policy spillovers (when one country's policy unintentionally affects others---e.g., US rate hikes cause capital flight from emerging markets)
 \end{itemize}
 \end{columns}
 
@@ -454,7 +528,7 @@ CBDCs could intensify:
 \begin{itemize}
 \item Reduced FX (foreign exchange) settlement risk
 \item Lower remittance costs
-\item Faster trade finance
+\item Faster trade finance (loans and guarantees for international commerce)
 \end{itemize}
 \end{columns}
 
@@ -485,7 +559,7 @@ CBDCs could intensify:
 \begin{itemize}
 \item AML/CFT (Combating the Financing of Terrorism) compliance
 \item Tax enforcement
-\item Targeted stimulus
+\item Targeted stimulus \textit{(Example: Instead of giving everyone \$1000, programmable CBDC could give \$2000 only to unemployed workers, or restrict spending to domestic goods.)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -527,8 +601,8 @@ $$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
 \textbf{Economic Rationale}
 \begin{itemize}
 \item Strategic autonomy (not dependent on Visa, Mastercard, or US tech giants)
-\item Payment system resilience
-\item Declining cash usage
+\item Payment system resilience (if Visa goes down or a foreign company exits, CBDC ensures people can still pay)
+\item Declining cash usage---if cash disappears, citizens lose their only form of public money; all transactions would go through private banks or card companies who charge fees and track purchases
 \end{itemize}
 
 \vspace{0.3em}
@@ -578,7 +652,7 @@ CBDCs are not simply ``digital cash''---they require careful economic analysis o
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{CBDC (Central Bank Digital Currency)}
-Digital form of central bank money, a liability of the central bank denominated in the national unit of account.
+Digital cash issued by the central bank. If you hold 100 in CBDC, the central bank guarantees you that value---unlike bank deposits which depend on your bank staying solvent.
 
 \vspace{0.3em}
 \textbf{Retail CBDC}
@@ -665,6 +739,37 @@ Cryptography that proves you meet a requirement without revealing your data---li
 \end{columns}
 
 \bottomnote{CBDC design choices have profound implications for monetary policy and financial stability}
+\end{frame}
+
+% Key Terms Part 3
+\begin{frame}[t]{Key Terms (3/3)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Liability (Finance)}
+A legal obligation to pay---if you hold CBDC, the central bank owes you that value. Unlike an asset (what you own), a liability is what you owe.
+
+\vspace{0.3em}
+\textbf{Monetary Policy}
+The central bank's decisions about interest rates and money supply to control inflation and support the economy. Examples: raising rates to fight inflation, cutting rates to boost growth.
+
+\vspace{0.3em}
+\textbf{Bank Reserves}
+Money that commercial banks hold at the central bank---like a bank's own bank account. Required by regulation to ensure banks can meet withdrawals.
+
+\column{0.48\textwidth}
+\textbf{Credit Supply}
+The total amount of loans banks can offer to businesses and people. When credit supply contracts, fewer loans are available, slowing economic activity.
+
+\vspace{0.3em}
+\textbf{Spillovers}
+When one country's policy unintentionally affects other countries. Example: US interest rate hikes cause capital to leave emerging markets, weakening their currencies.
+
+\vspace{0.3em}
+\textbf{Trade Finance}
+Loans and guarantees that help companies buy and sell goods internationally. Without trade finance, global commerce would be much slower and riskier.
+\end{columns}
+
+\bottomnote{Understanding these foundational terms is essential for analyzing CBDC policy}
 \end{frame}
 
 % References

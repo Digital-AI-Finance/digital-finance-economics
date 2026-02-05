@@ -1,0 +1,1150 @@
+{
+  "metadata": {
+    "generated": "2026-02-04",
+    "totalTerms": 125,
+    "totalLessons": 8
+  },
+  "terms": [
+    {
+      "id": "account-based-cbdc",
+      "term": "Account-Based CBDC",
+      "definition": "CBDC where validity requires verification of the holder's identity against an account.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "acquirer",
+      "term": "Acquirer",
+      "definition": "Bank that processes card payments for merchants and deposits funds into their accounts.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "adverse-selection",
+      "term": "Adverse Selection",
+      "definition": "When information asymmetry causes bad products/actors to dominate markets (Akerlof's lemons problem). Informed traders profit at uninformed traders' expense, causing market makers to widen spreads.",
+      "lessons": ["L06", "L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "airdrops",
+      "term": "Airdrops",
+      "definition": "Free distribution of tokens to wallet addresses to bootstrap network or reward loyalty.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "algorithmic-stablecoin",
+      "term": "Algorithmic Stablecoin",
+      "definition": "Stablecoin using supply adjustments without full collateral.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "aml",
+      "term": "AML (Anti-Money Laundering)",
+      "definition": "Laws and regulations designed to prevent criminals from disguising illegally obtained money as legitimate income. Rules preventing financial system use for laundering illicit funds.",
+      "lessons": ["L03", "L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "amm",
+      "term": "AMM (Automated Market Maker)",
+      "definition": "Smart contract providing liquidity through algorithmic pricing (e.g., constant product formula x · y = k).",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "arbitrage",
+      "term": "Arbitrage",
+      "definition": "Profiting from price differences across markets; maintains stablecoin pegs.",
+      "lessons": ["L02", "L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "atomic-swap",
+      "term": "Atomic Swap",
+      "definition": "A technology enabling exchange of different currencies simultaneously---both transfers complete or neither does.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "bank-disintermediation",
+      "term": "Bank Disintermediation",
+      "definition": "Risk that CBDC adoption draws deposits away from commercial banks, reducing their lending capacity.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "bank-reserves",
+      "term": "Bank Reserves",
+      "definition": "Money that commercial banks hold at the central bank---like a bank's own bank account.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "barter",
+      "term": "Barter",
+      "definition": "Direct goods exchange without money; requires double coincidence of wants.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "bid-ask-spread",
+      "term": "Bid-Ask Spread",
+      "definition": "Difference between highest buy price and lowest sell price; narrower spreads mean more liquid markets. Wider spreads mean higher hidden costs.",
+      "lessons": ["L04", "L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "block-time",
+      "term": "Block Time",
+      "definition": "Time between new blocks added to blockchain; determines MEV opportunities.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "blockchain",
+      "term": "Blockchain",
+      "definition": "Distributed digital ledger recording transactions across many computers.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "burn-mechanism",
+      "term": "Burn Mechanism",
+      "definition": "Process of permanently removing tokens from circulation to create scarcity.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "cbdc",
+      "term": "CBDC (Central Bank Digital Currency)",
+      "definition": "Digital cash issued by the central bank. If you hold 100 in CBDC, the central bank guarantees you that value---unlike bank deposits which depend on your bank staying solvent.",
+      "lessons": ["L01", "L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "censorship-resistance",
+      "term": "Censorship Resistance",
+      "definition": "Property of a system that prevents any single entity from blocking or reversing transactions.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "clob",
+      "term": "CLOB (Central Limit Order Book)",
+      "definition": "Order book matching system that pairs buy and sell orders by price-time priority.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "collateral",
+      "term": "Collateral",
+      "definition": "Assets pledged as security for loan or stablecoin.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "collateral-liquidation",
+      "term": "Collateral Liquidation",
+      "definition": "Automatic sale of collateral when borrowers fail to maintain required collateralization ratios.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "compliance-costs",
+      "term": "Compliance Costs",
+      "definition": "Direct and indirect expenses of meeting regulatory requirements.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "composability",
+      "term": "Composability",
+      "definition": "Ability of different DeFi protocols to interact and build on each other.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "constant-product-formula",
+      "term": "Constant Product Formula",
+      "definition": "AMM pricing rule x · y = k that automatically adjusts prices as traders swap tokens.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "consumer-protection",
+      "term": "Consumer Protection",
+      "definition": "Rules and standards designed to shield individuals from exploitation, fraud, or harm.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "contagion",
+      "term": "Contagion",
+      "definition": "Spread of financial distress from one institution or market to others through direct links or sentiment.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "correspondent-banking",
+      "term": "Correspondent Banking",
+      "definition": "An arrangement where one bank provides services on behalf of another, commonly used for international payments. Banks hold accounts with each other to facilitate cross-border payments through intermediaries.",
+      "lessons": ["L03", "L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "credit-supply",
+      "term": "Credit Supply",
+      "definition": "The total amount of loans banks can offer to businesses and people.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "critical-mass",
+      "term": "Critical Mass",
+      "definition": "Minimum number of users needed before a network becomes self-sustaining---typically around 16% adoption. Minimum adoption level needed for network effects to become self-sustaining.",
+      "lessons": ["L04", "L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "cross-side-externalities",
+      "term": "Cross-Side Externalities",
+      "definition": "Effects on one user group when the other group grows.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "cryptocurrency",
+      "term": "Cryptocurrency",
+      "definition": "Digital asset using cryptography, not issued by government.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "dapps",
+      "term": "dApps",
+      "definition": "Decentralized applications built on blockchain platforms.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "deadweight-loss",
+      "term": "Deadweight Loss",
+      "definition": "Economic inefficiency representing value destroyed by regulation or market distortions (Harberger triangle).",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "death-spiral",
+      "term": "Death Spiral",
+      "definition": "Self-reinforcing collapse where falling prices trigger more selling.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "decentralization",
+      "term": "Decentralization",
+      "definition": "Distribution of power away from single authority to many participants.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "defi",
+      "term": "DeFi",
+      "definition": "Decentralized Finance; blockchain financial services without intermediaries.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "deflationary",
+      "term": "Deflationary",
+      "definition": "Prices falling over time; fixed-supply currencies trend deflationary.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "digital-finance",
+      "term": "Digital Finance",
+      "definition": "Financial services relying on digital infrastructure for value transfer.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "digital-finance-trilemma",
+      "term": "Digital Finance Trilemma",
+      "definition": "Trade-off between decentralization, efficiency, and security/compliance.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "disintermediation",
+      "term": "Disintermediation",
+      "definition": "Removal or reduction of intermediaries like banks from financial transactions.",
+      "lessons": ["L01", "L08"],
+      "category": "Foundations"
+    },
+    {
+      "id": "dns",
+      "term": "DNS (Deferred Net Settlement)",
+      "definition": "System accumulating transactions and settling net positions at end of day, requiring less liquidity but more risk.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "dollarization",
+      "term": "Dollarization",
+      "definition": "Country adopting foreign currency instead of own.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "economies-of-scale",
+      "term": "Economies of Scale",
+      "definition": "Cost advantages achieved with increased production volume.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "externality",
+      "term": "Externality",
+      "definition": "Cost or benefit affecting parties not directly involved in a transaction or outside a transaction.",
+      "lessons": ["L01", "L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "extraterritorial-jurisdiction",
+      "term": "Extraterritorial Jurisdiction",
+      "definition": "Applying domestic laws to foreign entities accessing domestic markets.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "fatf",
+      "term": "FATF (Financial Action Task Force)",
+      "definition": "Global standard-setter for AML/CFT policies and international coordination.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "fiat-backed-stablecoin",
+      "term": "Fiat-Backed Stablecoin",
+      "definition": "Stablecoin backed 1:1 by fiat reserves.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "fiat-money",
+      "term": "Fiat Money",
+      "definition": "Government-issued currency not backed by physical commodity.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "financial-inclusion",
+      "term": "Financial Inclusion",
+      "definition": "Ensuring all people have access to useful and affordable financial services---1.4 billion adults lack bank accounts.",
+      "lessons": ["L03", "L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "fire-sales",
+      "term": "Fire Sales",
+      "definition": "Forced selling of assets at distressed prices, which can trigger further price declines.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "flight-to-safety",
+      "term": "Flight to Safety",
+      "definition": "When investors move money from risky assets to safe ones during uncertainty---with CBDC, could mean moving from bank deposits to CBDC.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "float",
+      "term": "Float",
+      "definition": "Money in transit between accounts---delay benefits whoever holds it (earns interest) at the other's expense.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "four-economic-lenses",
+      "term": "Four Economic Lenses",
+      "definition": "The four analytical frameworks: monetary economics, platform economics, market microstructure, and regulatory economics.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "front-running",
+      "term": "Front-Running",
+      "definition": "Trading ahead of someone else's order to profit from the expected price change.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "fsb",
+      "term": "FSB (Financial Stability Board)",
+      "definition": "International body coordinating financial regulation to address systemic risks.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "functional-regulation",
+      "term": "Functional Regulation",
+      "definition": "Regulating activities (lending, custody) rather than entity types.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "gas-fees",
+      "term": "Gas Fees",
+      "definition": "Transaction fees paid to blockchain validators for processing transactions.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "greshams-law",
+      "term": "Gresham's Law",
+      "definition": "\"Bad money drives out good\"; overvalued currency circulates, undervalued hoarded.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "grey-listing",
+      "term": "Grey-listing",
+      "definition": "FATF designation of jurisdictions with strategic AML/CFT deficiencies, triggering enhanced scrutiny.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "helicopter-money",
+      "term": "Helicopter Money",
+      "definition": "Direct cash transfers from central bank to citizens, bypassing banks---named for the image of dropping money from helicopters.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "hodl",
+      "term": "HODL (Hold On for Dear Life)",
+      "definition": "Crypto slang for holding assets long-term instead of trading; resisting sales despite price drops.",
+      "lessons": ["L02", "L06"],
+      "category": "Foundations"
+    },
+    {
+      "id": "ico",
+      "term": "ICO",
+      "definition": "Initial Coin Offering---token fundraising mechanism for blockchain projects.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "impermanent-loss",
+      "term": "Impermanent Loss",
+      "definition": "Loss LPs experience when asset prices diverge from deposit ratio, compared to simply holding.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "inflation-tax",
+      "term": "Inflation Tax",
+      "definition": "Hidden tax reducing purchasing power when government prints money.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "information-asymmetry",
+      "term": "Information Asymmetry",
+      "definition": "Situation where one party in a transaction has more or better information than another, potentially leading to adverse selection or moral hazard.",
+      "lessons": ["L07", "L08"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "institutional-regulation",
+      "term": "Institutional Regulation",
+      "definition": "Regulating entity types with clear jurisdictional boundaries.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "interbank-settlement",
+      "term": "Interbank Settlement",
+      "definition": "The process by which banks transfer money between themselves to complete transactions.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "interchange-fee",
+      "term": "Interchange Fee",
+      "definition": "Fee paid by merchant's bank to cardholder's bank for each card transaction---funds rewards programs.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "interoperability",
+      "term": "Interoperability",
+      "definition": "Ability of different financial systems and protocols to work together seamlessly.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "issuer",
+      "term": "Issuer",
+      "definition": "Bank that provides cards to consumers and extends credit.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "kyc",
+      "term": "KYC (Know Your Customer)",
+      "definition": "The process of verifying the identity of customers, required by financial regulations to prevent fraud and money laundering.",
+      "lessons": ["L03", "L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "layer-1",
+      "term": "Layer 1 (L1)",
+      "definition": "Base blockchain protocols (e.g., Ethereum, Bitcoin).",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "layer-2",
+      "term": "Layer 2 (L2)",
+      "definition": "Scaling solutions built on top of Layer 1 blockchains.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "liability",
+      "term": "Liability (Finance)",
+      "definition": "A legal obligation to pay---if you hold CBDC, the central bank owes you that value.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "liquidation",
+      "term": "Liquidation",
+      "definition": "Forced sale of collateral when value drops below threshold.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "liquidity",
+      "term": "Liquidity",
+      "definition": "How easily an asset trades without affecting its price. Having cash available when needed---RTGS requires banks to hold more liquidity than netting systems.",
+      "lessons": ["L01", "L04", "L06"],
+      "category": "Foundations"
+    },
+    {
+      "id": "liquidity-mining",
+      "term": "Liquidity Mining",
+      "definition": "Distributing tokens to users who provide liquidity to protocols, accelerating adoption.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "liquidity-provider",
+      "term": "Liquidity Provider (LP)",
+      "definition": "Party depositing assets into AMM pool to enable trading, earning fees in return.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "liquidity-risk",
+      "term": "Liquidity Risk",
+      "definition": "Risk that an asset cannot be sold quickly without significant price impact.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "lock-in",
+      "term": "Lock-In",
+      "definition": "Situation where switching costs make users captive to existing platform.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "market-failure",
+      "term": "Market Failure",
+      "definition": "Situation where free markets fail to allocate resources efficiently, justifying regulatory intervention.",
+      "lessons": ["L01", "L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "market-microstructure",
+      "term": "Market Microstructure",
+      "definition": "How trading actually works at the detailed level: order matching, price formation, liquidity provision, and how trading mechanisms affect price formation and efficiency.",
+      "lessons": ["L01", "L06", "L08"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "medium-of-exchange",
+      "term": "Medium of Exchange",
+      "definition": "Money's function as accepted payment for transactions.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "metcalfes-law",
+      "term": "Metcalfe's Law",
+      "definition": "A network's value grows with the square of its users: V ∝ n². 10x users means 100x value, explaining network dominance.",
+      "lessons": ["L04", "L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "mev",
+      "term": "MEV (Maximal Extractable Value)",
+      "definition": "Profit extractable by reordering, inserting, or censoring transactions within a block.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "mobile-money",
+      "term": "Mobile Money",
+      "definition": "Financial services via mobile phone without a bank account---M-Pesa in Kenya pioneered this model.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "monetary-economics",
+      "term": "Monetary Economics",
+      "definition": "Study of money creation, central banking, and monetary policy transmission.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "monetary-policy",
+      "term": "Monetary Policy",
+      "definition": "The central bank's decisions about interest rates and money supply to control inflation and support the economy.",
+      "lessons": ["L03", "L08"],
+      "category": "CBDC"
+    },
+    {
+      "id": "monetary-sovereignty",
+      "term": "Monetary Sovereignty",
+      "definition": "A nation's ability to control its own money supply and monetary policy independently.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "money-multiplier",
+      "term": "Money Multiplier",
+      "definition": "Bank lending amplifies deposits into larger money supply.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "moral-hazard",
+      "term": "Moral Hazard",
+      "definition": "Taking excessive risk because someone else bears the cost (e.g., expecting bailouts).",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "multi-homing-costs",
+      "term": "Multi-Homing Costs",
+      "definition": "Costs of using multiple competing platforms simultaneously.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "nash-equilibrium",
+      "term": "Nash Equilibrium",
+      "definition": "Game theory outcome where no player can improve by changing strategy alone.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "natural-monopoly",
+      "term": "Natural Monopoly",
+      "definition": "Market where one provider can serve everyone at lower cost than multiple competitors---common in payment infrastructure.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "negative-interest-rates",
+      "term": "Negative Interest Rates",
+      "definition": "A policy where depositors pay to keep money in accounts rather than earning interest---used to encourage spending.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "network-effects",
+      "term": "Network Effects",
+      "definition": "Phenomenon where a product or service becomes more valuable as more users join. Value of payment network increases as more users and merchants participate---why dominant networks stay dominant.",
+      "lessons": ["L01", "L04", "L05", "L08"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "network-externality",
+      "term": "Network Externality",
+      "definition": "Benefit or cost imposed on users when another user joins the network.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "netting",
+      "term": "Netting",
+      "definition": "Offsetting payments in opposite directions so only the net difference settles---reduces liquidity needs.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "opportunity-cost",
+      "term": "Opportunity Cost",
+      "definition": "Value of next best alternative foregone when choosing.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "oracle",
+      "term": "Oracle",
+      "definition": "System that provides external real-world data to blockchain smart contracts.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "order-book",
+      "term": "Order Book",
+      "definition": "Traditional market structure listing buy and sell orders at various prices.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "order-book-depth",
+      "term": "Order Book Depth",
+      "definition": "Volume of buy/sell orders at each price level; deeper books absorb large trades without price impact.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "over-collateralization",
+      "term": "Over-collateralization",
+      "definition": "Pledging more collateral than loan value for safety.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "path-dependence",
+      "term": "Path Dependence",
+      "definition": "Current state depends on historical choices, not just current conditions.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "platform-economics",
+      "term": "Platform Economics",
+      "definition": "Analysis of network effects, two-sided markets, and ecosystem dynamics.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "platform-governance",
+      "term": "Platform Governance",
+      "definition": "Rules and mechanisms for decision-making about platform evolution and resource allocation.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "plutocracy",
+      "term": "Plutocracy",
+      "definition": "Rule by the wealthy---those with most tokens have most votes.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "price-discovery",
+      "term": "Price Discovery",
+      "definition": "Process by which market determines asset prices through trading activity and information aggregation.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "price-elasticity",
+      "term": "Price Elasticity",
+      "definition": "How much demand changes when price changes---card users are less price-sensitive than merchants.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "price-impact",
+      "term": "Price Impact",
+      "definition": "How much your trade moves the market price; larger trades have higher price impact.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "principles-based-regulation",
+      "term": "Principles-Based Regulation",
+      "definition": "Flexible approach setting high-level objectives with supervisory judgment.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "prisoners-dilemma",
+      "term": "Prisoner's Dilemma",
+      "definition": "Situation where individual rationality leads to collectively suboptimal outcome.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "proportionality",
+      "term": "Proportionality",
+      "definition": "Principle that regulatory intensity should match risk level and firm size/complexity.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "prudential-regulation",
+      "term": "Prudential Regulation",
+      "definition": "Rules ensuring financial institutions' safety and soundness.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "quadratic-voting",
+      "term": "Quadratic Voting",
+      "definition": "Voting power increases with square root of tokens, not linearly, to mitigate plutocracy.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "quantity-theory-of-money",
+      "term": "Quantity Theory of Money",
+      "definition": "MV = PY relationship linking money, velocity, prices, output.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "regtech",
+      "term": "RegTech",
+      "definition": "Regulatory Technology---software tools automating compliance (KYC, AML, reporting).",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "regulatory-arbitrage",
+      "term": "Regulatory Arbitrage",
+      "definition": "Practice of exploiting differences in rules across jurisdictions or asset classifications to minimize compliance costs or avoid regulation.",
+      "lessons": ["L07", "L08"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "regulatory-capture",
+      "term": "Regulatory Capture",
+      "definition": "When regulated industry gains control over its regulator, leading to rules favoring industry over public interest.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "regulatory-economics",
+      "term": "Regulatory Economics",
+      "definition": "Analysis of market failures, regulatory interventions, and policy effectiveness.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "regulatory-perimeter",
+      "term": "Regulatory Perimeter",
+      "definition": "Boundary defining which activities and entities fall under regulatory oversight.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "remittances",
+      "term": "Remittances",
+      "definition": "Money sent home by workers abroad---often to developing countries, with high fees (average 6%).",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "retail-cbdc",
+      "term": "Retail CBDC",
+      "definition": "CBDC available to the general public for everyday transactions.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "rtgs",
+      "term": "RTGS (Real-Time Gross Settlement)",
+      "definition": "Payment system settling transactions individually and immediately, eliminating settlement risk.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "rules-based-regulation",
+      "term": "Rules-Based Regulation",
+      "definition": "Precise requirements approach with clear enforcement but less flexibility.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "run-risk",
+      "term": "Run Risk",
+      "definition": "Risk that depositors or token holders simultaneously attempt to withdraw, causing liquidity crisis.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "same-risk-same-regulation",
+      "term": "Same Risk, Same Regulation",
+      "definition": "Principle that activities posing similar risks should face equivalent regulatory treatment.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "sandbox",
+      "term": "Sandbox",
+      "definition": "Controlled regulatory environment where firms can test innovations with reduced requirements, allowing limited experimentation with relaxed rules for innovation.",
+      "lessons": ["L07", "L08"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "sandwich-attack",
+      "term": "Sandwich Attack",
+      "definition": "MEV strategy: buy before victim's trade, then sell after, profiting from price manipulation.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "seigniorage",
+      "term": "Seigniorage",
+      "definition": "Profit from issuing currency above production cost. The difference between the face value of money and its production cost---a profit that governments earn from issuing currency.",
+      "lessons": ["L01", "L02", "L03"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "self-custody",
+      "term": "Self-Custody",
+      "definition": "Holding private keys directly without intermediary.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "settlement-risk",
+      "term": "Settlement Risk",
+      "definition": "Risk that one party delivers but the other defaults---eliminated by RTGS, present in deferred systems.",
+      "lessons": ["L04"],
+      "category": "Payment Systems"
+    },
+    {
+      "id": "slippage",
+      "term": "Slippage",
+      "definition": "Price change between when you submit an order and when it executes, especially on large trades.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "spillovers",
+      "term": "Spillovers",
+      "definition": "When one country's policy unintentionally affects other countries.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "stablecoin",
+      "term": "Stablecoin",
+      "definition": "Cryptocurrency designed to maintain stable value, typically pegged to fiat currency.",
+      "lessons": ["L01", "L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "staking",
+      "term": "Staking",
+      "definition": "Locking tokens to earn rewards and secure the network.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "store-of-value",
+      "term": "Store of Value",
+      "definition": "Money's function preserving purchasing power over time.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "suptech",
+      "term": "SupTech",
+      "definition": "Supervisory Technology---tools enabling regulators to monitor markets in real-time.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "switching-costs",
+      "term": "Switching Costs",
+      "definition": "Costs (financial or behavioral) of moving from one platform to another.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "systemic-risk",
+      "term": "Systemic Risk",
+      "definition": "Risk that failure of one entity triggers cascading failures throughout the financial system.",
+      "lessons": ["L07", "L08"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "technology-neutral-regulation",
+      "term": "Technology-Neutral Regulation",
+      "definition": "Rules focused on function/activity rather than specific technology.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "tiered-remuneration",
+      "term": "Tiered Remuneration",
+      "definition": "Different interest rates for different amounts held---e.g., 0% on first 3000 EUR, negative rates above.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "token",
+      "term": "Token",
+      "definition": "Digital unit of value representing assets, rights, or access.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "token-based-cbdc",
+      "term": "Token-Based CBDC",
+      "definition": "CBDC where validity is verified by the instrument itself (like cash), enabling offline transactions.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "token-velocity",
+      "term": "Token Velocity",
+      "definition": "Rate at which tokens change hands; high velocity can depress token value.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "tokenomics",
+      "term": "Tokenomics",
+      "definition": "Economic design of token systems including supply schedules, incentives, and governance rights.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "trade-finance",
+      "term": "Trade Finance",
+      "definition": "Loans and guarantees that help companies buy and sell goods internationally.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "tradfi",
+      "term": "TradFi (Traditional Finance)",
+      "definition": "Banks, stock exchanges, and conventional financial institutions versus DeFi. Traditional Finance contrasted with decentralized alternatives.",
+      "lessons": ["L02", "L06", "L08"],
+      "category": "Foundations"
+    },
+    {
+      "id": "tradfi-defi-convergence",
+      "term": "TradFi-DeFi Convergence",
+      "definition": "Trend of traditional finance adopting DeFi innovations while DeFi increasingly seeks regulatory compliance.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "transaction-costs",
+      "term": "Transaction Costs",
+      "definition": "All exchange costs: time, fees, search, and friction.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "travel-rule",
+      "term": "Travel Rule",
+      "definition": "FATF requirement to transmit originator/beneficiary information for transactions exceeding threshold.",
+      "lessons": ["L07"],
+      "category": "Regulatory Economics"
+    },
+    {
+      "id": "tvl",
+      "term": "TVL (Total Value Locked)",
+      "definition": "Total amount of money deposited in DeFi protocols, a measure of adoption and liquidity.",
+      "lessons": ["L06"],
+      "category": "Market Microstructure"
+    },
+    {
+      "id": "two-sided-market",
+      "term": "Two-Sided Market",
+      "definition": "Platform connecting two distinct user groups who need each other (e.g., merchants and consumers, cardholders and merchants) providing mutual network benefits.",
+      "lessons": ["L01", "L04", "L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "unit-of-account",
+      "term": "Unit of Account",
+      "definition": "Money's function as standard measure for pricing.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "velocity-of-money",
+      "term": "Velocity of Money",
+      "definition": "Rate at which money circulates in economy.",
+      "lessons": ["L02"],
+      "category": "Monetary Economics"
+    },
+    {
+      "id": "velocity-sink",
+      "term": "Velocity Sink",
+      "definition": "Mechanism that slows how fast tokens change hands, supporting value.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "volatility",
+      "term": "Volatility",
+      "definition": "Degree of price fluctuation; high volatility means rapid changes.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "welfare",
+      "term": "Welfare",
+      "definition": "Total societal well-being; measures efficiency plus fairness.",
+      "lessons": ["L01"],
+      "category": "Foundations"
+    },
+    {
+      "id": "wholesale-cbdc",
+      "term": "Wholesale CBDC",
+      "definition": "CBDC restricted to financial institutions for interbank settlements.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "wholesale-funding",
+      "term": "Wholesale Funding",
+      "definition": "Money banks borrow from other financial institutions (rather than customer deposits) to fund operations.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    },
+    {
+      "id": "winner-take-all",
+      "term": "Winner-Take-All",
+      "definition": "Market dynamic where network effects lead to one dominant platform capturing most market share.",
+      "lessons": ["L05"],
+      "category": "Platform Economics"
+    },
+    {
+      "id": "wrapped-assets",
+      "term": "Wrapped Assets",
+      "definition": "Tokenized versions of assets from one blockchain that can be used on another blockchain.",
+      "lessons": ["L08"],
+      "category": "Synthesis"
+    },
+    {
+      "id": "zero-knowledge-proofs",
+      "term": "Zero-Knowledge Proofs",
+      "definition": "Cryptography that proves you meet a requirement without revealing your data---like proving you're over 18 without showing your birthdate.",
+      "lessons": ["L03"],
+      "category": "CBDC"
+    }
+  ]
+}
