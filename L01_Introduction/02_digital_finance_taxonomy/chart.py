@@ -30,8 +30,8 @@ fig, ax = plt.subplots(figsize=(10, 6))
 categories = [
     # (x, y, title, items, color)
     (0.25, 0.72, 'MONETARY\nECONOMICS', ['CBDCs', 'Stablecoins', 'Money Theory'], MLPURPLE),
-    (0.75, 0.72, 'PLATFORM\nECONOMICS', ['Network Effects', 'Token Economics', 'Two-Sided Markets'], MLBLUE),
-    (0.25, 0.28, 'MARKET\nMICROSTRUCTURE', ['Liquidity', 'Price Discovery', 'AMMs/DEXs'], MLORANGE),
+    (0.75, 0.72, 'PLATFORM\nECONOMICS', ['Network Effects', 'Token Economics', 'Two-Sided Markets\n(platforms connecting buyers & sellers)'], MLBLUE),
+    (0.25, 0.28, 'MARKET\nMICROSTRUCTURE', ['Liquidity', 'Price Discovery', 'AMMs (Automated Market Makers) /\nDEXs (Decentralized Exchanges)'], MLORANGE),
     (0.75, 0.28, 'REGULATORY\nECONOMICS', ['Market Failure', 'Competition Policy', 'Consumer Protection'], MLGREEN),
 ]
 

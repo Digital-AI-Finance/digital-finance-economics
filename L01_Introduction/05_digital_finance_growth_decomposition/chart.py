@@ -84,7 +84,7 @@ ax.stackplot(years,
                      'Adoption & Penetration',
                      'Network Effects',
                      'Regulatory Environment',
-                     'TFP Residual (Innovation)'],
+                     'TFP (Total Factor Productivity)\nResidual (unexplained innovation)'],
              colors=[MLBLUE, MLGREEN, MLORANGE, MLLAVENDER, MLPURPLE],
              alpha=0.85)
 
@@ -98,7 +98,7 @@ ax.text(2011.5, 16, 'Early\nSmartphone Era', ha='center', fontsize=11,
         bbox=dict(boxstyle='round', facecolor='white', alpha=0.8))
 
 ax.axvspan(2017, 2019, alpha=0.1, color='blue', label='_nolegend_')
-ax.text(2018, 16, 'PSD2 &\nOpen Banking', ha='center', fontsize=11,
+ax.text(2018, 16, 'PSD2 (EU Payment Directive) &\nOpen Banking', ha='center', fontsize=11,
         bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.8))
 
 ax.axvline(2020, color='red', linestyle=':', linewidth=2, alpha=0.6)
@@ -108,8 +108,10 @@ ax.text(2020, 19, 'Pandemic\nAcceleration', ha='center', fontsize=11, color='red
 # Labels and title
 ax.set_xlabel('Year', fontweight='bold', fontsize=14)
 ax.set_ylabel('Annual Growth Contribution (Percentage Points)', fontweight='bold', fontsize=14)
-ax.set_title('Digital Finance Growth Decomposition: Solow-Style Accounting\n' +
-             'Growth = α·Technology + β·Adoption + γ·Network + δ·Regulation + TFP',
+ax.set_title('Digital Finance Growth Decomposition: Solow-Style Growth Accounting\n' +
+             '(method to identify growth sources)\n' +
+             'Growth = α·Technology + β·Adoption + γ·Network + δ·Regulation + TFP\n' +
+             '(α, β, γ, δ = weights for each factor\'s contribution)',
              fontweight='bold', fontsize=16, pad=20)
 
 # Legend
