@@ -1,7 +1,12 @@
-"""Digital Finance Phenomena x Economic Lenses
+r"""Digital Finance Phenomena x Economic Lenses
 
 Heatmap showing relevance scores of digital finance phenomena across four analytical dimensions:
 monetary, platform, microstructure, and regulatory economics.
+
+Economic Model:
+Synthesis as weighted sum of lenses:
+$S = \sum_{i} w_i \cdot L_i$
+where w_i are lens weights and L_i are lens relevance scores.
 
 Citation: Course Framework - Osterrieder & Lorenz (2024) - Digital Finance Economics
 """

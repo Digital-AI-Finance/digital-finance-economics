@@ -1,6 +1,11 @@
-"""Bank Disintermediation: CBDC-Induced Deposit Dynamics
+r"""Bank Disintermediation: CBDC-Induced Deposit Dynamics
 
 Differential equation model of deposit flight to CBDC.
+
+Economic Model: $\Delta D_{bank} = -\alpha \cdot CBDC_{adoption}$
+where deposit outflow is proportional to CBDC adoption rate.
+Full dynamics: $\frac{dD}{dt} = -\alpha(r_{CBDC} - r_D)D + \beta \cdot confidence(t)$
+
 Theory: Brunnermeier & Niepelt (2019) on CBDC and monetary policy.
 
 Based on: Bindseil (2020) - Tiered CBDC and the financial system

@@ -1,9 +1,15 @@
-"""Two-Sided Market: Interchange Fee Optimization
+r"""Two-Sided Market: Interchange Fee Optimization
 
 This chart demonstrates the Rochet-Tirole two-sided market model applied to
 payment systems. It shows how the platform balances merchant acceptance and
 consumer adoption through interchange fee optimization to maximize transaction
 volume and profit.
+
+Economic Model: Rochet-Tirole Two-Sided Pricing
+- Price constraint: $p_B + p_S = c + m$ where $p_B$ = buyer price, $p_S$ = seller price
+- Platform profit: $\pi = (p_B + p_S - c) \cdot Q(p_B, p_S)$
+- Optimal interchange fee $f^*$ balances: $\frac{\partial Q}{\partial p_B} = -\frac{\partial Q}{\partial p_S}$
+- Network effects: $Q = D_B(p_B) \cdot D_S(p_S)$ (both sides must participate)
 
 Citation: Rochet & Tirole (2003) - Platform Competition in Two-Sided Markets
 """

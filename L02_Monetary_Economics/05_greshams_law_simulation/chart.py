@@ -1,7 +1,10 @@
-"""Gresham's Law: Currency Substitution Simulation
+r"""Gresham's Law: Currency Substitution Simulation
 
 Agent-based model demonstrating how bad money drives out good.
 Agents choose which currency to spend based on depreciation rates.
+
+Economic model: $\frac{dM_g}{dt} < 0$ when $\frac{V_b}{V_g} > 1$ (bad money drives out good).
+Circulation share evolves based on relative depreciation rates.
 
 Citation: Selgin (1996) - Salvaging Gresham's Law: The Good, the Bad, and the Illegal
 """

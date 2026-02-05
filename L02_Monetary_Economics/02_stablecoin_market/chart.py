@@ -1,7 +1,10 @@
-"""Stablecoin Reserve Dynamics: Bank Run Simulation
+r"""Stablecoin Reserve Dynamics: Bank Run Simulation
 
 Monte Carlo simulation of reserve depletion under stress scenarios.
 Based on Diamond & Dybvig (1983) bank run model.
+
+Economic model: $P_{stable} = 1 \pm \epsilon$ where price stability depends on reserve ratio.
+De-peg occurs when reserves fall below critical threshold.
 """
 import matplotlib.pyplot as plt
 import numpy as np

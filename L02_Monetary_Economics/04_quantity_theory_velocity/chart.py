@@ -1,7 +1,10 @@
-"""Quantity Theory of Money: Digital vs Fiat Velocity
+r"""Quantity Theory of Money: Digital vs Fiat Velocity
 
 Visualizes the Fisher equation MV=PY with different velocity regimes.
 Shows how digital currencies with higher velocity affect price levels.
+
+Economic model: $MV = PQ$ (Fisher equation) where M=money supply, V=velocity,
+P=price level, Q=output. Rearranged: $P = \frac{MV}{Q}$
 
 Citation: Fisher (1911) - The Purchasing Power of Money
 """

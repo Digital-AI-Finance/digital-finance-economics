@@ -1,7 +1,16 @@
-"""Regulatory Arbitrage: Game Theory Analysis of Regulatory Competition
+r"""Regulatory Arbitrage: Game Theory Analysis of Regulatory Competition
 
 Demonstrates strategic interaction between jurisdictions in regulatory competition.
 Shows Nash equilibrium in race-to-the-bottom vs cooperative outcomes using payoff matrices.
+
+Economic Model: Regulatory Arbitrage Payoff Function
+Economic Formula: $\Pi = B(a) - C(r) - P(d) \cdot F$
+where:
+  - Π = Regulatory arbitrage payoff
+  - B(a) = Regulatory benefit from action a
+  - C(r) = Compliance cost for regulatory stringency r
+  - P(d) = Probability of detection d
+  - F = Regulatory fine/penalty
 
 Citation: Kanbur & Keen (1993) - Jeux Sans Frontières: Tax Competition and Tax Coordination
 """
@@ -101,6 +110,11 @@ ax2.grid(True, alpha=0.3)
 # Overall title
 fig.suptitle('Regulatory Competition: Race to Bottom vs Cooperation',
              fontsize=16, fontweight='bold', y=1.02)
+
+# Add economic model formula as text
+formula_text = r'$\Pi = B(a) - C(r) - P(d) \cdot F$'
+fig.text(0.5, -0.05, f'Economic Model (Regulatory Arbitrage Payoff): {formula_text}',
+         ha='center', fontsize=12, style='italic', color='#333333')
 
 plt.tight_layout()
 

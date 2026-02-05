@@ -1,6 +1,11 @@
-"""Financial Contagion: Network Cascade Simulation
+r"""Financial Contagion: Network Cascade Simulation
 
 Based on: Acemoglu et al. (2015) - Systemic Risk and Network Topology
+
+Economic Model:
+Contagion probability across network:
+$P_{contagion} = 1 - \prod_{i}(1 - p_i \cdot w_{ij})$
+where p_i is failure probability of node i, w_ij is network weight.
 """
 import matplotlib.pyplot as plt
 import numpy as np

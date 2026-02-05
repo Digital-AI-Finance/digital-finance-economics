@@ -1,9 +1,13 @@
-"""Digital Finance Growth Decomposition: Solow-Style Accounting
+r"""Digital Finance Growth Decomposition: Solow-Style Accounting
 
 Decomposing fintech sector growth into technology infrastructure, adoption,
 network effects, and total factor productivity (TFP) components.
 
 Citation: Solow (1957) - Technical change and the aggregate production function
+
+Economic Model: $G = G_{adoption} + G_{usage} + G_{value}$
+Solow decomposition: $\Delta Y = \alpha \Delta K + \beta \Delta L + \Delta A$
+Growth accounting: $g_Y = \alpha g_{tech} + \beta g_{adoption} + \gamma g_{network} + \delta g_{regulatory} + TFP$
 """
 import matplotlib.pyplot as plt
 import numpy as np

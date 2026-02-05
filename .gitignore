@@ -33,6 +33,17 @@ CLAUDE.md
 **/CLAUDE.md
 .omc/
 
+# LaTeX backup files
+*.tex.backup
+*.tex.bak
+*.tex.before_*
+*.tex.new
+latex_output.txt
+compile_log.txt
+
+# Generated audit files
+audit_results.json
+
 # OS
 .DS_Store
 Thumbs.db

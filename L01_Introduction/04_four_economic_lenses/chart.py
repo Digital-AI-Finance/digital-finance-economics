@@ -1,9 +1,14 @@
-"""Four Economic Lenses Framework - Radar chart showing digital finance phenomena scores
+r"""Four Economic Lenses Framework - Radar chart showing digital finance phenomena scores
 
 Multidimensional assessment of digital finance phenomena across four economic perspectives:
 monetary economics, platform economics, market microstructure, and regulatory economics.
 
 Citation: Course Framework - Osterrieder & Lorenz (2024) - Digital Finance Economics
+
+Economic Model: $A = f(M, I, P, R)$
+Where: $M$=Monetary analysis, $I$=Market microstructure (Industrial org),
+       $P$=Platform economics, $R$=Regulatory economics
+Score function: $S_i = \sum_{j \in \{M,I,P,R\}} w_j \cdot a_{ij}$ where $\alpha_{ij}$ is relevance weight
 """
 import matplotlib.pyplot as plt
 import numpy as np

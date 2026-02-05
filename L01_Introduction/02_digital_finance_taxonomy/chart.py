@@ -1,6 +1,9 @@
-"""Digital Finance Taxonomy - Economic perspective on digital finance components
+r"""Digital Finance Taxonomy - Economic perspective on digital finance components
 
 Based on: Auer et al. (2020) - BIS taxonomy of digital finance and fintech innovations
+
+Economic Model: $T = \{Crypto, Stablecoins, CBDCs, DeFi\}$
+Taxonomy framework: $\mathcal{T} = \{M, P, S, R\}$ where M=Monetary, P=Platform, S=Structure, R=Regulatory
 """
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
