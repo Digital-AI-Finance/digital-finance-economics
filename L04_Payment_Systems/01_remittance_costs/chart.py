@@ -1,13 +1,13 @@
-"""Remittance Cost Dynamics: Bertrand Price Competition
+r"""Remittance Cost Dynamics: Bertrand Price Competition
 
 Modeling price equilibrium as competition increases in cross-border payments.
 Theory: Bertrand (1883), Tirole (1988) Industrial Organization.
 
-Bertrand Competition Model with Differentiation:
-- Profit: π_i = (p_i - c) * D_i(p_i, p_j)
-- Demand with differentiation: D_i = a - b*p_i + d*p_j (d < b)
-- Nash equilibrium: p* = (a + c*b) / (2b - d)
-- As n competitors increase, prices converge to marginal cost
+Economic Model: Bertrand Competition with Differentiation
+- Profit function: $\pi_i = (p_i - c) \cdot D_i(p_i, p_j)$
+- Demand with differentiation: $D_i = a - b \cdot p_i + d \cdot p_j$ where $d < b$
+- Nash equilibrium price: $p^* = \frac{a + c \cdot b}{2b - d}$
+- Core insight: $C_{digital} < C_{traditional}$ as $n$ competitors $\to \infty$, $p^* \to c$ (marginal cost)
 """
 import matplotlib.pyplot as plt
 import numpy as np

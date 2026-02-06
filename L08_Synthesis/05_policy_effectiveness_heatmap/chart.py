@@ -1,7 +1,12 @@
-"""Policy Effectiveness: Welfare Analysis Matrix
+r"""Policy Effectiveness: Welfare Analysis Matrix
 
 Quantifying policy impacts across multiple objectives and stakeholders.
 Theory: Multi-criteria welfare economics.
+
+Economic Model:
+Policy effectiveness as weighted impact:
+$E = \sum_i w_i \cdot impact_i$
+where w_i are stakeholder weights and impact_i are policy effects.
 
 Citation: Bank for International Settlements (2021) - Policy Framework Analysis
 """

@@ -94,11 +94,11 @@ fig, ax = plt.subplots(figsize=(12, 7))
 
 # 95% CI band (lighter)
 ax.fill_between(projection_years, ci_95_lower, ci_95_upper,
-                alpha=0.15, color=MLPURPLE, label='95% Confidence Interval')
+                alpha=0.15, color=MLPURPLE, label='95% CI (Confidence Interval)')
 
 # 90% CI band (darker)
 ax.fill_between(projection_years, ci_90_lower, ci_90_upper,
-                alpha=0.25, color=MLPURPLE, label='90% Confidence Interval')
+                alpha=0.25, color=MLPURPLE, label='90% CI (Confidence Interval)')
 
 # Historical data points
 ax.scatter(hist_years, hist_values, s=120, color=MLRED, zorder=5,
@@ -118,7 +118,7 @@ ax.text(2024.5, 18.5, 'Projection →', fontsize=12, color='gray',
         style='italic', fontweight='bold')
 
 # CAGR annotation
-textstr = f'Historical CAGR: {cagr*100:.1f}%\nFitted Growth: {g_fit*100:.1f}%'
+textstr = f'Historical CAGR (Compound Annual Growth Rate): {cagr*100:.1f}%\nFitted Growth: {g_fit*100:.1f}%'
 ax.text(0.03, 0.97, textstr, transform=ax.transAxes, fontsize=12,
         verticalalignment='top', bbox=dict(boxstyle='round',
         facecolor='wheat', alpha=0.8))

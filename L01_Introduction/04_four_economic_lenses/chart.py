@@ -1,9 +1,14 @@
-"""Four Economic Lenses Framework - Radar chart showing digital finance phenomena scores
+r"""Four Economic Lenses Framework - Radar chart showing digital finance phenomena scores
 
 Multidimensional assessment of digital finance phenomena across four economic perspectives:
 monetary economics, platform economics, market microstructure, and regulatory economics.
 
 Citation: Course Framework - Osterrieder & Lorenz (2024) - Digital Finance Economics
+
+Economic Model: $A = f(M, I, P, R)$
+Where: $M$=Monetary analysis, $I$=Market microstructure (Industrial org),
+       $P$=Platform economics, $R$=Regulatory economics
+Score function: $S_i = \sum_{j \in \{M,I,P,R\}} w_j \cdot a_{ij}$ where $\alpha_{ij}$ is relevance weight
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -34,8 +39,8 @@ phenomena = {
     'Bitcoin': np.array([9, 3, 7, 8]) + np.random.uniform(-0.3, 0.3, 4),
     'Stablecoins': np.array([8, 5, 6, 9]) + np.random.uniform(-0.3, 0.3, 4),
     'CBDCs': np.array([10, 4, 3, 10]) + np.random.uniform(-0.3, 0.3, 4),
-    'DeFi/AMMs': np.array([3, 8, 10, 6]) + np.random.uniform(-0.3, 0.3, 4),
-    'Neobanks': np.array([2, 9, 4, 7]) + np.random.uniform(-0.3, 0.3, 4)
+    'DeFi (Decentralized Finance) /\nAMMs (Automated Market Makers)': np.array([3, 8, 10, 6]) + np.random.uniform(-0.3, 0.3, 4),
+    'Neobanks (digital-only banks)': np.array([2, 9, 4, 7]) + np.random.uniform(-0.3, 0.3, 4)
 }
 
 colors = [MLPURPLE, MLBLUE, MLORANGE, MLGREEN, MLRED]
@@ -85,7 +90,7 @@ ax.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1), frameon=True,
 
 # C3: Add theory explanation annotation
 theory_text = ('Four Analytical Dimensions:\n'
-               '1. Monetary: Money properties, velocity, stability\n'
+               '1. Monetary: Money properties, velocity (speed money circulates), stability\n'
                '2. Platform: Network effects, competition\n'
                '3. Microstructure: Trading, liquidity, price formation\n'
                '4. Regulatory: Policy design, compliance, supervision')

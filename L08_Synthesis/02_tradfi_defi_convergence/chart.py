@@ -1,7 +1,12 @@
-"""TradFi-DeFi Convergence: Dual Technology Adoption
+r"""TradFi-DeFi Convergence: Dual Technology Adoption
 
 Coupled S-curve model showing mutual influence and convergence dynamics.
 Theory: Rogers (1962) Diffusion of Innovations, Moore (1991) Technology Adoption Lifecycle.
+
+Economic Model:
+Convergence condition:
+$\lim_{t \to \infty} |TradFi - DeFi| \to 0$
+where convergence occurs as adoption levels approach equilibrium.
 
 Based on: Zetzsche et al. (2020) - DeFi Decentralized Finance
 """

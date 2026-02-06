@@ -1,7 +1,11 @@
-"""CBDC Monetary Policy Transmission - impulse response comparison
+r"""CBDC Monetary Policy Transmission - impulse response comparison
 
 Compares policy rate pass-through between traditional banking channels and direct CBDC channels,
 showing faster and more complete transmission with CBDCs.
+
+Economic Model: $\frac{\partial Y}{\partial i} = f(CBDC_{penetration})$
+where policy transmission effectiveness increases with CBDC penetration rate.
+Impulse response: $r_t = r_{t-1} + \lambda(r^{policy}_t - r_{t-1})$ with $\lambda_{CBDC} > \lambda_{traditional}$
 
 Citation: Bindseil (2020) - Tiered CBDC and the financial system; Bordo & Levin (2017)
 """

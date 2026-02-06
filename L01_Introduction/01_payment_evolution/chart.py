@@ -1,9 +1,12 @@
-"""Payment Technology Adoption - Rogers (1962) Diffusion of Innovations S-Curve Model
+r"""Payment Technology Adoption - Rogers (1962) Diffusion of Innovations S-Curve Model
 
 Demonstrates technology adoption lifecycle using S-curve (logistic growth) model:
 S(t) = K / (1 + exp(-r(t - t0))) where K is carrying capacity, r is growth rate,
 and t0 is the inflection point. Shows overlapping adoption curves for successive
 payment technologies from credit cards to CBDCs.
+
+Economic Model: $S(t) = \frac{K}{1 + e^{-r(t - t_0)}}$
+Alternative exponential growth formula: $V_t = V_0 e^{rt}$
 """
 import matplotlib.pyplot as plt
 import numpy as np

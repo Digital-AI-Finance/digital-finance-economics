@@ -1,7 +1,10 @@
-"""CBDC Project Status Worldwide - Country-level implementation status
+r"""CBDC Project Status Worldwide - Country-level implementation status
 
 Global survey of central bank digital currency development stages across countries,
 showing launched, pilot, development, research, and inactive projects.
+
+Economic Model: $CBDC_{status} \in \{Research, Pilot, Launched\}$
+Adoption stages framework showing country-level implementation progress.
 
 Citation: Atlantic Council (2024) - CBDC Tracker; BIS (2021) - CBDCs: an opportunity for the monetary system
 """

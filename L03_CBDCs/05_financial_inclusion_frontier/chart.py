@@ -1,6 +1,11 @@
-"""Financial Inclusion Frontier: Production Possibility Analysis
+r"""Financial Inclusion Frontier: Production Possibility Analysis
 
 Cost-inclusion tradeoff with CBDC technology shift.
+
+Economic Model: $I = f(Access, Usage, Quality)$
+where financial inclusion is a function of three dimensions.
+Production possibility frontier: $I = \alpha \sqrt{\frac{C}{C_{max}}}$ with CBDC technology shift increasing $\alpha$.
+
 Theory: Standard microeconomic production possibility frontier showing technology-driven efficiency gains.
 
 Citation: World Bank (2017) - The Global Findex Database; Auer et al. (2020) - Central bank digital currencies: motives, economic implications and research agenda

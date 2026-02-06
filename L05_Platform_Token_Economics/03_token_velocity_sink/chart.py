@@ -4,6 +4,16 @@ Demonstrates how staking mechanisms reduce token velocity and increase market ca
 Based on the Equation of Exchange (MV=PQ) applied to tokenomics, where velocity sinks
 through staking create value capture for token holders.
 
+Economic Model:
+  $V = \\frac{PQ}{M}$ (Token Velocity)
+  $M = \\frac{PQ}{V}$ (Market Cap from Velocity)
+
+Where:
+  - M: Market capitalization (monetary stock)
+  - V: Token velocity (turnover rate)
+  - P: Average price level of transactions
+  - Q: Real transaction volume
+
 Citation: Fisher (1911) - The Purchasing Power of Money; adapted to token economics
 """
 import matplotlib.pyplot as plt

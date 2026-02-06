@@ -1,7 +1,14 @@
-"""Payment System Adoption: Bass Diffusion Model
+r"""Payment System Adoption: Bass Diffusion Model
 
 Innovation and imitation dynamics in payment technology diffusion.
 Theory: Bass (1969) "A New Product Growth Model for Consumer Durables"
+
+Economic Model: Bass Diffusion with Logistic Growth
+- Adoption function: $A(t) = \frac{M}{1 + e^{-r(t-t_0)}}$ where $M$ is market potential
+- Differential equation: $\frac{dN}{dt} = (p + q \cdot \frac{N}{M}) \cdot (M - N)$
+- $p$ = coefficient of innovation (external influence)
+- $q$ = coefficient of imitation (internal influence)
+- Peak adoption time: $t^* = \frac{1}{p+q} \ln(\frac{q}{p})$
 """
 import matplotlib.pyplot as plt
 import numpy as np

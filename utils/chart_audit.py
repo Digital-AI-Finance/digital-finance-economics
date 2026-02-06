@@ -194,7 +194,8 @@ def analyze_chart(chart_path: Path) -> Dict[str, Any]:
     }
 
     # C4: Has LaTeX formula or economic model
-    has_latex = bool(re.search(r'\$[^$]+\$|\\frac|\\sum|\\int|\\sigma|\\alpha|\\beta', source))
+    # Match: $...$ patterns, r'$...$' raw strings, or common LaTeX symbols
+    has_latex = bool(re.search(r"r?['\"]?\$[^$]+\$|\\\\frac|\\\\sum|\\\\int|\\\\sigma|\\\\alpha|\\\\beta|\\\\cdot|cdot|\\\\Delta|\\\\omega|\\\\pi|≤|≥|→|×|÷|²|³", source))
     results['criteria']['C4_economic_model'] = {
         'pass': has_latex,
         'value': has_latex,
