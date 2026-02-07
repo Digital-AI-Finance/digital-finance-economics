@@ -40,6 +40,8 @@ Analyze the stability of major stablecoins (USDT, USDC, DAI) by measuring their 
 
 Answer: Which stablecoin type (fiat-backed vs crypto-backed) is more stable, and why?
 
+**Note**: Deviations are measured in *basis points* (bp), where 1 basis point = 0.01%, so 100 bp = 1%.
+
 ### Complete Code
 
 ```python
@@ -476,7 +478,7 @@ Death Spiral (What Actually Happened):
 
 1. **Circular Backing**: UST was backed by LUNA, but LUNA's value depended on UST demand. This is circular, not backed by external value.
 
-2. **Reflexivity**: Unlike fiat-backed stablecoins (backed by USD that doesn't depend on stablecoin), Terra's backing got weaker as the stablecoin got weaker.
+2. **Reflexivity** (when expectations affect reality, creating feedback loops): Unlike fiat-backed stablecoins (backed by USD that doesn't depend on stablecoin), Terra's backing got weaker as the stablecoin got weaker.
 
 3. **No Lender of Last Resort**: Central banks can print unlimited currency to defend pegs. Terra had no equivalent - the "printing" (LUNA minting) made things worse.
 
@@ -883,7 +885,7 @@ Note: Data as of February 2025. All figures are approximate/historical for educa
 | System | Key Figures |
 |--------|-------------|
 | **US Federal Reserve** | M2 money supply: $21 trillion; Annual growth: ~5%; Fed remits profits to Treasury |
-| **Tether (USDT)** | Market cap: $95 billion; Reserve yield: ~5% (T-bills); Operating costs: ~$50 million/year |
+| **Tether (USDT)** | Market cap: $95 billion; Reserve yield: ~5% (Treasury bonds - government debt instruments that pay interest); Operating costs: ~$50 million/year |
 | **Bitcoin Mining** | Block reward: 3.125 BTC/block; Blocks/day: 144; BTC price: $42,000; Mining cost: ~$30,000/BTC |
 
 ### Complete Code

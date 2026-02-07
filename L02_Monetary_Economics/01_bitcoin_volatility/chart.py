@@ -95,6 +95,8 @@ ax1.fill_between(range(T), -10, 10, color='gray', alpha=0.1, label='±10% zone')
 ax1.set_ylabel('Daily Return (%)', fontweight='bold')
 ax1.set_title('GARCH(1,1) Simulated Returns: Volatility Clustering in Crypto vs Traditional Assets',
               fontsize=14, fontweight='bold', color=MLPURPLE, pad=10)
+fig.text(0.5, 0.94, '(GARCH = Model showing how big price swings tend to cluster together over time)',
+         ha='center', fontsize=10, style='italic', color='#555555')
 ax1.legend(loc='upper right', framealpha=0.95)
 ax1.grid(True, alpha=0.3, axis='y')
 ax1.set_ylim(-15, 15)
