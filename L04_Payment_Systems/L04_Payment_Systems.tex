@@ -96,7 +96,7 @@
 Payment systems enable:
 \begin{itemize}
 \item Value transfer between parties
-\item Settlement of obligations
+\item Settlement of obligations \textit{(the final, irreversible transfer of money between parties---once settled, it cannot be undone)}
 \item Support for economic transactions
 \end{itemize}
 
@@ -170,7 +170,7 @@ $$V \propto n^2$$
 \begin{itemize}
 \item Incumbents (existing dominant players) have user base advantage
 \item New entrants need to ``buy'' network
-\item Interoperability can reduce barriers
+\item Interoperability \textit{(ability for different payment systems to work together)} can reduce barriers
 \end{itemize}
 \end{columns}
 
@@ -208,7 +208,7 @@ Card networks connect:
 \end{itemize}
 
 \column{0.48\textwidth}
-\textbf{Rochet-Tirole Model}
+\textbf{Rochet-Tirole Model} \textit{(Tirole received the 2014 Nobel Prize in Economics)}
 
 Optimal pricing:
 $$p_B + p_S = c + m$$
@@ -232,7 +232,7 @@ Price structure matters, not just level:
 \textit{(This framework explains Uber, Airbnb, Amazon, dating apps---any platform connecting two groups)}
 \end{columns}
 
-\bottomnote{Rochet \& Tirole (2006): Two-sided markets require analysis beyond standard economics}
+\bottomnote{Rochet \& Tirole (2003): Two-sided markets require analysis beyond standard economics}
 \end{frame}
 
 % Interchange Fees
@@ -278,7 +278,7 @@ Price structure matters, not just level:
 \end{itemize}
 \end{columns}
 
-\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment capped debit at 0.05\%{}+21c. EU caps are lower due to stronger regulator intervention.}
+\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment \textit{(2010 law capping debit card interchange fees)} capped debit at 0.05\%{}+21c. EU caps are lower due to stronger regulator intervention.}
 \end{frame}
 
 % Cross-Border Payments
@@ -350,7 +350,7 @@ Cross-border payments are:
 \begin{frame}[t]{Settlement System Design}
 \begin{columns}[T]
 \column{0.48\textwidth}
-\textbf{RTGS (Real-Time Gross)}
+\textbf{RTGS (Real-Time Gross Settlement)}
 
 Characteristics:
 \begin{itemize}
@@ -371,7 +371,7 @@ Trade-offs:
 \end{itemize}
 
 \column{0.48\textwidth}
-\textbf{DNS (Deferred Net)}
+\textbf{DNS (Deferred Net Settlement)}
 
 Characteristics:
 \begin{itemize}
@@ -392,7 +392,7 @@ Trade-offs:
 \end{itemize}
 \end{columns}
 
-\bottomnote{Hybrid systems combine benefits: queue management, partial netting with RTGS}
+\bottomnote{Hybrid systems combine benefits: queue management \textit{(holding payments in line until funds arrive)}, partial netting \textit{(offsetting some payments while settling others individually)} with RTGS speed}
 \end{frame}
 
 % Instant Payments
@@ -415,7 +415,7 @@ Major systems:
 \begin{itemize}
 \item 24/7/365 availability
 \item Settlement in seconds
-\item Irrevocable payments
+\item Irrevocable payments \textit{(cannot be reversed or cancelled once sent)}
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -432,7 +432,7 @@ For businesses:
 \begin{itemize}
 \item Working capital (cash needed for daily operations) optimization
 \item Reduced float costs
-\item Real-time reconciliation
+\item Real-time reconciliation \textit{(matching payments to invoices instantly)}
 \end{itemize}
 
 For economy:
@@ -484,7 +484,7 @@ M-Pesa (Kenya) model:
 \begin{itemize}
 \item Suri \& Jack (2016): 2\% poverty reduction (approximately 400,000 Kenyan households lifted out of poverty)
 \item Women especially benefited
-\item Improved risk sharing
+\item Improved risk sharing \textit{(spreading financial risks across family and community members)}
 \end{itemize}
 
 \textit{Why it works: When someone's crops fail, relatives can send money instantly via phone. Before M-Pesa, they'd have to physically travel with cash or use expensive services.}
@@ -499,7 +499,7 @@ M-Pesa (Kenya) model:
 \column{0.48\textwidth}
 \textbf{Blockchain-Based}
 \begin{itemize}
-\item Ripple/XRP for cross-border
+\item Ripple/XRP \textit{(cross-border payment company using blockchain technology)} for cross-border
 \item Stablecoins for remittances
 \textit{(How it works: Buy stablecoins, send instantly, recipient converts locally---\$1-2 total vs \$6 traditional)}
 \item DeFi (Decentralized Finance---financial services on blockchain without traditional banks) payment rails
@@ -507,7 +507,7 @@ M-Pesa (Kenya) model:
 
 Advantages:
 \begin{itemize}
-\item Bypass correspondent banking
+\item Bypass correspondent banking \textit{(sending value directly via blockchain instead of routing through multiple intermediary banks)}
 \item 24/7 operation
 \item Lower intermediary costs
 \end{itemize}
@@ -539,7 +539,7 @@ Advantages:
 \column{0.48\textwidth}
 \textbf{Market Structure Issues}
 \begin{itemize}
-\item Natural monopoly tendencies
+\item Natural monopoly tendencies \textit{(markets where one provider can serve everyone at lower cost than multiple competitors---common in payment infrastructure)}
 \item High barriers to entry
 \item Winner-take-most dynamics
 \end{itemize}
@@ -557,7 +557,7 @@ Advantages:
 \begin{itemize}
 \item Apple Pay, Google Pay
 \item Alipay, WeChat Pay
-\item Meta (stablecoin attempt)
+\item Meta (stablecoin attempt---the Diem/Libra project, abandoned due to regulatory opposition in 2022)
 \textit{(Why Big Tech is different: They already have your phone, your data, your habits---banks never had that relationship)}
 \end{itemize}
 
@@ -703,9 +703,9 @@ Financial services via mobile phone without a bank account---M-Pesa in Kenya pio
 \column{0.48\textwidth}
 \textbf{Academic Papers}
 \begin{itemize}
-\item Rochet \& Tirole (2006): ``Two-Sided Markets''
-\item Suri \& Jack (2016): ``The Long-Run Poverty Effects of M-Pesa''
-\item Kahn \& Roberds (2009): ``Payment System Settlement''
+\item Rochet \& Tirole (2003): ``Platform Competition in Two-Sided Markets''
+\item Suri \& Jack (2016): ``The Long-Run Poverty and Gender Impacts of Mobile Money''
+\item Kahn \& Roberds (2009): ``Payments Settlement: Tiering in Private and Public Systems''
 \end{itemize}
 
 \column{0.48\textwidth}

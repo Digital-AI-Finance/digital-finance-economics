@@ -42,7 +42,7 @@ Answer: Which stablecoin type (fiat-backed vs crypto-backed) is more stable, and
 
 **Note**: Deviations are measured in *basis points* (bp), where 1 basis point = 0.01%, so 100 bp = 1%.
 
-### Complete Code
+### Starter Code
 
 ```python
 """
@@ -63,7 +63,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
 # =============================================================================
-# DATA COLLECTION
+# DATA COLLECTION (provided - do not modify)
 # =============================================================================
 
 # Define date range (2 years to capture recent market events)
@@ -80,22 +80,31 @@ dai = yf.download('DAI-USD', start=start_date, end=end_date, progress=False)
 print("Data fetched successfully!")
 
 # =============================================================================
-# PEG DEVIATION CALCULATION
+# PART (a): PEG DEVIATION CALCULATION
 # =============================================================================
+# Task: Calculate the deviation of each stablecoin from its $1.00 peg,
+# expressed in basis points (1 bp = 0.01%, so multiply dollar deviation by 10000).
+# Also compute the absolute deviation for volatility analysis.
 
-# Calculate deviation from $1.00 peg (in basis points: 1 bp = 0.01%)
-usdt['deviation_bp'] = (usdt['Close'] - 1.0) * 10000
-usdc['deviation_bp'] = (usdc['Close'] - 1.0) * 10000
-dai['deviation_bp'] = (dai['Close'] - 1.0) * 10000
+# Hint: deviation_bp = (Close_price - 1.0) * 10000
+
+usdt['deviation_bp'] = None  # YOUR CODE HERE
+usdc['deviation_bp'] = None  # YOUR CODE HERE
+dai['deviation_bp'] = None  # YOUR CODE HERE
 
 # Calculate absolute deviation for volatility metrics
-usdt['abs_deviation'] = abs(usdt['Close'] - 1.0)
-usdc['abs_deviation'] = abs(usdc['Close'] - 1.0)
-dai['abs_deviation'] = abs(dai['Close'] - 1.0)
+usdt['abs_deviation'] = None  # YOUR CODE HERE
+usdc['abs_deviation'] = None  # YOUR CODE HERE
+dai['abs_deviation'] = None  # YOUR CODE HERE
 
 # =============================================================================
-# SUMMARY STATISTICS
+# PART (b): VOLATILITY COMPARISON
 # =============================================================================
+# Task: Build a summary DataFrame comparing the three stablecoins on:
+#   - Mean deviation (bp)
+#   - Standard deviation of deviation (bp)
+#   - Maximum absolute depeg (bp)
+#   - Number of days where absolute deviation exceeded 50bp (i.e., 0.005 in dollar terms)
 
 print("\n" + "="*70)
 print("STABLECOIN PEG DEVIATION ANALYSIS")
@@ -105,53 +114,60 @@ stats = pd.DataFrame({
     'Stablecoin': ['USDT (Fiat-backed)', 'USDC (Fiat-backed)', 'DAI (Crypto-backed)'],
     'Type': ['Fiat-backed', 'Fiat-backed', 'Crypto-backed'],
     'Mean Deviation (bp)': [
-        usdt['deviation_bp'].mean(),
-        usdc['deviation_bp'].mean(),
-        dai['deviation_bp'].mean()
+        None,  # YOUR CODE HERE - mean of usdt deviation_bp
+        None,  # YOUR CODE HERE - mean of usdc deviation_bp
+        None,  # YOUR CODE HERE - mean of dai deviation_bp
     ],
     'Std Deviation (bp)': [
-        usdt['deviation_bp'].std(),
-        usdc['deviation_bp'].std(),
-        dai['deviation_bp'].std()
+        None,  # YOUR CODE HERE - std of usdt deviation_bp
+        None,  # YOUR CODE HERE - std of usdc deviation_bp
+        None,  # YOUR CODE HERE - std of dai deviation_bp
     ],
     'Max Depeg (bp)': [
-        usdt['deviation_bp'].abs().max(),
-        usdc['deviation_bp'].abs().max(),
-        dai['deviation_bp'].abs().max()
+        None,  # YOUR CODE HERE - max of absolute deviation_bp
+        None,  # YOUR CODE HERE
+        None,  # YOUR CODE HERE
     ],
     'Days Outside 50bp': [
-        (usdt['abs_deviation'] > 0.005).sum(),
-        (usdc['abs_deviation'] > 0.005).sum(),
-        (dai['abs_deviation'] > 0.005).sum()
+        None,  # YOUR CODE HERE - count days where abs_deviation > 0.005
+        None,  # YOUR CODE HERE
+        None,  # YOUR CODE HERE
     ]
 })
 
 print(stats.to_string(index=False))
 
 # =============================================================================
-# IDENTIFY MAJOR DEPEG EVENTS
+# PART (c): RISK METRICS - IDENTIFY MAJOR DEPEG EVENTS
 # =============================================================================
+# Task: Write a function that finds dates where the depeg exceeded a threshold
+# (default 100 basis points). Print the date, close price, and deviation for
+# each event. Limit output to the first 10 events per stablecoin.
 
 print("\n" + "="*70)
 print("MAJOR DEPEG EVENTS (>100 basis points)")
 print("="*70)
 
 def find_depeg_events(df, name, threshold_bp=100):
-    """Find dates where depeg exceeded threshold"""
-    major_depegs = df[abs(df['deviation_bp']) > threshold_bp]
-    if len(major_depegs) > 0:
-        print(f"\n{name}:")
-        for date, row in major_depegs.head(10).iterrows():
-            print(f"  {date.strftime('%Y-%m-%d')}: ${row['Close']:.4f} ({row['deviation_bp']:+.0f} bp)")
-    else:
-        print(f"\n{name}: No depegs >100bp in period")
+    """Find dates where depeg exceeded threshold.
+
+    Args:
+        df: DataFrame with 'deviation_bp' and 'Close' columns
+        name: display name for the stablecoin
+        threshold_bp: minimum absolute deviation in basis points (default 100)
+    """
+    pass  # YOUR CODE HERE
+    # Steps:
+    # 1. Filter df to rows where abs(deviation_bp) > threshold_bp
+    # 2. If any found, print each date, Close price, and deviation_bp
+    # 3. If none found, print "{name}: No depegs >{threshold_bp}bp in period"
 
 find_depeg_events(usdt, "USDT")
 find_depeg_events(usdc, "USDC")
 find_depeg_events(dai, "DAI")
 
 # =============================================================================
-# PUBLICATION-READY CHART
+# PUBLICATION-READY CHART (provided - do not modify)
 # =============================================================================
 
 try:
@@ -210,56 +226,6 @@ plt.savefig('stablecoin_peg_analysis.png', dpi=150, bbox_inches='tight')
 plt.show()
 
 print("\nChart saved as 'stablecoin_peg_analysis.png'")
-
-# =============================================================================
-# ECONOMIC ANALYSIS
-# =============================================================================
-
-print("\n" + "="*70)
-print("ECONOMIC ANALYSIS: Stablecoin Stability Mechanisms")
-print("="*70)
-
-print("""
-KEY FINDINGS:
-
-1. STABILITY RANKING (most to least stable):
-   - USDC: Tightest peg maintenance, regulated issuer, transparent reserves
-   - USDT: Generally stable but larger tail events, less transparent
-   - DAI: Wider fluctuations due to crypto collateral volatility
-
-2. MECHANISM ANALYSIS:
-
-   FIAT-BACKED (USDT, USDC):
-   + Direct arbitrage: If price < $1, buy stablecoin, redeem for $1
-   + Clear economic floor and ceiling from redemption guarantee
-   - Trust in issuer and reserve composition
-   - Counterparty risk (issuer could freeze/fail)
-
-   CRYPTO-BACKED (DAI):
-   + Transparent, on-chain collateral
-   + Decentralized governance
-   - Collateral volatility propagates to stablecoin
-   - Liquidation cascades during market stress
-   - Over-collateralization is capital inefficient
-
-3. WHY FIAT-BACKED IS MORE STABLE:
-   - Direct link to stable asset (USD in bank)
-   - Simpler arbitrage mechanism
-   - Professional market makers maintain peg
-   - Redemption guarantee creates hard bounds
-
-4. WHY DAI HAS WIDER DEVIATIONS:
-   - Collateral (ETH) can drop 30-50% in days
-   - Liquidation auctions don't always clear at par
-   - Smart contract risk adds uncertainty premium
-   - Governance decisions can affect stability
-
-5. POLICY IMPLICATIONS:
-   - Fiat-backed coins trade stability for centralization
-   - Crypto-backed coins trade stability for decentralization
-   - Neither achieves the stability of bank deposits
-   - This is why CBDCs are being developed
-""")
 ```
 
 ### Model Answer / Expected Output
@@ -336,6 +302,8 @@ $$V = \frac{PY}{M} = \frac{\text{Nominal GDP}}{\text{Money Supply}}$$
 
 For cryptocurrencies, we adapt:
 $$V = \frac{\text{Annual Transaction Volume}}{\text{Market Cap}}$$
+
+Market Cap = Price x Supply = P x M, so V = Transaction Volume / Market Cap is equivalent to rearranging MV = PY as V = PY / M.
 
 **Bitcoin Velocity Calculation:**
 - Annual economic volume: $8B/day x 365 = $2,920 billion
@@ -888,7 +856,7 @@ Note: Data as of February 2025. All figures are approximate/historical for educa
 | **Tether (USDT)** | Market cap: $95 billion; Reserve yield: ~5% (Treasury bonds - government debt instruments that pay interest); Operating costs: ~$50 million/year |
 | **Bitcoin Mining** | Block reward: 3.125 BTC/block; Blocks/day: 144; BTC price: $42,000; Mining cost: ~$30,000/BTC |
 
-### Complete Code
+### Starter Code
 
 ```python
 """
@@ -907,99 +875,90 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # =============================================================================
-# SEIGNIORAGE CALCULATIONS
+# DATA SETUP (provided - do not modify)
 # =============================================================================
 
 print("="*70)
 print("SEIGNIORAGE ANALYSIS: Who Profits from Money Creation?")
 print("="*70)
 
-# -----------------------------------------------------------------------------
-# 1. US FEDERAL RESERVE
-# -----------------------------------------------------------------------------
+# --- US Federal Reserve data ---
+m2_supply = 21_000_000_000_000       # $21 trillion (approximate)
+m2_growth_rate = 0.05                 # 5% annual growth (approximate)
+fed_assets = 7_500_000_000_000       # $7.5 trillion balance sheet (approximate)
+avg_yield = 0.03                      # ~3% average yield on Fed portfolio (approximate)
+fed_operating_costs = 5_000_000_000  # ~$5 billion operating costs
 
+# --- Tether (USDT) data ---
+usdt_market_cap = 95_000_000_000     # $95 billion (approximate)
+reserve_yield = 0.05                  # 5% yield on T-bill reserves (approximate)
+tether_operating_costs = 50_000_000  # $50 million (estimated)
+
+# --- Bitcoin Mining data ---
+block_reward = 3.125                  # BTC per block (post-2024 halving)
+blocks_per_day = 144
+btc_price = 42_000                    # Approximate price for calculation
+mining_cost_per_btc = 30_000          # Estimated average mining cost
+
+# =============================================================================
+# PART (a): SEIGNIORAGE CALCULATION
+# =============================================================================
+# Task: Calculate the seigniorage (profit from money creation) for each system.
+# Seigniorage = revenue from money creation minus costs.
+
+# --- 1. US Federal Reserve ---
 print("\n--- US FEDERAL RESERVE ---")
 
-# Seigniorage = revenue from money creation
-# For Fed: M2 growth * velocity adjustment + interest on reserves
-# Data as of February 2025 (approximate figures for educational purposes)
-
-m2_supply = 21_000_000_000_000  # $21 trillion (approximate)
-m2_growth_rate = 0.05  # 5% annual growth (approximate)
-new_money_created = m2_supply * m2_growth_rate
-
-# Fed earns interest on assets (Treasury securities) purchased with new money
-fed_assets = 7_500_000_000_000  # $7.5 trillion balance sheet (approximate)
-avg_yield = 0.03  # ~3% average yield on Fed portfolio (approximate)
-
-fed_interest_income = fed_assets * avg_yield
-fed_operating_costs = 5_000_000_000  # ~$5 billion operating costs
-fed_remittance_to_treasury = fed_interest_income - fed_operating_costs
+# Hint: Fed earns interest on its asset portfolio (Treasury securities)
+# Seigniorage = interest income - operating costs
+new_money_created = None  # YOUR CODE HERE: m2_supply * m2_growth_rate
+fed_interest_income = None  # YOUR CODE HERE: fed_assets * avg_yield
+fed_remittance_to_treasury = None  # YOUR CODE HERE: interest income - operating costs
 
 print(f"M2 Money Supply: ${m2_supply/1e12:.1f} trillion")
 print(f"New Money Created (annual): ${new_money_created/1e12:.1f} trillion")
 print(f"Fed Interest Income: ${fed_interest_income/1e9:.1f} billion")
-print(f"Fed Operating Costs: ${fed_operating_costs/1e9:.1f} billion")
 print(f"Fed Remittance to Treasury: ${fed_remittance_to_treasury/1e9:.1f} billion")
 print(f"\nSeigniorage Beneficiary: US Treasury (public)")
 
-# -----------------------------------------------------------------------------
-# 2. TETHER (USDT)
-# -----------------------------------------------------------------------------
-
+# --- 2. Tether (USDT) ---
 print("\n--- TETHER (USDT) ---")
 
-# Data as of February 2025 (approximate figures for educational purposes)
-usdt_market_cap = 95_000_000_000  # $95 billion (approximate)
-reserve_yield = 0.05  # 5% yield on T-bill reserves (approximate)
-tether_gross_income = usdt_market_cap * reserve_yield
-tether_operating_costs = 50_000_000  # $50 million (estimated)
-tether_net_profit = tether_gross_income - tether_operating_costs
-
-# Users' opportunity cost
-user_opportunity_cost = usdt_market_cap * reserve_yield  # Users could earn this themselves
+# Hint: Tether earns yield on reserves backing stablecoins
+# Users who hold USDT earn 0% - the yield goes entirely to Tether
+tether_gross_income = None  # YOUR CODE HERE: market_cap * reserve_yield
+tether_net_profit = None  # YOUR CODE HERE: gross income - operating costs
+user_opportunity_cost = None  # YOUR CODE HERE: what users could earn on their own capital
 
 print(f"USDT Market Cap: ${usdt_market_cap/1e9:.1f} billion")
-print(f"Reserve Yield (T-bills): {reserve_yield*100:.1f}%")
-print(f"Tether Gross Income: ${tether_gross_income/1e9:.1f} billion/year")
-print(f"Tether Operating Costs: ${tether_operating_costs/1e6:.0f} million/year")
 print(f"Tether Net Profit: ${tether_net_profit/1e9:.2f} billion/year")
 print(f"User Opportunity Cost: ${user_opportunity_cost/1e9:.1f} billion/year")
 print(f"\nSeigniorage Beneficiary: Tether Limited (private company)")
 
-# -----------------------------------------------------------------------------
-# 3. BITCOIN MINING
-# -----------------------------------------------------------------------------
-
+# --- 3. Bitcoin Mining ---
 print("\n--- BITCOIN MINING ---")
 
-# Data as of February 2025 (approximate figures for educational purposes)
-block_reward = 3.125  # BTC per block (post-2024 halving)
-blocks_per_day = 144
-btc_price = 42_000  # Approximate price for calculation
-mining_cost_per_btc = 30_000  # Estimated average mining cost
-
+# Hint: Miners earn block rewards but spend most on electricity/hardware
+# "Dissipated seigniorage" = seigniorage consumed by production costs
 daily_btc_issued = block_reward * blocks_per_day
 annual_btc_issued = daily_btc_issued * 365
 
-gross_mining_revenue = annual_btc_issued * btc_price
-total_mining_cost = annual_btc_issued * mining_cost_per_btc
-net_mining_profit = gross_mining_revenue - total_mining_cost
+gross_mining_revenue = None  # YOUR CODE HERE: annual_btc_issued * btc_price
+total_mining_cost = None  # YOUR CODE HERE: annual_btc_issued * mining_cost_per_btc
+net_mining_profit = None  # YOUR CODE HERE: revenue - cost
+dissipation_rate = None  # YOUR CODE HERE: total_mining_cost / gross_mining_revenue
 
-# This is "dissipated seigniorage" - profit goes to miners but is spent on electricity/hardware
-dissipation_rate = total_mining_cost / gross_mining_revenue
-
-print(f"Block Reward: {block_reward} BTC")
 print(f"Annual BTC Issued: {annual_btc_issued:,.0f} BTC")
 print(f"Gross Mining Revenue: ${gross_mining_revenue/1e9:.2f} billion/year")
-print(f"Total Mining Costs: ${total_mining_cost/1e9:.2f} billion/year")
 print(f"Net Mining Profit: ${net_mining_profit/1e9:.2f} billion/year")
 print(f"Dissipation Rate: {dissipation_rate*100:.0f}% (goes to electricity/hardware)")
 print(f"\nSeigniorage Beneficiary: Miners (but mostly dissipated in costs)")
 
 # =============================================================================
-# COMPARISON SUMMARY
+# PART (b): INFLATION RATE / SEIGNIORAGE RATE COMPUTATION
 # =============================================================================
+# Task: Compute the seigniorage as a rate (per $1000 of monetary base) for
+# each system, and build a comparison DataFrame.
 
 print("\n" + "="*70)
 print("SEIGNIORAGE COMPARISON SUMMARY")
@@ -1008,22 +967,49 @@ print("="*70)
 comparison = pd.DataFrame({
     'System': ['US Federal Reserve', 'Tether (USDT)', 'Bitcoin Mining'],
     'Annual Seigniorage ($B)': [
-        fed_remittance_to_treasury/1e9,
-        tether_net_profit/1e9,
-        net_mining_profit/1e9
+        None,  # YOUR CODE HERE - fed_remittance_to_treasury in billions
+        None,  # YOUR CODE HERE - tether_net_profit in billions
+        None,  # YOUR CODE HERE - net_mining_profit in billions
     ],
     'Beneficiary': ['Public (Treasury)', 'Private (Tether Ltd)', 'Miners (dissipated)'],
     'Seigniorage per $1000 base': [
-        (fed_remittance_to_treasury / fed_assets) * 1000,
-        (tether_net_profit / usdt_market_cap) * 1000,
-        (net_mining_profit / (21_000_000 * btc_price)) * 1000  # per $1000 of BTC market cap
+        None,  # YOUR CODE HERE - (fed_remittance / fed_assets) * 1000
+        None,  # YOUR CODE HERE - (tether_profit / usdt_market_cap) * 1000
+        None,  # YOUR CODE HERE - (mining_profit / total_btc_market_cap) * 1000
     ]
 })
 
 print(comparison.to_string(index=False))
 
 # =============================================================================
-# VISUALIZATION
+# PART (c): WELFARE ANALYSIS
+# =============================================================================
+# Task: For a user holding $10,000 in each system for one year, calculate:
+#   1. The opportunity cost (what they forgo by holding this form of money)
+#   2. Who captures that value instead
+# Print a clear comparison of the three systems.
+
+print("\n" + "="*70)
+print("WELFARE ANALYSIS: Cost to Users")
+print("="*70)
+
+holding_amount = 10_000  # $10,000 held for one year
+
+# For each system, calculate the user's annual opportunity cost
+# Hint: For Fed/fiat, inflation erodes purchasing power
+# For Tether, the reserve yield goes to Tether instead of the user
+# For Bitcoin, mining costs are borne by miners (not holders directly)
+
+fed_user_cost = None  # YOUR CODE HERE: holding_amount * m2_growth_rate (inflation erodes value)
+tether_user_cost = None  # YOUR CODE HERE: holding_amount * reserve_yield (yield captured by Tether)
+btc_user_cost = None  # YOUR CODE HERE: holding_amount * dissipation_rate * (annual_btc_issued * btc_price) / (21_000_000 * btc_price)
+
+pass  # YOUR CODE HERE: Print a formatted comparison of the three costs
+# Include: system name, annual cost to user, who captures the value
+
+# =============================================================================
+# VISUALIZATION (provided - do not modify)
+# Requires Part (a) and (b) to be completed first
 # =============================================================================
 
 try:
@@ -1046,7 +1032,7 @@ for bar, val in zip(bars, seigniorage):
 
 # Chart 2: Seigniorage Distribution Flow
 ax2 = axes[1]
-labels = ['Fed: Treasury', 'Tether: Shareholders', 'BTC: Miners→Electricity']
+labels = ['Fed: Treasury', 'Tether: Shareholders', 'BTC: Miners->Electricity']
 sizes = [fed_remittance_to_treasury/1e9, tether_net_profit/1e9, total_mining_cost/1e9]
 ax2.pie(sizes, labels=labels, autopct='%1.0f%%', colors=colors, startangle=90)
 ax2.set_title('Where Does Seigniorage Go?', fontsize=12, fontweight='bold')
@@ -1065,55 +1051,6 @@ plt.savefig('seigniorage_analysis.png', dpi=150, bbox_inches='tight')
 plt.show()
 
 print("\nChart saved as 'seigniorage_analysis.png'")
-
-# =============================================================================
-# ECONOMIC ANALYSIS
-# =============================================================================
-
-print("\n" + "="*70)
-print("ECONOMIC ANALYSIS: Policy Implications")
-print("="*70)
-
-print("""
-KEY FINDINGS:
-
-1. FEDERAL RESERVE (PUBLIC SEIGNIORAGE):
-   - Seigniorage flows to US Treasury (public benefit)
-   - Funds ~$220B/year in government operations
-   - This is the "privilege" of issuing reserve currency
-   - Citizens benefit indirectly through lower taxes/more services
-
-2. TETHER (PRIVATIZED SEIGNIORAGE):
-   - $4.75B/year profit to private shareholders
-   - Users provide $95B capital, earn 0%
-   - Users bear all the risk (depeg, hack), capture none of yield
-   - This is why regulators want stablecoins to share yield or be regulated
-
-3. BITCOIN (DISSIPATED SEIGNIORAGE):
-   - ~$4.9B/year in mining revenue, but ~$3.5B spent on electricity
-   - Seigniorage is "burned" in proof-of-work
-   - Only ~$1.4B net profit to miners (distributed globally)
-   - Economically wasteful but provides decentralization
-
-4. POLICY IMPLICATIONS:
-
-   a) CBDC Argument: Why let Tether capture $4.75B that could fund public services?
-      CBDCs return seigniorage to the public.
-
-   b) Stablecoin Regulation: Should stablecoins be required to pass yield to users?
-      Current model is extractive - users provide capital, issuers keep profits.
-
-   c) Bitcoin's Design Trade-off: Dissipated seigniorage is the "cost of decentralization"
-      No entity captures monetary rents, but energy is consumed.
-
-   d) Fairness Question: Is it fair that holding USDT earns 0% while Tether earns 5%
-      on those same dollars? This is hidden "tax" on stablecoin users.
-
-5. QUANTITATIVE PERSPECTIVE:
-   - If you hold $10,000 in USDT for one year, your opportunity cost is ~$500
-   - Tether earns that $500 instead of you
-   - This is the "seigniorage tax" on stablecoin users
-""")
 ```
 
 ### Model Answer / Expected Output

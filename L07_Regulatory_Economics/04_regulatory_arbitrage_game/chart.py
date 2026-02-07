@@ -103,7 +103,7 @@ ax2.plot(time, tft_cumulative, color=MLGREEN, linewidth=2.5, label='Tit-for-Tat'
 
 ax2.set_xlabel('Round')
 ax2.set_ylabel('Cumulative Payoff')
-ax2.set_title('Repeated Game Dynamics with Cumulative Payoff Analysis')
+ax2.set_title('Repeated Game: Illustrative Dynamics (Simplified)')
 ax2.legend(loc='best')
 ax2.grid(True, alpha=0.3)
 

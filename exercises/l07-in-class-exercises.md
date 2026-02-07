@@ -352,15 +352,15 @@ import matplotlib.pyplot as plt
 # When both lax: Race to bottom, low tax, high instability
 
 payoffs_A = np.array([
-    [8, 4, 1],   # A: Strict vs B: S, M, L
-    [10, 6, 2],  # A: Medium vs B: S, M, L
-    [11, 8, 4]   # A: Lax vs B: S, M, L
+    [7, 4, 2],   # A: Strict vs B: S, M, L
+    [8, 6, 3],   # A: Medium vs B: S, M, L
+    [9, 7, 4]    # A: Lax vs B: S, M, L
 ])
 
 payoffs_B = np.array([
-    [8, 10, 11],  # B's payoff when A: Strict
-    [4, 6, 8],    # B's payoff when A: Medium
-    [1, 2, 4]     # B's payoff when A: Lax
+    [7, 8, 9],   # B's payoff when A: Strict (transpose of A)
+    [4, 6, 7],   # B's payoff when A: Medium
+    [2, 3, 4]    # B's payoff when A: Lax
 ])
 
 strategies = ['Strict', 'Medium', 'Lax']
@@ -384,25 +384,12 @@ for i, strat in enumerate(strategies):
 
 def find_nash_equilibria(payoffs_A, payoffs_B):
     """Find all Nash equilibria in a normal form game."""
-    nash_equilibria = []
-    n_strategies = len(strategies)
-
-    for i in range(n_strategies):
-        for j in range(n_strategies):
-            # Check if (i, j) is a Nash equilibrium
-            # A's best response to B playing j
-            a_payoffs_given_j = payoffs_A[:, j]
-            a_best_response = np.argmax(a_payoffs_given_j)
-
-            # B's best response to A playing i
-            b_payoffs_given_i = payoffs_B[i, :]
-            b_best_response = np.argmax(b_payoffs_given_i)
-
-            # Nash equilibrium if both are playing best responses
-            if i == a_best_response and j == b_best_response:
-                nash_equilibria.append((i, j))
-
-    return nash_equilibria
+    # YOUR CODE HERE
+    # Hint: For each strategy pair (i,j), check if:
+    #   - i is A's best response to j (A gets highest payoff in column j)
+    #   - j is B's best response to i (B gets highest payoff in row i)
+    # Use np.argmax() to find best responses
+    pass  # Remove this line when implementing
 
 nash = find_nash_equilibria(payoffs_A, payoffs_B)
 print(f"\n{'='*60}")
@@ -445,23 +432,13 @@ def simulate_repeated_game(strategy_A, strategy_B, rounds=100):
     payoffs_B_history = []
 
     def get_action(strategy, my_history, opp_history, round_num):
-        if strategy == 'always_lax':
-            return 2  # Lax
-        elif strategy == 'always_strict':
-            return 0  # Strict
-        elif strategy == 'tit_for_tat':
-            if round_num == 0:
-                return 0  # Start cooperative
-            return opp_history[-1]  # Copy opponent
-        elif strategy == 'grim_trigger':
-            if round_num == 0:
-                return 0
-            if any(a == 2 for a in opp_history):  # If opponent ever played Lax
-                return 2  # Punish forever
-            return 0
-        elif strategy == 'random':
-            return np.random.choice([0, 1, 2])
-        return 0
+        # YOUR CODE HERE
+        # Implement the following strategies:
+        # 'always_lax': always return 2
+        # 'always_strict': always return 0
+        # 'tit_for_tat': start with 0, then copy opponent's last move
+        # 'grim_trigger': start with 0, switch to 2 permanently if opponent ever played 2
+        pass  # Remove this line when implementing
 
     for r in range(rounds):
         action_A = get_action(strategy_A, history_A, history_B, r)
@@ -585,7 +562,7 @@ welfare = [result['total_A'] + result['total_B'] for _, result in results]
 bars = ax4.barh(names, welfare, color=['red', 'green', 'blue', 'orange', 'purple'])
 ax4.set_xlabel('Total Welfare (100 rounds)')
 ax4.set_title('Strategy Comparison: Combined Welfare')
-ax4.axvline(x=800, color='gray', linestyle='--', label='Cooperative Benchmark')
+ax4.axvline(x=1400, color='gray', linestyle='--', label='Cooperative Benchmark')
 
 # Add value labels
 for bar, val in zip(bars, welfare):
@@ -627,13 +604,21 @@ PROPOSED MECHANISM: FATF-Style Peer Review with Economic Sanctions
    - Create "regulatory passport" for compliant jurisdictions
    - Firms licensed in compliant jurisdictions can operate cross-border
    - Non-compliant jurisdictions lose market access
+""")
 
+# YOUR CODE HERE
+# Design a mechanism that changes payoffs to make (Strict, Strict) the Nash equilibrium
+# Hint: Add a "passport bonus" for compliant jurisdictions
+# and a "grey-listing penalty" for non-compliant ones
+# Modified payoffs should make cooperation individually rational
+
+print("""
 4. GAME THEORY ANALYSIS
 
    With Mechanism (Modified Payoffs):
 
-   If both Strict: (8, 8) + (2, 2) passport bonus = (10, 10)
-   If A Lax while B Strict: (11, 1) - (4, 0) penalty = (7, 1)
+   If both Strict: (7, 7) + (3, 3) passport bonus = (10, 10)
+   If A Lax while B Strict: (9, 2) - (4, 0) penalty = (5, 2)
    If both Lax: (4, 4) - (3, 3) grey-list = (1, 1)
 
    New Nash Equilibrium: (Strict, Strict) with payoff (10, 10)
@@ -655,21 +640,21 @@ Nash Equilibrium: A plays Lax, B plays Lax
   Payoffs: A = 4, B = 4
   Total welfare: 8
 
-Cooperative outcome (Strict, Strict): Total = 16
+Cooperative outcome (Strict, Strict): Total = 14
 Nash outcome (Lax, Lax): Total = 8
-WELFARE LOSS FROM NON-COOPERATION: 8
-Percentage loss: 50.0%
+WELFARE LOSS FROM NON-COOPERATION: 6
+Percentage loss: 42.9%
 ```
 
 **Key Findings:**
 
 1. **Nash Equilibrium is (Lax, Lax)** - Both countries have dominant strategy to be lax
-   - Given B is Strict: A gets 8 (Strict), 10 (Medium), 11 (Lax) -> A chooses Lax
-   - Given B is Medium: A gets 4 (Strict), 6 (Medium), 8 (Lax) -> A chooses Lax
-   - Given B is Lax: A gets 1 (Strict), 2 (Medium), 4 (Lax) -> A chooses Lax
+   - Given B is Strict: A gets 7 (Strict), 8 (Medium), 9 (Lax) -> A chooses Lax
+   - Given B is Medium: A gets 4 (Strict), 6 (Medium), 7 (Lax) -> A chooses Lax
+   - Given B is Lax: A gets 2 (Strict), 3 (Medium), 4 (Lax) -> A chooses Lax
    - Lax is dominant strategy for both
 
-2. **Welfare Loss = 50%** - Non-cooperation destroys half of potential welfare
+2. **Welfare Loss = 42.9%** - Non-cooperation destroys over 40% of potential welfare
 
 3. **Repeated Game Strategies**:
    - Tit-for-Tat and Grim Trigger sustain cooperation
@@ -684,7 +669,7 @@ Percentage loss: 50.0%
 ### Presentation Talking Points
 - The race to the bottom is a Nash equilibrium - rational individual behavior leads to collectively bad outcome
 - This is the classic Prisoner's Dilemma structure applied to regulatory competition
-- Welfare loss from non-cooperation is large (50% in our model)
+- Welfare loss from non-cooperation is large (42.9% in our model)
 - Repeated games can sustain cooperation through reputation and punishment strategies
 - Key economic insight: Without enforcement mechanisms, regulatory arbitrage is inevitable
 - FATF grey-listing is exactly the mechanism design solution our analysis suggests
@@ -864,11 +849,15 @@ d_supply = 20   # Slope: supply elasticity
 # Current equilibrium (no additional regulation)
 # Q = 200 - 10P = 50 + 20P
 # 150 = 30P
-# P* = 5 (implicit cost in basis points)
+# P* = 5 (implicit cost in percentage points)
 # Q* = 150 ($150B)
 
-P_star = (a_demand - c_supply) / (b_demand + d_supply)
-Q_star = a_demand - b_demand * P_star
+# YOUR CODE HERE
+# Calculate equilibrium price P_star and quantity Q_star
+# Hint: Set demand equal to supply and solve for P
+# Q = a_demand - b_demand * P = c_supply + d_supply * P
+P_star = None  # Replace with formula
+Q_star = None  # Replace with formula
 
 print("="*60)
 print("STABLECOIN MARKET EQUILIBRIUM ANALYSIS")
@@ -881,14 +870,13 @@ print(f"  Equilibrium quantity: ${Q_star:.1f}B")
 # REGULATORY SCENARIO: 100% GOVERNMENT BOND RESERVES
 # =============================================================================
 
-# Cost of regulation: Stablecoin issuers currently earn ~5% on commercial paper
-# Government bonds yield ~4%
-# Lost yield = 1% on reserves = 100 bps
-# But only affects the ~20% currently in commercial paper
-# Net cost increase = 0.2 * 100 = 20 bps
+# Cost of regulation: Reserve restructuring from mixed to 100% government bonds
+# Compliance cost of 5 percentage points reflecting yield gap between required
+# government bonds and current commercial paper holdings, plus operational
+# burden of maintaining full reserve coverage
 
 # This shifts supply curve up by the compliance cost (tau)
-tau = 20  # basis points (0.20%)
+tau = 5  # percentage points - compliance cost of reserve restructuring
 
 # New equilibrium with regulation
 # Supply shifts: Q = 50 + 20*(P - tau/100) [cost absorbed by issuers]
@@ -917,15 +905,20 @@ print(f"  Quantity reduction: ${Q_star - Q_regulated:.1f}B ({100*(Q_star - Q_reg
 
 def consumer_surplus(Q, P, a, b):
     """CS = 0.5 * (a/b - P) * Q = area under demand curve above price"""
-    return 0.5 * ((a/b) - P) * Q
+    # YOUR CODE HERE
+    # Consumer surplus is the triangle between demand curve and market price
+    pass
 
 def producer_surplus(Q, P, c, d, tau=0):
     """PS = 0.5 * (P - tau - c/d) * Q = area above supply curve below price-tau"""
-    return 0.5 * (P - tau - c/d) * Q
+    # YOUR CODE HERE
+    pass
 
 def deadweight_loss(Q_before, Q_after, P_before, P_after):
     """DWL = 0.5 * (P_after - P_before) * (Q_before - Q_after)"""
-    return 0.5 * (P_after - P_before) * (Q_before - Q_after)
+    # YOUR CODE HERE
+    # Deadweight loss is the Harberger triangle
+    pass
 
 # Calculate surpluses
 CS_before = consumer_surplus(Q_star, P_star, a_demand, b_demand)
@@ -943,7 +936,7 @@ DWL = deadweight_loss(Q_star, Q_regulated, P_star, P_regulated)
 transfer = tau * Q_regulated
 
 print(f"\n{'='*60}")
-print("WELFARE ANALYSIS (in units where 1 = $10M annual)")
+print("WELFARE ANALYSIS")
 print(f"{'='*60}")
 print(f"\nBefore Regulation:")
 print(f"  Consumer Surplus: {CS_before:.1f}")
@@ -1003,13 +996,17 @@ print("COST-BENEFIT ANALYSIS")
 print(f"{'='*60}")
 
 # Convert DWL to dollar terms (assuming our units are $10M)
-DWL_dollars = DWL * 0.01  # Convert basis points * billions to billions
+DWL_dollars = DWL * 0.01  # Convert percentage points * billions to billions
 
 # Annual costs
 annual_cost = DWL_dollars  # Deadweight loss is annual
 annual_benefit = benefit   # Reduced expected loss is annual
 
-net_benefit = annual_benefit - annual_cost
+# YOUR CODE HERE
+# Calculate net_benefit = annual_benefit - annual_cost
+# If positive, regulation passes cost-benefit test
+# If negative, regulation fails
+net_benefit = None  # Replace with calculation
 
 print(f"\nAnnual Costs:")
 print(f"  Deadweight loss: ${annual_cost:.2f}B")
@@ -1034,11 +1031,10 @@ print(f"{'='*60}")
 run_probs = [0.02, 0.05, 0.08, 0.10]
 print("\nNet benefit at different baseline run probabilities:")
 for p in run_probs:
-    exp_loss_b = p * loss_given_run * Q_star
-    exp_loss_a = P_run_after * loss_given_run * Q_regulated
-    ben = exp_loss_b - exp_loss_a
-    net = ben - annual_cost
-    print(f"  P(run) = {100*p:.0f}%: Net benefit = ${net:.2f}B {'[PASS]' if net > 0 else '[FAIL]'}")
+    # YOUR CODE HERE
+    # Calculate expected loss before and after for each run probability
+    # Then compute net benefit
+    pass
 
 # =============================================================================
 # VISUALIZATION
@@ -1076,7 +1072,7 @@ ax1.axvline(Q_star, color='gray', linestyle=':', alpha=0.5)
 ax1.axvline(Q_regulated, color='red', linestyle=':', alpha=0.5)
 
 ax1.set_xlabel('Quantity ($B)')
-ax1.set_ylabel('Price (basis points)')
+ax1.set_ylabel('Price (percentage points)')
 ax1.set_title('Stablecoin Market: Deadweight Loss from Reserve Requirement')
 ax1.legend(loc='upper right')
 ax1.set_xlim(0, 200)
@@ -1166,33 +1162,33 @@ print("\nChart saved as 'stablecoin_cost_benefit.png'")
 
 ### Model Answer / Expected Output
 
-**Expected Numerical Results:**
+**Expected Numerical Results** (students should verify by running the code -- exact values depend on the surplus function implementation):
 ```
 Current Market (No Reserve Requirement):
   Equilibrium price: 5.00 bps
   Equilibrium quantity: $150.0B
 
 With 100% Gov Bond Requirement:
-  Compliance cost (tau): 20 bps
-  New equilibrium price: 18.33 bps
+  Compliance cost (tau): 5 bps
+  New equilibrium price: 8.33 bps
   New equilibrium quantity: $116.7B
   Quantity reduction: $33.3B (22.2%)
 
 COST-BENEFIT ANALYSIS:
-  Annual Cost (DWL): ~$2.2B
-  Annual Benefit (reduced run risk): ~$1.9B
+  Annual Cost (DWL): ~$0.56B
+  Annual Benefit (reduced run risk): ~$1.90B
 
-  NET COST: ~$0.3B annually
-  RECOMMENDATION: REGULATION FAILS COST-BENEFIT TEST
+  NET BENEFIT: ~$1.35B annually
+  RECOMMENDATION: REGULATION PASSES COST-BENEFIT TEST
 
-  (BUT: At run probabilities >6%, regulation passes)
+  (Sensitivity: At very low run probabilities <2%, regulation may fail)
 ```
 
 **Key Findings:**
 
-1. **Deadweight Loss is Significant**: 22% reduction in stablecoin market size
-2. **At Baseline Assumptions**: Regulation slightly fails cost-benefit test
-3. **Highly Sensitive to Run Probability**: If true run risk >6%, regulation is justified
+1. **Deadweight Loss Exists but is Moderate**: 22% reduction in stablecoin market size, but small absolute DWL with tau=5
+2. **At Baseline Assumptions**: Regulation passes cost-benefit test because run-risk reduction benefit exceeds the small DWL
+3. **Highly Sensitive to Run Probability**: If true run risk is very low (<2%), regulation may fail the test
 4. **Policy Implication**: Need better data on actual run probabilities
 
 ### Presentation Talking Points
@@ -1200,7 +1196,7 @@ COST-BENEFIT ANALYSIS:
 - Deadweight loss (Harberger triangle) captures foregone efficient transactions
 - Benefits of regulation are often probabilistic (reduced risk, not eliminated risk)
 - Sensitivity analysis is critical - results depend on assumptions
-- Key economic insight: "Safe" regulation can destroy value if the risk being addressed is small
+- Key economic insight: Even when regulation passes cost-benefit, the margin depends heavily on assumptions
 - Real policy question: What is the actual probability of a stablecoin run?
 
 ---

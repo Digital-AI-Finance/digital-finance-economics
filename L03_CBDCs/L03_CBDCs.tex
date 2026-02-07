@@ -98,7 +98,7 @@
 \item The government's bank
 \item Creates the national currency
 \item Sets interest rates for the economy
-\item Lender of last resort in crises
+\item Lender of last resort (providing emergency loans when no one else will) in crises
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -107,7 +107,7 @@
 \item Private companies where you have accounts
 \item Accept deposits, make loans
 \item Can fail (unlike central banks)
-\item Must hold reserves at central bank
+\item Must hold reserves (money banks must keep at the central bank) at central bank
 \end{itemize}
 
 \vspace{0.3em}
@@ -217,7 +217,7 @@ Does public benefit exceed costs and risks?
 \includegraphics[width=0.58\textwidth]{02_cbdc_design_space/chart.pdf}
 \end{center}
 
-\bottomnote{Design choices involve trade-offs between privacy, efficiency, and policy goals}
+\bottomnote{Design choices involve trade-offs. Pareto frontier shows optimal trade-offs---no design can improve one attribute without sacrificing another. Dominated designs are inferior options.}
 \end{frame}
 
 % Retail vs Wholesale
@@ -230,7 +230,7 @@ For general public use:
 \begin{itemize}
 \item Replaces/complements cash
 \item Consumer payment instrument
-\item Requires distribution network
+\item Requires distribution network \textit{(Unlike wholesale CBDC which uses existing bank infrastructure, retail CBDC needs new channels to reach every citizen.)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -273,7 +273,7 @@ Like digital cash:
 \begin{itemize}
 \item Verify the instrument, not holder
 \item Can enable anonymity
-\item Offline transactions possible
+\item Offline transactions possible \textit{(This matters because rural areas and developing countries may lack reliable internet---offline capability ensures universal access.)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -297,7 +297,7 @@ Like bank accounts:
 \vspace{0.3em}
 Economic implications:
 \begin{itemize}
-\item Interest-bearing feasible
+\item Interest-bearing feasible \textit{(Because account-based systems track balances, they can calculate and pay interest---token-based systems cannot easily distinguish one holder's balance from another.)}
 \item Targeted policies possible
 \item Privacy concerns
 \end{itemize}
@@ -380,7 +380,7 @@ If CBDC is attractive:
 \textit{Example: If 20\% of deposits move to CBDC, banks must borrow elsewhere at higher rates, meaning fewer or costlier loans.}
 
 \vspace{0.3em}
-\textbf{Andolfatto (2021), a Federal Reserve economist, modeled this:}
+\textbf{Andolfatto (2021), an economist at the Federal Reserve Bank of St. Louis, modeled this:}
 \begin{itemize}
 \item CBDC as outside option (an alternative that improves your bargaining power---if you can switch to CBDC, banks must treat you better)
 \item Forces competitive deposit rates
@@ -443,7 +443,7 @@ Benefits:
 \vspace{0.3em}
 Challenges:
 \begin{itemize}
-\item Digital divide persists \textit{(Example: In India, 300 million people lack smartphones---CBDC only on phones would exclude them, worsening inequality.)}
+\item Digital divide (gap between those with and without internet access) persists \textit{(Example: In India, 300 million people lack smartphones---CBDC only on phones would exclude them, worsening inequality.)}
 \item Infrastructure requirements
 \item Financial literacy needs
 \end{itemize}
@@ -462,7 +462,7 @@ CBDCs could intensify:
 \begin{itemize}
 \item Cross-border CBDC use
 \item Challenge to dollar dominance \textit{(The US gains immense power from dollar dominance: ability to sanction enemies, borrow cheaply, and export inflation. Challengers want these privileges.)}
-\item Regional currency blocs
+\item Regional currency blocs (groups of countries sharing or linking their currencies)
 \end{itemize}
 
 \vspace{0.3em}
@@ -478,14 +478,14 @@ CBDCs could intensify:
 \begin{itemize}
 \item Digital dollar slower to develop
 \item Privacy concerns prominent
-\item Risk of losing first-mover advantage
+\item Risk of losing first-mover advantage (the benefit of being first to market)
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Economic Implications}
 \begin{itemize}
 \item Seigniorage redistribution \textit{(If people worldwide use digital yuan instead of dollars, China earns the profit from money creation that previously went to the US.)}
-\item Sanctions effectiveness
+\item Sanctions effectiveness (the ability to economically punish other nations)
 \item Monetary policy spillovers (when one country's policy unintentionally affects others---e.g., US rate hikes cause capital flight from emerging markets)
 \end{itemize}
 \end{columns}
@@ -526,7 +526,7 @@ CBDCs could intensify:
 \vspace{0.3em}
 \textbf{Economic Benefits}
 \begin{itemize}
-\item Reduced FX (foreign exchange) settlement risk
+\item Reduced Foreign Exchange (FX) settlement risk
 \item Lower remittance costs
 \item Faster trade finance (loans and guarantees for international commerce)
 \end{itemize}
@@ -584,7 +584,7 @@ $$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
 \textbf{ECB (European Central Bank) Design Principles}
 \begin{itemize}
 \item Complement to cash, not replacement
-\item Privacy by design (small payments)
+\item Privacy by design (building privacy protections into the system from the start) (small payments)
 \item Holding limits (\textasciitilde3000 EUR proposed)
 \item No interest initially
 \end{itemize}
@@ -608,7 +608,7 @@ $$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
 \vspace{0.3em}
 \textbf{Criticisms}
 \begin{itemize}
-\item Banks lobby against disintermediation
+\item Banks lobby (companies trying to influence politicians) against disintermediation
 \item Privacy advocates concerned
 \item Unclear consumer demand
 \end{itemize}
@@ -767,6 +767,26 @@ When one country's policy unintentionally affects other countries. Example: US i
 \vspace{0.3em}
 \textbf{Trade Finance}
 Loans and guarantees that help companies buy and sell goods internationally. Without trade finance, global commerce would be much slower and riskier.
+
+\vspace{0.3em}
+\textbf{CFT (Combating the Financing of Terrorism)}
+Laws preventing terrorist groups from receiving money---often paired with AML (Anti-Money Laundering).
+
+\vspace{0.3em}
+\textbf{FX (Foreign Exchange)}
+The exchange of one currency for another---e.g., converting dollars to euros.
+
+\vspace{0.3em}
+\textbf{First-Mover Advantage}
+The benefit of being first to market---early CBDC adopters may set standards others must follow.
+
+\vspace{0.3em}
+\textbf{Sanctions}
+Economic penalties imposed by governments---restricting trade or freezing assets of target countries.
+
+\vspace{0.3em}
+\textbf{Digital Bank Run}
+A bank run accelerated by digital technology---deposits can flee via mobile apps in hours, not days.
 \end{columns}
 
 \bottomnote{Understanding these foundational terms is essential for analyzing CBDC policy}

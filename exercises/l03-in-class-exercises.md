@@ -127,12 +127,6 @@ cbdc_data = {
     }
 }
 
-# =============================================================================
-# VISUALIZATION 1: Status Overview by Stage
-# =============================================================================
-
-fig, axes = plt.subplots(2, 2, figsize=(14, 10))
-
 # Color scheme matching course style
 MLPURPLE = '#3333B2'
 MLBLUE = '#0066CC'
@@ -140,124 +134,119 @@ MLORANGE = '#FF7F0E'
 MLGREEN = '#2CA02C'
 MLRED = '#D62728'
 
-# Panel 1: Count by Stage
-ax1 = axes[0, 0]
+# =============================================================================
+# (a) Population-Weighted Coverage Calculation
+# Task: Calculate total population (in millions) covered by each CBDC stage.
+# Hint: Sum the 'population_millions' list for each stage in cbdc_data.
+# =============================================================================
+
+pop_launched = None  # YOUR CODE HERE — sum population_millions for 'Launched'
+pop_pilot = None  # YOUR CODE HERE — sum population_millions for 'Pilot'
+pop_development = None  # YOUR CODE HERE — sum population_millions for 'Development'
+pop_research = None  # YOUR CODE HERE — sum population_millions for 'Research'
+
+# Print your results to verify (expected: Pilot should be largest due to China + India)
+print(f"Launched: {pop_launched} million")
+print(f"Pilot: {pop_pilot} million")
+print(f"Development: {pop_development} million")
+print(f"Research: {pop_research} million")
+
+# =============================================================================
+# (b) Bar Chart: CBDC Projects by Development Stage
+# Task: Create a bar chart showing the number of countries per stage.
+# Given data:
 stages = ['Launched', 'Pilot', 'Development', 'Research', 'Inactive']
 counts = [11, 21, 33, 68, 14]
 colors = [MLGREEN, MLBLUE, MLORANGE, MLPURPLE, 'gray']
+# =============================================================================
 
-bars = ax1.bar(stages, counts, color=colors, alpha=0.8, edgecolor='black')
-ax1.set_ylabel('Number of Countries', fontweight='bold')
-ax1.set_title('CBDC Projects by Development Stage (2024)', fontweight='bold', color=MLPURPLE)
+fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+ax1 = axes[0, 0]
 
-# Add count labels
-for bar, count in zip(bars, counts):
-    ax1.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1,
-             str(count), ha='center', fontweight='bold')
+# YOUR CODE HERE — create a bar chart on ax1 using stages, counts, colors
+# Hint: Use ax1.bar(...), set ylabel, title, and add count labels above each bar
+pass  # YOUR CODE HERE
 
 ax1.set_ylim(0, 80)
 ax1.grid(True, alpha=0.3, axis='y')
 
-# Panel 2: Population Coverage by Stage
-ax2 = axes[0, 1]
+# =============================================================================
+# (c) Regional Distribution: Groupby + Horizontal Bar Chart
+# Task: Count how many countries are in each region across ALL stages,
+#        sort by count (descending), and plot a horizontal bar chart.
+# Hint: Loop over stages and regions in cbdc_data, use defaultdict(int).
+# =============================================================================
 
-# Calculate population by stage
-pop_launched = sum(cbdc_data['Launched']['population_millions'])
-pop_pilot = sum(cbdc_data['Pilot']['population_millions'])
-pop_development = sum(cbdc_data['Development']['population_millions'])
-pop_research = sum(cbdc_data['Research']['population_millions'])
-
-pop_by_stage = [pop_launched, pop_pilot, pop_development, pop_research]
-stage_labels = ['Launched', 'Pilot', 'Development', 'Research']
-
-ax2.pie(pop_by_stage, labels=stage_labels, autopct='%1.1f%%',
-        colors=[MLGREEN, MLBLUE, MLORANGE, MLPURPLE],
-        explode=[0.05, 0.05, 0, 0], startangle=90)
-ax2.set_title('Population Coverage by CBDC Stage\n(Sample Countries, Billions)', fontweight='bold', color=MLPURPLE)
-
-# Panel 3: Regional Distribution
 ax3 = axes[1, 0]
 
-# Count countries by region across all stages
-region_counts = defaultdict(int)
-for stage in ['Launched', 'Pilot', 'Development', 'Research']:
-    for region in cbdc_data[stage]['region']:
-        region_counts[region] += 1
+region_counts = None  # YOUR CODE HERE — build a dict mapping region -> count
+regions = None  # YOUR CODE HERE — sorted list of region names (descending by count)
+region_values = None  # YOUR CODE HERE — corresponding counts
 
-regions = list(region_counts.keys())
-region_values = list(region_counts.values())
+# YOUR CODE HERE — create a horizontal bar chart on ax3 using ax3.barh(...)
+# Add count labels to the right of each bar
+pass  # YOUR CODE HERE
 
-# Sort by count
-sorted_pairs = sorted(zip(region_values, regions), reverse=True)
-region_values, regions = zip(*sorted_pairs)
-
-bars3 = ax3.barh(regions, region_values, color=MLBLUE, alpha=0.8, edgecolor='black')
 ax3.set_xlabel('Number of Countries', fontweight='bold')
 ax3.set_title('CBDC Projects by Region', fontweight='bold', color=MLPURPLE)
-
-# Add count labels
-for bar, count in zip(bars3, region_values):
-    ax3.text(bar.get_width() + 0.3, bar.get_y() + bar.get_height()/2,
-             str(count), va='center', fontweight='bold')
-
-ax3.set_xlim(0, max(region_values) + 3)
 ax3.grid(True, alpha=0.3, axis='x')
 
-# Panel 4: Timeline of Pilots and Launches
+# =============================================================================
+# (d) Timeline Plot: Cumulative Launches and Pilots Over Time
+# Task: Plot two line series on ax4 showing cumulative launched and pilot
+#        countries from 2019-2024. Add annotations for key events.
+# Given data:
+years = [2019, 2020, 2021, 2022, 2023, 2024]
+launched_cumulative = [0, 1, 9, 11, 11, 11]   # Bahamas, then Eastern Caribbean + Nigeria
+pilot_cumulative = [0, 1, 3, 10, 21, 21]      # China pilot, gradual expansion
+# =============================================================================
+
 ax4 = axes[1, 1]
 
-# Create timeline data
-years = [2019, 2020, 2021, 2022, 2023, 2024]
-launched_cumulative = [0, 1, 9, 11, 11, 11]  # Bahamas, then Eastern Caribbean + Nigeria
-pilot_cumulative = [0, 1, 3, 10, 21, 21]  # China pilot, gradual expansion
+# YOUR CODE HERE — plot two line series on ax4 (launched and pilot cumulative)
+# Add markers, legend, axis labels, title, and annotations for key events
+# Hint: Use ax4.plot(...), ax4.annotate(...)
+pass  # YOUR CODE HERE
 
-ax4.plot(years, launched_cumulative, marker='o', linewidth=2.5, color=MLGREEN,
-         label='Launched (Cumulative)', markersize=8)
-ax4.plot(years, pilot_cumulative, marker='s', linewidth=2.5, color=MLBLUE,
-         label='Pilot (Cumulative)', markersize=8)
-
-ax4.set_xlabel('Year', fontweight='bold')
-ax4.set_ylabel('Number of Countries', fontweight='bold')
-ax4.set_title('CBDC Launch and Pilot Timeline', fontweight='bold', color=MLPURPLE)
-ax4.legend(loc='upper left')
-ax4.grid(True, alpha=0.3)
-
-# Add key event annotations
-ax4.annotate('Bahamas\nSand Dollar', xy=(2020, 1), xytext=(2019.5, 4),
-             fontsize=9, ha='center', arrowprops=dict(arrowstyle='->', color='gray'))
-ax4.annotate('China e-CNY\nPilot Expands', xy=(2022, 10), xytext=(2022.5, 15),
-             fontsize=9, ha='center', arrowprops=dict(arrowstyle='->', color='gray'))
+# Panel 2 (pie chart) is provided for you
+ax2 = axes[0, 1]
+if pop_launched is not None:
+    pop_by_stage = [pop_launched, pop_pilot, pop_development, pop_research]
+    stage_labels = ['Launched', 'Pilot', 'Development', 'Research']
+    ax2.pie(pop_by_stage, labels=stage_labels, autopct='%1.1f%%',
+            colors=[MLGREEN, MLBLUE, MLORANGE, MLPURPLE],
+            explode=[0.05, 0.05, 0, 0], startangle=90)
+    ax2.set_title('Population Coverage by CBDC Stage\n(Sample Countries, Billions)',
+                  fontweight='bold', color=MLPURPLE)
+else:
+    ax2.text(0.5, 0.5, 'Complete part (a) first', ha='center', va='center', fontsize=14)
 
 plt.tight_layout()
 plt.savefig('cbdc_global_tracker.png', dpi=150, bbox_inches='tight')
 plt.show()
 
+# =============================================================================
+# INTERPRETATION (fill in after running your code)
+# =============================================================================
 print("\n" + "="*70)
 print("KEY FINDINGS: Global CBDC Development Status")
 print("="*70)
-
-print(f"""
+print("""
 1. STAGE DISTRIBUTION:
-   - Launched: {counts[0]} countries (mostly small Caribbean nations)
-   - Pilot: {counts[1]} countries (includes China with 1.4B population)
-   - Development: {counts[2]} countries (EU, UK, Australia - major economies)
-   - Research: {counts[3]} countries (US, Japan - watching carefully)
+   - Which stage has the most countries? Why?
+   - YOUR ANSWER HERE
 
 2. POPULATION COVERAGE:
-   - Pilot stage covers {pop_pilot/1000:.1f} billion people (China, India dominate)
-   - Development stage covers {pop_development/1000:.1f} billion people
-   - Launched CBDCs serve only {pop_launched:.1f} million people
+   - Which stage covers the most people? Why?
+   - YOUR ANSWER HERE
 
 3. REGIONAL PATTERNS:
-   - Asia leads in population-weighted adoption (China, India)
-   - Caribbean leads in launched CBDCs (small island testing grounds)
-   - Europe in development mode (Digital Euro expected 2027-28)
-   - Americas cautious (US in research, only small launches)
+   - Which region leads? What explains this?
+   - YOUR ANSWER HERE
 
 4. KEY INSIGHT:
-   - Small nations launch first (low risk, financial inclusion needs)
-   - Large economies proceed cautiously (systemic risk concerns)
-   - China most aggressive large-economy adopter (e-CNY)
+   - What is the relationship between country size and launch speed?
+   - YOUR ANSWER HERE
 """)
 ```
 
@@ -313,6 +302,8 @@ The global CBDC landscape reveals a **inverse relationship between economic size
 ### Task
 
 Evaluate three CBDC design choices across key economic criteria. Score each design 1-5 on each criterion, identify the optimal design for different country contexts, and explain the trade-offs.
+
+**Note: A "Pareto efficient" design means you cannot improve one attribute (e.g., privacy) without making another worse (e.g., AML compliance). The goal is to find designs on the Pareto frontier---the set of best possible trade-offs.**
 
 **CBDC Designs to Evaluate**:
 1. **Design A**: Retail, Account-Based, Interest-Bearing, 3000 EUR Limit
@@ -588,7 +579,7 @@ The economically strongest position is that **banks will survive but transform s
    - Risk assessment still human/institutional
 
 3. **The adjustment:**
-   - Banks become more like narrow banks for deposits (safety)
+   - Banks become more like narrow banks (a simplified bank that only holds safe assets and does not make risky loans) for deposits (safety)
    - Banks become more like investment banks for lending (risk)
    - The universal banking model fragments
 
@@ -664,9 +655,13 @@ Your group is the economic advisory team for **the Central Bank of a fictional A
 | Standard | Smartphone app | Urban, semi-urban | Free |
 | Agent | Point-of-sale terminals | Merchants, agents | Subsidized |
 
+**Note: USSD (Unstructured Supplementary Service Data) is a mobile phone protocol that works without internet---like texting but for interactive menus. It works on any basic phone.**
+
 - USSD chosen because it works on any mobile phone, no data required
 - Works even with spotty network (store-and-forward)
 - Example: M-Pesa in Kenya succeeded with USSD, not apps
+
+**Note: M-Pesa is a Kenyan mobile money system launched in 2007 that revolutionized financial inclusion---proof that phone-based payments can reach the unbanked without smartphones or bank accounts.**
 
 **2. Tiered KYC Model:**
 
@@ -779,6 +774,10 @@ Requirements: pip install numpy matplotlib scipy
 
 Model based on: Bindseil (2020) - Tiered CBDC and the financial system
 Theory: Brunnermeier & Niepelt (2019) - On the equivalence of private and public money
+
+Note: This exercise uses an Ordinary Differential Equation (ODE)---a mathematical formula
+showing how something changes over time. The `odeint` function from scipy solves these
+equations numerically.
 """
 
 import numpy as np
@@ -786,7 +785,7 @@ import matplotlib.pyplot as plt
 from scipy.integrate import odeint
 
 # =============================================================================
-# MODEL PARAMETERS
+# MODEL PARAMETERS (given)
 # =============================================================================
 
 # Baseline economy parameters
@@ -799,7 +798,7 @@ CRISIS_SENSITIVITY = 2.0  # Amplification during crisis
 CBDC_CONVENIENCE_PREMIUM = 0.002  # 0.2% equivalent value of CBDC features
 
 # =============================================================================
-# DEPOSIT DYNAMICS MODEL
+# DEPOSIT DYNAMICS MODEL (given --- study this carefully!)
 # =============================================================================
 
 def deposit_flight_model(deposits, time, params):
@@ -854,41 +853,36 @@ def deposit_flight_model(deposits, time, params):
     return effective_flow
 
 # =============================================================================
-# SCENARIO SIMULATION
+# (a) SCENARIO DEFINITIONS
+# Task: Define 7 scenarios as a list of tuples. Each tuple contains:
+#       (name, cbdc_rate, holding_limit, crisis_start)
+# Scenarios to define:
+#   A: No CBDC baseline (all None)
+#   B: 0% CBDC rate, no holding limit, no crisis
+#   C: 0% CBDC rate, 30% holding limit, no crisis
+#   D: 1% CBDC rate, no holding limit, no crisis
+#   E: 1% CBDC rate, 30% holding limit, no crisis
+#   F: 0% CBDC rate, no holding limit, crisis at quarter 8
+#   G: 0% CBDC rate, 30% holding limit, crisis at quarter 8
+# =============================================================================
+
+scenarios = None  # YOUR CODE HERE — define as a list of 7 tuples: (name, cbdc_rate, holding_limit, crisis_start)
+
+# =============================================================================
+# (b) SIMULATION FUNCTION
+# Task: Complete the run_scenario function that:
+#   1. Creates a params dict with keys: cbdc_rate, holding_limit, crisis_start, crisis_duration
+#   2. Creates a time grid of 200 points from 0 to 20 quarters
+#   3. Solves the ODE using odeint(deposit_flight_model, TOTAL_DEPOSITS, time_grid, args=(params,))
+#   4. Returns (time_grid, deposits_flattened, params)
 # =============================================================================
 
 def run_scenario(name, cbdc_rate, holding_limit, crisis_start=None, crisis_duration=3):
     """Run a single scenario and return results."""
-
-    params = {
-        'cbdc_rate': cbdc_rate,
-        'holding_limit': holding_limit,
-        'crisis_start': crisis_start,
-        'crisis_duration': crisis_duration
-    }
-
-    # Time grid: 20 quarters (5 years)
-    time_grid = np.linspace(0, 20, 200)
-
-    # Solve ODE
-    deposits = odeint(deposit_flight_model, TOTAL_DEPOSITS, time_grid, args=(params,))
-
-    return time_grid, deposits.flatten(), params
-
-# Define scenarios
-scenarios = [
-    # Scenario Name, CBDC Rate, Holding Limit, Crisis Start
-    ("A: No CBDC (Baseline)", None, None, None),
-    ("B: 0% CBDC, No Limit", 0.0, None, None),
-    ("C: 0% CBDC, 3000 EUR Limit", 0.0, 30, None),  # 30% of deposits as limit
-    ("D: 1% CBDC, No Limit", 0.01, None, None),
-    ("E: 1% CBDC, 3000 EUR Limit", 0.01, 30, None),
-    ("F: 0% CBDC, No Limit + Crisis", 0.0, None, 8),
-    ("G: 0% CBDC, 3000 EUR Limit + Crisis", 0.0, 30, 8),
-]
+    pass  # YOUR CODE HERE
 
 # =============================================================================
-# VISUALIZATION
+# VISUALIZATION (Panels 1 and 2 are given; Panels 3 and 4 are yours to build)
 # =============================================================================
 
 fig, axes = plt.subplots(2, 2, figsize=(14, 10))
@@ -897,17 +891,18 @@ fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 colors = ['gray', '#2CA02C', '#0066CC', '#FF7F0E', '#9467BD', '#D62728', '#8C564B']
 linestyles = ['-', '-', '--', '-', '--', ':', ':']
 
-# Panel 1: All scenarios comparison
+# --- Panel 1 (given): All scenarios comparison ---
 ax1 = axes[0, 0]
-for i, (name, cbdc_rate, limit, crisis) in enumerate(scenarios):
-    if name == "A: No CBDC (Baseline)":
-        time_grid = np.linspace(0, 20, 200)
-        deposits = np.ones(200) * TOTAL_DEPOSITS
-    else:
-        time_grid, deposits, _ = run_scenario(name, cbdc_rate, limit, crisis)
+if scenarios is not None:
+    for i, (name, cbdc_rate, limit, crisis) in enumerate(scenarios):
+        if name == "A: No CBDC (Baseline)":
+            time_grid = np.linspace(0, 20, 200)
+            deposits = np.ones(200) * TOTAL_DEPOSITS
+        else:
+            time_grid, deposits, _ = run_scenario(name, cbdc_rate, limit, crisis)
 
-    ax1.plot(time_grid, deposits, label=name, color=colors[i],
-             linewidth=2 if i > 0 else 1.5, linestyle=linestyles[i])
+        ax1.plot(time_grid, deposits, label=name, color=colors[i],
+                 linewidth=2 if i > 0 else 1.5, linestyle=linestyles[i])
 
 ax1.set_xlabel('Time (Quarters)', fontweight='bold')
 ax1.set_ylabel('Bank Deposits (% of Initial)', fontweight='bold')
@@ -917,7 +912,7 @@ ax1.grid(True, alpha=0.3)
 ax1.set_ylim(0, 105)
 ax1.axhline(70, color='red', linestyle=':', alpha=0.5, label='Stability Threshold')
 
-# Panel 2: Holding Limit Impact
+# --- Panel 2 (given): Holding Limit Impact ---
 ax2 = axes[0, 1]
 limits = [0, 10, 20, 30, 40, 50, 100]  # % of deposits
 final_deposits = []
@@ -939,42 +934,40 @@ ax2.axhline(70, color='red', linestyle='--', alpha=0.5, label='Stability Thresho
 ax2.legend()
 ax2.grid(True, alpha=0.3, axis='y')
 
-# Panel 3: CBDC Rate Sensitivity
+# =============================================================================
+# (c) Panel 3: CBDC Rate Sensitivity
+# Task: For each rate in [0, 0.005, 0.01, 0.015, 0.02, 0.025, 0.03], run a
+#        scenario with NO holding limit and collect the final deposit level.
+#        Plot rates (as %) on x-axis vs final deposits on y-axis.
+#        Add a horizontal line at 70% ("Stability Threshold") and a vertical
+#        line at 0.5% ("Bank Deposit Rate").
+# =============================================================================
+
 ax3 = axes[1, 0]
 rates = [0, 0.005, 0.01, 0.015, 0.02, 0.025, 0.03]
-final_deposits_rate = []
 
-for rate in rates:
-    _, deposits, _ = run_scenario("test", rate, None, None)  # No limit
-    final_deposits_rate.append(deposits[-1])
+# YOUR CODE HERE — collect final deposit levels and plot on ax3
+pass  # YOUR CODE HERE
 
-ax3.plot(np.array(rates)*100, final_deposits_rate, marker='o', linewidth=2.5,
-         color='#FF7F0E', markersize=8)
-ax3.axhline(70, color='red', linestyle='--', alpha=0.5, label='Stability Threshold')
-ax3.axvline(0.5, color='gray', linestyle=':', alpha=0.5, label='Bank Deposit Rate (0.5%)')
 ax3.set_xlabel('CBDC Interest Rate (%)', fontweight='bold')
 ax3.set_ylabel('Final Deposit Level (%)', fontweight='bold')
 ax3.set_title('Deposit Sensitivity to CBDC Interest Rate\n(No Holding Limit, 5 Years)', fontweight='bold', color='#3333B2')
-ax3.legend()
 ax3.grid(True, alpha=0.3)
 ax3.set_xlim(-0.1, 3.1)
 
-# Panel 4: Crisis Scenario Analysis
+# =============================================================================
+# (c) Panel 4: Crisis Scenario Analysis
+# Task: Run 3 scenarios and plot on ax4:
+#   1. No crisis, 30% limit (green, solid)
+#   2. Crisis at Q8, no limit (red, dashed)
+#   3. Crisis at Q8, 30% limit (blue, dash-dot)
+# Mark the crisis period (Q8-11) with ax4.axvspan and a text label.
+# =============================================================================
+
 ax4 = axes[1, 1]
-time_grid, deposits_nocrisis, _ = run_scenario("No Crisis", 0.0, 30, None)
-time_grid, deposits_crisis_nolimit, _ = run_scenario("Crisis, No Limit", 0.0, None, 8)
-time_grid, deposits_crisis_limit, _ = run_scenario("Crisis, 30% Limit", 0.0, 30, 8)
 
-ax4.plot(time_grid, deposits_nocrisis, label='No Crisis, 30% Limit',
-         color='#2CA02C', linewidth=2.5)
-ax4.plot(time_grid, deposits_crisis_nolimit, label='Crisis (Q8-11), No Limit',
-         color='#D62728', linewidth=2.5, linestyle='--')
-ax4.plot(time_grid, deposits_crisis_limit, label='Crisis (Q8-11), 30% Limit',
-         color='#0066CC', linewidth=2.5, linestyle='-.')
-
-# Mark crisis period
-ax4.axvspan(8, 11, alpha=0.1, color='red')
-ax4.text(9.5, 15, 'Crisis\nPeriod', ha='center', fontsize=9, color='#D62728')
+# YOUR CODE HERE — run 3 scenarios, plot them, mark crisis period
+pass  # YOUR CODE HERE
 
 ax4.set_xlabel('Time (Quarters)', fontweight='bold')
 ax4.set_ylabel('Bank Deposits (% of Initial)', fontweight='bold')
@@ -988,7 +981,8 @@ plt.savefig('disintermediation_calculator.png', dpi=150, bbox_inches='tight')
 plt.show()
 
 # =============================================================================
-# SUMMARY STATISTICS
+# (d) INTERPRETATION
+# Task: Fill in your findings based on the plots you generated.
 # =============================================================================
 
 print("\n" + "="*70)
@@ -999,24 +993,16 @@ print("""
 KEY FINDINGS:
 
 1. HOLDING LIMIT EFFECT:
-   - 30% holding limit preserves ~75-80% of deposits
-   - No limit: deposits can fall below 50% over 5 years
-   - Limits are the MOST effective stabilization tool
+   - YOUR ANSWER HERE: What happens with a 30% limit vs no limit?
 
 2. INTEREST RATE SENSITIVITY:
-   - Each 0.5% increase in CBDC rate costs ~5-10% of deposits
-   - At 2% CBDC rate with no limit, deposits collapse
-   - Non-interest-bearing CBDC minimizes disintermediation
+   - YOUR ANSWER HERE: How does each 0.5% increase in CBDC rate affect deposits?
 
 3. CRISIS AMPLIFICATION:
-   - Crisis doubles flight velocity
-   - Without limits: deposits can fall 30-40% in 3 quarters
-   - With limits: crisis impact capped at limit size
+   - YOUR ANSWER HERE: How do holding limits help during a crisis?
 
 4. POLICY IMPLICATIONS:
-   - Holding limits: ESSENTIAL for stability
-   - Interest rates: Should be 0% or below bank deposit rates
-   - Crisis planning: Pre-positioned limits prevent panic
+   - YOUR ANSWER HERE: What are the key design recommendations?
 
 MODEL LIMITATIONS:
 - Simplified depositor behavior

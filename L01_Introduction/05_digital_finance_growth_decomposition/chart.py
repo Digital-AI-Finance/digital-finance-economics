@@ -1,12 +1,11 @@
-r"""Digital Finance Growth Decomposition: Solow-Style Accounting
+r"""Digital Finance Growth Decomposition: Illustrative Factor Analysis
 
 Decomposing fintech sector growth into technology infrastructure, adoption,
 network effects, and total factor productivity (TFP) components.
 
-Citation: Solow (1957) - Technical change and the aggregate production function
+Data: Illustrative (not empirical)
 
 Economic Model: $G = G_{adoption} + G_{usage} + G_{value}$
-Solow decomposition: $\Delta Y = \alpha \Delta K + \beta \Delta L + \Delta A$
 Growth accounting: $g_Y = \alpha g_{tech} + \beta g_{adoption} + \gamma g_{network} + \delta g_{regulatory} + TFP$
 """
 import matplotlib.pyplot as plt
@@ -108,8 +107,7 @@ ax.text(2020, 19, 'Pandemic\nAcceleration', ha='center', fontsize=11, color='red
 # Labels and title
 ax.set_xlabel('Year', fontweight='bold', fontsize=14)
 ax.set_ylabel('Annual Growth Contribution (Percentage Points)', fontweight='bold', fontsize=14)
-ax.set_title('Digital Finance Growth Decomposition: Solow-Style Growth Accounting\n' +
-             '(method to identify growth sources)\n' +
+ax.set_title('Digital Finance Growth Decomposition: Illustrative Factor Analysis\n' +
              'Growth = α·Technology + β·Adoption + γ·Network + δ·Regulation + TFP\n' +
              '(α, β, γ, δ = weights for each factor\'s contribution)',
              fontweight='bold', fontsize=16, pad=20)
@@ -123,7 +121,7 @@ ax.set_xlim(2010, 2025)
 ax.set_ylim(0, 20)
 
 # Add citation
-fig.text(0.99, 0.01, 'Source: Solow (1957) growth accounting methodology',
+fig.text(0.99, 0.01, 'Data: Illustrative (not empirical)',
          ha='right', fontsize=10, style='italic', color='gray')
 
 plt.tight_layout()

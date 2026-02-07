@@ -1,7 +1,17 @@
-"""Regulatory Perimeter: Firm Response to Regulation Intensity
+r"""Regulatory Perimeter: Firm Response to Regulation Intensity
 
 Illustrates how firms respond to increasing regulatory burden through compliance,
 informalization, or exit/relocation decisions based on cost-benefit analysis.
+
+Economic Model: Regulatory Perimeter Firm Decision
+Economic Formula: $\text{Firm stays compliant if: } \pi_{\text{regulated}} - C(r) \geq \pi_{\text{unregulated}}$
+where:
+  - pi_regulated = Profit from operating within the regulated perimeter
+  - C(r) = Compliance cost as a function of regulation intensity r
+  - pi_unregulated = Profit from operating outside (informal sector or relocation)
+  - Compliant fraction = max(0, 1-r)
+  - Informal fraction = min(r, 0.3)
+  - Relocated fraction = max(0, r-0.3)
 
 Citation: De Soto (1989) - The Other Path; Porta & Shleifer (2014) - Informality and Development
 """
@@ -49,7 +59,7 @@ ax.set_xlim(0, 1)
 ax.set_ylim(0, 1.1)
 
 # Add educational annotation
-ax.text(0.02, 0.98, 'Perimeter Effect: π(inside) - C(r) ≥ π(outside)\nFirms exit when compliance cost > profit',
+ax.text(0.02, 0.98, 'Perimeter Effect: Profit(inside) - C(r) ≥ Profit(outside)\nFirms exit when compliance cost > profit',
         transform=ax.transAxes, fontsize=10,
         verticalalignment='top',
         bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))

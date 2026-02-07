@@ -3,7 +3,14 @@
 Modeling token unlock schedules and their market impact.
 Theory: Token vesting economics and selling pressure dynamics showing cliff-and-linear vesting patterns.
 
-Citation: Cong et al. (2021) - Tokenomics: Dynamic Adoption and Valuation; Liu et al. (2023) - Risks and Returns of Cryptocurrency
+Economic Model:
+  Vesting function: $S_i(t) = 0$ for $t < \\text{cliff}_i$
+  $S_i(t) = A_i \\cdot (t - \\text{cliff}_i) / T_i$ for $\\text{cliff}_i \\leq t \\leq \\text{cliff}_i + T_i$
+  Total circulating supply: $C(t) = \\sum_i S_i(t)$
+  Price impact: $P(t) = P(t-1) \\cdot (1 + \\delta)$
+  where $\\delta = -0.5 \\cdot (\\text{unlock}_t / \\text{Total}) + \\mu + \\varepsilon$
+
+Citation: Cong et al. (2021) - Tokenomics: Dynamic Adoption and Valuation
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,7 +21,7 @@ np.random.seed(42)
 plt.rcParams.update({
     'font.size': 12, 'axes.labelsize': 12, 'axes.titlesize': 14,
     'xtick.labelsize': 11, 'ytick.labelsize': 11, 'legend.fontsize': 10,
-    'figure.figsize': (14, 10), 'figure.dpi': 150
+    'figure.figsize': (14, 11), 'figure.dpi': 150
 })
 
 MLPURPLE = '#3333B2'
@@ -24,6 +31,7 @@ MLGREEN = '#2CA02C'
 MLRED = '#D62728'
 MLLAVENDER = '#ADADE0'
 MLGRAY = '#7F7F7F'
+MLMAGENTA = '#C2185B'  # Distinct color for Team
 
 # Token allocation structure (100M total tokens)
 TOTAL_SUPPLY = 100_000_000
@@ -64,7 +72,7 @@ def calculate_vesting_schedule(amount, cliff_months, vesting_months):
 # Calculate vesting schedules for each allocation
 vesting_schedules = {}
 cumulative_schedules = {}
-colors = {'Team': MLPURPLE, 'Investors': MLBLUE, 'Advisors': MLORANGE,
+colors = {'Team': MLMAGENTA, 'Investors': MLBLUE, 'Advisors': MLORANGE,
           'Community': MLGREEN, 'Treasury': MLGRAY}
 
 for category, params in ALLOCATIONS.items():
@@ -80,26 +88,30 @@ for category, params in ALLOCATIONS.items():
 total_circulating = np.sum([cumulative_schedules[cat] for cat in ALLOCATIONS.keys()], axis=0)
 
 # Simulate price impact from unlock events
-# Base price starts at $10, affected by unlock size
+# Use moderate impact with mean-reversion so price shows dips but does not flatline
 base_price = 10.0
 price_trajectory = np.zeros(months + 1)
 price_trajectory[0] = base_price
+long_run_price = base_price  # mean-reversion anchor grows slowly
 
 for month in range(1, months + 1):
     # Calculate total unlock for this month
     monthly_unlock = sum([vesting_schedules[cat][month] for cat in ALLOCATIONS.keys()])
 
-    # Selling pressure: larger unlocks create more price impact
-    # Impact factor: each 1% of total supply unlocked causes ~0.5% price drop
+    # Selling pressure: moderate impact factor
     unlock_pct = monthly_unlock / TOTAL_SUPPLY
-    price_impact = -0.5 * unlock_pct * 100  # Negative impact
+    price_impact = -0.03 * unlock_pct * 100  # ~3% drop per 1% of supply unlocked
 
-    # Add some recovery/growth trend and noise
-    growth_trend = 0.015  # 1.5% monthly growth on average
-    noise = np.random.normal(0, 0.02)  # 2% volatility
+    # Mean-reversion: price recovers toward slowly-growing anchor
+    long_run_price *= 1.005  # 0.5% monthly appreciation of fundamentals
+    mean_reversion = 0.05 * (long_run_price - price_trajectory[month - 1]) / price_trajectory[month - 1]
+
+    # Growth trend and noise
+    growth_trend = 0.01  # 1% monthly base growth
+    noise = np.random.normal(0, 0.025)  # 2.5% volatility
 
     # Apply price change
-    price_change = price_impact + growth_trend + noise
+    price_change = price_impact + mean_reversion + growth_trend + noise
     price_trajectory[month] = price_trajectory[month - 1] * (1 + price_change)
 
     # Floor at $1
@@ -107,8 +119,10 @@ for month in range(1, months + 1):
 
 
 # Create figure with subplots
-fig = plt.figure(figsize=(14, 10))
-gs = fig.add_gridspec(3, 2, hspace=0.35, wspace=0.3)
+fig = plt.figure(figsize=(14, 11))
+fig.suptitle('Tokenomics: From Vesting Schedule to Price Impact',
+             fontsize=16, fontweight='bold', y=0.98)
+gs = fig.add_gridspec(3, 2, hspace=0.40, wspace=0.3, top=0.93)
 
 # Subplot 1: Vesting schedules (monthly unlock rate)
 ax1 = fig.add_subplot(gs[0, :])
@@ -118,13 +132,15 @@ for category, schedule in vesting_schedules.items():
 
 ax1.set_xlabel('Months Since Launch (months)')
 ax1.set_ylabel('Monthly Token Unlock (millions)')
-ax1.set_title('Token Vesting Schedule: Monthly Unlock Rate by Category')
+ax1.set_title('(1) Token Vesting Schedule: Monthly Unlock Rate by Category')
 ax1.legend(loc='best', fontsize=10, ncol=5)
 ax1.grid(True, alpha=0.3, linestyle='--')
 
-# B5: Add annotation highlighting investor cliff event
+# Fix investor cliff annotation: compute actual y-value at month 6
+investor_unlock_at_cliff = vesting_schedules['Investors'][6] / 1e6
 ax1.annotate('Investor cliff:\nMajor unlock event',
-            xy=(6, 10), xytext=(10, 13),
+            xy=(6, investor_unlock_at_cliff),
+            xytext=(50, -30), textcoords='offset points',
             fontsize=9, fontweight='bold', color=MLBLUE,
             arrowprops=dict(arrowstyle='->', color=MLBLUE, lw=1.5),
             bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLBLUE, alpha=0.8))
@@ -148,7 +164,14 @@ ax2.plot(t_months, total_circulating / 1e6, linewidth=3, color='black',
 
 ax2.set_xlabel('Months Since Launch')
 ax2.set_ylabel('Cumulative Tokens (millions)')
-ax2.set_title('Circulating Supply Over Time')
+ax2.set_title('(2) Circulating Supply Over Time')
+
+# Fix "X months" placeholder
+ax2.text(0.02, 0.35, 'Vesting terms:\n- Cliff: No tokens released until\n  e.g., 12 months for Team\n- Linear vesting: Tokens unlock\n  gradually after cliff period',
+        transform=ax2.transAxes, fontsize=9,
+        verticalalignment='top',
+        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.7))
+
 ax2.legend(loc='best', fontsize=10)
 ax2.grid(True, alpha=0.3, linestyle='--')
 ax2.axhline(TOTAL_SUPPLY / 1e6, color='red', linestyle=':', alpha=0.3, linewidth=1.5)
@@ -167,8 +190,13 @@ pie_values = unlocked + [locked_supply]
 pie_colors = [colors[cat] for cat in ALLOCATIONS.keys()] + ['#CCCCCC']
 
 wedges, texts, autotexts = ax3.pie(pie_values, labels=pie_labels, colors=pie_colors,
-                                     autopct='%1.1f%%', startangle=90)
-ax3.set_title(f'Token Distribution at Month {mid_month}')
+                                     autopct='%1.1f%%', startangle=90,
+                                     pctdistance=0.85,
+                                     textprops={'fontsize': 9})
+# Make percentage text smaller for readability
+for t in autotexts:
+    t.set_fontsize(8)
+ax3.set_title(f'(3) Token Distribution at Month {mid_month}')
 
 # Subplot 4: Price impact simulation
 ax4 = fig.add_subplot(gs[2, :])
@@ -188,15 +216,31 @@ for month, unlock, price in major_unlocks:
 
 ax4.set_xlabel('Months Since Launch')
 ax4.set_ylabel('Token Price (USD)')
-ax4.set_title('Simulated Price Impact from Token Unlocks')
+ax4.set_title('(4) Simulated Price Impact from Token Unlocks')
+
+# Add unlock price explanation
+ax4.text(0.5, 0.92, '(Large unlocks create selling pressure, potentially depressing price)',
+        transform=ax4.transAxes, fontsize=8, ha='center', style='italic', color='gray')
+
 ax4.legend(loc='best', fontsize=10)
 ax4.grid(True, alpha=0.3, linestyle='--')
 
 # Add annotation box explaining the simulation
-textstr = 'Price Impact Model:\n• Unlock pressure: -0.5% price per 1% supply unlocked\n• Growth trend: +1.5% monthly\n• Volatility: ±2% random noise'
+textstr = 'Price Impact Model:\n\u2022 Unlock pressure: -3% price per 1% supply unlocked\n\u2022 Growth trend: +1% monthly + mean reversion\n\u2022 Volatility: \u00b12.5% random noise'
 ax4.text(0.98, 0.05, textstr, transform=ax4.transAxes, fontsize=9,
          verticalalignment='bottom', horizontalalignment='right',
          bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.3))
+
+# 4-panel reading guide
+fig.text(0.99, 0.96,
+         'Read top-to-bottom:\n'
+         '(1) When tokens unlock\n'
+         '(2) How supply accumulates\n'
+         '(3) Distribution at month 24\n'
+         '(4) How unlocks affect price',
+         fontsize=9, ha='right', va='top',
+         bbox=dict(boxstyle='round,pad=0.4', facecolor='lightcyan',
+                  edgecolor=MLBLUE, linewidth=1.5, alpha=0.9))
 
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')
 plt.savefig(Path(__file__).parent / 'chart.png', dpi=150, bbox_inches='tight')

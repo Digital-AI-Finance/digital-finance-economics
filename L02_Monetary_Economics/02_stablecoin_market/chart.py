@@ -3,8 +3,15 @@ r"""Stablecoin Reserve Dynamics: Bank Run Simulation
 Monte Carlo simulation of reserve depletion under stress scenarios.
 Based on Diamond & Dybvig (1983) bank run model.
 
-Economic model: $P_{stable} = 1 \pm \epsilon$ where price stability depends on reserve ratio.
-De-peg occurs when reserves fall below critical threshold.
+Economic Model:
+    Reserve depletion with inflow/outflow:
+    $R_{t+1} = R_t \cdot (1 - \max(0, r_{out} - r_{in} + \epsilon_t))$
+
+    Normal regime: $r_{in} = 0.018$, $r_{out} = 0.02$ (net outflow 0.2%/day)
+    Panic regime:  $r_{in} = 0$, $r_{out} = 0.12$ (post confidence breach)
+    De-peg occurs when $R_t < 0.50$.
+
+Citation: Diamond & Dybvig (1983) - Bank Runs, Deposit Insurance, and Liquidity
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -27,15 +34,20 @@ MLLAVENDER = '#ADADE0'
 
 # Simulation parameters
 N_SIMS = 500  # Number of Monte Carlo simulations
-T_DAYS = 60   # Simulation horizon in days
-NORMAL_REDEMPTION_RATE = 0.02  # 2% per day
-PANIC_REDEMPTION_RATE = 0.15   # 15% per day
+T_DAYS = 90   # Simulation horizon in days (extended per D7)
+NORMAL_INFLOW_RATE = 0.018     # 1.8% per day inflows (new deposits)
+NORMAL_REDEMPTION_RATE = 0.02  # 2% per day outflows (net outflow ~0.2%/day)
+PANIC_REDEMPTION_RATE = 0.12   # 12% per day during panic
 CONFIDENCE_THRESHOLD = 0.80    # Reserve ratio triggering panic
 DEPEG_THRESHOLD = 0.50         # Reserve ratio causing de-peg
 
 def simulate_reserves(initial_reserve_ratio, n_sims=N_SIMS, t_days=T_DAYS):
     """
-    Simulate reserve dynamics under Diamond-Dybvig bank run model.
+    Simulate reserve dynamics under Diamond-Dybvig bank run model
+    with inflow/outflow dynamics.
+
+    Normal regime: inflow=1.8%/day, outflow=2%/day (net -0.2%/day)
+    Panic regime: inflow=0, outflow=12%/day (after confidence breach)
 
     Returns:
         reserve_ratios: Array of shape (n_sims, t_days+1) with reserve ratios
@@ -46,23 +58,29 @@ def simulate_reserves(initial_reserve_ratio, n_sims=N_SIMS, t_days=T_DAYS):
     depeg_times = np.full(n_sims, np.nan)
 
     for sim in range(n_sims):
+        in_panic = False
         for t in range(t_days):
             current_ratio = reserve_ratios[sim, t]
 
-            # Diamond-Dybvig: Check if confidence threshold breached
+            # Diamond-Dybvig: Once confidence threshold breached, stay in panic
             if current_ratio < CONFIDENCE_THRESHOLD:
-                # Panic regime: High redemption rate
+                in_panic = True
+
+            if in_panic:
+                # Panic regime: no inflows, high redemption
+                inflow_rate = 0.0
                 redemption_rate = PANIC_REDEMPTION_RATE
             else:
-                # Normal regime: Low redemption rate
+                # Normal regime: steady inflows and outflows
+                inflow_rate = NORMAL_INFLOW_RATE
                 redemption_rate = NORMAL_REDEMPTION_RATE
 
-            # Add stochastic noise to redemption rate
-            noise = np.random.normal(0, 0.01)
-            actual_redemption = max(0, redemption_rate + noise)
+            # Add stochastic noise to net flow
+            noise = np.random.normal(0, 0.005)
+            net_outflow = max(0, redemption_rate - inflow_rate + noise)
 
-            # Update reserve ratio
-            new_ratio = current_ratio * (1 - actual_redemption)
+            # Update reserve ratio: R_{t+1} = R_t * (1 - net_outflow)
+            new_ratio = current_ratio * (1 - net_outflow)
             reserve_ratios[sim, t + 1] = max(0, new_ratio)
 
             # Check for de-peg event

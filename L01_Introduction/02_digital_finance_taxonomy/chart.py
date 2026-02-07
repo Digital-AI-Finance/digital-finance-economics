@@ -1,6 +1,6 @@
 r"""Digital Finance Taxonomy - Economic perspective on digital finance components
 
-Based on: Auer et al. (2020) - BIS taxonomy of digital finance and fintech innovations
+Based on: Course Framework -- Four Economic Lenses for Digital Finance
 
 Economic Model: $T = \{Crypto, Stablecoins, CBDCs, DeFi\}$
 Taxonomy framework: $\mathcal{T} = \{M, P, S, R\}$ where M=Monetary, P=Platform, S=Structure, R=Regulatory

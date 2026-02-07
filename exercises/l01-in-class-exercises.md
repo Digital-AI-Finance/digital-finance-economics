@@ -53,7 +53,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
 # =============================================================================
-# DATA COLLECTION
+# DATA COLLECTION (provided -- do not modify)
 # =============================================================================
 
 # Define date range (last 3 years for meaningful volatility analysis)
@@ -81,113 +81,65 @@ sp500['return'] = sp500['Adj Close'].pct_change()
 print("Data fetched successfully!")
 
 # =============================================================================
-# VOLATILITY CALCULATION
+# PART A: VOLATILITY CALCULATION
 # =============================================================================
 
-# Calculate 30-day rolling volatility (annualized)
-# Formula: std(daily returns) * sqrt(trading days per year)
-# Crypto trades 365 days, traditional markets ~252 days
+# TODO: Calculate 30-day rolling volatility (annualized) for each asset.
+# Formula: std(daily returns over 30-day window) * sqrt(trading days per year) * 100
+# Hint: Crypto trades 365 days/year, traditional markets ~252 days/year.
+# Store result in a new column called 'volatility' on each DataFrame.
 
-btc['volatility'] = btc['return'].rolling(window=30).std() * np.sqrt(365) * 100
-gold['volatility'] = gold['return'].rolling(window=30).std() * np.sqrt(252) * 100
-eurusd['volatility'] = eurusd['return'].rolling(window=30).std() * np.sqrt(252) * 100
-sp500['volatility'] = sp500['return'].rolling(window=30).std() * np.sqrt(252) * 100
+btc['volatility'] = None  # YOUR CODE HERE
+gold['volatility'] = None  # YOUR CODE HERE
+eurusd['volatility'] = None  # YOUR CODE HERE
+sp500['volatility'] = None  # YOUR CODE HERE
 
 # =============================================================================
-# SUMMARY STATISTICS
+# PART B: SUMMARY STATISTICS
 # =============================================================================
 
 print("\n" + "="*60)
 print("SUMMARY STATISTICS: Annualized Volatility")
 print("="*60)
 
-stats = pd.DataFrame({
-    'Asset': ['Bitcoin (BTC)', 'Gold (GLD)', 'EUR/USD', 'S&P 500'],
-    'Mean Volatility (%)': [
-        btc['volatility'].mean(),
-        gold['volatility'].mean(),
-        eurusd['volatility'].mean(),
-        sp500['volatility'].mean()
-    ],
-    'Max Volatility (%)': [
-        btc['volatility'].max(),
-        gold['volatility'].max(),
-        eurusd['volatility'].max(),
-        sp500['volatility'].max()
-    ],
-    'Min Volatility (%)': [
-        btc['volatility'].min(),
-        gold['volatility'].min(),
-        eurusd['volatility'].min(),
-        sp500['volatility'].min()
-    ]
-})
+# TODO: Build a DataFrame called `stats` with columns:
+#   'Asset'              -- names: 'Bitcoin (BTC)', 'Gold (GLD)', 'EUR/USD', 'S&P 500'
+#   'Mean Volatility (%)' -- mean of each asset's 'volatility' column
+#   'Max Volatility (%)'  -- max of each asset's 'volatility' column
+#   'Min Volatility (%)'  -- min of each asset's 'volatility' column
+
+stats = None  # YOUR CODE HERE
 
 print(stats.to_string(index=False))
 
-# Calculate volatility ratios
-btc_gold_ratio = btc['volatility'].mean() / gold['volatility'].mean()
-btc_eurusd_ratio = btc['volatility'].mean() / eurusd['volatility'].mean()
+# TODO: Calculate and print the ratio of Bitcoin's mean volatility to
+# Gold's mean volatility and to EUR/USD's mean volatility.
+
+btc_gold_ratio = None  # YOUR CODE HERE
+btc_eurusd_ratio = None  # YOUR CODE HERE
 
 print(f"\nBitcoin is {btc_gold_ratio:.1f}x more volatile than Gold")
 print(f"Bitcoin is {btc_eurusd_ratio:.1f}x more volatile than EUR/USD")
 
 # =============================================================================
-# PUBLICATION-READY CHART
+# PART C: PUBLICATION-READY CHART
 # =============================================================================
 
-# Set style for publication quality
-try:
-    plt.style.use('seaborn-v0_8-whitegrid')
-except:
-    plt.style.use('seaborn-whitegrid')
-fig, ax = plt.subplots(figsize=(12, 7), dpi=100)
+# TODO: Create a time-series line chart comparing rolling volatility across
+# all four assets. Requirements:
+#   - Figure size (12, 7), dpi=100
+#   - Plot each asset's 'volatility' column with a distinct color and label
+#   - Add two horizontal reference lines: typical gold vol (~15%) and FX vol (~8%)
+#   - Title: 'Bitcoin Volatility vs. Traditional Assets\n30-Day Rolling Annualized Volatility'
+#   - Annotate the peak Bitcoin volatility point
+#   - Save as 'bitcoin_volatility_analysis.png' (dpi=150)
 
-# Plot volatility series
-ax.plot(btc.index, btc['volatility'],
-        label='Bitcoin', color='#F7931A', linewidth=2, alpha=0.9)
-ax.plot(gold.index, gold['volatility'],
-        label='Gold', color='#FFD700', linewidth=1.5, alpha=0.8)
-ax.plot(eurusd.index, eurusd['volatility'],
-        label='EUR/USD', color='#0066CC', linewidth=1.5, alpha=0.8)
-ax.plot(sp500.index, sp500['volatility'],
-        label='S&P 500', color='#228B22', linewidth=1.5, alpha=0.8)
-
-# Add benchmark reference lines
-ax.axhline(y=15, color='gray', linestyle='--', alpha=0.5,
-           label='Typical Gold Volatility (~15%)')
-ax.axhline(y=8, color='gray', linestyle=':', alpha=0.5,
-           label='Typical FX Volatility (~8%)')
-
-# Formatting
-ax.set_title('Bitcoin Volatility vs. Traditional Assets\n30-Day Rolling Annualized Volatility',
-             fontsize=14, fontweight='bold', pad=20)
-ax.set_xlabel('Date', fontsize=11)
-ax.set_ylabel('Annualized Volatility (%)', fontsize=11)
-ax.legend(loc='upper right', fontsize=9)
-ax.set_ylim(0, min(200, btc['volatility'].max() * 1.1))  # Cap at 200% for readability
-
-# Add annotation for key insight
-max_vol_date = btc['volatility'].idxmax()
-max_vol = btc['volatility'].max()
-ax.annotate(f'Peak: {max_vol:.0f}%',
-            xy=(max_vol_date, max_vol),
-            xytext=(max_vol_date, max_vol + 15),
-            fontsize=9, ha='center',
-            arrowprops=dict(arrowstyle='->', color='gray', alpha=0.5))
-
-# Add source note
-fig.text(0.99, 0.01, 'Data: Yahoo Finance | Analysis: L01 Exercise',
-         fontsize=8, ha='right', alpha=0.7)
-
-plt.tight_layout()
-plt.savefig('bitcoin_volatility_analysis.png', dpi=150, bbox_inches='tight')
-plt.show()
+pass  # YOUR CODE HERE
 
 print("\nChart saved as 'bitcoin_volatility_analysis.png'")
 
 # =============================================================================
-# ECONOMIC CONCLUSION
+# ECONOMIC CONCLUSION (provided -- review and discuss with your partner)
 # =============================================================================
 
 print("\n" + "="*60)

@@ -81,7 +81,7 @@ ax1.annotate(f'Optimal interchange fee:\n{optimal_fee:.2f}%',
 # Labels and title
 ax1.set_xlabel('Interchange Fee (%)')
 ax1.set_ylabel('Normalized Value [0, 1]')
-ax1.set_title('Two-Sided Market: Balancing Merchants and Consumers')
+ax1.set_title('Two-Sided Market: Balancing Merchants and Consumers\n(Goal: Set fees to maximize total transactions on the platform)')
 ax1.set_xlim(0, 5)
 ax1.set_ylim(0, 1.05)
 ax1.legend(loc='upper right', framealpha=0.95)

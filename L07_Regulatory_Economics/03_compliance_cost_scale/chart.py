@@ -1,19 +1,24 @@
-"""Compliance Cost and Firm Scale: U-Shaped Cost Curve
+r"""Compliance Cost and Firm Scale: U-Shaped Cost Curve
 
 Modeling economies and diseconomies of scale in regulatory compliance.
-Theory: Stigler (1958), Economies of Scale in Industrial Organization.
 
-Cost Model:
-  TC = FC + VC(Q) + RC(Q)
-    FC = Fixed compliance costs (licensing, systems, legal)
-    VC = Variable costs (proportional to scale)
-    RC = Regulatory complexity costs (U-shaped)
-  AC = TC/Q = FC/Q + vc + rc(Q)
+Economic Model: U-Shaped Average Compliance Cost
+Economic Formula: $AC(Q) = \frac{FC}{Q} + vc + rc \cdot Q^{\alpha - 1}$
+where:
+  - AC = Average compliance cost as percentage of revenue
+  - FC = Fixed compliance costs (licensing, legal, systems)
+  - Q = Firm revenue (scale measure)
+  - vc = Variable compliance cost rate
+  - rc = Regulatory complexity cost scaling factor
+  - alpha = Complexity exponent (>1 creates U-shape from diseconomies)
 
 U-Shape Mechanism:
-  - Small scale: FC/Q dominates → high AC (economies of scale)
-  - Medium scale: FC/Q decreases → AC minimum (MES)
-  - Large scale: RC(Q) increases → rising AC (diseconomies: complexity, scrutiny)
+  - Small scale: FC/Q dominates -> high AC (economies of scale)
+  - Medium scale: FC/Q decreases -> AC minimum (MES)
+  - Large scale: rc*Q^(alpha-1) increases -> rising AC (diseconomies: complexity, scrutiny)
+
+Citation: Stigler (1958) - The Economies of Scale (cost curve foundations);
+          Stigler (1971) - The Theory of Economic Regulation (regulatory barrier interpretation)
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -131,11 +136,11 @@ ax.text(3, ax.get_ylim()[1] * 0.95, 'Regulatory\nSandbox Zone',
 # Add reference line for "sustainable" cost level
 sustainable_threshold = 2.0
 ax.axhline(sustainable_threshold, color=MLRED, linestyle='--',
-           linewidth=1.5, alpha=0.6, label='2% "Sustainable" Level', zorder=2)
+           linewidth=1.5, alpha=0.6, label='2% Illustrative Threshold', zorder=2)
 
 ax.set_xlabel('Firm Revenue ($ millions)')
 ax.set_ylabel('Average Compliance Cost (% of Revenue)')
-ax.set_title('U-Shaped Compliance Cost Curve: Stigler (1958) Economies of Scale')
+ax.set_title('U-Shaped Compliance Cost Curve: Stigler (1958, 1971) Economies of Scale')
 ax.legend(loc='upper right', framealpha=0.95)
 ax.grid(True, alpha=0.3, which='both')
 ax.set_xlim(revenue.min(), revenue.max())

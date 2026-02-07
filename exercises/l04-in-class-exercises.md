@@ -35,7 +35,7 @@
 
 Analyze remittance costs across different corridors using World Bank-style data. Calculate which corridors are most expensive, identify patterns, and assess progress toward the UN SDG target of 3% by 2030.
 
-### Complete Code
+### Starter Code
 
 ```python
 """
@@ -89,19 +89,15 @@ corridors = [
     ("Malaysia", "Bangladesh", 4.8, 20, 50),
 ]
 
-# Create DataFrame
-df = pd.DataFrame(corridors, columns=[
-    'sending_country', 'receiving_country', 'avg_cost_pct',
-    'provider_count', 'digital_share_pct'
-])
-
-# Add derived columns
-df['corridor'] = df['sending_country'] + ' -> ' + df['receiving_country']
-df['meets_sdg'] = df['avg_cost_pct'] <= 3.0
-df['cost_category'] = pd.cut(df['avg_cost_pct'],
-                              bins=[0, 3, 5, 8, 100],
-                              labels=['SDG Compliant (<3%)', 'Low (3-5%)',
-                                     'Medium (5-8%)', 'High (>8%)'])
+# (a) Create DataFrame from the corridors list above.
+#     Columns: 'sending_country', 'receiving_country', 'avg_cost_pct',
+#              'provider_count', 'digital_share_pct'
+#     Then add derived columns:
+#       - 'corridor': "sending_country -> receiving_country"
+#       - 'meets_sdg': True if avg_cost_pct <= 3.0
+#       - 'cost_category': use pd.cut with bins [0, 3, 5, 8, 100]
+#         and labels ['SDG Compliant (<3%)', 'Low (3-5%)', 'Medium (5-8%)', 'High (>8%)']
+df = None  # YOUR CODE HERE
 
 print("="*70)
 print("REMITTANCE COST ANALYSIS BY CORRIDOR")
@@ -136,18 +132,38 @@ print(df['cost_category'].value_counts().to_string())
 # ANALYSIS 3: COMPETITION EFFECT
 # =============================================================================
 
+# =============================================================================
+# BERTRAND COMPETITION SIDEBAR
+# =============================================================================
+
+print("\n" + "="*70)
+print("SIDEBAR: BERTRAND COMPETITION (1883)")
+print("="*70)
+print("""
+An economic model showing that when firms compete purely on price (rather than
+quantity or quality), prices are driven down toward the actual cost of production.
+The key insight: even two competitors are enough to drive prices down significantly.
+In remittance markets, this means more money transfer providers = lower fees for customers.
+""")
+print("="*70)
+
 print("\n3. COMPETITION EFFECT (Bertrand Theory)")
 print("-"*40)
 
-# Calculate correlation between provider count and cost
-correlation = df['provider_count'].corr(df['avg_cost_pct'])
+# (b) Calculate the Pearson correlation between provider_count and avg_cost_pct.
+#     Correlation: a statistical measure of how much two things move together,
+#     ranging from -1 to +1; negative means they move in opposite directions.
+#     Hint: use df['col1'].corr(df['col2'])
+correlation = None  # YOUR CODE HERE
 print(f"Correlation between # providers and cost: {correlation:.3f}")
 print("(Negative correlation = more competition = lower prices)")
 
-# Split into high/low competition
-median_providers = df['provider_count'].median()
-high_competition = df[df['provider_count'] >= median_providers]
-low_competition = df[df['provider_count'] < median_providers]
+# (c) Split corridors into high-competition and low-competition groups.
+#     Compute the median of provider_count. Corridors with provider_count >= median
+#     are "high competition"; below median are "low competition".
+median_providers = None  # YOUR CODE HERE
+high_competition = None  # YOUR CODE HERE
+low_competition = None   # YOUR CODE HERE
 
 print(f"\nHigh Competition (>={int(median_providers)} providers):")
 print(f"  Average cost: {high_competition['avg_cost_pct'].mean():.1f}%")
@@ -226,18 +242,11 @@ ax2.legend()
 cbar = plt.colorbar(ax2.collections[0], ax=ax2)
 cbar.set_label('Digital Share %')
 
-# Chart 3: Cost distribution histogram
+# (d) Chart 3: Cost distribution histogram.
+#     Plot a histogram of avg_cost_pct (10 bins) and add vertical lines for
+#     the SDG target (3%), the mean, and the median. Include a legend.
 ax3 = axes[1, 0]
-ax3.hist(df['avg_cost_pct'], bins=10, color='#3333B2', alpha=0.7, edgecolor='black')
-ax3.axvline(x=3, color='green', linestyle='--', linewidth=2, label='SDG Target')
-ax3.axvline(x=df['avg_cost_pct'].mean(), color='red', linestyle='-',
-           linewidth=2, label=f'Mean ({df["avg_cost_pct"].mean():.1f}%)')
-ax3.axvline(x=df['avg_cost_pct'].median(), color='orange', linestyle='-',
-           linewidth=2, label=f'Median ({df["avg_cost_pct"].median():.1f}%)')
-ax3.set_xlabel('Cost (%)')
-ax3.set_ylabel('Number of Corridors')
-ax3.set_title('Cost Distribution')
-ax3.legend()
+pass  # YOUR CODE HERE
 
 # Chart 4: Digital share vs Cost
 ax4 = axes[1, 1]
@@ -351,8 +360,8 @@ print("""
 Apply the Rochet-Tirole two-sided market model to calculate optimal interchange fees for a new payment network. You are the economics team advising a startup card network entering the European market.
 
 **Given Parameters (Note: Illustrative data for educational purposes):**
-- Merchant price elasticity: -2.0 (sensitive to fees)
-- Consumer price elasticity: -0.5 (less sensitive - rewards offset fees)
+- Merchant price elasticity (how much demand changes when price changes---high elasticity means customers are very sensitive to price changes; from L04 slides): -2.0 (sensitive to fees)
+- Consumer price elasticity (how much demand changes when price changes---high elasticity means customers are very sensitive to price changes; from L04 slides): -0.5 (less sensitive - rewards offset fees)
 - Total marginal cost to platform: 0.8% per transaction
 - Platform target margin: 0.3%
 
@@ -427,7 +436,7 @@ If competitor offers 0.5% lower merchant fees:
 | **Match** | Cut merchant fee by 0.5% | Lose 0.5% margin per transaction |
 | **Don't Match** | Maintain fees | Lose merchants (elastic!) |
 | **Subsidize** | Reduce consumer rewards to fund merchant discount | Lose consumers |
-| **Differentiate** | Better rewards, service, or brand | Non-price competition |
+| **Differentiate** | Better rewards, service, or brand | Non-price competition (competing on features, quality, speed, or brand reputation instead of lowering prices) |
 
 **Quantitative Analysis:**
 - Merchant elasticity = -2.0 means: 10% price increase = 20% volume decrease
@@ -831,12 +840,14 @@ Monthly income: RUP 400 (~$0.80)
 
 Build an interactive model of network effects in payment systems. Compare Metcalfe's Law (value grows with n^2) with Odlyzko-Tilly (value grows with n*log(n)) and identify critical mass thresholds.
 
+> **Odlyzko-Tilly Model (2005):** A more realistic alternative to Metcalfe's Law. Instead of network value growing as n² (which overestimates for large networks), Odlyzko-Tilly suggests value grows as n×log(n)---still faster than linear, but not as extreme as Metcalfe predicted.
+
 **Questions to Answer:**
 1. At what user count does a network become "viable" (value > switching costs)?
 2. How does the growth model (Metcalfe vs Odlyzko-Tilly) affect adoption dynamics?
 3. What happens when two competing networks with different sizes merge or interoperate?
 
-### Complete Code
+### Starter Code
 
 ```python
 """
@@ -865,18 +876,20 @@ def metcalfe_value(n, k=1):
 
     k = scaling constant (value per connection)
     """
-    return k * n * (n - 1) / 2
+    # (a) Return k * n * (n - 1) / 2
+    return None  # YOUR CODE HERE
 
 def odlyzko_value(n, k=1):
     """
     Odlyzko-Tilly Law: Value proportional to n*log(n)
 
     Empirically, users don't value ALL connections equally.
-    Value of marginal connection decreases logarithmically.
+    Value of marginal (the next additional) connection decreases logarithmically.
 
     More realistic for large networks.
     """
-    return k * n * np.log(n + 1)  # +1 to avoid log(0)
+    # (a) Return k * n * log(n + 1)  (use np.log; +1 to avoid log(0))
+    return None  # YOUR CODE HERE
 
 def linear_value(n, k=1):
     """
@@ -885,16 +898,17 @@ def linear_value(n, k=1):
     Baseline model - each user adds constant value.
     No network effects.
     """
-    return k * n
+    # (a) Return k * n
+    return None  # YOUR CODE HERE
 
 def calculate_critical_mass(value_func, switching_cost, max_n=1000, k=1):
     """
     Find the point where network value exceeds switching cost.
     This is the "critical mass" after which adoption accelerates.
     """
-    for n in range(1, max_n):
-        if value_func(n, k) > switching_cost:
-            return n
+    # (b) Loop n from 1 to max_n. Return the first n where
+    #     value_func(n, k) > switching_cost. If none found, return max_n.
+    pass  # YOUR CODE HERE
     return max_n
 
 # =============================================================================
@@ -956,15 +970,13 @@ def simulate_adoption(value_func, k, switching_cost, market_size=1000,
         current_users = users[-1]
         current_value = value_func(current_users, k)
 
-        # Net value determines adoption rate
-        net_value = max(0, current_value - switching_cost)
-
-        # S-curve growth: fast in middle, slow at saturation
-        headroom = market_size - current_users
-        growth_rate = viral_coefficient * net_value * (headroom / market_size)
-
-        new_users = min(current_users + growth_rate, market_size)
-        users.append(new_users)
+        # (c) Implement the adoption loop body:
+        #     1. net_value = max(0, current_value - switching_cost)
+        #     2. headroom = market_size - current_users
+        #     3. growth_rate = viral_coefficient * net_value * (headroom / market_size)
+        #     4. new_users = min(current_users + growth_rate, market_size)
+        #     5. Append new_users to the users list
+        pass  # YOUR CODE HERE
 
     return users
 
@@ -999,12 +1011,15 @@ print(f"  Linear:       {adoption_linear[-1]:>6.0f} users ({100*adoption_linear[
 def analyze_merger(n1, n2, value_func, k):
     """
     Analyze value creation from merging two networks.
+    Returns: (value_1, value_2, value_merged, synergy)
     """
-    value_1 = value_func(n1, k)
-    value_2 = value_func(n2, k)
-    value_merged = value_func(n1 + n2, k)
-    synergy = value_merged - value_1 - value_2
-    return value_1, value_2, value_merged, synergy
+    # (d) Compute value of each network separately and merged:
+    #     value_1 = value_func(n1, k)
+    #     value_2 = value_func(n2, k)
+    #     value_merged = value_func(n1 + n2, k)
+    #     synergy = value_merged - value_1 - value_2
+    #     Return the tuple (value_1, value_2, value_merged, synergy)
+    return None  # YOUR CODE HERE
 
 # Example merger: Network A (200 users) + Network B (100 users)
 n1, n2 = 200, 100
@@ -1230,7 +1245,7 @@ Compare SWIFT-based correspondent banking with blockchain-based cross-border pay
 |----------------|-------|------------|
 | Sending bank fee | $15-25 | $0 (self-custody) |
 | Correspondent bank fee(s) | $10-30 | $0 |
-| Receiving bank fee | $5-15 | $0-5 (offramp) |
+| Receiving bank fee | $5-15 | $0-5 (offramp: converting cryptocurrency back to traditional fiat currency---e.g., selling USDC for US dollars at a local exchange) |
 | FX spread | 2-4% | 0.1-0.5% |
 | Network fee | - | $0.10-2 (on-chain) |
 | **TOTAL on $1000** | $60-120 (6-12%) | $5-20 (0.5-2%) |
@@ -1257,7 +1272,8 @@ Compare SWIFT-based correspondent banking with blockchain-based cross-border pay
 | Correspondent default | Yes (multiple) | No |
 | Receiving bank default | Yes | Possible (offramp) |
 | Smart contract risk | No | Yes |
-| Protocol risk | Low (mature) | Medium (bugs, hacks) |
+| Protocol risk (risk that the underlying software code has bugs or security vulnerabilities) | Low (mature) | Medium (bugs, hacks) |
+| Herstatt risk (the risk that one party in a foreign exchange transaction pays out but the other party defaults before completing their side---named after Bankhaus Herstatt, a German bank whose 1974 failure during cross-timezone settlement caused major losses) | Yes (cross-border) | Reduced (atomic swaps) |
 
 *Verdict:* Depends on perspective. SWIFT has known, regulated counterparties. Blockchain has protocol risk but fewer counterparties.
 
@@ -1380,13 +1396,13 @@ Apply the RTGS vs DNS framework from L04 to evaluate settlement system design fo
 | Settlement Risk | Zero | 2 days of exposure | T+2 standard |
 | Liquidity Need | Very High | Low | Manageable |
 | Operational Complexity | High | Lower | Proven |
-| Margin Requirements | Lower | Higher | T+2 calibrated |
+| **Margin Requirements** (collateral---cash or securities---that must be deposited to cover potential losses during the settlement period) | Lower | Higher | T+2 calibrated |
 | Fail Rate | Very Low | Higher | ~2% fail rate |
 
 **Recommendation: RTGS (T+0 or T+1) with robust liquidity facilities**
 
 **Justification:**
-- Current T+2 creates counterparty risk (GameStop 2021 showed this)
+- Current T+2 creates counterparty risk (GameStop 2021: retail investors caused extreme volatility, exposing how settlement delays create risk---brokers had to halt trading because they couldn't post enough collateral during the T+2 settlement window)
 - DTCC moving to T+1 in 2024, eventually T+0
 - Blockchain can enable T+0 (DvP - Delivery vs Payment in real-time)
 - Higher liquidity cost is offset by reduced margin requirements and counterparty risk

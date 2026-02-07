@@ -1,13 +1,18 @@
 r"""Remittance Cost Dynamics: Bertrand Price Competition
 
-Modeling price equilibrium as competition increases in cross-border payments.
-Theory: Bertrand (1883), Tirole (1988) Industrial Organization.
+How competition drives down remittance (money transfer) prices.
+Core idea: When more companies compete, prices fall toward the actual cost.
 
-Economic Model: Bertrand Competition with Differentiation
-- Profit function: $\pi_i = (p_i - c) \cdot D_i(p_i, p_j)$
-- Demand with differentiation: $D_i = a - b \cdot p_i + d \cdot p_j$ where $d < b$
-- Nash equilibrium price: $p^* = \frac{a + c \cdot b}{2b - d}$
-- Core insight: $C_{digital} < C_{traditional}$ as $n$ competitors $\to \infty$, $p^* \to c$ (marginal cost)
+Economic Model:
+    Bertrand competition with product differentiation:
+    $$c(n) = c_0 + \frac{m}{n^{1-d}}$$
+    where $c_0$ = marginal cost floor, $m$ = monopoly markup,
+    $n$ = number of competitors, $d$ = product differentiation parameter
+    ($d=0$: homogeneous goods, price collapses to marginal cost with 2 firms;
+     $d>0$: differentiated products, convergence is slower).
+
+Theory: Bertrand (1883) price competition model.
+Reference: Tirole (1988) - The Theory of Industrial Organization.
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -64,7 +69,7 @@ real_data = [
     (2008, 10.0, 2, 'Pre-mobile money'),
     (2010, 9.2, 3, 'PayPal expansion'),
     (2012, 8.5, 4, 'M-Pesa Africa'),
-    (2015, 7.5, 5, 'TransferWise founded'),
+    (2011, 7.8, 4, 'TransferWise founded'),
     (2017, 6.9, 7, 'Crypto remittances'),
     (2020, 6.5, 9, 'COVID digitization'),
     (2023, 6.2, 12, 'Stablecoin corridors'),
@@ -120,6 +125,12 @@ ax.annotate('UN SDG 10.c Target:\nReduce remittance costs to 3% by 2030\n'
            fontsize=10, ha='center',
            bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.7),
            arrowprops=dict(arrowstyle='->', connectionstyle='arc3,rad=0.2', lw=1.5))
+
+# Bertrand competition explanation for BSc students
+ax.text(0.02, 0.35,
+    'Bertrand Competition:\nAs more firms enter a market,\nprices fall toward the actual\ncost of providing the service.\nMore competitors = lower prices.',
+    transform=ax.transAxes, fontsize=9,
+    bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8, edgecolor='gray'))
 
 # Monopoly price marker
 monopoly_price = bertrand_price(1, marginal_cost, monopoly_markup, differentiation)
