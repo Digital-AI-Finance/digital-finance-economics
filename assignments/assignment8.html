@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A8: How Financial Crises Spread Through Networks | Digital Finance &amp; Economics</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"\\[",right:"\\]",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false}]});});</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f6f8fa;color:#24292e;font-size:13px;line-height:1.6}a{color:#0366d6;text-decoration:none}a:hover{text-decoration:underline}.nav{background:#24292e;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}.nav-title{color:#fff;font-weight:600;font-size:15px}.nav-links{display:flex;gap:20px}.nav-links a{color:#fff;font-size:12px;opacity:0.85;transition:opacity 0.15s}.nav-links a:hover{opacity:1;text-decoration:none}.container{max-width:1000px;margin:0 auto;padding:20px}.assignment-header{color:#fff;padding:24px 32px;border-radius:6px;margin-bottom:20px}.assignment-header h1{font-size:22px;font-weight:700;margin-bottom:4px}.assignment-header .lecture-ref{font-size:13px;opacity:0.85}.section-title{font-size:16px;font-weight:700;margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid #e1e4e8}.brief-content{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:20px;margin-bottom:20px}.brief-content h2{font-size:16px;font-weight:700;margin:16px 0 8px;color:#24292e}.brief-content h3{font-size:14px;font-weight:600;margin:12px 0 6px;color:#24292e}.brief-content h4{font-size:13px;font-weight:600;margin:10px 0 4px;color:#586069}.brief-content p{margin:8px 0;line-height:1.6}.brief-content ul,.brief-content ol{margin:8px 0 8px 24px}.brief-content li{margin:4px 0;line-height:1.5}.brief-content code{background:#f6f8fa;padding:2px 6px;border-radius:3px;font-size:12px;font-family:'SFMono-Regular',Consolas,monospace}.brief-content pre{background:#24292e;color:#e1e4e8;padding:16px;border-radius:6px;overflow-x:auto;margin:12px 0;font-size:12px;line-height:1.5}.brief-content pre code{background:transparent;padding:0;color:inherit}.brief-content table{width:100%;border-collapse:collapse;margin:12px 0}.brief-content th,.brief-content td{border:1px solid #e1e4e8;padding:8px 12px;text-align:left;font-size:12px}.brief-content th{background:#f6f8fa;font-weight:600}.brief-content hr{border:none;border-top:1px solid #e1e4e8;margin:16px 0}.brief-content a{color:#0366d6}.chart-section{text-align:center;margin:20px 0}.chart-section img{max-width:100%;border:1px solid #e1e4e8;border-radius:6px}.resources{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.resource-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px;font-weight:500;background:#fff;transition:all 0.15s}.resource-link:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}.model-answer{border:2px dashed #e1e4e8;border-radius:6px;padding:16px;margin:24px 0}.model-answer summary{cursor:pointer;font-weight:600;font-size:14px;padding:8px;list-style:none}.model-answer summary::-webkit-details-marker{display:none}.model-answer summary::before{content:"+ ";font-family:monospace}.model-answer[open] summary::before{content:"- "}.slide-card{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:16px;margin:12px 0}.slide-card h4{font-size:11px;color:#586069;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e1e4e8}.slide-card h2{font-size:16px;font-weight:700;margin:8px 0}.slide-card h3{font-size:14px;font-weight:600;margin:6px 0}.slide-card p{margin:6px 0;line-height:1.5}.slide-card ul,.slide-card ol{margin:6px 0 6px 20px}.slide-card li{margin:3px 0}.slide-card img{max-width:100%;border-radius:4px;margin:8px 0}.slide-card table{width:100%;border-collapse:collapse;margin:8px 0}.slide-card th,.slide-card td{border:1px solid #e1e4e8;padding:6px 10px;font-size:12px}.slide-card th{background:#f6f8fa;font-weight:600}.slide-card code{background:#f6f8fa;padding:2px 4px;border-radius:3px;font-size:11px}.slide-card pre{background:#24292e;color:#e1e4e8;padding:12px;border-radius:4px;font-size:11px;overflow-x:auto}.slide-card pre code{background:transparent;padding:0;color:inherit}.prev-next{display:flex;justify-content:space-between;margin:24px 0;padding-top:16px;border-top:1px solid #e1e4e8}.prev-next a{padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px}.prev-next a:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}.foot{text-align:center;padding:16px;font-size:11px;color:#586069;margin-top:20px}.foot a{margin:0 8px}@media(max-width:768px){.container{padding:12px}.assignment-header{padding:16px}.assignment-header h1{font-size:18px}.resources{flex-direction:column}.prev-next{flex-direction:column;gap:8px}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><span class="nav-title">Digital Finance & Economics</span><div class="nav-links"><a href="../index.html">Dashboard</a><a href="../assignments.html">Assignments</a><a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a></div></nav>
+
+<div class="container">
+
+<div class="assignment-header" style="background:linear-gradient(135deg,#ef4444,#dc2626)">
+<h1>A8: How Financial Crises Spread Through Networks</h1>
+<div class="lecture-ref">L08 Synthesis</div>
+</div>
+
+<h2 class="section-title">Assignment Brief</h2>
+
+<div class="brief-content">
+
+<h2>Introduction</h2>
+
+<p>When one bank fails, its losses can spread to connected banks, triggering a <strong>cascade</strong> (a chain reaction where failures cause more failures). This model simulates <strong>financial contagion</strong> (the spread of financial distress from one institution to others through direct connections) on a random network of 20 financial institutions.</p>
+
+<p>Each institution has a <strong>capital buffer</strong> $B_i$ (money set aside to absorb losses -- like a safety cushion). When institution $i$ fails, it spreads losses to its neighbors. If a neighbor's accumulated losses exceed its buffer, it also fails -- creating a cascade.</p>
+
+<p>The formula for losses received by institution $i$ is:</p>
+
+$$\text{Loss}_i = \sum_{j \in \text{failed neighbors}} \frac{\text{Loss}_j}{\text{degree}_j}$$
+
+<p>where $\text{degree}_j$ is the number of connections that institution $j$ has.</p>
+
+<h2>Your Task</h2>
+
+<p>Run the baseline simulation, then implement <strong>three variations</strong> to explore how different factors affect systemic risk. Create a 7-slide presentation (using Marp or PowerPoint) summarizing your findings.</p>
+
+<h2>Variations to Implement</h2>
+
+<h3>Variation 1: Double All Buffers</h3>
+
+<p><strong>Change:</strong> On line 42, modify the capital buffer range from <code>[0.05, 0.20]</code> to <code>[0.10, 0.40]</code>:</p>
+
+<pre><code>buffers = np.random.uniform(0.10, 0.40, N)</code></pre>
+
+<p><strong>Question:</strong> How many nodes fail now compared to baseline? What does this tell you about capital requirements as a policy tool?</p>
+
+<h3>Variation 2: Increase Network Density</h3>
+
+<p><strong>Change:</strong> On line 36, make the network more connected by changing <code>&lt; 0.3</code> to <code>&lt; 0.7</code>:</p>
+
+<pre><code>adj = np.random.rand(N, N) &lt; 0.7</code></pre>
+
+<p><strong>Question:</strong> Does more connectivity help or hurt financial stability? Why might dense networks be "robust-yet-fragile"?</p>
+
+<h3>Variation 3: Multiple Initial Failures</h3>
+
+<p><strong>Change:</strong> After line 53, add two more initial failures:</p>
+
+<pre><code>failed[shock_node] = True
+failed[1] = True
+failed[2] = True</code></pre>
+
+<p>Also update line 56 to reflect 3 initial failures:</p>
+
+<pre><code>round_failures = [3]  # Initial shocks</code></pre>
+
+<p><strong>Question:</strong> How does the cascade differ when 3 banks fail simultaneously versus a single shock?</p>
+
+<h2>Open Extension (Optional)</h2>
+
+<p>Add a <strong>circuit breaker</strong> mechanism: any node that has lost 50% of its buffer freezes all outgoing connections (stops spreading losses to neighbors). This simulates emergency liquidity injections or regulatory interventions.</p>
+
+<p><strong>Implementation hint:</strong> Track a new boolean array <code>frozen</code> and modify the loss propagation loop to skip frozen nodes.</p>
+
+<h2>How to Run</h2>
+
+<ol>
+<li>Upload the provided <code>chart.py</code> file to Google Colab</li>
+<li>Run the baseline version first to understand the output</li>
+<li>Make each variation change one at a time</li>
+<li>Save the network visualizations and failure counts for each variation</li>
+<li>Create your presentation comparing all four scenarios</li>
+</ol>
+
+<h2>Deliverables</h2>
+
+<p>Submit a 7-slide presentation (PDF or PPTX):</p>
+<ol>
+<li><strong>Title slide</strong> with your name and the reference: Acemoglu et al. (2015) - Systemic Risk and Network Topology</li>
+<li><strong>The Model</strong> -- explain the mechanics (20 nodes, random connections, capital buffers, loss propagation formula)</li>
+<li><strong>Baseline Results</strong> -- network visualization + total failures</li>
+<li><strong>Variation 1</strong> -- doubled buffers analysis</li>
+<li><strong>Variation 2</strong> -- dense network analysis</li>
+<li><strong>Variation 3</strong> -- multiple shocks analysis</li>
+<li><strong>Key Insights</strong> -- what did you learn about systemic risk and network structure?</li>
+</ol>
+
+<h2>Time Allocation</h2>
+
+<ul>
+<li><strong>45 minutes:</strong> Run simulations and analyze results</li>
+<li><strong>10 minutes:</strong> Create presentation slides</li>
+</ul>
+
+<h2>Assessment Criteria</h2>
+
+<ul>
+<li><strong>Correctness:</strong> All three variations implemented correctly (30%)</li>
+<li><strong>Analysis:</strong> Clear explanations of how each change affects contagion (40%)</li>
+<li><strong>Insight:</strong> Understanding of the "robust-yet-fragile" paradox and policy implications (20%)</li>
+<li><strong>Presentation:</strong> Clear visuals and concise explanations (10%)</li>
+</ul>
+
+<h2>Learning Objectives</h2>
+
+<p>By completing this assignment, you will:</p>
+<ul>
+<li>Understand how financial contagion spreads through networks</li>
+<li>Recognize the counterintuitive effects of network density on systemic risk</li>
+<li>Evaluate the effectiveness of capital buffers as a policy tool</li>
+<li>Appreciate why regulators monitor interconnectedness in financial systems</li>
+</ul>
+
+</div>
+
+<h2 class="section-title">Model Answer</h2>
+
+<details class="model-answer" style="border-color:#ef4444">
+<summary>Show Model Answer Presentation</summary>
+
+<div class="slide-card">
+<h4>Slide 1 of 7</h4>
+<h2>How Financial Crises Spread Through Networks</h2>
+<p><strong>Assignment A8: Financial Contagion Simulation</strong></p>
+<p>Reference: Acemoglu, D., Ozdaglar, A., &amp; Tahbaz-Salehi, A. (2015). Systemic Risk and Stability in Financial Networks. <em>American Economic Review</em>, 105(2), 564-608.</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 2 of 7</h4>
+<h2>The Model: Network Contagion Mechanics</h2>
+<p><strong>Setup:</strong></p>
+<ul>
+<li>20 financial institutions arranged in a random network</li>
+<li>Each node has a <strong>capital buffer</strong> $B_i$ (randomly drawn from [0.05, 0.20])</li>
+<li>Connections represent financial exposures (loans, derivatives, interbank lending)</li>
+</ul>
+<p><strong>Cascade Dynamics:</strong></p>
+<p>When institution $i$ fails, it spreads losses to all connected neighbors:</p>
+$$\text{Loss}_j = \sum_{i \in \text{failed neighbors}} \frac{B_i}{\text{degree}_i}$$
+<ul>
+<li>If $\text{Loss}_j > B_j$, then institution $j$ also fails</li>
+<li>Process repeats until no new failures occur</li>
+</ul>
+</div>
+
+<div class="slide-card">
+<h4>Slide 3 of 7</h4>
+<h2>Baseline Results: Single Shock Cascade</h2>
+<img src="../L08_Synthesis/01_systemic_risk_contagion/chart.png" style="max-width:60%;float:right">
+<p><strong>Observations:</strong></p>
+<ul>
+<li>Initial shock to node 0 (marked "Shock")</li>
+<li>Cascade spreads through network connections</li>
+<li>Multiple rounds of failures (shown in bar chart)</li>
+<li>Some nodes become <strong>stressed</strong> (orange) but don't fail</li>
+<li>Total failures depend on network structure and buffer distribution</li>
+</ul>
+</div>
+
+<div class="slide-card">
+<h4>Slide 4 of 7</h4>
+<h2>Variation 1: Doubled Capital Buffers</h2>
+<img src="l08-presentation/chart_varied.png" style="max-width:50%;float:right">
+<p><strong>Change:</strong> Buffers increased from [0.05, 0.20] to [0.10, 0.40]</p>
+<p><strong>Result:</strong> Significantly <strong>fewer failures</strong></p>
+<p><strong>Policy Implication:</strong></p>
+<p>Capital requirements are the most effective defense against systemic risk. Even modest increases in buffers can prevent cascades.</p>
+<p><strong>Trade-off:</strong> Higher capital requirements reduce bank profitability and may restrict lending.</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 5 of 7</h4>
+<h2>Variation 2: Dense Network (p=0.7)</h2>
+<p><strong>Change:</strong> Connection probability increased from 0.3 to 0.7</p>
+<p><strong>Result:</strong> <strong>MORE failures</strong> than baseline (counterintuitive!)</p>
+<p><strong>The "Robust-Yet-Fragile" Paradox:</strong></p>
+<ul>
+<li><strong>Low density:</strong> Isolated failures (few connections to spread losses)</li>
+<li><strong>Medium density:</strong> Network absorbs shocks well (diversified exposures)</li>
+<li><strong>High density:</strong> Every failure hits many institutions simultaneously</li>
+</ul>
+<p><strong>Real-world example:</strong> 2008 financial crisis -- highly interconnected institutions (AIG, Lehman Brothers) spread losses globally through credit default swaps and interbank markets.</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 6 of 7</h4>
+<h2>Variation 3: Multiple Initial Shocks</h2>
+<p><strong>Change:</strong> 3 simultaneous failures instead of 1</p>
+<p><strong>Result:</strong> Devastating cascade with <strong>rapid propagation</strong></p>
+<p><strong>Why it matters:</strong></p>
+<ul>
+<li>Correlated failures (e.g., exposure to same asset class) trigger simultaneous shocks</li>
+<li>2008 crisis: many banks held mortgage-backed securities, all failed together</li>
+<li>2020 COVID shock: entire travel/hospitality sectors affected at once</li>
+</ul>
+<p><strong>Regulatory response:</strong> Stress tests now simulate multiple simultaneous shocks to ensure banks can survive correlated failures.</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 7 of 7</h4>
+<h2>Key Insights: Network Structure Determines Systemic Risk</h2>
+<ol>
+<li><strong>Buffers protect individuals; network structure determines systemic risk</strong>
+<ul>
+<li>Individual bank strength (high capital) is necessary but not sufficient</li>
+<li>Network topology (who is connected to whom) matters more than you'd expect</li>
+</ul>
+</li>
+<li><strong>Dense networks are "robust-yet-fragile"</strong> (Acemoglu et al., 2015)
+<ul>
+<li>Small shocks: absorbed by many counterparties (robust)</li>
+<li>Large shocks: hit everyone simultaneously (fragile)</li>
+</ul>
+</li>
+<li><strong>Policy implications:</strong>
+<ul>
+<li>Monitor interconnectedness, not just individual bank health</li>
+<li>Central clearing counterparties (CCPs) reduce network complexity</li>
+<li>Circuit breakers and emergency liquidity can stop cascades</li>
+</ul>
+</li>
+<li><strong>Trade-offs are unavoidable:</strong>
+<ul>
+<li>Isolation reduces contagion but prevents risk-sharing</li>
+<li>Interconnection enables diversification but creates fragility</li>
+</ul>
+</li>
+</ol>
+</div>
+
+</details>
+
+<div class="prev-next">
+<a href="assignment7.html">&larr; A7: Regulatory Game Theory</a>
+<span></span>
+</div>
+
+</div>
+
+<div class="foot">
+<a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub Repository</a> &middot; &copy; Joerg Osterrieder 2026
+</div>
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A1: How Fast Do Payment Technologies Spread? — Digital Finance & Economics</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"\\[",right:"\\]",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false}]});});</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f6f8fa;color:#24292e;font-size:13px;line-height:1.6}
+a{color:#0366d6;text-decoration:none}
+a:hover{text-decoration:underline}
+.nav{background:#24292e;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-title{color:#fff;font-weight:600;font-size:15px}
+.nav-links{display:flex;gap:20px}
+.nav-links a{color:#fff;font-size:12px;opacity:0.85;transition:opacity 0.15s}
+.nav-links a:hover{opacity:1;text-decoration:none}
+.container{max-width:1000px;margin:0 auto;padding:20px}
+.assignment-header{color:#fff;padding:24px 32px;border-radius:6px;margin-bottom:20px}
+.assignment-header h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.assignment-header .lecture-ref{font-size:13px;opacity:0.85}
+.section-title{font-size:16px;font-weight:700;margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid #e1e4e8}
+.brief-content{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:20px;margin-bottom:20px}
+.brief-content h2{font-size:16px;font-weight:700;margin:16px 0 8px;color:#24292e}
+.brief-content h3{font-size:14px;font-weight:600;margin:12px 0 6px;color:#24292e}
+.brief-content h4{font-size:13px;font-weight:600;margin:10px 0 4px;color:#586069}
+.brief-content p{margin:8px 0;line-height:1.6}
+.brief-content ul,.brief-content ol{margin:8px 0 8px 24px}
+.brief-content li{margin:4px 0;line-height:1.5}
+.brief-content code{background:#f6f8fa;padding:2px 6px;border-radius:3px;font-size:12px;font-family:'SFMono-Regular',Consolas,monospace}
+.brief-content pre{background:#24292e;color:#e1e4e8;padding:16px;border-radius:6px;overflow-x:auto;margin:12px 0;font-size:12px;line-height:1.5}
+.brief-content pre code{background:transparent;padding:0;color:inherit}
+.brief-content table{width:100%;border-collapse:collapse;margin:12px 0}
+.brief-content th,.brief-content td{border:1px solid #e1e4e8;padding:8px 12px;text-align:left;font-size:12px}
+.brief-content th{background:#f6f8fa;font-weight:600}
+.brief-content hr{border:none;border-top:1px solid #e1e4e8;margin:16px 0}
+.brief-content a{color:#0366d6}
+.chart-section{text-align:center;margin:20px 0}
+.chart-section img{max-width:100%;border:1px solid #e1e4e8;border-radius:6px}
+.resources{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.resource-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px;font-weight:500;background:#fff;transition:all 0.15s}
+.resource-link:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}
+.model-answer{border:2px dashed #e1e4e8;border-radius:6px;padding:16px;margin:24px 0}
+.model-answer summary{cursor:pointer;font-weight:600;font-size:14px;padding:8px;list-style:none}
+.model-answer summary::-webkit-details-marker{display:none}
+.model-answer summary::before{content:"+ ";font-family:monospace}
+.model-answer[open] summary::before{content:"- "}
+.slide-card{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:16px;margin:12px 0}
+.slide-card h4{font-size:11px;color:#586069;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e1e4e8}
+.slide-card h2{font-size:16px;font-weight:700;margin:8px 0}
+.slide-card h3{font-size:14px;font-weight:600;margin:6px 0}
+.slide-card p{margin:6px 0;line-height:1.5}
+.slide-card ul,.slide-card ol{margin:6px 0 6px 20px}
+.slide-card li{margin:3px 0}
+.slide-card img{max-width:100%;border-radius:4px;margin:8px 0}
+.slide-card table{width:100%;border-collapse:collapse;margin:8px 0}
+.slide-card th,.slide-card td{border:1px solid #e1e4e8;padding:6px 10px;font-size:12px}
+.slide-card th{background:#f6f8fa;font-weight:600}
+.slide-card code{background:#f6f8fa;padding:2px 4px;border-radius:3px;font-size:11px}
+.slide-card pre{background:#24292e;color:#e1e4e8;padding:12px;border-radius:4px;font-size:11px;overflow-x:auto}
+.slide-card pre code{background:transparent;padding:0;color:inherit}
+.prev-next{display:flex;justify-content:space-between;margin:24px 0;padding-top:16px;border-top:1px solid #e1e4e8}
+.prev-next a{padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px}
+.prev-next a:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}
+.foot{text-align:center;padding:16px;font-size:11px;color:#586069;margin-top:20px}
+.foot a{margin:0 8px}
+@media(max-width:768px){.container{padding:12px}.assignment-header{padding:16px}.assignment-header h1{font-size:18px}.resources{flex-direction:column}.prev-next{flex-direction:column;gap:8px}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><span class="nav-title">Digital Finance & Economics</span><div class="nav-links"><a href="../index.html">Dashboard</a><a href="../assignments.html">Assignments</a><a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a></div></nav>
+
+<div class="container">
+
+<div class="assignment-header" style="background:linear-gradient(135deg,#22c55e,#16a34a)">
+<h1>A1: How Fast Do Payment Technologies Spread?</h1>
+<div class="lecture-ref">L01 Introduction &mdash; Rogers (1962) Diffusion of Innovations</div>
+</div>
+
+<div class="section-title">Assignment Brief</div>
+
+<div class="brief-content">
+
+<h2>Introduction</h2>
+
+<p>New payment technologies don't take over the world overnight. They follow a predictable pattern called an S-curve (a curve shaped like the letter S that shows how technology adoption starts slow, accelerates, then levels off). The Rogers (1962) Diffusion of Innovations model describes this using three key parameters: the carrying capacity K (the maximum percentage of people who will ever adopt the technology), the growth rate r (how fast adoption accelerates during the steep middle phase), and the inflection point t0 (the year when adoption reaches half of its maximum level K). Understanding these parameters helps predict whether a payment technology will become mainstream or remain niche.</p>
+
+<h2>Your Task</h2>
+
+<p>Your job is to replicate the chart showing adoption S-curves for six payment technologies (credit cards, ATMs/debit, online banking, mobile payments, cryptocurrencies, and CBDCs). Then explore how changes to the model parameters affect adoption trajectories.</p>
+
+<p><strong>Required Variations:</strong></p>
+
+<ol>
+<li><strong>Add a new technology</strong>: Add "Buy Now Pay Later" (BNPL) services with K=40%, r=0.20, t0=2022. How does its adoption curve compare to existing technologies? Why might BNPL have a higher growth rate r but lower ceiling K than credit cards?</li>
+<li><strong>Double the growth rate for crypto</strong>: Change the cryptocurrency growth rate r from 0.10 to 0.20. What year does adoption reach 50% of its ceiling (which is 15% of the population)? Compare this to the original model.</li>
+<li><strong>Increase CBDC ceiling</strong>: Set the CBDC (Central Bank Digital Currency) carrying capacity K to 90% instead of 50%. How does the curve change by 2050? Would a government-backed digital currency with K=90% eventually overtake mobile payments?</li>
+</ol>
+
+<p><strong>Open Extension (optional, for extra credit):</strong></p>
+
+<p>The S-curve (logistic function) is not the only growth model. Compare it with the Gompertz curve: G(t) = K * exp(-exp(-r*(t-t0))). The Gompertz curve has a slower initial growth phase but faster late-stage growth. Which model fits better for technologies with rapid early adoption (like mobile payments) versus slow-burn technologies (like credit cards)?</p>
+
+<hr>
+
+<h2>How to Run</h2>
+
+<ol>
+<li>Open Google Colab (colab.research.google.com)</li>
+<li>Create a new notebook</li>
+<li>Paste the Python code from <code>chart_varied.py</code></li>
+<li>Click the Run button (play icon) on each cell</li>
+<li>Download the generated charts</li>
+<li>Use the charts in your presentation</li>
+</ol>
+
+<hr>
+
+<h2>Time Budget</h2>
+
+<ul>
+<li><strong>45 minutes</strong>: Code exploration + chart generation + analysis</li>
+<li><strong>10 minutes</strong>: Presentation (5-7 slides)</li>
+</ul>
+
+<hr>
+
+<h2>Deliverable</h2>
+
+<p>A 5-7 slide presentation that includes:</p>
+
+<ul>
+<li>The S-curve model equation and parameter definitions</li>
+<li>Your replicated baseline chart (6 technologies)</li>
+<li>At least one variation chart you generated</li>
+<li>Analysis: Which parameters matter most for predicting technology success?</li>
+<li>One insight: What surprised you or challenged your assumptions?</li>
+</ul>
+
+<p><strong>Presentation Tips:</strong></p>
+
+<ul>
+<li>Use plain-text math (S = K / (1 + exp(-r*(t-t0)))) not LaTeX</li>
+<li>Define every term when first used</li>
+<li>Show charts full-screen (not embedded in slides with tiny text)</li>
+<li>Compare curves visually (don't just list numbers)</li>
+<li>End with a testable prediction: "By 2030, I predict [technology X] will reach [Y]% adoption because..."</li>
+</ul>
+
+<p><strong>Assessment Criteria:</strong></p>
+
+<ul>
+<li>Correct replication of baseline chart (20%)</li>
+<li>All three required variations completed (30%)</li>
+<li>Clear explanation of how parameter changes affect curves (30%)</li>
+<li>Presentation clarity and visual design (20%)</li>
+</ul>
+
+</div>
+
+<div class="section-title">Your Variation Chart</div>
+
+<div class="chart-section">
+<a href="l01-presentation/chart_varied.pdf"><img src="l01-presentation/chart_varied.png" alt="Assignment 1 Variation Chart"></a>
+</div>
+
+<div class="resources">
+<a class="resource-link" href="l01-presentation/chart_varied.py">Download chart_varied.py</a>
+<a class="resource-link" href="l01-presentation/chart_varied.pdf">Download chart_varied.pdf</a>
+</div>
+
+<details class="model-answer" style="border-color:#22c55e">
+<summary>Model Answer Presentation (7 Slides)</summary>
+
+<div class="slide-card"><h4>Slide 1</h4>
+<h2>How Fast Do Payment Technologies Spread?</h2>
+<h3>Rogers (1962) Diffusion of Innovations</h3>
+<p><em>In-Class Presentation Assignment &mdash; L01 Introduction</em></p>
+<p><strong>Student Name</strong>: Model Answer<br>
+<strong>Date</strong>: February 2026</p>
+</div>
+
+<div class="slide-card"><h4>Slide 2</h4>
+<h2>The Model: S-Curve (Logistic Growth)</h2>
+<p><strong>Equation</strong>: S(t) = K / (1 + exp(-r * (t - t0)))</p>
+<p><strong>Parameters</strong>:</p>
+<ul>
+<li><strong>K</strong> (carrying capacity) = maximum adoption percentage the technology will ever reach</li>
+<li><strong>r</strong> (growth rate) = how fast adoption accelerates during the steep middle phase</li>
+<li><strong>t0</strong> (inflection point) = the year when adoption reaches exactly half of K</li>
+</ul>
+<p><strong>Why S-shaped?</strong> Early adopters are easy to convince (slow start), then word-of-mouth creates exponential growth (steep middle), then the market saturates as remaining holdouts resist (flat top).</p>
+<p><strong>Source</strong>: Rogers, E.M. (1962). <em>Diffusion of Innovations</em>. Free Press.</p>
+</div>
+
+<div class="slide-card"><h4>Slide 3</h4>
+<h2>Baseline: Six Payment Technologies</h2>
+<p><img src="../L01_Introduction/01_payment_evolution/chart.png" alt="Baseline"></p>
+<p><strong>Key Observations</strong>:</p>
+<ul>
+<li>Credit cards: slowest growth (r=0.08) but highest ceiling (K=75%)</li>
+<li>Mobile payments: fastest growth (r=0.15) but medium ceiling (K=65%)</li>
+<li>Cryptocurrencies: slow growth (r=0.10) and low ceiling (K=30%)</li>
+<li>Growth rate r determines steepness through inflection, carrying capacity K determines finish line</li>
+</ul>
+</div>
+
+<div class="slide-card"><h4>Slide 4</h4>
+<h2>Variation 1: Adding Buy Now Pay Later (BNPL)</h2>
+<p><img src="l01-presentation/chart_varied.png" alt="Variations"></p>
+<p><strong>Parameters</strong>: K=40%, r=0.20, t0=2022</p>
+<p><strong>Analysis</strong>:</p>
+<ul>
+<li>BNPL has the <em>fastest</em> growth rate (r=0.20) of all technologies shown</li>
+<li>But lowest ceiling among traditional payments (K=40%)</li>
+<li>Interpretation: BNPL spreads quickly among young consumers (high r) but faces regulatory limits and consumer skepticism that cap long-term adoption (low K)</li>
+<li>By 2035, BNPL reaches ~38% (near its ceiling), while credit cards continue growing toward 75%</li>
+</ul>
+</div>
+
+<div class="slide-card"><h4>Slide 5</h4>
+<h2>Variation 2: Faster Crypto Adoption (r doubled)</h2>
+<p><strong>Both curves</strong>: reach 15% (half of K=30%) at the inflection point t0=2022</p>
+<p><strong>Analysis</strong>:</p>
+<ul>
+<li>Doubling r changes HOW STEEPLY the curve rises through 15%, not WHEN it crosses 15%</li>
+<li>With r=0.10: goes from 5% to 25% (17% to 83% of K) over ~28 years</li>
+<li>With r=0.20: goes from 5% to 25% in ~14 years (twice as steep)</li>
+<li>But ceiling K=30% remains unchanged &mdash; crypto still plateaus at 30% regardless of r</li>
+<li><strong>Key Insight</strong>: Growth rate r controls the <em>steepness</em> of adoption during the transition phase, while carrying capacity K controls your <em>ultimate</em> market share</li>
+</ul>
+<p><strong>Real-world question</strong>: What would it take to increase crypto's K from 30% to 60%? (Hint: regulatory clarity, stability mechanisms, user-friendly interfaces)</p>
+</div>
+
+<div class="slide-card"><h4>Slide 6</h4>
+<h2>Variation 3: CBDC with Higher Ceiling (K=90%)</h2>
+<p><strong>Original</strong>: K=50%, reaches ~45% by 2050<br>
+<strong>Increased</strong>: K=90%, reaches ~80% by 2050</p>
+<p><strong>Analysis</strong>:</p>
+<ul>
+<li>By 2040, K=90% CBDC (at ~70%) overtakes mobile payments (plateauing at 65%)</li>
+<li>By 2050, K=90% CBDC dominates all technologies</li>
+<li><strong>Interpretation</strong>: If governments mandate CBDC for tax payments or social benefits, carrying capacity K could approach 90% (nearly universal adoption)</li>
+</ul>
+<p><strong>Counterargument</strong>: Privacy concerns and distrust of government surveillance might keep actual K closer to 50-60%, not 90%</p>
+</div>
+
+<div class="slide-card"><h4>Slide 7</h4>
+<h2>Key Insight: Two Parameters, Two Questions</h2>
+<p>Every technology adoption story answers two questions:</p>
+<ol>
+<li><strong>How fast?</strong> (controlled by growth rate r)
+<ul>
+<li>Mobile payments: r=0.15 (fastest)</li>
+<li>Credit cards: r=0.08 (slowest)</li>
+</ul>
+</li>
+<li><strong>How far?</strong> (controlled by carrying capacity K)
+<ul>
+<li>ATMs/debit: K=85% (highest)</li>
+<li>Cryptocurrencies: K=30% (lowest)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Winning strategy</strong>: High r gets you market share quickly (first-mover advantage), but high K determines whether you're still relevant in 20 years.</p>
+<p><strong>Testable prediction</strong>: By 2030, CBDCs will reach 25-30% adoption in countries that launch pilots before 2025 (China, Sweden, Nigeria). Countries without pilots will stay below 5%.</p>
+</div>
+
+<div class="slide-card"><h4>Slide 8</h4>
+<h2>References &amp; Data Sources</h2>
+<ul>
+<li>Rogers, E.M. (1962). <em>Diffusion of Innovations</em>. Free Press.</li>
+<li>Chart code: Python implementation using logistic growth function</li>
+<li>Technology parameters: Estimated from industry reports (World Payments Report 2023, McKinsey FinTech surveys)</li>
+<li>Model limitations: Assumes single homogeneous population (reality: different adoption curves for age groups, countries, income levels)</li>
+</ul>
+<p><strong>Code availability</strong>: Full Python code in <code>chart_varied.py</code></p>
+</div>
+
+</details>
+
+<div class="prev-next">
+<span></span>
+<a href="assignment2.html">Next: Gresham's Law &rarr;</a>
+</div>
+
+<div class="foot">
+<a href="../index.html">Dashboard</a> <a href="../assignments.html">All Assignments</a> <a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub Repository</a> · &copy; Joerg Osterrieder 2026
+</div>
+
+</div>
+
+</body>
+</html>

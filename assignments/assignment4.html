@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A4: Network Effects in Payment Systems — Digital Finance & Economics</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"\\[",right:"\\]",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false}]});});</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f6f8fa;color:#24292e;font-size:13px;line-height:1.6}a{color:#0366d6;text-decoration:none}a:hover{text-decoration:underline}.nav{background:#24292e;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}.nav-title{color:#fff;font-weight:600;font-size:15px}.nav-links{display:flex;gap:20px}.nav-links a{color:#fff;font-size:12px;opacity:0.85;transition:opacity 0.15s}.nav-links a:hover{opacity:1;text-decoration:none}.container{max-width:1000px;margin:0 auto;padding:20px}.assignment-header{color:#fff;padding:24px 32px;border-radius:6px;margin-bottom:20px}.assignment-header h1{font-size:22px;font-weight:700;margin-bottom:4px}.assignment-header .lecture-ref{font-size:13px;opacity:0.85}.section-title{font-size:16px;font-weight:700;margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid #e1e4e8}.brief-content{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:20px;margin-bottom:20px}.brief-content h2{font-size:16px;font-weight:700;margin:16px 0 8px;color:#24292e}.brief-content h3{font-size:14px;font-weight:600;margin:12px 0 6px;color:#24292e}.brief-content h4{font-size:13px;font-weight:600;margin:10px 0 4px;color:#586069}.brief-content p{margin:8px 0;line-height:1.6}.brief-content ul,.brief-content ol{margin:8px 0 8px 24px}.brief-content li{margin:4px 0;line-height:1.5}.brief-content code{background:#f6f8fa;padding:2px 6px;border-radius:3px;font-size:12px;font-family:'SFMono-Regular',Consolas,monospace}.brief-content pre{background:#24292e;color:#e1e4e8;padding:16px;border-radius:6px;overflow-x:auto;margin:12px 0;font-size:12px;line-height:1.5}.brief-content pre code{background:transparent;padding:0;color:inherit}.brief-content table{width:100%;border-collapse:collapse;margin:12px 0}.brief-content th,.brief-content td{border:1px solid #e1e4e8;padding:8px 12px;text-align:left;font-size:12px}.brief-content th{background:#f6f8fa;font-weight:600}.brief-content hr{border:none;border-top:1px solid #e1e4e8;margin:16px 0}.brief-content a{color:#0366d6}.chart-section{text-align:center;margin:20px 0}.chart-section img{max-width:100%;border:1px solid #e1e4e8;border-radius:6px}.resources{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.resource-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px;font-weight:500;background:#fff;transition:all 0.15s}.resource-link:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}.model-answer{border:2px dashed #e1e4e8;border-radius:6px;padding:16px;margin:24px 0}.model-answer summary{cursor:pointer;font-weight:600;font-size:14px;padding:8px;list-style:none}.model-answer summary::-webkit-details-marker{display:none}.model-answer summary::before{content:"+ ";font-family:monospace}.model-answer[open] summary::before{content:"- "}.slide-card{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:16px;margin:12px 0}.slide-card h4{font-size:11px;color:#586069;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e1e4e8}.slide-card h2{font-size:16px;font-weight:700;margin:8px 0}.slide-card h3{font-size:14px;font-weight:600;margin:6px 0}.slide-card p{margin:6px 0;line-height:1.5}.slide-card ul,.slide-card ol{margin:6px 0 6px 20px}.slide-card li{margin:3px 0}.slide-card img{max-width:100%;border-radius:4px;margin:8px 0}.slide-card table{width:100%;border-collapse:collapse;margin:8px 0}.slide-card th,.slide-card td{border:1px solid #e1e4e8;padding:6px 10px;font-size:12px}.slide-card th{background:#f6f8fa;font-weight:600}.slide-card code{background:#f6f8fa;padding:2px 4px;border-radius:3px;font-size:11px}.slide-card pre{background:#24292e;color:#e1e4e8;padding:12px;border-radius:4px;font-size:11px;overflow-x:auto}.slide-card pre code{background:transparent;padding:0;color:inherit}.prev-next{display:flex;justify-content:space-between;margin:24px 0;padding-top:16px;border-top:1px solid #e1e4e8}.prev-next a{padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px}.prev-next a:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}.foot{text-align:center;padding:16px;font-size:11px;color:#586069;margin-top:20px}.foot a{margin:0 8px}@media(max-width:768px){.container{padding:12px}.assignment-header{padding:16px}.assignment-header h1{font-size:18px}.resources{flex-direction:column}.prev-next{flex-direction:column;gap:8px}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><span class="nav-title">Digital Finance & Economics</span><div class="nav-links"><a href="../index.html">Dashboard</a><a href="../assignments.html">Assignments</a><a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a></div></nav>
+
+<div class="container">
+
+<div class="assignment-header" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
+<h1>A4: Network Effects in Payment Systems</h1>
+<div class="lecture-ref">L04 Payment Systems</div>
+</div>
+
+<!-- ====== ASSIGNMENT BRIEF ====== -->
+<div class="section-title">Assignment Brief</div>
+<div class="brief-content">
+
+<h2>Network Effects: When Does a Payment System Take Off?</h2>
+
+<h3>Introduction</h3>
+<p>Network effects (the phenomenon where a product becomes more valuable as more people use it) determine when a payment system reaches critical mass (the point where enough people use it that growth becomes self-sustaining). Three theories model network value V as a function of n users:</p>
+<ul>
+<li><strong>Metcalfe's Law</strong>: V = n&#178;/1000 (every pair can connect)</li>
+<li><strong>Odlyzko-Tilly</strong>: V = n&#183;ln(n)/10 (only close contacts matter)</li>
+<li><strong>Linear</strong>: V = n (no network effects)</li>
+</ul>
+<p>The divisors (1000 and 10) normalize raw connection counts to comparable value units.</p>
+<p><strong>Key Concepts:</strong></p>
+<ul>
+<li><strong>Switching cost</strong>: the time, effort, and money needed to change from one payment system to another</li>
+<li><strong>Critical mass</strong>: the number of users at which network value exceeds switching costs, making adoption self-sustaining</li>
+</ul>
+
+<h3>Your Task</h3>
+<p>You will explore how different network value models predict when payment systems reach critical mass under various switching cost scenarios.</p>
+
+<h3>Variations to Implement</h3>
+<ol>
+<li><strong>VARIATION 1 - Lower switching cost threshold from 500 to 100</strong>
+<ul>
+<li>How does critical mass change for each model?</li>
+<li>Which model reaches critical mass fastest?</li>
+</ul>
+</li>
+<li><strong>VARIATION 2 - Raise switching cost to 2,000</strong>
+<ul>
+<li>How does critical mass change?</li>
+<li>Which model never reaches critical mass within 1000 users?</li>
+</ul>
+</li>
+<li><strong>VARIATION 3 - Add Reed's Law</strong>
+<ul>
+<li>Implement Reed's Law: V = 2^(n/10)</li>
+<li>Where does it cross the switching cost threshold (500)?</li>
+<li>How does it compare to the other models?</li>
+</ul>
+</li>
+</ol>
+
+<h3>Open Extension (Advanced)</h3>
+<p>Remove the scaling divisors and use raw formulas:</p>
+<ul>
+<li>Metcalfe: V = n&#178;</li>
+<li>Odlyzko-Tilly: V = n&#183;ln(n)</li>
+<li>Linear: V = n</li>
+</ul>
+<p><strong>Questions:</strong></p>
+<ul>
+<li>How do critical mass points change?</li>
+<li>What do the divisors represent economically?</li>
+<li>Why are they needed for realistic modeling?</li>
+</ul>
+
+<h3>How to Run</h3>
+<p>Use Google Colab or your local Python environment with matplotlib and numpy installed.</p>
+
+<h3>Time Allocation</h3>
+<ul>
+<li>45 minutes: Implementation and analysis</li>
+<li>10 minutes: Presentation preparation</li>
+</ul>
+
+<h3>Deliverables</h3>
+<ol>
+<li>Modified Python code implementing all three variations</li>
+<li>7-slide presentation (use Marp or PowerPoint) summarizing your findings</li>
+<li>Brief written analysis of what the scaling factors mean economically</li>
+</ol>
+
+<h3>References</h3>
+<ul>
+<li>Metcalfe, B. (2013). "Metcalfe's Law after 40 Years of Ethernet"</li>
+<li>Odlyzko, A., &amp; Tilly, B. (2005). "A refutation of Metcalfe's Law and a better estimate for the value of networks and network interconnections"</li>
+</ul>
+
+<h3>Grading Criteria</h3>
+<ul>
+<li><strong>Correctness</strong> (40%): All three variations implemented correctly</li>
+<li><strong>Analysis</strong> (30%): Clear explanation of critical mass changes</li>
+<li><strong>Presentation</strong> (20%): Clear visualization and communication</li>
+<li><strong>Extension</strong> (10%): Insight into scaling factors (bonus)</li>
+</ul>
+
+</div>
+
+<!-- ====== MODEL ANSWER ====== -->
+<div class="section-title">Model Answer</div>
+<details class="model-answer" style="border-color:#f59e0b">
+<summary>Show Model Answer Presentation</summary>
+
+<div class="slide-card">
+<h4>Slide 1</h4>
+<h2>Network Effects: When Does a Payment System Take Off?</h2>
+<p><strong>Assignment A4 Model Answer</strong></p>
+<p>References:</p>
+<ul>
+<li>Metcalfe, B. (2013). "Metcalfe's Law after 40 Years of Ethernet"</li>
+<li>Odlyzko, A., &amp; Tilly, B. (2005). "A refutation of Metcalfe's Law..."</li>
+</ul>
+</div>
+
+<div class="slide-card">
+<h4>Slide 2</h4>
+<h3>The Model: Three Network Value Functions</h3>
+<p><strong>Network value V as a function of n users:</strong></p>
+<ol>
+<li><strong>Metcalfe's Law</strong>: $V = \frac{n^2}{1000}$
+<ul>
+<li>Every user can connect to every other user</li>
+<li>Total possible connections = n(n-1)/2 &#8776; n&#178;/2</li>
+</ul>
+</li>
+<li><strong>Odlyzko-Tilly</strong>: $V = \frac{n \ln(n)}{10}$
+<ul>
+<li>Only close contacts matter (logarithmic decay)</li>
+<li>More realistic for large networks</li>
+</ul>
+</li>
+<li><strong>Linear</strong>: $V = n$
+<ul>
+<li>No network effects (baseline)</li>
+</ul>
+</li>
+</ol>
+<p><strong>Scaling factors</strong> (1000, 10): Normalize raw connection counts to comparable value units</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 3</h4>
+<h3>Baseline Results (Threshold = 500)</h3>
+<p><strong>Critical mass points where V &gt; 500:</strong></p>
+<ul>
+<li><strong>Linear</strong>: n = 500 (V = n, so n = 500)</li>
+<li><strong>Metcalfe</strong>: n = 708 (n&#178;/1000 = 500 &#8594; n = &#8730;500,000 &#8776; 707.1)</li>
+<li><strong>Odlyzko</strong>: n &#8776; 750 (solve n&#183;ln(n)/10 = 500 numerically)</li>
+</ul>
+<img src="../L04_Payment_Systems/04_network_effects_metcalfe/chart.png" style="max-width:100%">
+<p><strong>Key insight</strong>: Linear reaches critical mass FIRST (at n=500), while Metcalfe requires 42% more users (n=708). The n&#178;/1000 scaling divisor means Metcalfe's quadratic advantage doesn't overcome the denominator until larger network sizes</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 4</h4>
+<h3>Variation 1: Lower Threshold (100)</h3>
+<p><strong>Critical mass points where V &gt; 100:</strong></p>
+<ul>
+<li><strong>Linear</strong>: n = 100</li>
+<li><strong>Metcalfe</strong>: n = 317 (&#8730;100,000 &#8776; 316.2)</li>
+<li><strong>Odlyzko</strong>: n &#8776; 278</li>
+</ul>
+<img src="l04-presentation/chart_varied.png" style="max-width:100%">
+<p><strong>Key insight</strong>: Lower switching costs favor rapid adoption even with weak network effects</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 5</h4>
+<h3>Variation 2: Higher Threshold (2,000)</h3>
+<p><strong>Critical mass points where V &gt; 2,000:</strong></p>
+<ul>
+<li><strong>Linear</strong>: n = 2,000 (beyond our 1000-user range)</li>
+<li><strong>Metcalfe</strong>: n &#8776; 1,414 (&#8730;2,000,000 &#8776; 1,414.2, beyond range)</li>
+<li><strong>Odlyzko</strong>: n &gt; 1,000 (beyond range)</li>
+</ul>
+<p><strong>Key insight</strong>: High switching costs prevent any model from reaching critical mass within 1000 users. Payment systems need to lower barriers to adoption.</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 6</h4>
+<h3>Variation 3: Reed's Law (Exponential Growth)</h3>
+<p><strong>Reed's Law</strong>: $V = 2^{n/10}$ (value from forming groups/coalitions)</p>
+<p><strong>Critical mass for threshold = 500:</strong></p>
+<ul>
+<li>Reed's Law: n &#8776; 90 (since 2^9 = 512 &gt; 500)</li>
+</ul>
+<p><strong>Comparison:</strong></p>
+<ul>
+<li>Reed: n = 90</li>
+<li>Metcalfe: n = 708</li>
+<li>Odlyzko: n = 750</li>
+<li>Linear: n = 500</li>
+</ul>
+<p><strong>Key insight</strong>: If group formation drives value (e.g., merchant networks), critical mass arrives much earlier</p>
+</div>
+
+<div class="slide-card">
+<h4>Slide 7</h4>
+<h3>The Role of Scaling Divisors</h3>
+<p><strong>Without divisors</strong> (raw formulas):</p>
+<ul>
+<li>Metcalfe V = n&#178;: Critical mass at n = 23 (&#8730;500 &#8776; 22.4)</li>
+<li>Odlyzko V = n&#183;ln(n): Critical mass at n &#8776; 75</li>
+</ul>
+<p><strong>With realistic divisors</strong> (/1000, /10):</p>
+<ul>
+<li>Metcalfe: n = 708</li>
+<li>Odlyzko: n = 750</li>
+</ul>
+<p><strong>What divisors represent:</strong></p>
+<ul>
+<li><strong>Economic interpretation</strong>: Not all connections generate equal value</li>
+<li>Divisors calibrate theoretical models to empirical network value data</li>
+<li>Example: Facebook has 3 billion users, but value isn't 9&#215;10&#185;&#8312; dollars</li>
+</ul>
+<p><strong>Key insight</strong>: Scaling factors are essential for realistic predictions of when payment systems become viable</p>
+</div>
+
+</details>
+
+<!-- ====== PREV/NEXT ====== -->
+<div class="prev-next">
+<a href="assignment3.html">&larr; Prev: CBDC Disintermediation</a>
+<a href="assignment5.html">Next: Winner-Take-All &rarr;</a>
+</div>
+
+</div>
+
+<div class="foot">
+<a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub Repository</a> &middot; &copy; Joerg Osterrieder 2026
+</div>
+
+</body>
+</html>
