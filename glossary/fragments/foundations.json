@@ -1,0 +1,72 @@
+[
+  {
+    "id": "blockchain",
+    "detailed": "A blockchain is a distributed digital ledger (a record-keeping system) that stores transaction data across many computers instead of in one central location. Each block contains a batch of transactions, and blocks are linked together in a chain using cryptography (mathematical codes that secure data). Once data is recorded in a block, it cannot be changed without altering all subsequent blocks, which requires consensus from the network. This makes blockchains resistant to tampering and fraud, and eliminates the need for a trusted central authority to verify transactions.",
+    "example": "Bitcoin's blockchain records every transaction ever made. When Alice sends 0.5 BTC to Bob, that transaction gets bundled into a block with hundreds of others, then added to the chain permanently. Anyone can verify the transaction happened, but no single company or government controls the records."
+  },
+  {
+    "id": "cryptocurrency",
+    "detailed": "A cryptocurrency is a digital asset (a form of money that exists only electronically) that uses cryptography to secure transactions and control the creation of new units. Unlike traditional currencies issued by governments (called fiat money), cryptocurrencies are not backed by a central authority like a central bank. Instead, they typically operate on decentralized networks using blockchain technology. The cryptographic algorithms ensure that transactions are secure, ownership is verifiable, and the supply of the currency follows predetermined rules rather than government policy.",
+    "example": "Bitcoin is the first and most famous cryptocurrency. It has no physical bills or coins, exists only as digital records on its blockchain, and no government or company controls it. You can send Bitcoin to anyone in the world without going through a bank."
+  },
+  {
+    "id": "decentralization",
+    "detailed": "Decentralization refers to the distribution of power, control, and decision-making away from a single central authority to many participants in a network. In finance, this means that instead of one institution (like a bank or government) controlling transactions and records, many independent parties share that responsibility. Each participant maintains a copy of the records and helps verify new transactions. This distribution reduces the risk that a single point of failure (one entity being hacked, going bankrupt, or acting maliciously) can compromise the entire system.",
+    "example": "Traditional banking is centralized: your bank controls your account and can freeze it. Bitcoin is decentralized: thousands of computers worldwide maintain the ledger, so no single entity can shut it down or censor your transactions, though this comes at the cost of slower processing and higher energy use."
+  },
+  {
+    "id": "defi",
+    "detailed": "DeFi (Decentralized Finance) refers to financial services built on blockchain platforms that operate without traditional intermediaries like banks, brokers, or exchanges. Instead of a company managing your money, smart contracts (self-executing computer programs on a blockchain) automatically execute transactions based on predefined rules. Users can lend, borrow, trade, earn interest, and access other financial services directly through software protocols. This removes the need to trust a central institution, though it introduces new technical and smart contract risks.",
+    "example": "On a DeFi platform like Aave, you can deposit USD Coin (a stablecoin) and automatically earn interest from borrowers worldwide. No bank processes the loan, checks credit scores, or takes a cut as intermediary. The blockchain smart contract handles everything automatically based on supply and demand."
+  },
+  {
+    "id": "digital-finance",
+    "detailed": "Digital finance encompasses all financial services and transactions that rely on digital infrastructure (computers, networks, and electronic systems) rather than physical cash or in-person interactions. This includes online banking, mobile payment apps, digital currencies, electronic trading platforms, and blockchain-based systems. Digital finance enables faster, cheaper, and more accessible financial services by automating processes, reducing paperwork, and allowing people to transact across distances instantly. It ranges from traditional banks offering online services to completely new models like cryptocurrencies and DeFi protocols.",
+    "example": "When you pay with Apple Pay instead of cash, check your bank balance on a mobile app instead of visiting a branch, or buy stocks through Robinhood instead of calling a broker, you are using digital finance. Even traditional banks like Chase now conduct over 60% of transactions digitally."
+  },
+  {
+    "id": "disintermediation",
+    "detailed": "Disintermediation is the removal or reduction of intermediaries (middlemen) from financial transactions. Traditionally, banks, payment processors, brokers, and other institutions stand between parties in financial dealings, verifying identities, processing transactions, and taking fees for their services. Digital technologies, especially blockchain, enable direct peer-to-peer transactions where parties can transact without these intermediaries. While this can reduce costs and increase speed, it also transfers responsibilities like fraud protection and dispute resolution from institutions to individual users.",
+    "example": "Sending money internationally traditionally requires your bank, correspondent banks, and the recipient's bank (each taking fees and 3-5 days). Bitcoin enables Alice in Germany to send money directly to Bob in Kenya in minutes with lower fees, bypassing all banking intermediaries, though Bob must understand how to secure his Bitcoin wallet."
+  },
+  {
+    "id": "fiat-money",
+    "detailed": "Fiat money is government-issued currency that has value because the government declares it legal tender (must be accepted for debts and taxes) and people trust it, not because it is backed by a physical commodity like gold or silver. The term \"fiat\" comes from Latin meaning \"let it be done,\" reflecting that this money exists by government decree. Central banks can create or destroy fiat money to manage the economy, adjusting interest rates and money supply. All modern major currencies—US dollar, euro, British pound, Japanese yen—are fiat money.",
+    "example": "A 20 EUR banknote costs only a few cents to print but is worth 20 EUR because the European Central Bank declares it legal tender and people trust they can use it to buy goods, pay taxes, and settle debts. Unlike gold coins, it has no intrinsic value beyond the paper it is printed on."
+  },
+  {
+    "id": "hodl",
+    "detailed": "HODL is crypto slang meaning to hold cryptocurrency assets long-term rather than selling them, regardless of price volatility (rapid price swings up and down). The term originated from a 2013 Bitcoin forum post where a user misspelled \"hold\" while drunk, and the community embraced it as \"Hold On for Dear Life.\" HODLers believe in the long-term value appreciation of their assets and resist the temptation to sell during market downturns or panic. This strategy contrasts with active trading and reflects a conviction about eventual price increases despite short-term turbulence.",
+    "example": "When Bitcoin dropped from 60,000 USD to 30,000 USD in mid-2021, many investors panicked and sold at a loss. HODLers kept their Bitcoin, believing it would recover. Those who held saw Bitcoin later reach new highs above 69,000 USD by November 2021, validating their patience."
+  },
+  {
+    "id": "liquidity",
+    "detailed": "Liquidity refers to how easily and quickly an asset can be bought or sold in the market without causing a significant change in its price. High liquidity means you can trade large amounts without affecting the price much because there are many buyers and sellers ready to transact. Low liquidity means your trades move the price substantially, making it expensive to enter or exit positions. Liquidity is crucial for markets to function efficiently and for institutions to meet their payment obligations without delay. It also refers to having cash or easily-convertible assets available when needed.",
+    "example": "Bitcoin is highly liquid: you can sell 10,000 USD worth instantly on major exchanges at the displayed price. A rare collectible NFT might be low liquidity: if you try to sell it quickly, you might only find one buyer willing to pay 50% of its last sale price."
+  },
+  {
+    "id": "token",
+    "detailed": "A token is a digital unit of value created on a blockchain that can represent various things: assets (like real estate or gold), utility (access rights to use a service), governance rights (voting power in protocol decisions), or currency. Unlike cryptocurrencies that have their own blockchains (like Bitcoin), tokens are usually built on existing blockchain platforms (like Ethereum). Smart contracts define the token's properties—how many exist, how they transfer, what rights they confer. Tokens enable programmable, divisible, and transferable digital ownership of virtually anything.",
+    "example": "Uniswap's UNI token gives holders voting rights on protocol changes like fee structures. Each UNI represents one vote. Alternatively, a real estate company might issue 1,000 tokens representing fractional ownership of a building—owning 10 tokens means you own 1% of the property and earn 1% of rental income."
+  },
+  {
+    "id": "tradfi",
+    "detailed": "TradFi (Traditional Finance) refers to the established financial system of banks, stock exchanges, insurance companies, and other regulated institutions that have operated for decades or centuries. These institutions are centralized (controlled by specific organizations), heavily regulated by government authorities, operate during set business hours, and rely on trusted intermediaries to facilitate transactions. TradFi is contrasted with DeFi (Decentralized Finance), which uses blockchain technology to provide financial services without centralized control, 24/7 operation, and permissionless access (anyone can participate without approval).",
+    "example": "JPMorgan Chase is TradFi: it is a bank regulated by the US Federal Reserve, holds your money in centralized databases, operates branches with set hours, and requires identity verification to open accounts. Aave is DeFi: software on the Ethereum blockchain where anyone can lend or borrow cryptocurrency 24/7 without identity checks."
+  },
+  {
+    "id": "transaction-costs",
+    "detailed": "Transaction costs encompass all expenses and frictions involved in making an exchange beyond the price of the good or service itself. These include explicit fees (bank charges, payment processing fees, brokerage commissions), time costs (how long the transaction takes), search costs (effort to find trading partners or best prices), and information costs (verifying quality, trust, and legitimacy). High transaction costs make markets less efficient by discouraging beneficial trades. Digital finance aims to reduce these costs through automation, disintermediation, and faster processing, though it may introduce new costs like technical complexity and security requirements.",
+    "example": "Buying a house involves massive transaction costs: real estate agent commissions (3-6% of price), legal fees for contracts and title searches, inspection fees, weeks of time negotiating and processing paperwork, and effort searching for properties. In contrast, buying stocks via Robinhood has near-zero fees and takes seconds."
+  },
+  {
+    "id": "volatility",
+    "detailed": "Volatility measures the degree and frequency of price fluctuations in an asset. High volatility means prices change rapidly and unpredictably over short periods, swinging dramatically up and down. Low volatility means prices remain relatively stable with gradual changes. Volatility represents risk and uncertainty—high volatility assets can generate large gains or losses quickly, making them unsuitable for transactions or savings where predictable value is needed. Financial stability typically requires low volatility. Volatility is often measured statistically as the standard deviation (a measure of spread) of price returns over a period.",
+    "example": "Bitcoin experienced extreme volatility in 2021, ranging from 29,000 USD to 69,000 USD within months—a 138% swing. The US dollar versus euro showed low volatility, fluctuating only between 1.13 and 1.23 USD per EUR—less than 9%. This makes Bitcoin unsuitable for pricing your salary or a mortgage, but USD/EUR pairs work fine."
+  },
+  {
+    "id": "welfare",
+    "detailed": "Welfare in economics refers to the total well-being or benefit that society derives from economic activities, goods, and services. It encompasses both efficiency (maximizing total value created, measured as consumer surplus plus producer surplus) and equity (fairness in how benefits are distributed across people). Economists analyze how policies, regulations, and market structures affect welfare—whether they increase overall social benefit or create deadweight losses (value destroyed). Welfare analysis helps determine if an innovation or intervention makes society better off, considering not just who gains but also who loses and by how much.",
+    "example": "Introducing a payment system with lower fees increases consumer welfare (buyers save money) and producer welfare (sellers receive more). But if the system excludes elderly people who lack smartphones, total welfare might decrease if their lost access outweighs others' gains. Policymakers must weigh total benefit against distribution of who benefits."
+  }
+]

@@ -1,0 +1,127 @@
+[
+  {
+    "id": "airdrops",
+    "detailed": "An airdrop is a free distribution of cryptocurrency tokens sent directly to people's digital wallets (software that stores crypto), usually to jump-start a new network or reward early users. Projects use airdrops the way a new restaurant might hand out free samples to attract its first customers. The idea is that once people hold tokens, they have an incentive to use and promote the platform. Airdrops can also reward loyalty, giving extra tokens to people who were active on the platform before it launched its own currency.",
+    "example": "In 2020, the Uniswap exchange airdropped 400 UNI tokens to every wallet that had ever used the platform. At their peak price, those free tokens were worth over $16,000 per person."
+  },
+  {
+    "id": "burn-mechanism",
+    "detailed": "A burn mechanism is a process that permanently destroys tokens by sending them to an address from which they can never be retrieved, reducing the total supply in circulation. This works like a company buying back and shredding its own shares: fewer tokens in existence means each remaining token represents a larger share of the network's value. Burns create deflationary pressure (a tendency for value per token to rise over time) and are often triggered automatically when users pay transaction fees or use platform services.",
+    "example": "Ethereum's EIP-1559 upgrade burns a portion of every transaction fee. In busy periods, Ethereum has burned more tokens per day than it creates, making the total supply shrink over time."
+  },
+  {
+    "id": "critical-mass",
+    "detailed": "Critical mass is the minimum number of users a network needs before it becomes self-sustaining, meaning new users join on their own without heavy subsidies or marketing. Research suggests this threshold often falls around 10-20% of the potential user base. Below critical mass, the network is fragile because each user sees too few others to justify staying. Once the threshold is crossed, a virtuous cycle kicks in: more users attract even more users, and growth accelerates on its own. Getting to critical mass is the hardest and most expensive phase for any platform.",
+    "example": "A messaging app like WhatsApp is useless if only 5 of your 200 contacts use it. Once about 30-40 contacts join, you start checking it daily and telling others, pushing it past critical mass."
+  },
+  {
+    "id": "cross-side-externalities",
+    "detailed": "Cross-side externalities are the effects that one group of users on a platform has on a completely different group of users on the same platform. Unlike regular externalities (spillover effects on bystanders), cross-side externalities specifically describe the interdependence between two distinct user groups connected by a platform. When more users join on one side, the other side benefits or suffers. These effects are the engine that drives two-sided markets (platforms serving two different groups), because each side's value depends on how many people are on the other side.",
+    "example": "When more restaurants join Uber Eats, customers get more food choices and use the app more. When more customers use Uber Eats, restaurants earn more revenue and want to stay on the platform. Each side's growth benefits the other."
+  },
+  {
+    "id": "dapps",
+    "detailed": "Decentralized applications (dApps) are software programs that run on a blockchain (a shared, tamper-resistant database spread across many computers) rather than on a single company's server. Because no single entity controls the underlying infrastructure, dApps can operate without a central authority deciding who can use them or changing the rules unilaterally. They typically use smart contracts (self-executing code stored on the blockchain) to automate their logic. Users interact with dApps through a crypto wallet, and every action is recorded transparently on the blockchain.",
+    "example": "Uniswap is a dApp on Ethereum that lets anyone swap tokens without creating an account or providing identification. It processed over $1 trillion in trades by 2023, all governed by code rather than a company."
+  },
+  {
+    "id": "ico",
+    "detailed": "An Initial Coin Offering (ICO) is a fundraising method where a blockchain project sells newly created tokens to early investors in exchange for established cryptocurrencies like Bitcoin or Ethereum, or sometimes traditional money. It is similar to an IPO (initial public offering, where a company sells shares to the public for the first time), but typically with far less regulation and no ownership stake in a company. Instead, buyers receive tokens that may grant access to a future service or rise in value if the project succeeds. The ICO boom of 2017 raised billions but also produced many scams and failures.",
+    "example": "Ethereum raised about $18 million in its 2014 ICO by selling ETH tokens at roughly $0.31 each. Those tokens later exceeded $4,000, but many other ICO projects from the same era went to zero."
+  },
+  {
+    "id": "layer-1",
+    "detailed": "Layer 1 refers to the base-level blockchain protocol that processes and records transactions on its own without relying on any other network. Think of it as the foundation of a building: everything else is built on top of it. Layer 1 blockchains define the core rules for how transactions are validated, how new blocks of data are added, and how the network reaches agreement (consensus) among participants. Because every transaction must be verified by the entire network, Layer 1 chains often face trade-offs between security, speed, and decentralization (spreading control across many participants).",
+    "example": "Bitcoin and Ethereum are Layer 1 blockchains. Ethereum processes roughly 15-30 transactions per second on its base layer, compared to Visa's capacity of about 65,000 per second."
+  },
+  {
+    "id": "layer-2",
+    "detailed": "Layer 2 refers to secondary networks or technologies built on top of a Layer 1 blockchain to increase its speed and reduce costs without sacrificing security. They work by processing many transactions off the main chain (away from the base blockchain) and then periodically posting a compressed summary back to Layer 1 for final verification. This is like handling routine paperwork in a branch office and only sending the final signed documents to headquarters. Layer 2 solutions let blockchains serve millions of users while keeping the underlying network secure and decentralized.",
+    "example": "Arbitrum and Optimism are Layer 2 networks on Ethereum that can process transactions for under $0.10, compared to $5-50 on Ethereum's base layer during busy periods. They inherit Ethereum's security guarantees."
+  },
+  {
+    "id": "liquidity-mining",
+    "detailed": "Liquidity mining is a strategy where a DeFi protocol (decentralized finance application) distributes free tokens to users who deposit their assets into the protocol's trading pools, providing the liquidity (readily available funds) that the platform needs to function. It is essentially a subsidy to attract capital quickly, similar to a bank offering a high introductory interest rate to attract new depositors. The distributed tokens often carry governance rights (voting power over the protocol's future) or can be sold for profit. Liquidity mining helped DeFi grow rapidly but can create mercenary capital that leaves when rewards dry up.",
+    "example": "In 2020, Compound started distributing COMP tokens to anyone lending or borrowing on its platform. Within weeks, total deposits surged from $100 million to over $1 billion as users chased the token rewards."
+  },
+  {
+    "id": "lock-in",
+    "detailed": "Lock-in occurs when the costs of switching away from a platform become so high that users are effectively trapped, even if a better alternative exists. These costs can be financial (losing purchased content), social (leaving behind your contact network), or technical (data stored in a proprietary format that competitors cannot read). Lock-in gives platforms enormous pricing power because users will tolerate fee increases or quality declines rather than bear the pain of switching. In crypto, lock-in can occur through token holdings, learned interfaces, or smart contract dependencies that tie a user's assets to one ecosystem.",
+    "example": "If you have years of playlists, followers, and listening history on Spotify, switching to Apple Music means losing all that curation. The effort to rebuild keeps you locked in even if Apple offers a cheaper plan."
+  },
+  {
+    "id": "metcalfes-law",
+    "detailed": "Metcalfe's Law states that the value of a network grows proportionally to the square of the number of its users, expressed as V = n^2, where V is value and n is the number of users. The reasoning is that each new user can connect with every existing user, so the number of possible connections grows much faster than the number of users. With 10 users there are 45 possible connections, but with 100 users there are 4,950. This explosive growth in connections explains why dominant networks become nearly impossible to displace: the value gap between a large and small network widens with every new user.",
+    "example": "A phone network with 10 users has 45 possible connections (10 times 9 divided by 2). Double to 20 users and connections jump to 190, more than quadrupling. This is why Facebook with 3 billion users dwarfs smaller social networks in value."
+  },
+  {
+    "id": "multi-homing-costs",
+    "detailed": "Multi-homing costs are the expenses and inconveniences of using multiple competing platforms at the same time rather than committing to just one. These costs include subscription fees, the time spent maintaining separate accounts, learning different interfaces, and splitting your data or social connections across platforms. When multi-homing costs are low, users easily try competitors and no single platform dominates. When multi-homing costs are high, users pick one platform and stick with it, which strengthens winner-take-all dynamics (where one platform captures most of the market).",
+    "example": "A restaurant can easily list on both Uber Eats and DoorDash (low multi-homing cost). But a game developer building for both PlayStation and Xbox must write separate code, buy two dev kits, and manage two storefronts (high multi-homing cost)."
+  },
+  {
+    "id": "network-effects",
+    "detailed": "Network effects occur when a product or service becomes more valuable to each user as more people use it. A phone is worthless if you are the only person who owns one, but extremely valuable when billions of people have phones. Network effects create a positive feedback loop (a self-reinforcing cycle): more users attract even more users, which makes the network more valuable, which attracts still more users. This dynamic explains why payment networks, social media, and blockchain platforms tend toward a small number of dominant players. Network effects are the single most important force in platform economics.",
+    "example": "Instagram became more valuable as more friends joined because you could see more content and reach more people. By 2023 it had over 2 billion users, making it nearly impossible for a new photo-sharing app to compete."
+  },
+  {
+    "id": "network-externality",
+    "detailed": "A network externality is a benefit or cost that one user's participation in a network imposes on other users, without any direct transaction between them. When a new person joins a social network, every existing member gains a potential new connection at no extra cost, which is a positive network externality. Conversely, when too many users join and the network becomes congested or spammy, that is a negative network externality. The key insight is that individuals do not consider these spillover effects on others when deciding to join, which can lead to networks that are either too small or too large relative to what would be socially optimal.",
+    "example": "When one more driver joins Uber, riders benefit from shorter wait times (positive externality). But during surge pricing, too many ride requests overwhelm drivers, increasing wait times for everyone (negative externality)."
+  },
+  {
+    "id": "path-dependence",
+    "detailed": "Path dependence means that the current state of a technology or market is heavily shaped by historical events and early choices, not just by present-day conditions. Small advantages or lucky breaks early on can lock in a particular outcome permanently, even if objectively better alternatives exist. Once a platform gains a lead, network effects and switching costs reinforce its dominance, making it nearly impossible for latecomers to catch up regardless of their technical superiority. Path dependence explains why we sometimes end up stuck with inferior standards or dominant platforms that won the race through timing rather than quality.",
+    "example": "The QWERTY keyboard layout was designed in the 1870s to prevent typewriter jams. Even though faster layouts exist, billions of people learned QWERTY, and switching costs keep it dominant 150 years later."
+  },
+  {
+    "id": "platform-governance",
+    "detailed": "Platform governance refers to the rules, processes, and power structures that determine how decisions are made about a platform's evolution, fee structure, and resource allocation. In traditional companies, a board of directors governs. In blockchain platforms, governance is often decentralized: token holders vote on proposals to change protocol rules, adjust fees, or allocate treasury funds. Good governance balances efficiency (making decisions quickly) with legitimacy (ensuring all stakeholders have a voice). Poor governance can lead to plutocracy (rule by wealthy token holders), stagnation, or contentious splits (forks) in the community.",
+    "example": "MakerDAO token holders vote on interest rates for its stablecoin DAI. In 2023, a governance vote raised the DAI savings rate from 1% to 8%, attracting billions in deposits. One large holder's vote can outweigh thousands of small holders."
+  },
+  {
+    "id": "plutocracy",
+    "detailed": "Plutocracy means governance by the wealthy. In blockchain platforms that use token-based voting (one token equals one vote), anyone who accumulates a large number of tokens gains disproportionate control over the platform's rules, fee structures, and treasury spending. This mirrors how a shareholder with 51% of a company's stock can outvote all other shareholders combined. Plutocracy undermines the decentralization promise of blockchain because a handful of whales (large token holders) can dominate decisions that affect millions of users. Solutions like quadratic voting (where voting power grows with the square root of tokens, not linearly) aim to reduce this imbalance.",
+    "example": "In some DeFi protocols, a single venture capital fund holding 10% of tokens can outvote thousands of small community members combined. If 100 small holders each own 100 tokens, the fund with 1 million tokens still wins every vote."
+  },
+  {
+    "id": "quadratic-voting",
+    "detailed": "Quadratic voting is a governance mechanism where the cost of additional votes increases quadratically, meaning each extra vote costs more than the last. Specifically, casting N votes costs N^2 tokens (1 vote costs 1 token, 2 votes cost 4 tokens, 3 votes cost 9 tokens, and so on). This design lets people express how strongly they care about an issue while preventing wealthy participants from cheaply dominating every decision. Someone who cares intensely can still cast many votes but must pay a steep premium, while someone with moderate preferences can vote cheaply. It is a mathematical compromise between one-person-one-vote democracy and one-token-one-vote plutocracy.",
+    "example": "Under quadratic voting, casting 10 votes costs 100 tokens (10 squared), while casting 1 vote costs just 1 token. A whale with 10,000 tokens gets only 100 votes (square root of 10,000), not 10,000 votes as in standard token voting."
+  },
+  {
+    "id": "staking",
+    "detailed": "Staking is the process of locking up cryptocurrency tokens in a blockchain protocol as a form of security deposit, earning rewards in return. Stakers help secure the network because they have money at risk: if they validate fraudulent transactions, their staked tokens can be confiscated (a penalty called slashing). Think of it like a landlord requiring a security deposit that you forfeit if you damage the property. Staking also acts as a velocity sink (a mechanism that slows token circulation) because locked tokens cannot be sold or traded, which tends to support the token's price by reducing available supply.",
+    "example": "Ethereum requires validators to stake 32 ETH (roughly $60,000-100,000) to participate in securing the network. In return, stakers earn approximately 3-5% annual rewards. If a validator goes offline or cheats, a portion of their stake is slashed."
+  },
+  {
+    "id": "switching-costs",
+    "detailed": "Switching costs are all the expenses, effort, and inconvenience a user faces when moving from one platform or service to another. These costs can be financial (cancellation fees, losing prepaid credits), procedural (learning a new interface, migrating data), or relational (leaving behind friends, followers, or professional connections). High switching costs create lock-in and protect incumbent platforms from competition, even when rivals offer better features or lower prices. In crypto, switching costs include transferring assets between blockchains (which may require bridge fees and carry security risks), relearning interfaces, and abandoning reputation or history on the original platform.",
+    "example": "Moving from one bank to another requires changing direct deposits, updating automatic bill payments, ordering new checks, and memorizing new account numbers. These hassles explain why the average person keeps the same bank account for over 15 years."
+  },
+  {
+    "id": "token-velocity",
+    "detailed": "Token velocity measures how frequently a token changes hands within a given time period. It is calculated as the total transaction volume divided by the average token supply in circulation. High velocity means tokens are bought and immediately sold or spent, passing through wallets quickly without being held. The equation of exchange (M * V = P * Q, where M is token supply, V is velocity, P is price level, and Q is quantity of transactions) shows that if velocity rises while other factors stay constant, each token's value falls. Platforms therefore try to reduce velocity through mechanisms that encourage holding rather than instant resale.",
+    "example": "If a token has a supply of 1 million and $10 million in daily transactions, its velocity is 10 per day. Each token changes hands 10 times daily, suggesting nobody holds it long, which puts downward pressure on its price."
+  },
+  {
+    "id": "tokenomics",
+    "detailed": "Tokenomics is the economic design of a cryptocurrency token, encompassing its supply schedule (how many tokens exist now and will exist in the future), distribution method (who gets tokens and how), utility (what the token can be used for), and incentive structure (why people would want to hold it). Good tokenomics aligns the interests of all participants: developers, users, and investors. Key design choices include whether supply is capped or inflationary, how tokens are allocated between the team and community, what governance rights (voting power) tokens carry, and what mechanisms exist to create demand and reduce selling pressure.",
+    "example": "Bitcoin's tokenomics features a hard cap of 21 million coins, with new supply halving every four years. Ethereum's tokenomics changed in 2022 to include fee burning, making supply potentially deflationary during high-usage periods."
+  },
+  {
+    "id": "two-sided-market",
+    "detailed": "A two-sided market is a platform that creates value by connecting two distinct groups of users who need each other but cannot easily connect on their own. The platform acts as an intermediary, and its value depends on having enough participants on both sides. This creates a chicken-and-egg problem (a circular dependency): one side will not join without the other, but the other will not join without the first. To solve this, platforms often subsidize the more price-sensitive side (the side that is more likely to leave if charged) and charge the less price-sensitive side. Pricing strategy becomes about balancing both sides, not just maximizing revenue from one.",
+    "example": "Uber connects riders (side A) with drivers (side B). Uber subsidized early riders with cheap fares to attract them, then attracted drivers by guaranteeing minimum earnings. A credit card network similarly needs both cardholders and merchants."
+  },
+  {
+    "id": "velocity-sink",
+    "detailed": "A velocity sink is any mechanism built into a token's design that encourages holders to keep their tokens rather than immediately selling or spending them, thereby slowing the rate at which tokens change hands (velocity). Common velocity sinks include staking rewards (earning interest for locking tokens), governance rights (needing to hold tokens to vote on protocol changes), usage discounts (getting lower fees when holding tokens), and buy-and-burn programs (where the protocol uses revenue to purchase and destroy tokens). By reducing velocity, these mechanisms support token value according to the equation of exchange: if V (velocity) goes down and other factors stay constant, token price goes up.",
+    "example": "Binance's BNB token acts as a velocity sink: holding BNB gives you a 25% discount on trading fees. This encourages traders to buy and hold BNB rather than selling it immediately, reducing its velocity and supporting its price."
+  },
+  {
+    "id": "winner-take-all",
+    "detailed": "Winner-take-all describes a market dynamic where strong network effects cause one dominant platform to capture the vast majority of users and value, leaving little room for competitors. Once a platform reaches critical mass (the minimum user base for self-sustaining growth), network effects accelerate its advantage: more users attract more users, developers build for the largest audience, and switching costs lock everyone in. The result is that the market tips toward a single winner, and second-place competitors struggle to survive even with comparable or superior technology. This pattern is especially common in payment systems, social networks, and blockchain platforms where interoperability between competing networks is limited.",
+    "example": "Google controls roughly 90% of the global search market. In social media, Facebook grew so dominant that Google+, despite Google's vast resources, shut down after failing to reach critical mass. In crypto, Ethereum hosts over 60% of all DeFi activity."
+  }
+]

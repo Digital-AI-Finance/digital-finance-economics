@@ -68,7 +68,7 @@ a:hover{text-decoration:underline}
 
 .terms-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
-.term-card{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:14px;transition:all 0.15s}
+.term-card{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:14px;transition:all 0.15s;position:relative}
 .term-card:hover{border-color:#0366d6;box-shadow:0 3px 12px rgba(0,0,0,0.08)}
 .term-card.hidden{display:none}
 .term-name{font-size:14px;font-weight:600;color:#24292e;margin-bottom:6px}
@@ -89,6 +89,17 @@ a:hover{text-decoration:underline}
 .no-results{text-align:center;padding:48px 24px;color:#586069}
 .no-results h3{font-size:16px;margin-bottom:8px;color:#24292e}
 .no-results p{font-size:13px}
+
+/* Expand/Collapse Button */
+.expand-btn{position:absolute;top:14px;right:14px;border:none;background:none;cursor:pointer;font-size:14px;color:#586069;transition:transform 0.2s;padding:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+.expand-btn:hover{color:#0366d6}
+.term-card.expanded .expand-btn{transform:rotate(90deg)}
+
+/* Detailed Term Information */
+.term-detail{display:none;margin-top:10px;padding-top:10px;border-top:1px solid #e1e4e8}
+.term-card.expanded .term-detail{display:block}
+.term-detail-label{font-size:11px;font-weight:600;color:#586069;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px}
+.term-example{background:#f0f9ff;border-left:3px solid #0366d6;padding:8px 12px;margin-top:8px;font-style:italic;font-size:12px;border-radius:0 4px 4px 0}
 
 /* Footer */
 .foot{text-align:center;padding:24px;font-size:11px;color:#586069;margin-top:32px;border-top:1px solid #e1e4e8}
@@ -265,7 +276,9 @@ function filterTerms() {
       const query = searchQuery.toLowerCase();
       const termMatch = term.term.toLowerCase().includes(query);
       const defMatch = term.definition.toLowerCase().includes(query);
-      if (!termMatch && !defMatch) {
+      const detailedMatch = term.detailed && term.detailed.toLowerCase().includes(query);
+      const exampleMatch = term.example && term.example.toLowerCase().includes(query);
+      if (!termMatch && !defMatch && !detailedMatch && !exampleMatch) {
         return false;
       }
     }
@@ -318,6 +331,19 @@ function renderTerms() {
     </section>
   `).join('');
 
+  // Auto-expand cards when search matches in detailed or example
+  if (searchQuery) {
+    const query = searchQuery.toLowerCase();
+    document.querySelectorAll('.term-card').forEach(card => {
+      const detailed = card.querySelector('.term-detail .term-definition');
+      const example = card.querySelector('.term-example');
+      if ((detailed && detailed.textContent.toLowerCase().includes(query)) ||
+          (example && example.textContent.toLowerCase().includes(query))) {
+        card.classList.add('expanded');
+      }
+    });
+  }
+
   // Update alphabet nav active states
   updateAlphabetNav(letters);
 }
@@ -326,6 +352,8 @@ function renderTerms() {
 function renderTermCard(term) {
   const highlightedTerm = highlightText(term.term, searchQuery);
   const highlightedDef = highlightText(term.definition, searchQuery);
+  const highlightedDetailed = term.detailed ? highlightText(term.detailed, searchQuery) : '';
+  const highlightedExample = term.example ? highlightText(term.example, searchQuery) : '';
 
   const lessonTags = term.lessons.map(l => {
     const num = l.replace('L0', '').replace('L', '');
@@ -336,11 +364,18 @@ function renderTermCard(term) {
 
   return `
     <div class="term-card" data-lessons="${term.lessons.join(',')}" data-category="${term.category}">
+      <button class="expand-btn" aria-label="Expand details" tabindex="0">&#9654;</button>
       <h3 class="term-name">${highlightedTerm}</h3>
       <p class="term-definition">${highlightedDef}</p>
       <div class="term-tags">
         ${lessonTags}
         <span class="tag tag-category">${term.category}</span>
+      </div>
+      <div class="term-detail">
+        <div class="term-detail-label">Detailed Explanation</div>
+        <p class="term-definition">${highlightedDetailed || 'No additional details available.'}</p>
+        <div class="term-detail-label" style="margin-top:8px">Example</div>
+        <div class="term-example">${highlightedExample || 'No example available.'}</div>
       </div>
     </div>
   `;
@@ -356,6 +391,25 @@ function updateAlphabetNav(activeLetters) {
 }
 
 // Event Listeners
+
+// Expand/collapse button click handler
+termsContainer.addEventListener('click', (e) => {
+  const btn = e.target.closest('.expand-btn');
+  if (btn) {
+    const card = btn.closest('.term-card');
+    card.classList.toggle('expanded');
+  }
+});
+
+// Expand/collapse button keyboard handler
+termsContainer.addEventListener('keydown', (e) => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('expand-btn')) {
+    e.preventDefault();
+    const card = e.target.closest('.term-card');
+    card.classList.toggle('expanded');
+  }
+});
+
 searchInput.addEventListener('input', (e) => {
   searchQuery = e.target.value.trim();
   renderTerms();
