@@ -1,9 +1,12 @@
 """MEV Sandwich Attack: Optimal Extraction
 
-Profit maximization in blockchain front-running attacks.
-Theory: Daian et al. (2020) "Flash Boys 2.0: Frontrunning in DEXes"
+Economic Model:
+  AMM Invariant: $x \\cdot y = k$
+  Sandwich Profit: $\\pi = \\Delta y_{back} - \\Delta y_{front} - 2g$
+  Victim Loss: $\\Delta_{victim} = (Q_{expected} - Q_{actual}) \\cdot P_{ref}$
+  Optimal: $Q_f^* = \\arg\\max_Q \\pi(Q)$ s.t. $P_{victim} \\leq P_{max}$
 
-Based on: Daian et al. (2020) - Flash Boys 2.0
+Citation: Daian et al. (2020) - Flash Boys 2.0
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,46 +28,53 @@ MLRED = '#D62728'
 MLLAVENDER = '#ADADE0'
 
 # Initial AMM pool (constant product market maker: x*y = k)
-x = 10000  # ETH reserve
-y = 10000  # USDC reserve
-k = x * y  # Constant product
+# Smaller pool so victim trade (10% of pool) creates meaningful price impact
+x = 1000   # ETH reserve
+y = 1000   # USDC reserve
+k = x * y  # Constant product (1,000,000)
 initial_price = y / x  # Initial price: 1 ETH = 1 USDC
+fee = 0.003  # 0.3% swap fee (Uniswap standard)
 
 # Victim wants to buy ETH by selling this much USDC
-dx_victim = 100
-gas_cost = 2.0  # Gas cost per transaction (in USDC)
+dy_victim = 100  # USDC sent to pool (10% of reserve)
+base_gas = 2.0   # Base gas cost per transaction (in USDC)
+priority_factor = 0.0005  # Priority gas auction: cost scales with Q_f^2
 
 # Sweep front-run sizes to find optimal sandwich size
-dx_front_range = np.linspace(1, 500, 100)
+dy_front_range = np.linspace(1, 500, 200)
 profits = []
 victim_losses = []  # Track welfare extraction from victim
 
-for dx_front in dx_front_range:
-    # Step 1: Attacker front-runs (buys ETH by selling USDC)
-    y1 = y + dx_front
+for dy_front in dy_front_range:
+    # Step 1: Attacker front-runs (buys ETH by selling USDC, minus fee)
+    effective_dy_f = dy_front * (1 - fee)
+    y1 = y + effective_dy_f
     x1 = k / y1
     attacker_eth = x - x1  # ETH attacker receives
 
     # Step 2: Victim buys ETH (executes at inflated price P' > P)
-    y2 = y1 + dx_victim
+    effective_dy_v = dy_victim * (1 - fee)
+    y2 = y1 + effective_dy_v
     x2 = k / y2
     victim_eth = x1 - x2  # ETH victim receives (less than expected)
 
     # Victim expected to get (at initial price, no front-run):
-    y_no_attack = y + dx_victim
+    y_no_attack = y + dy_victim * (1 - fee)
     x_no_attack = k / y_no_attack
     victim_eth_expected = x - x_no_attack
     victim_loss = (victim_eth_expected - victim_eth) * (y2/x2)  # Value lost in USDC
     victim_losses.append(victim_loss)
 
-    # Step 3: Attacker back-runs (sells ETH back for USDC at P')
-    x3 = x2 + attacker_eth
+    # Step 3: Attacker back-runs (sells ETH back for USDC; fee on ETH input)
+    x3 = x2 + attacker_eth * (1 - fee)  # Fee applied to ETH input
     y3 = k / x3
-    attacker_usdc_back = y2 - y3  # USDC attacker receives
+    attacker_usdc_back = y2 - y3  # USDC received (fee already deducted from ETH)
 
-    # Attacker profit: revenue from back-run minus front-run cost minus 2x gas
-    # π = Q_f * (P' - P_initial) - 2*gas_cost
-    profit = attacker_usdc_back - dx_front - 2*gas_cost
+    # Attacker profit: exact AMM execution with fee + priority gas auction
+    # Priority gas grows quadratically (competitive MEV auction / PGA)
+    total_gas = 2 * (base_gas + priority_factor * dy_front**2)
+    # Exact: π = Δy_back(1-f) - Δy_front - 2·gas(Q_f)
+    profit = attacker_usdc_back - dy_front - total_gas
     profits.append(profit)
 
 # Convert to numpy arrays
@@ -73,22 +83,22 @@ victim_losses = np.array(victim_losses)
 
 # Find optimal sandwich size (maximizes profit)
 optimal_idx = np.argmax(profits)
-optimal_front = dx_front_range[optimal_idx]
+optimal_front = dy_front_range[optimal_idx]
 optimal_profit = profits[optimal_idx]
 optimal_victim_loss = victim_losses[optimal_idx]
 
 # Calculate prices for the optimal sandwich attack
-dx_front_example = optimal_front
-y1_ex = y + dx_front_example
+dy_front_example = optimal_front
+y1_ex = y + dy_front_example * (1 - fee)
 x1_ex = k / y1_ex
 price_after_front = y1_ex / x1_ex
 
-y2_ex = y1_ex + dx_victim
+y2_ex = y1_ex + dy_victim * (1 - fee)
 x2_ex = k / y2_ex
 price_after_victim = y2_ex / x2_ex
 
 attacker_eth_ex = x - x1_ex
-x3_ex = x2_ex + attacker_eth_ex
+x3_ex = x2_ex + attacker_eth_ex * (1 - fee)  # Fee on ETH input
 y3_ex = k / x3_ex
 price_after_back = y3_ex / x3_ex
 
@@ -129,7 +139,7 @@ ax_main.annotate('Attacker\nBack-runs', xy=(3, price_after_back), xytext=(3, pri
 
 # Inset: Profit optimization curve
 ax_inset = plt.subplot2grid((3, 3), (0, 2), rowspan=2)
-ax_inset.plot(dx_front_range, profits, color=MLPURPLE, linewidth=2.5, label='Profit π(Q_f)')
+ax_inset.plot(dy_front_range, profits, color=MLPURPLE, linewidth=2.5, label='Profit π(Q_f)')
 ax_inset.plot(optimal_front, optimal_profit, 'o', color=MLRED, markersize=12,
          markeredgecolor='black', markeredgewidth=2, zorder=5,
          label=f'Optimal Q_f* = {optimal_front:.0f}')
@@ -142,16 +152,17 @@ ax_inset.legend(fontsize=9, loc='upper right')
 ax_inset.grid(alpha=0.3, linestyle='--')
 ax_inset.tick_params(labelsize=10)
 
-# Add profit equation annotation
-ax_inset.text(0.5, 0.15, r'MEV Extraction:' + '\n' +
-              r'$\pi = Q_f(P^\prime - P) - 2 \cdot \text{gas}$' + '\n' +
-              r'$P^\prime = \frac{y + \Delta y}{x - \Delta x}$ (manipulated price)',
+# Add profit equation annotation (exact AMM formula with fee + PGA)
+ax_inset.text(0.5, 0.15, r'Exact profit (with 0.3% fee + PGA):' + '\n' +
+              r'$\pi = \Delta y_{back}(1\!-\!f) - \Delta y_{front} - 2g(Q_f)$' + '\n' +
+              r'$g(Q_f) = g_0 + \alpha Q_f^2$ (priority auction)',
          transform=ax_inset.transAxes, fontsize=9, ha='center',
          bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 # Welfare analysis panel (bottom right)
 ax_welfare = plt.subplot2grid((3, 3), (2, 2))
-welfare_data = [optimal_profit, optimal_victim_loss, 2*gas_cost]
+optimal_gas = 2 * (base_gas + priority_factor * optimal_front**2)
+welfare_data = [optimal_profit, optimal_victim_loss, optimal_gas]
 welfare_labels = ['Attacker\nProfit', 'Victim\nLoss', 'Gas\nBurned']
 welfare_colors = [MLGREEN, MLRED, '#888888']
 
@@ -170,13 +181,23 @@ for bar, value in zip(bars_welfare, welfare_data):
             ha='center', va='bottom', fontsize=9, fontweight='bold')
 
 # Add zero-sum note
-net_welfare = optimal_profit - optimal_victim_loss - 2*gas_cost
+net_welfare = optimal_profit - optimal_victim_loss - optimal_gas
 ax_welfare.text(0.5, -0.25, f'Net: ${net_welfare:.2f} (zero-sum minus gas)',
          transform=ax_welfare.transAxes, fontsize=8, ha='center', style='italic',
          bbox=dict(boxstyle='round', facecolor='lightgray', alpha=0.5))
 
+# Annotate residual price impact on main chart
+ax_main.annotate(f'Residual impact: pool does not\nfully return to P={y/x:.2f}.\n'
+                 f'Final P={price_after_back:.3f} (victim trade\n'
+                 f'permanently shifts reserves).',
+                 xy=(3, price_after_back), xytext=(0.25, 0.25),
+                 textcoords='axes fraction',
+                 fontsize=9, color='#555555',
+                 arrowprops=dict(arrowstyle='->', color='#555555', lw=1),
+                 bbox=dict(boxstyle='round,pad=0.3', facecolor='lightyellow', edgecolor='#999999', alpha=0.85))
+
 fig.suptitle('MEV Sandwich Attack: Optimal Extraction Strategy\n' +
-             f'Daian et al. (2020): Victim Trade = {dx_victim} USDC, Optimal Front-run = {optimal_front:.0f} USDC',
+             f'Daian et al. (2020): Victim Trade = {dy_victim} USDC, Optimal Front-run = {optimal_front:.0f} USDC',
              fontsize=17, y=0.98, fontweight='bold')
 plt.tight_layout(rect=[0, 0, 1, 0.96])
 

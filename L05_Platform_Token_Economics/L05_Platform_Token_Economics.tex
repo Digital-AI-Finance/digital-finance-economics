@@ -89,7 +89,7 @@
 \end{itemize}
 \end{columns}
 
-\bottomnote{This lesson applies platform economics to understand cryptocurrency and token systems}
+\bottomnote{In L04 we studied how payment networks work. Now we ask: \textit{why} do some networks grow to dominate while others fail? Platform economics provides the answer.}
 \end{frame}
 
 % Platform Economics Introduction
@@ -102,8 +102,8 @@ A platform is a two-sided market (platform connecting two user groups who need e
 \begin{itemize}
 \item Facilitates interactions between distinct user groups
 \item Creates value through network effects (when a product becomes more valuable as more people use it)
-\item Exhibits cross-side externalities (effects on third parties not involved in a transaction)
-\item Often displays winner-take-all dynamics
+\item Exhibits cross-side externalities (when adding users on one side of the platform benefits users on the other side---e.g., more merchants attract more consumers)
+\item Often displays winner-take-all dynamics \textit{(one platform captures most of the market)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -114,11 +114,16 @@ A platform is a two-sided market (platform connecting two user groups who need e
 \item Payment networks: merchants and consumers
 \end{itemize}
 
+\vspace{0.3em}
+\textbf{What is a Token?}
+
+A digital asset recorded on a blockchain. Tokens can serve as currency, grant voting rights, provide access to a service, or represent ownership.
+
 \column{0.48\textwidth}
 \textbf{Key Economic Features}
 \begin{itemize}
 \item Network externalities (direct and indirect)
-\item Multi-homing costs and switching costs
+\item Multi-homing costs \textit{(cost of using multiple platforms at once)} and switching costs \textit{(cost of changing platforms)}
 \item Platform competition vs. cooperation
 \item Governance and control
 \end{itemize}
@@ -128,7 +133,7 @@ A platform is a two-sided market (platform connecting two user groups who need e
 
 Blockchain systems are inherently platforms:
 \begin{itemize}
-\item Validators, developers, users interact
+\item Validators (computers that verify blockchain transactions, earning rewards), developers, users interact
 \item Token value depends on network size
 \item Adoption follows platform dynamics
 \end{itemize}
@@ -147,10 +152,8 @@ Blockchain systems are inherently platforms:
 \textbf{1. Direct Network Effects}
 \begin{itemize}
 \item Value increases with same-side users
-\item Example: More Bitcoin holders $\rightarrow$ more liquidity
-\item Katz-Shapiro (1985): $V_i = v(n)$ where $v'(n) > 0$
-
-\textit{(The value for user $i$ is a function of total users $n$, and this value increases as $n$ grows)}
+\item Example: More Bitcoin holders $\rightarrow$ more liquidity \textit{(ease of buying or selling without moving the price)}
+\item Katz-Shapiro (1985): If each new user adds \$10 of value to every existing user, then each user's value $V_i = 10n$, and total network value is $10n^2$ (this is Metcalfe's Law).
 \end{itemize}
 
 \vspace{0.3em}
@@ -164,19 +167,19 @@ Blockchain systems are inherently platforms:
 \vspace{0.3em}
 \textbf{Real Example: Ethereum}
 
-2020: 1M addresses $\rightarrow$ 200 dApps
+2020: $\sim$0.4M daily active addresses $\rightarrow$ 200 dApps
 
-2023: 2M addresses $\rightarrow$ 3000+ dApps
+2023: $\sim$0.5M daily active addresses $\rightarrow$ 3000+ dApps
 
 More users attract developers; more dApps attract users.
 
 \column{0.48\textwidth}
 \textbf{Economic Implications}
 \begin{itemize}
-\item Positive feedback loops
+\item Positive feedback loops \textit{(self-reinforcing cycles: more users attract more users---snowball effect)}
 \item Multiple equilibria possible
-\item Coordination problems in early stages
-\item Path dependence and lock-in
+\item Coordination problems in early stages \textit{(everyone waits for others to join first)}
+\item Path dependence \textit{(today's state depends on history, not just current conditions)} and lock-in \textit{(high switching costs trap users)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -190,6 +193,8 @@ How to quantify network effects?
 \item Metcalfe's Law: $V \propto n^2$
 
 \textit{(Network value grows with the square of users: doubling users quadruples value)}
+
+\textit{Why $n^2$? With $n$ users, each connects to $n-1$ others, giving $n(n-1)/2$ connections---approximately $n^2$. Caveat: not all connections are equally valuable.}
 \end{itemize}
 \end{columns}
 
@@ -202,7 +207,7 @@ How to quantify network effects?
 \includegraphics[width=0.65\textwidth]{01_platform_adoption_dynamics/chart.pdf}
 \end{center}
 
-\bottomnote{S-curve adoption patterns reflect network effects: slow start, rapid growth, eventual saturation}
+\bottomnote{This chart shows the Katz-Shapiro (1985) fulfilled-expectations model. Where the blue curve crosses the dashed line, expectations match reality (equilibrium). Green dots are stable; red dots are unstable (critical mass). The `Penguin Effect' describes how nobody wants to adopt first.}
 \end{frame}
 
 % Critical Mass and Tipping Points
@@ -230,7 +235,11 @@ A platform needs critical mass (minimum users needed for network to become self-
 \column{0.48\textwidth}
 \textbf{Theoretical Foundation}
 
-Schelling (1978): Coordination games with multiple equilibria
+Schelling (1978): Coordination games \textit{(situations where everyone benefits from choosing the same option, but agreeing which is the hard part)} with multiple equilibria.
+
+\textit{Equilibrium: a state where no participant wants to change behavior. Stable = the system returns to it after a push. Unstable = any small push sends the system away (the knife-edge tipping point).}
+
+\textit{(Schelling studied tipping points in social settings; Katz \& Shapiro (1985) adapted the concept to technology adoption)}
 \begin{itemize}
 \item High adoption: stable equilibrium
 \item Low adoption: stable equilibrium
@@ -240,9 +249,9 @@ Schelling (1978): Coordination games with multiple equilibria
 \vspace{0.3em}
 \textbf{Application to Tokens}
 \begin{itemize}
-\item ICOs (Initial Coin Offerings---token fundraising) reduce bootstrapping costs
+\item ICOs (Initial Coin Offerings---token fundraising) reduce bootstrapping costs \textit{(the expense of getting from zero users to a viable community)}
 \item Token airdrops create initial user base
-\item Liquidity mining accelerates adoption
+\item DeFi (Decentralized Finance) liquidity mining \textit{(providing capital---`liquidity'---to a protocol's trading pool in exchange for token rewards)} accelerates adoption
 \end{itemize}
 \end{columns}
 
@@ -272,22 +281,27 @@ MV = PQ
 \textit{(Money supply times velocity equals price level times transactions---if tokens circulate faster, each is worth less)}
 
 \begin{itemize}
-\item $M$: Token supply (monetary base)
+\item $M$: Token supply (total number of tokens in existence)
 \item $V$: Velocity (transactions per period)
 \item $P$: Price level in token terms
-\item $Q$: Real output (network activity)
+\item $Q$: Transaction volume (total goods and services bought with the token per period)
 \end{itemize}
 
 \vspace{0.3em}
-Solving for token value:
+Rearranging for the price level:
 \[
-P_{\text{token}} = \frac{PQ}{MV}
+P = \frac{MV}{Q}
 \]
 
-\textit{(Token price increases with network activity but decreases with supply and velocity)}
+In dollar terms, token price:
+\[
+P_{\text{token}} = \frac{\text{Total dollar transaction volume}}{M \times V}
+\]
+
+\textit{(Token price = total economic activity divided by supply times velocity)}
 
 \column{0.48\textwidth}
-\textbf{The Velocity Problem}
+\textbf{The Velocity Problem} \textit{(Why is high velocity bad for token holders?)}
 
 High velocity reduces token value:
 \begin{itemize}
@@ -304,20 +318,22 @@ Mechanisms to reduce velocity (mechanism that slows how fast tokens change hands
 \item Staking (locking tokens to earn rewards and secure the network) requirements (lock-up periods)
 \item Governance (how decisions are made about the protocol) rights (voting power)
 \item Fee discounts for holders
-\item Burn mechanisms (deflationary)
+\item Burn mechanisms \textit{(permanently destroying tokens to reduce supply---deflationary means total supply shrinks over time, making remaining tokens scarcer)}
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Real Example: Token Velocity}
+\textbf{Worked Example: MV = PQ}
 
-Token A: V=50/year (pure payment)
+Suppose: PQ = \$1B/year (network activity), M = 10M tokens.
 
-Token B: V=5/year (staking rewards)
+Token A (payment only, V=50): $P_{\text{token}} = \frac{\$1\text{B}}{10\text{M} \times 50} = \$2.00$
 
-With equal $M$ and $PQ$, Token B is worth 10x more.
+Token B (staking rewards, V=5): $P_{\text{token}} = \frac{\$1\text{B}}{10\text{M} \times 5} = \$20.00$
+
+Token B is 10$\times$ more valuable because it circulates 10$\times$ slower.
 \end{columns}
 
-\bottomnote{Samuelson (2017): Token velocity is central challenge in cryptoeconomics design}
+\bottomnote{Samani (2017): Token velocity is central challenge in cryptoeconomics design}
 \end{frame}
 
 % Chart: Token Velocity Sink
@@ -357,7 +373,7 @@ With equal $M$ and $PQ$, Token B is worth 10x more.
 \textbf{3. Algorithmic Adjustment}
 \begin{itemize}
 \item Supply responds to demand
-\item Example: Stablecoins (DAI (a decentralized stablecoin), Terra)
+\item Example: Stablecoins---DAI (decentralized, still operating) and Terra/UST (algorithmic, collapsed in 2022 losing \~\$40B---a cautionary tale)
 \item Attempts price stability
 \item Complex mechanism design
 \end{itemize}
@@ -380,7 +396,7 @@ With equal $M$ and $PQ$, Token B is worth 10x more.
 \includegraphics[width=0.65\textwidth]{04_tokenomics_supply_schedule/chart.pdf}
 \end{center}
 
-\bottomnote{Different supply schedules create distinct inflation dynamics and holder incentives}
+\bottomnote{Token supply design involves both high-level monetary policy (fixed vs.\ inflationary vs.\ algorithmic) and micro-level vesting schedules (how tokens unlock over time). This chart illustrates vesting mechanics.}
 \end{frame}
 
 % Winner-Take-All Dynamics
@@ -392,8 +408,8 @@ With equal $M$ and $PQ$, Token B is worth 10x more.
 Platform markets often concentrate:
 \begin{itemize}
 \item Network effects favor largest player
-\item Multi-homing costs create lock-in
-\item Liquidity begets liquidity
+\item Multi-homing costs create lock-in \textit{(using multiple platforms is expensive, so users stay with one)}
+\item Liquidity begets liquidity \textit{(traders go where other traders are, creating a self-reinforcing cycle)}
 \item Switching costs preserve dominance
 \end{itemize}
 
@@ -401,27 +417,28 @@ Platform markets often concentrate:
 \textbf{Evidence in Crypto Markets}
 \begin{itemize}
 \item Bitcoin dominance in store of value
-\item Ethereum dominance in smart contracts
+\item Ethereum dominance in smart contracts (self-executing programs on a blockchain)
 \item Exchange concentration (Binance, Coinbase)
 \end{itemize}
 
 \column{0.48\textwidth}
 \textbf{Theoretical Foundation}
 
-Gibrat's Law: proportional growth leads to concentration
+If Platform A has 80\% share and Platform B has 20\%, and both grow at 10\%/year, A gains 8 points while B gains only 2---the big get bigger. This is Gibrat's Law:
 \[
 \frac{dS_i}{dt} = \alpha S_i + \epsilon_i
 \]
 
 \textit{(Larger platforms grow faster on average, leading to market concentration over time)}
 
-Where $S_i$ is firm $i$'s market share.
+\vspace{0.3em}
+A simple model (Pólya urn) illustrates this: imagine drawing balls from an urn and adding one more of the same color---early random draws determine the final mix, just as early adopter choices determine which platform dominates.
 
 \vspace{0.3em}
 \textbf{Policy Implications}
 \begin{itemize}
-\item Antitrust concerns in platform markets
-\item Interoperability requirements
+\item Antitrust (laws preventing excessive market dominance) concerns in platform markets
+\item Interoperability (ability of different blockchains to communicate and transfer assets) requirements
 \item Challenges to decentralization narrative
 \end{itemize}
 \end{columns}
@@ -435,7 +452,7 @@ Where $S_i$ is firm $i$'s market share.
 \includegraphics[width=0.65\textwidth]{05_winner_take_all_market_share/chart.pdf}
 \end{center}
 
-\bottomnote{Network effects and switching costs lead to market concentration around dominant platform}
+\bottomnote{Network effects and switching costs lead to market concentration around dominant platform. Next: dominant platforms are two-sided markets---how do they set prices across both sides?}
 \end{frame}
 
 % Two-Sided Markets
@@ -448,7 +465,7 @@ Rochet \& Tirole (2003): A market is two-sided if:
 \begin{itemize}
 \item Platform serves two distinct groups
 \item Cross-side externalities exist
-\item Price structure matters (not just level)
+\item Price structure matters, not just level \textit{(e.g., charging merchants 3\% and consumers 0\% differs from 1.5\% each)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -456,16 +473,18 @@ Rochet \& Tirole (2003): A market is two-sided if:
 \begin{itemize}
 \item Exchanges: traders and liquidity providers
 \item Payment networks: merchants and consumers
-\item DeFi (Decentralized Finance) protocols: borrowers and lenders
+\item DeFi protocols: borrowers and lenders
 \end{itemize}
 
 \column{0.48\textwidth}
 \textbf{Pricing Strategies}
 
+This explains why crypto exchanges offer zero-fee trading to retail (subsidized side) while charging market makers.
+
 Platform can subsidize one side:
 \begin{itemize}
-\item Loss leaders to attract one group
-\item Extract surplus from other side
+\item Loss leaders \textit{(offering below cost to attract one group)}
+\item Charge the other side more to recoup losses \textit{(extract the value they gain from the platform)}
 \item Example: Free wallets, fee-paying traders
 \end{itemize}
 
@@ -478,7 +497,7 @@ Platform can subsidize one side:
 \end{itemize}
 \end{columns}
 
-\bottomnote{Rochet \& Tirole (2003, 2006): Two-sided market theory explains platform pricing}
+\bottomnote{Rochet \& Tirole (2003, 2006): Two-sided market theory explains platform pricing. Next: How platforms make decisions---governance.}
 \end{frame}
 
 % Governance and Voting
@@ -498,32 +517,32 @@ Token holders often have governance rights:
 \textbf{Voting Mechanisms}
 \begin{itemize}
 \item One-token-one-vote (plutocracy (rule by the wealthy---those with most tokens have most votes) risk)
-\item Quadratic voting (voting power increases with square root of tokens, not linearly) (Weyl \& Lalley)
-\item Delegated voting (representation)
-\item Futarchy (prediction markets)
+\item Quadratic voting (voting power increases with square root of tokens, not linearly; 100 tokens $\rightarrow$ 100 linear votes but only $\sqrt{100} = 10$ quadratic votes) (Weyl \& Lalley)
+\item Delegated voting \textit{(assign your voting power to a representative who votes on your behalf)}
+\item Futarchy \textit{(governance by prediction market---bet on which policy will work best, then implement the winner. Example: Two prediction markets bet on token price under different fee proposals; implement whichever predicts higher value)}
 \end{itemize}
 
 \column{0.48\textwidth}
 \textbf{Challenges}
 \begin{itemize}
-\item Low voter turnout (rational apathy)
+\item Low voter turnout (rational apathy---\textit{when the cost of voting exceeds the expected benefit, so voters abstain. If you hold \$100 of tokens and the vote concerns a 0.2\% fee change, the impact on you is \$0.20---not worth 10 minutes of research})
 \item Plutocracy: wealth concentration
 \item Governance attacks (hostile takeovers)
 \item Short-term vs. long-term interests
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Mechanism Design}
+\textbf{Mechanism Design} \textit{(creating rules and incentives so self-interested actors produce desired outcomes)}
 
 How to align incentives?
 \begin{itemize}
-\item Time-weighted voting (long-term holders)
-\item Skin-in-the-game requirements
-\item Reputation systems
+\item Time-weighted voting \textit{(voting power increases the longer you hold tokens, rewarding long-term commitment)}
+\item Skin-in-the-game requirements \textit{(voters must lock tokens at risk if their vote harms the protocol)}
+\item Reputation systems \textit{(tracking voter history to weight votes by past accuracy)}
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Real Example: DAO Voting}
+\textbf{Real Example: DAO (Decentralized Autonomous Organization---run by smart contracts and token-holder votes instead of a board) Voting}
 
 Proposal: Change protocol fee from 0.3\% to 0.5\%
 
@@ -545,9 +564,9 @@ Whale wins despite majority opposition.
 
 Platforms face strategic choices:
 \begin{itemize}
-\item Proprietary standards vs. open protocols
+\item Proprietary standards \textit{(owned by one company)} vs. open protocols \textit{(freely usable by anyone)}
 \item Exclusivity vs. interoperability
-\item Walled gardens vs. ecosystems
+\item Walled gardens \textit{(closed systems that restrict users from leaving)} vs. open ecosystems
 \end{itemize}
 
 \vspace{0.3em}
@@ -555,7 +574,7 @@ Platforms face strategic choices:
 \begin{itemize}
 \item L1 (Layer 1---base blockchains like Ethereum) blockchains compete for users
 \item L2 (Layer 2---solutions built on top of L1) solutions cooperate with L1s
-\item Cross-chain bridges enable multi-homing
+\item Cross-chain bridges \textit{(protocols that transfer assets between different blockchains)} enable multi-homing
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -767,6 +786,22 @@ Base blockchain protocols (e.g., Ethereum, Bitcoin).
 \vspace{0.3em}
 \textbf{Layer 2 (L2)}
 Scaling solutions built on top of Layer 1 blockchains.
+
+\vspace{0.3em}
+\textbf{Gini Coefficient}
+Measure of inequality from 0 (perfect equality) to 1 (one entity has everything). Used to measure market concentration.
+
+\vspace{0.3em}
+\textbf{Validators}
+Computers that verify blockchain transactions, earning rewards.
+
+\vspace{0.3em}
+\textbf{Protocol}
+The rules governing how a blockchain network operates.
+
+\vspace{0.3em}
+\textbf{Interoperability}
+Ability of different blockchains to communicate and transfer assets.
 \end{columns}
 
 \bottomnote{Understanding these terms is essential for analyzing platform and token economics}
@@ -786,7 +821,7 @@ Scaling solutions built on top of Layer 1 blockchains.
 \column{0.48\textwidth}
 \textbf{Tokenomics}
 \begin{itemize}
-\item Samuelson (2017): ``Velocity of Tokens'' (Medium)
+\item Samani (2017): ``Velocity of Tokens'' (Medium)
 \item Buterin (2017): ``On Medium-of-Exchange Token Valuations''
 \item Weyl \& Lalley (2018): ``Quadratic Voting''
 \end{itemize}

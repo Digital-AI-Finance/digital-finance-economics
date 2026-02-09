@@ -121,7 +121,7 @@ ax.text(28, 17, 'Critical mass\n(~16%)', fontsize=9, color='gray', va='bottom', 
 # Main plot styling
 ax.set_xlabel('Years Since Introduction', fontweight='bold')
 ax.set_ylabel('Cumulative Adoption (%)', fontweight='bold')
-ax.set_title('Payment System Adoption: Bass Diffusion Model\nInnovation (p) vs. Imitation (q) Effects',
+ax.set_title('Payment System Adoption: Bass Diffusion Model\n(S-curves: slow start, rapid middle growth, then saturation)',
              fontsize=16, fontweight='bold', color=MLPURPLE, pad=15)
 ax.legend(loc='upper left', framealpha=0.95, fontsize=10)
 ax.grid(True, alpha=0.3, linestyle='--')
@@ -142,7 +142,7 @@ ax_inset.plot(years, mobile_data['innov'] + mobile_data['imit'],
 
 ax_inset.set_xlabel('Years', fontsize=10)
 ax_inset.set_ylabel('Adoption Rate', fontsize=10)
-ax_inset.set_title('Mobile Payments: Innovation vs Imitation', fontsize=10, fontweight='bold')
+ax_inset.set_title('Mobile: Early Adopters (blue) vs Word-of-Mouth (red)', fontsize=10, fontweight='bold')
 ax_inset.legend(loc='upper right', fontsize=8, framealpha=0.9)
 ax_inset.grid(True, alpha=0.2)
 ax_inset.set_xlim(0, 30)

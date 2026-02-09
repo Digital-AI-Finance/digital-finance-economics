@@ -106,7 +106,7 @@ ax1.text(19.5, tipping_threshold + 2, 'Tipping Point', ha='right', va='bottom',
 # Mark central bank intervention zone
 intervention_time = 12
 ax1.axvline(intervention_time, color=MLPURPLE, linestyle='-.', linewidth=1.5, alpha=0.5)
-ax1.annotate('CB Intervention:\nRate Ceiling +\nQuantity Limits',
+ax1.annotate('Central Bank Intervention:\nRate Ceiling +\nQuantity Limits',
              xy=(intervention_time, 85), xytext=(intervention_time + 1.5, 85),
              fontsize=9, color=MLPURPLE, fontweight='bold',
              arrowprops=dict(arrowstyle='->', color=MLPURPLE, lw=1.5))
@@ -185,7 +185,7 @@ ax2.set_ylim(40, 105)
 
 # Add caption with theoretical reference
 fig.text(0.5, -0.02,
-         'Theory: Brunnermeier & Niepelt (2019) - CBDC and Private Banks\n'
+         'Theory: Brunnermeier & Niepelt (2019) - On the Equivalence of Private and Public Money\n'
          'Model: dD/dt = -α(r_CBDC - r_D)D + β·confidence(t) | α=0.8, β=1.2, r_D=0.5%',
          ha='center', fontsize=9, style='italic', color='gray')
 

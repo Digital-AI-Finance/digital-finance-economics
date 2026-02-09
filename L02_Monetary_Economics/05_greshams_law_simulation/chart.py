@@ -1,10 +1,20 @@
 r"""Gresham's Law: Currency Substitution Simulation
 
 Agent-based model demonstrating how bad money drives out good.
-Agents choose which currency to spend based on depreciation rates.
+Agents choose which currency to spend via a logit feedback loop
+that produces an S-curve tipping dynamic.
 
-Economic model: $\frac{dM_g}{dt} < 0$ when $\frac{V_b}{V_g} > 1$ (bad money drives out good).
-Circulation share evolves based on relative depreciation rates.
+Economic Model:
+    Spending probability for Currency A (depreciating) at time $t$:
+    $P(\text{spend A})_t = \frac{1}{1 + e^{-z_t}}$
+
+    where the logit argument evolves as:
+    $z_t = k \cdot (s_{t-1} - 0.5) + b \cdot \frac{t}{T}$
+
+    $s_t$ = share of agents spending Currency A (smoothed),
+    $k = 15.0$ = feedback strength, $b = 0.10$ = base bias from depreciation.
+    Positive feedback: as more agents spend A, it becomes rational
+    to also spend A, producing an S-curve tipping at period ~40-50.
 
 Citation: Selgin (1996) - Salvaging Gresham's Law: The Good, the Bad, and the Illegal
 """
@@ -30,26 +40,32 @@ MLLAVENDER = '#ADADE0'
 # Simulation parameters
 N_agents = 1000
 T_periods = 100
-r_A = -0.02  # Currency A depreciates 2% per period
-r_B = 0.03   # Currency B appreciates 3% per period
+r_A = 0.05   # Currency A depreciates 5% per period (bad money)
+r_B = 0.01   # Currency B depreciates 1% per period (good money)
 
-# Calculate spending probability for currency A (bad money)
-# Higher probability when r_B - r_A is large (big difference favoring B)
-r_diff = r_B - r_A
-prob_spend_A = 1 / (1 + np.exp(-5 * r_diff))
+# Logit feedback parameters (per D6, tuned for tipping at ~period 40-50)
+k_feedback = 15.0   # Feedback strength: how much past share amplifies
+base_bias = 0.10    # Base bias from depreciation difference
 
-# Initialize tracking arrays
-circulation_A = np.zeros(T_periods)
-circulation_B = np.zeros(T_periods)
+# Track share of agents spending Currency A (the depreciating one)
+share_A = np.zeros(T_periods)
+share_A[0] = 0.50   # Start at equal split
 
-# Run simulation
-for t in range(T_periods):
-    # Each agent makes spending decision
-    spend_A = np.random.rand(N_agents) < prob_spend_A
+# Run simulation with logit feedback loop
+for t in range(1, T_periods):
+    # Logit argument: positive feedback from past share + time-increasing bias
+    logit_arg = k_feedback * (share_A[t-1] - 0.5) + base_bias * t / T_periods
+    prob_spend_A = 1 / (1 + np.exp(-logit_arg))
 
-    # Calculate circulation shares
-    circulation_A[t] = spend_A.sum() / N_agents
-    circulation_B[t] = 1 - circulation_A[t]
+    # Agent simulation: each agent decides to spend A or B
+    n_spend_A = np.sum(np.random.random(N_agents) < prob_spend_A)
+
+    # Smoothed update: 95% persistence + 5% new observation
+    share_A[t] = 0.95 * share_A[t-1] + 0.05 * (n_spend_A / N_agents)
+
+# Derive circulation arrays for plotting
+circulation_A = share_A
+circulation_B = 1 - share_A
 
 # Find tipping point (where A > 80%)
 tipping_idx = np.where(circulation_A > 0.80)[0]
@@ -61,9 +77,9 @@ fig, ax = plt.subplots()
 # Plot circulation shares
 periods = np.arange(T_periods)
 ax.plot(periods, circulation_A * 100, color=MLRED, linewidth=2.5,
-        label='Currency A (depreciating, r=-2%)', marker='o', markevery=10, markersize=5)
+        label='Currency A (depreciating, r=5%)', marker='o', markevery=10, markersize=5)
 ax.plot(periods, circulation_B * 100, color=MLGREEN, linewidth=2.5,
-        label='Currency B (appreciating, r=+3%)', marker='s', markevery=10, markersize=5)
+        label='Currency B (stable, r=1%)', marker='s', markevery=10, markersize=5)
 
 # Add 80% threshold line
 ax.axhline(y=80, color='gray', linestyle=':', linewidth=1.5, alpha=0.6, label='80% threshold')

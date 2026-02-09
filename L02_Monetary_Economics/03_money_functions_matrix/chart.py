@@ -1,6 +1,15 @@
-"""Money Functions Assessment Matrix - Comparing crypto vs fiat
+r"""Money Functions Assessment Matrix - Comparing crypto vs fiat
 
 Based on: Menger (1892) - On the origin of money, classical functions of money
+
+Economic Model:
+    Without money, direct barter requires a double coincidence of wants.
+    With $n$ goods, the number of required barter exchange pairs is:
+    $\text{Barter pairs} = \frac{n(n-1)}{2}$
+
+    Money reduces this to $n$ exchange rates (one per good priced in money).
+    The three classical functions -- medium of exchange, unit of account,
+    store of value -- each reduce distinct transaction costs.
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,12 +33,12 @@ fig, ax = plt.subplots(figsize=(10, 6))
 functions = ['Medium of\nExchange', 'Unit of\nAccount', 'Store of\nValue']
 assets = ['USD (Fiat)', 'Bitcoin', 'USDT (Stablecoin)', 'CBDC (proposed)']
 
-# Scores (0-10)
+# Scores (0-10) - Illustrative assessment, not empirical measurement
 scores = np.array([
     [9, 9, 8],   # USD
     [4, 2, 5],   # Bitcoin
     [7, 6, 6],   # USDT
-    [9, 9, 9],   # CBDC
+    [8, 8, 7],   # CBDC (proposed, not yet proven at scale)
 ])
 
 # Colors for each asset

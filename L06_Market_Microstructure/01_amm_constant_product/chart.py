@@ -1,6 +1,11 @@
 """AMM Constant Product Market Maker (x*y=k)
 
-Based on: Adams et al. (2021) - Uniswap v3 Core
+Economic Model:
+  Constant Product: $x \\cdot y = k$ (invariant)
+  Spot Price: $P = y/x$
+  Slippage: $\\text{slip} = \\frac{x_0}{x_0 - \\Delta x} - 1$ (convex, not linear)
+
+Citation: Adams et al. (2021) - Uniswap v3 Core
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -87,7 +92,7 @@ ax_main.grid(True, alpha=0.3)
 # Add constant product formula annotation
 ax_main.text(0.02, 0.98, r'$x \cdot y = k$ (Constant Product)' + '\n' +
              r'Price: $P = y/x$' + '\n' +
-             r'Slippage: $\Delta P \propto$ trade size',
+             r'Slippage increases nonlinearly (convex) with trade size',
              transform=ax_main.transAxes, fontsize=11,
              verticalalignment='top',
              bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))

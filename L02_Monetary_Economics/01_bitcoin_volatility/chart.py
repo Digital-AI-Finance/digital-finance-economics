@@ -1,11 +1,21 @@
-"""Bitcoin Volatility: GARCH(1,1) Simulation
+r"""Bitcoin Volatility: GARCH(1,1) Simulation
 
 Modeling volatility clustering in cryptocurrency markets.
 Theory: Bollerslev (1986) GARCH model.
 Reference: Bollerslev, T. (1986). Generalized autoregressive conditional heteroskedasticity.
 Journal of Econometrics, 31(3), 307-327.
 
-Based on: Baur & Dimpfl (2021) - Asymmetric volatility in cryptocurrencies
+Based on: Baur & Dimpfl (2018) - Asymmetric volatility in cryptocurrencies
+
+Economic Model:
+    GARCH(1,1) conditional variance:
+    $\sigma_t^2 = \omega + \alpha \epsilon_{t-1}^2 + \beta \sigma_{t-1}^2$
+
+    Unconditional (long-run) variance:
+    $\bar{\sigma}^2 = \frac{\omega}{1 - \alpha - \beta}$
+
+    Stationarity requires $\alpha + \beta < 1$. Higher persistence
+    ($\alpha + \beta$ close to 1) produces stronger volatility clustering.
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -63,16 +73,18 @@ T = 1000  # Number of periods
 
 # Bitcoin-like parameters (high persistence, strong clustering)
 # ω + α + β should be < 1 for stationarity
-omega_btc = 0.00001
+# Unconditional variance = omega/(1-alpha-beta) = 0.0001/0.05 = 0.002
+omega_btc = 0.0001
 alpha_btc = 0.10
 beta_btc = 0.85
 # Persistence: α + β = 0.95 (very high)
 
 # S&P 500-like parameters (lower persistence)
+# Unconditional variance = omega/(1-alpha-beta) = 0.00001/0.04 = 0.00025
 omega_sp = 0.00001
 alpha_sp = 0.08
-beta_sp = 0.90
-# Persistence: α + β = 0.98 (even higher, but lower volatility level)
+beta_sp = 0.88
+# Persistence: α + β = 0.96
 
 # Simulate both processes
 returns_btc, sigma_btc = simulate_garch(T, omega_btc, alpha_btc, beta_btc)
@@ -89,7 +101,7 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8), sharex=True)
 
 # Panel 1: Simulated returns showing volatility clustering
 ax1.plot(returns_btc_pct, color=MLORANGE, alpha=0.7, linewidth=0.8, label='BTC-like (α=0.10, β=0.85)')
-ax1.plot(returns_sp_pct, color=MLBLUE, alpha=0.6, linewidth=0.8, label='S&P500-like (α=0.08, β=0.90)')
+ax1.plot(returns_sp_pct, color=MLBLUE, alpha=0.6, linewidth=0.8, label='S&P500-like (α=0.08, β=0.88)')
 ax1.axhline(y=0, color='black', linestyle='-', alpha=0.3, linewidth=0.8)
 ax1.fill_between(range(T), -10, 10, color='gray', alpha=0.1, label='±10% zone')
 ax1.set_ylabel('Daily Return (%)', fontweight='bold')

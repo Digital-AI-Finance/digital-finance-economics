@@ -32,19 +32,19 @@ MLLAVENDER = '#ADADE0'
 months = 12
 policy_rate = np.concatenate([np.array([0]), np.ones(months-1)])  # 100bp shock at t=0
 
-# Traditional channel (low friction = 0.3)
+# Traditional channel (low passthrough = 0.3)
 traditional_rate = np.zeros(months)
-friction_traditional = 0.3
+passthrough_traditional = 0.3
 
 for t in range(1, months):
-    traditional_rate[t] = traditional_rate[t-1] + friction_traditional * (policy_rate[t] - traditional_rate[t-1])
+    traditional_rate[t] = traditional_rate[t-1] + passthrough_traditional * (policy_rate[t] - traditional_rate[t-1])
 
-# CBDC channel (high friction = 0.9)
+# CBDC channel (high passthrough = 0.9)
 cbdc_rate = np.zeros(months)
-friction_cbdc = 0.9
+passthrough_cbdc = 0.9
 
 for t in range(1, months):
-    cbdc_rate[t] = cbdc_rate[t-1] + friction_cbdc * (policy_rate[t] - cbdc_rate[t-1])
+    cbdc_rate[t] = cbdc_rate[t-1] + passthrough_cbdc * (policy_rate[t] - cbdc_rate[t-1])
 
 # Plot
 fig, ax = plt.subplots()

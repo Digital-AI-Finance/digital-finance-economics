@@ -1,6 +1,12 @@
 """Impermanent Loss for Liquidity Providers
 
-Based on: Pintail (2019) - Impermanent Loss in Uniswap
+Economic Model:
+  Impermanent Loss: $IL(r) = \\frac{2\\sqrt{r}}{1+r} - 1$
+  LP Value: $V_{LP} = V_0 \\cdot \\sqrt{r}$ (for 50/50 constant-product AMM)
+  Hold Value: $V_{hold} = V_0 \\cdot (1+r)/2$
+  where $r = P_T/P_0$ (price ratio)
+
+Citation: Pintail (2019) - Uniswap: A Good Deal for Liquidity Providers?
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -59,16 +65,17 @@ ax1.set_title('Impermanent Loss: LP Position vs Hold Strategy')
 ax1.legend()
 ax1.grid(alpha=0.3)
 
-# Add impermanent loss formula annotation
+# Add impermanent loss formula annotation (using r for price ratio consistently)
 ax1.text(0.02, 0.02, r'Impermanent Loss:' + '\n' +
-         r'$IL = \frac{2\sqrt{p}}{1+p} - 1$' + '\n' +
-         r'where $p = $ price ratio' + '\n' +
-         r'$V_{LP} = V_0 \sqrt{p}$, $V_{hold} = V_0(1+p)/2$',
+         r'$IL = \frac{2\sqrt{r}}{1+r} - 1$' + '\n' +
+         r'where $r = $ price ratio (final/initial)' + '\n' +
+         r'$V_{LP} = V_0 \sqrt{r}$, $V_{hold} = V_0(1+r)/2$',
          transform=ax1.transAxes, fontsize=10,
          verticalalignment='bottom',
          bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
 
 # Bottom subplot: Dollar values
+ax2.set_title('Portfolio Value: LP vs Hold')
 ax2.plot(r, lp_value, color=MLPURPLE, linewidth=2, label='LP Position')
 ax2.plot(r, hold_value, color=MLBLUE, linewidth=2, label='Hold Strategy')
 
@@ -82,6 +89,14 @@ ax2.set_xlabel('Price Ratio (Final/Initial)')
 ax2.set_ylabel('Portfolio Value ($)')
 ax2.legend()
 ax2.grid(alpha=0.3)
+
+# Reading guide annotation
+ax2.text(0.98, 0.02, 'Reading guide: Red shaded region shows where\n'
+         'LP underperforms a simple hold strategy.\n'
+         'IL is always non-positive; it equals 0 only at r = 1.',
+         transform=ax2.transAxes, fontsize=9,
+         verticalalignment='bottom', horizontalalignment='right',
+         bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.7))
 
 plt.tight_layout()
 

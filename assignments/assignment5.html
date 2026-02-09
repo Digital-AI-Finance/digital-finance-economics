@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A5: Does Random Growth Create Monopolies? — Digital Finance & Economics</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"\\[",right:"\\]",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false}]});});</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f6f8fa;color:#24292e;font-size:13px;line-height:1.6}a{color:#0366d6;text-decoration:none}a:hover{text-decoration:underline}.nav{background:#24292e;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}.nav-title{color:#fff;font-weight:600;font-size:15px}.nav-links{display:flex;gap:20px}.nav-links a{color:#fff;font-size:12px;opacity:0.85;transition:opacity 0.15s}.nav-links a:hover{opacity:1;text-decoration:none}.container{max-width:1000px;margin:0 auto;padding:20px}.assignment-header{color:#fff;padding:24px 32px;border-radius:6px;margin-bottom:20px}.assignment-header h1{font-size:22px;font-weight:700;margin-bottom:4px}.assignment-header .lecture-ref{font-size:13px;opacity:0.85}.section-title{font-size:16px;font-weight:700;margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid #e1e4e8}.brief-content{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:20px;margin-bottom:20px}.brief-content h2{font-size:16px;font-weight:700;margin:16px 0 8px;color:#24292e}.brief-content h3{font-size:14px;font-weight:600;margin:12px 0 6px;color:#24292e}.brief-content h4{font-size:13px;font-weight:600;margin:10px 0 4px;color:#586069}.brief-content p{margin:8px 0;line-height:1.6}.brief-content ul,.brief-content ol{margin:8px 0 8px 24px}.brief-content li{margin:4px 0;line-height:1.5}.brief-content code{background:#f6f8fa;padding:2px 6px;border-radius:3px;font-size:12px;font-family:'SFMono-Regular',Consolas,monospace}.brief-content pre{background:#24292e;color:#e1e4e8;padding:16px;border-radius:6px;overflow-x:auto;margin:12px 0;font-size:12px;line-height:1.5}.brief-content pre code{background:transparent;padding:0;color:inherit}.brief-content table{width:100%;border-collapse:collapse;margin:12px 0}.brief-content th,.brief-content td{border:1px solid #e1e4e8;padding:8px 12px;text-align:left;font-size:12px}.brief-content th{background:#f6f8fa;font-weight:600}.brief-content hr{border:none;border-top:1px solid #e1e4e8;margin:16px 0}.brief-content a{color:#0366d6}.chart-section{text-align:center;margin:20px 0}.chart-section img{max-width:100%;border:1px solid #e1e4e8;border-radius:6px}.resources{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}.resource-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px;font-weight:500;background:#fff;transition:all 0.15s}.resource-link:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}.model-answer{border:2px dashed #e1e4e8;border-radius:6px;padding:16px;margin:24px 0}.model-answer summary{cursor:pointer;font-weight:600;font-size:14px;padding:8px;list-style:none}.model-answer summary::-webkit-details-marker{display:none}.model-answer summary::before{content:"+ ";font-family:monospace}.model-answer[open] summary::before{content:"- "}.slide-card{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:16px;margin:12px 0}.slide-card h4{font-size:11px;color:#586069;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e1e4e8}.slide-card h2{font-size:16px;font-weight:700;margin:8px 0}.slide-card h3{font-size:14px;font-weight:600;margin:6px 0}.slide-card p{margin:6px 0;line-height:1.5}.slide-card ul,.slide-card ol{margin:6px 0 6px 20px}.slide-card li{margin:3px 0}.slide-card img{max-width:100%;border-radius:4px;margin:8px 0}.slide-card table{width:100%;border-collapse:collapse;margin:8px 0}.slide-card th,.slide-card td{border:1px solid #e1e4e8;padding:6px 10px;font-size:12px}.slide-card th{background:#f6f8fa;font-weight:600}.slide-card code{background:#f6f8fa;padding:2px 4px;border-radius:3px;font-size:11px}.slide-card pre{background:#24292e;color:#e1e4e8;padding:12px;border-radius:4px;font-size:11px;overflow-x:auto}.slide-card pre code{background:transparent;padding:0;color:inherit}.prev-next{display:flex;justify-content:space-between;margin:24px 0;padding-top:16px;border-top:1px solid #e1e4e8}.prev-next a{padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px}.prev-next a:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}.foot{text-align:center;padding:16px;font-size:11px;color:#586069;margin-top:20px}.foot a{margin:0 8px}@media(max-width:768px){.container{padding:12px}.assignment-header{padding:16px}.assignment-header h1{font-size:18px}.resources{flex-direction:column}.prev-next{flex-direction:column;gap:8px}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><span class="nav-title">Digital Finance & Economics</span><div class="nav-links"><a href="../index.html">Dashboard</a><a href="../assignments.html">Assignments</a><a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a></div></nav>
+
+<div class="container">
+
+<div class="assignment-header" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
+<h1>A5: Does Random Growth Create Monopolies?</h1>
+<div class="lecture-ref">L05 Platform &amp; Token Economics &mdash; 45 min work + 10 min presentation</div>
+</div>
+
+<!-- ===== ASSIGNMENT BRIEF ===== -->
+<div class="section-title">Assignment Brief</div>
+<div class="brief-content">
+
+<h2>Introduction</h2>
+<p><strong>Gibrat's Law</strong> is a theory from 1931 stating that firm growth rates are random and independent of firm size. It predicts that even without any unfair advantages, pure randomness can create extreme <strong>market concentration</strong> (when a small number of firms control most of the market).</p>
+<p>This simulation starts 100 equal firms and lets each grow by a random percentage each period. We track three key metrics:</p>
+<ul>
+<li><strong>HHI (Herfindahl-Hirschman Index)</strong>: A measure of market concentration calculated by summing the squared market shares of all firms. Ranges from 0 to 10,000 where higher means more concentrated.</li>
+<li><strong>Gini coefficient</strong>: A measure of inequality from 0 to 1 where 0 means perfect equality and 1 means one firm has everything.</li>
+<li><strong>CR4</strong>: The combined market share of the top 4 firms.</li>
+</ul>
+<p><strong>Research Question</strong>: Does pure randomness in growth rates lead to monopoly?</p>
+
+<hr>
+
+<h2>Your Task</h2>
+
+<h3>Part 1: Run the Baseline Model (15 minutes)</h3>
+<ol>
+<li>Copy the baseline simulation code (provided below) into Google Colab</li>
+<li>Run it and observe the charts</li>
+<li>Record the final HHI, Gini, and CR4 values after 100 periods</li>
+<li>Screenshot or save the output chart</li>
+</ol>
+
+<h3>Part 2: Test Three Variations (20 minutes)</h3>
+<p>Modify the baseline model to test each variation below. Run each separately and record results.</p>
+
+<h4>Variation 1: Reduce Growth Volatility</h4>
+<p><strong>Change</strong>: Set <code>sigma=0.05</code> (instead of 0.25)</p>
+<p><strong>Question</strong>: Does concentration still emerge when growth is less volatile?</p>
+
+<h4>Variation 2: Increase Average Growth</h4>
+<p><strong>Change</strong>: Set <code>mu=0.10</code> (instead of 0.02)</p>
+<p><strong>Question</strong>: What happens to Gini when all firms grow faster on average?</p>
+
+<h4>Variation 3: Fewer Initial Firms</h4>
+<p><strong>Change</strong>: Set <code>n_firms=10</code> (instead of 100)</p>
+<p><strong>Question</strong>: How does initial market structure affect concentration?</p>
+
+<h3>Part 3: Open Extension (10 minutes)</h3>
+<p>Add <strong>increasing returns to scale</strong>: Firms with more than 10% market share get a growth bonus.</p>
+<p><strong>Implementation hint</strong>: After calculating shares each period, add this:</p>
+<pre><code>for i in range(n_firms):
+    if shares[i] &gt; 0.10:
+        sizes[i] *= (1 + 0.05)  # 5% bonus growth</code></pre>
+<p><strong>Question</strong>: Does this accelerate winner-take-all dynamics?</p>
+
+<hr>
+
+<h2>How to Run</h2>
+<ol>
+<li>Go to <a href="https://colab.research.google.com/">Google Colab</a></li>
+<li>Create a new notebook</li>
+<li>Copy the baseline code (from lecture materials or below)</li>
+<li>Run cells to generate charts</li>
+<li>Modify parameters for each variation</li>
+<li>Save/screenshot results</li>
+</ol>
+
+<hr>
+
+<h2>Deliverable: 7-Slide Marp Presentation</h2>
+<p>Create a Marp markdown presentation with:</p>
+<ol>
+<li><strong>Title slide</strong>: Your name, assignment title, date</li>
+<li><strong>The Model</strong>: Explain Gibrat's Law equation and the three metrics (HHI, Gini, CR4)</li>
+<li><strong>Baseline Results</strong>: Show baseline chart + final metrics</li>
+<li><strong>Variation 1</strong>: Show results + interpretation</li>
+<li><strong>Variation 2</strong>: Show results + interpretation</li>
+<li><strong>Variation 3</strong>: Show results + interpretation</li>
+<li><strong>Key Insight</strong>: Answer the research question with evidence from your results</li>
+</ol>
+
+<p><strong>Marp template starter</strong>:</p>
+<pre><code>---
+marp: true
+theme: default
+paginate: true
+---
+
+# Does Random Growth Create Monopolies?
+
+Your Name
+Assignment A5 | L05 Platform &amp; Token Economics
+
+---
+
+## The Model: Gibrat's Law (1931)
+
+...</code></pre>
+
+<hr>
+
+<h2>Grading Criteria</h2>
+<table>
+<thead><tr><th>Criterion</th><th>Points</th></tr></thead>
+<tbody>
+<tr><td>Baseline model runs correctly</td><td>20</td></tr>
+<tr><td>All 3 variations implemented and results recorded</td><td>30</td></tr>
+<tr><td>Open extension attempted</td><td>10</td></tr>
+<tr><td>Presentation clarity and structure</td><td>20</td></tr>
+<tr><td>Interpretation and economic insight</td><td>20</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>100</strong></td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Academic Integrity</h2>
+<ul>
+<li>You may discuss the model with classmates</li>
+<li>Your code variations and presentation must be your own work</li>
+<li>Cite any external sources (beyond lecture materials)</li>
+</ul>
+
+<hr>
+
+<h2>Baseline Code Reference</h2>
+<p>The baseline model is available in:</p>
+<ul>
+<li>Lecture slides: L05 Platform &amp; Token Economics</li>
+<li>Chart source: <code>L05_Platform_Token_Economics/05_winner_take_all_market_share/chart.py</code></li>
+</ul>
+<p>Key parameters:</p>
+<pre><code>n_firms = 100
+n_periods = 100
+mu = 0.02      # Average growth rate
+sigma = 0.25   # Growth volatility</code></pre>
+<p>The simulation uses:</p>
+<pre><code>S_{i,t} = S_{i,t-1} * (1 + epsilon)</code></pre>
+<p>where <code>epsilon ~ N(mu, sigma^2)</code> is drawn randomly each period for each firm.</p>
+
+<hr>
+
+<h2>Tips for Success</h2>
+<ol>
+<li><strong>Start early</strong> - debugging simulation code takes time</li>
+<li><strong>Label your charts</strong> - include titles, axis labels, and legends</li>
+<li><strong>Explain, don't just describe</strong> - interpret WHY concentration emerges</li>
+<li><strong>Compare across variations</strong> - what's the key driver of concentration?</li>
+<li><strong>Be concise</strong> - 7 slides means each slide must count</li>
+</ol>
+<p>Good luck!</p>
+
+</div>
+
+<!-- ===== MODEL ANSWER ===== -->
+<div class="section-title">Model Answer</div>
+<details class="model-answer" style="border-color:#f59e0b">
+<summary>Show Model Answer Presentation (7 slides)</summary>
+
+<!-- Slide 1 -->
+<div class="slide-card">
+<h4>Slide 1 &mdash; Title</h4>
+<h2>Does Random Growth Create Monopolies?</h2>
+<p><strong>Model Answer</strong><br>
+Assignment A5 | L05 Platform &amp; Token Economics<br>
+BSc Digital Finance &amp; Economics</p>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide-card">
+<h4>Slide 2 &mdash; The Model</h4>
+<h2>The Model: Gibrat's Law (1931)</h2>
+<p><strong>Theory</strong>: Firm growth rates are random and independent of firm size<br>
+<strong>Equation</strong>: $S_{i,t} = S_{i,t-1} \cdot (1 + \varepsilon_{i,t})$ where $\varepsilon \sim N(\mu, \sigma^2)$</p>
+<p><strong>Baseline Parameters</strong>:</p>
+<ul>
+<li>100 firms start equal</li>
+<li>$\mu = 0.02$ (2% average growth)</li>
+<li>$\sigma = 0.25$ (25% growth volatility)</li>
+<li>100 simulation periods</li>
+</ul>
+<p><strong>Metrics</strong>:</p>
+<ul>
+<li><strong>HHI</strong> (Herfindahl-Hirschman Index): $\sum_i s_i^2$ &mdash; higher = more concentrated</li>
+<li><strong>Gini coefficient</strong>: Inequality from 0 (equal) to 1 (monopoly)</li>
+<li><strong>CR4</strong>: Combined market share of top 4 firms</li>
+</ul>
+<p><strong>Citation</strong>: Gibrat (1931), Arthur (1989) "Increasing Returns and Path Dependence"</p>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide-card">
+<h4>Slide 3 &mdash; Baseline Results</h4>
+<h2>Baseline Results: Random Growth Creates Concentration</h2>
+<div class="chart-section">
+<img src="../L05_Platform_Token_Economics/05_winner_take_all_market_share/chart.png" style="max-width:100%">
+</div>
+<p><strong>After 100 periods</strong>:</p>
+<ul>
+<li><strong>HHI</strong>: ~2,140 (below DOJ highly-concentrated threshold of 2,500 &mdash; but still moderately concentrated)</li>
+<li><strong>Gini</strong>: ~0.75 (severe inequality)</li>
+<li><strong>CR4</strong>: ~60% (top 4 firms control 60% of market)</li>
+<li><strong>Leader</strong>: Single firm holds ~25% market share</li>
+</ul>
+<p><strong>Key Observation</strong>: Started equal, ended with winner-take-all. Pure randomness is sufficient.</p>
+</div>
+
+<!-- Slide 4 -->
+<div class="slide-card">
+<h4>Slide 4 &mdash; Variation 1</h4>
+<h2>Variation 1: Low Volatility ($\sigma = 0.05$)</h2>
+<div class="chart-section">
+<img src="l05-presentation/chart_varied.png" style="max-width:100%">
+</div>
+<p><em>See Panel 2 (top-right) in variation chart</em></p>
+<p><strong>Change</strong>: Reduced growth volatility from 25% to 5%</p>
+<p><strong>Results</strong>:</p>
+<ul>
+<li><strong>HHI</strong>: Stays below 500 (competitive market)</li>
+<li><strong>Gini</strong>: Below 0.3 (low inequality)</li>
+<li><strong>CR4</strong>: ~25% (top 4 firms have normal competitive share)</li>
+</ul>
+<p><strong>Interpretation</strong>: <strong>Volatility drives concentration</strong>. When growth is stable, firms stay relatively equal. Random shocks must be large enough to create divergence.</p>
+</div>
+
+<!-- Slide 5 -->
+<div class="slide-card">
+<h4>Slide 5 &mdash; Variation 2</h4>
+<h2>Variation 2: High Average Growth ($\mu = 0.10$)</h2>
+<div class="chart-section">
+<img src="l05-presentation/chart_varied.png" style="max-width:100%">
+</div>
+<p><em>See Panel 3 (bottom-left) in variation chart</em></p>
+<p><strong>Change</strong>: Increased average growth rate from 2% to 10%</p>
+<p><strong>Results</strong>:</p>
+<ul>
+<li><strong>HHI</strong>: Still rises to ~2,500</li>
+<li><strong>Gini</strong>: Still ~0.70</li>
+<li><strong>CR4</strong>: ~55%</li>
+</ul>
+<p><strong>Interpretation</strong>: Average growth ($\mu$) matters less than volatility ($\sigma$). All firms grow faster, but concentration still emerges because relative volatility creates winners. The <strong>variance</strong> of growth, not the mean, determines market structure.</p>
+</div>
+
+<!-- Slide 6 -->
+<div class="slide-card">
+<h4>Slide 6 &mdash; Variation 3</h4>
+<h2>Variation 3: Fewer Firms ($n = 10$)</h2>
+<div class="chart-section">
+<img src="l05-presentation/chart_varied.png" style="max-width:100%">
+</div>
+<p><em>See Panel 4 (bottom-right) in variation chart</em></p>
+<p><strong>Change</strong>: Started with 10 firms instead of 100</p>
+<p><strong>Results</strong>:</p>
+<ul>
+<li><strong>HHI</strong>: Starts at ~1,000 (already concentrated), reaches 5,000+ rapidly</li>
+<li><strong>Gini</strong>: Reaches 0.85+ (near-monopoly)</li>
+<li><strong>CR4</strong>: ~85% (top 4 firms are almost entire market)</li>
+</ul>
+<p><strong>Interpretation</strong>: Smaller initial markets concentrate faster. With fewer firms, random shocks have larger relative impact on market shares. Oligopolistic markets are structurally unstable under random growth.</p>
+</div>
+
+<!-- Slide 7 -->
+<div class="slide-card">
+<h4>Slide 7 &mdash; Open Extension &amp; Key Insight</h4>
+<h2>Open Extension: Increasing Returns to Scale</h2>
+<p><strong>Modification</strong>: Firms above 10% market share get 5% bonus growth</p>
+<p><strong>Code Addition</strong>:</p>
+<pre><code>shares = active_sizes / np.sum(active_sizes)
+for i in range(n_firms):
+    if shares[i] &gt; 0.10:
+        sizes[i] *= 1.05  # 5% bonus</code></pre>
+<p><strong>Results</strong> (compared to baseline):</p>
+<ul>
+<li>HHI reaches 4,500+ (vs. 2,140 baseline)</li>
+<li>Gini reaches 0.85+ (vs. 0.75)</li>
+<li>Winner emerges by period 50 (vs. period 80)</li>
+</ul>
+<p><strong>Interpretation</strong>: Increasing returns <strong>accelerate</strong> winner-take-all. Once a firm pulls ahead, it grows faster, creating a self-reinforcing cycle. This is the economic basis for platform monopolies (network effects = increasing returns).</p>
+
+<hr>
+
+<h3>Key Insight: Volatility Creates Monopoly</h3>
+<p><strong>Research Question</strong>: Does pure randomness in growth rates lead to monopoly?</p>
+<p><strong>Answer</strong>: <strong>YES</strong>, but only when growth volatility is high enough.</p>
+<p><strong>Evidence</strong>:</p>
+<ol>
+<li><strong>Baseline</strong>: Random growth ($\sigma = 0.25$) &rarr; moderate-to-severe concentration (HHI = 2,140)</li>
+<li><strong>Variation 1</strong>: Low volatility ($\sigma = 0.05$) &rarr; competitive market (HHI &lt; 500)</li>
+<li><strong>Variation 2</strong>: High mean growth ($\mu = 0.10$) &rarr; still concentrates (HHI = 2,500)</li>
+<li><strong>Variation 3</strong>: Fewer firms &rarr; faster concentration (HHI = 5,000+)</li>
+</ol>
+<p><strong>Economic Implication</strong>: Markets with high growth uncertainty (e.g., tech platforms, crypto protocols) naturally tend toward monopoly <strong>even without anticompetitive behavior</strong>. Policy interventions (regulation, interoperability mandates) may be needed to preserve competition.</p>
+<p><strong>Gibrat's Paradox</strong>: Random growth is not neutral &mdash; it systematically favors concentration.</p>
+</div>
+
+</details>
+
+<!-- ===== PREV/NEXT ===== -->
+<div class="prev-next">
+<a href="assignment4.html">&larr; A4: Network Effects</a>
+<a href="assignment6.html">A6: AMM Constant Product &rarr;</a>
+</div>
+
+</div>
+
+<footer class="foot">
+<a href="https://github.com/Digital-AI-Finance/digital-finance-economics">GitHub Repository</a> &middot; &copy; Joerg Osterrieder 2026
+</footer>
+
+</body>
+</html>

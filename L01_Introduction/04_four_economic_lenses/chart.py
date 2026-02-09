@@ -3,7 +3,7 @@ r"""Four Economic Lenses Framework - Radar chart showing digital finance phenome
 Multidimensional assessment of digital finance phenomena across four economic perspectives:
 monetary economics, platform economics, market microstructure, and regulatory economics.
 
-Citation: Course Framework - Osterrieder & Lorenz (2024) - Digital Finance Economics
+Citation: Course Framework -- adapted for BSc Digital Finance course
 
 Economic Model: $A = f(M, I, P, R)$
 Where: $M$=Monetary analysis, $I$=Market microstructure (Industrial org),
@@ -36,11 +36,11 @@ N = len(categories)
 
 # Define phenomena and their scores across the four lenses
 phenomena = {
-    'Bitcoin': np.array([9, 3, 7, 8]) + np.random.uniform(-0.3, 0.3, 4),
-    'Stablecoins': np.array([8, 5, 6, 9]) + np.random.uniform(-0.3, 0.3, 4),
-    'CBDCs': np.array([10, 4, 3, 10]) + np.random.uniform(-0.3, 0.3, 4),
-    'DeFi (Decentralized Finance) /\nAMMs (Automated Market Makers)': np.array([3, 8, 10, 6]) + np.random.uniform(-0.3, 0.3, 4),
-    'Neobanks (digital-only banks)': np.array([2, 9, 4, 7]) + np.random.uniform(-0.3, 0.3, 4)
+    'Bitcoin': np.array([9, 3, 7, 8]),
+    'Stablecoins': np.array([8, 5, 6, 9]),
+    'CBDCs': np.array([10, 4, 3, 10]),
+    'DeFi (Decentralized Finance) /\nAMMs (Automated Market Makers)': np.array([3, 8, 10, 6]),
+    'Neobanks (digital-only banks)': np.array([2, 9, 4, 7])
 }
 
 colors = [MLPURPLE, MLBLUE, MLORANGE, MLGREEN, MLRED]

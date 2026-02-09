@@ -1,7 +1,24 @@
-"""Consumer Protection: Akerlof's Market for Lemons
+r"""Consumer Protection: Akerlof's Market for Lemons
 
 Information asymmetry and market unraveling in crypto/DeFi markets.
-Theory: Akerlof (1970) "The Market for Lemons: Quality Uncertainty and the Market Mechanism"
+
+Economic Model: Akerlof Adverse Selection with Regulatory Interventions
+Economic Formula: $p = v \cdot \bar{q}; \quad \text{seller stays if } c \cdot q_i \leq p$
+where:
+  - p = Market price (pooling equilibrium)
+  - v = Buyer valuation coefficient (v=1.2: buyers value quality 20% above cost)
+  - q_bar = Average quality of remaining sellers
+  - c = Seller cost coefficient (c=1.0: seller's reservation price equals quality)
+  - q_i = Individual project quality (drawn from Uniform[0,1])
+  - Market unravels when high-quality sellers (q > p/c) exit, lowering q_bar
+
+Regulatory interventions modeled:
+  1. No regulation: pooling equilibrium -> adverse selection spiral
+  2. Disclosure: buyers see true q, pay v*q -> separating equilibrium (market survives)
+  3. Certification: high-q sellers (q>0.6) get certified at cost 0.05
+  4. Minimum standard: ban projects with q < 0.3
+
+Citation: Akerlof (1970) - The Market for Lemons: Quality Uncertainty and the Market Mechanism
 """
 import matplotlib.pyplot as plt
 import numpy as np

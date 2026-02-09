@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A2: Gresham's Law — When Bad Money Wins — Digital Finance & Economics</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"\\[",right:"\\]",display:true},{left:"$",right:"$",display:false},{left:"\\(",right:"\\)",display:false}]});});</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:#f6f8fa;color:#24292e;font-size:13px;line-height:1.6}
+a{color:#0366d6;text-decoration:none}
+a:hover{text-decoration:underline}
+.nav{background:#24292e;padding:8px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.nav-title{color:#fff;font-weight:600;font-size:15px}
+.nav-links{display:flex;gap:20px}
+.nav-links a{color:#fff;font-size:12px;opacity:0.85;transition:opacity 0.15s}
+.nav-links a:hover{opacity:1;text-decoration:none}
+.container{max-width:1000px;margin:0 auto;padding:20px}
+.assignment-header{color:#fff;padding:24px 32px;border-radius:6px;margin-bottom:20px}
+.assignment-header h1{font-size:22px;font-weight:700;margin-bottom:4px}
+.assignment-header .lecture-ref{font-size:13px;opacity:0.85}
+.section-title{font-size:16px;font-weight:700;margin:24px 0 12px;padding-bottom:6px;border-bottom:2px solid #e1e4e8}
+.brief-content{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:20px;margin-bottom:20px}
+.brief-content h2{font-size:16px;font-weight:700;margin:16px 0 8px;color:#24292e}
+.brief-content h3{font-size:14px;font-weight:600;margin:12px 0 6px;color:#24292e}
+.brief-content h4{font-size:13px;font-weight:600;margin:10px 0 4px;color:#586069}
+.brief-content p{margin:8px 0;line-height:1.6}
+.brief-content ul,.brief-content ol{margin:8px 0 8px 24px}
+.brief-content li{margin:4px 0;line-height:1.5}
+.brief-content code{background:#f6f8fa;padding:2px 6px;border-radius:3px;font-size:12px;font-family:'SFMono-Regular',Consolas,monospace}
+.brief-content pre{background:#24292e;color:#e1e4e8;padding:16px;border-radius:6px;overflow-x:auto;margin:12px 0;font-size:12px;line-height:1.5}
+.brief-content pre code{background:transparent;padding:0;color:inherit}
+.brief-content table{width:100%;border-collapse:collapse;margin:12px 0}
+.brief-content th,.brief-content td{border:1px solid #e1e4e8;padding:8px 12px;text-align:left;font-size:12px}
+.brief-content th{background:#f6f8fa;font-weight:600}
+.brief-content hr{border:none;border-top:1px solid #e1e4e8;margin:16px 0}
+.brief-content a{color:#0366d6}
+.chart-section{text-align:center;margin:20px 0}
+.chart-section img{max-width:100%;border:1px solid #e1e4e8;border-radius:6px}
+.resources{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.resource-link{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px;font-weight:500;background:#fff;transition:all 0.15s}
+.resource-link:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}
+.model-answer{border:2px dashed #e1e4e8;border-radius:6px;padding:16px;margin:24px 0}
+.model-answer summary{cursor:pointer;font-weight:600;font-size:14px;padding:8px;list-style:none}
+.model-answer summary::-webkit-details-marker{display:none}
+.model-answer summary::before{content:"+ ";font-family:monospace}
+.model-answer[open] summary::before{content:"- "}
+.slide-card{background:#fff;border:1px solid #e1e4e8;border-radius:6px;padding:16px;margin:12px 0}
+.slide-card h4{font-size:11px;color:#586069;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e1e4e8}
+.slide-card h2{font-size:16px;font-weight:700;margin:8px 0}
+.slide-card h3{font-size:14px;font-weight:600;margin:6px 0}
+.slide-card p{margin:6px 0;line-height:1.5}
+.slide-card ul,.slide-card ol{margin:6px 0 6px 20px}
+.slide-card li{margin:3px 0}
+.slide-card img{max-width:100%;border-radius:4px;margin:8px 0}
+.slide-card table{width:100%;border-collapse:collapse;margin:8px 0}
+.slide-card th,.slide-card td{border:1px solid #e1e4e8;padding:6px 10px;font-size:12px}
+.slide-card th{background:#f6f8fa;font-weight:600}
+.slide-card code{background:#f6f8fa;padding:2px 4px;border-radius:3px;font-size:11px}
+.slide-card pre{background:#24292e;color:#e1e4e8;padding:12px;border-radius:4px;font-size:11px;overflow-x:auto}
+.slide-card pre code{background:transparent;padding:0;color:inherit}
+.prev-next{display:flex;justify-content:space-between;margin:24px 0;padding-top:16px;border-top:1px solid #e1e4e8}
+.prev-next a{padding:8px 16px;border:1px solid #e1e4e8;border-radius:6px;font-size:12px}
+.prev-next a:hover{border-color:#0366d6;background:#f0f7ff;text-decoration:none}
+.foot{text-align:center;padding:16px;font-size:11px;color:#586069;margin-top:20px}
+.foot a{margin:0 8px}
+@media(max-width:768px){.container{padding:12px}.assignment-header{padding:16px}.assignment-header h1{font-size:18px}.resources{flex-direction:column}.prev-next{flex-direction:column;gap:8px}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><span class="nav-title">Digital Finance & Economics</span><div class="nav-links"><a href="../index.html">Dashboard</a><a href="../assignments.html">Assignments</a><a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub</a></div></nav>
+
+<div class="container">
+
+<div class="assignment-header" style="background:linear-gradient(135deg,#22c55e,#16a34a)">
+<h1>A2: Gresham's Law &mdash; When Bad Money Wins</h1>
+<div class="lecture-ref">L02 Monetary Economics &mdash; Selgin (1996) Salvaging Gresham's Law</div>
+</div>
+
+<div class="section-title">Assignment Brief</div>
+
+<div class="brief-content">
+
+<h2>Introduction</h2>
+
+<p>"Bad money drives out good money" &mdash; this famous economic principle, known as <strong>Gresham's Law</strong>, explains why people spend depreciating currency and hoard stable currency. You'll explore an agent-based model that simulates this tipping-point behavior.</p>
+
+<h3>The Model</h3>
+
+<p>Imagine 1,000 agents (simulated people) who each period must decide: spend Currency A (the "bad money" that loses 5% of its value per period) or spend Currency B (the "good money" that only loses 1% per period)?</p>
+
+<p>The model uses a <strong>logit feedback rule</strong> to determine the probability that an agent spends Currency A:</p>
+
+<pre><code>P(spend A) = 1 / (1 + exp(-z_t))</code></pre>
+
+<p>where:</p>
+
+<ul>
+<li><code>z_t = k_feedback × (share_A_{t-1} - 0.5) + (r_A - r_B) × 10 + base_bias × (t / T)</code></li>
+<li><strong>Logit feedback</strong>: A mathematical formula that converts any number <code>z</code> into a probability between 0 and 1. When <code>z</code> is large positive, P ≈ 1 (almost certain). When <code>z</code> is large negative, P ≈ 0 (almost never).</li>
+<li><strong>k_feedback</strong> (default: 15.0): How strongly past behavior amplifies current behavior. If many people spent A yesterday, that makes it more rational for you to spend A today (because holding onto A means you'll suffer the depreciation loss).</li>
+<li><strong>(r_A - r_B) × 10</strong>: The depreciation differential bias. When Currency A depreciates faster than B, agents have an incentive to spend A and hoard B. With default values (r_A=0.05, r_B=0.01), this contributes +0.4 to the logit at every step. With equal depreciation (r_A=r_B), this term is zero.</li>
+<li><strong>base_bias</strong> (default: 0.10): A small exogenous drift toward spending A, scaled by time progress.</li>
+<li><strong>share_A_{t-1}</strong>: The fraction of agents who spent A in the previous period.</li>
+<li><strong>t / T</strong>: Time progress (0 at start, 1 at end), which gradually increases the pressure to spend A.</li>
+</ul>
+
+<p>This creates a <strong>tipping point</strong>: initially, agents are split 50-50, but once enough people start spending A, the feedback loop kicks in and everyone switches to spending A (and hoarding B).</p>
+
+<h2>Your Task</h2>
+
+<p>Run the simulation with three parameter variations and analyze what changes:</p>
+
+<h3>Variation 1: Weak Feedback (k_feedback = 5.0)</h3>
+<p><strong>Change:</strong> Reduce <code>k_feedback</code> from 15.0 to 5.0.</p>
+<p><strong>Question:</strong> Does tipping still happen within 100 periods? If not, what happens instead? How does the rate of change in circulation shares compare to the baseline?</p>
+
+<h3>Variation 2: Strong Feedback (k_feedback = 25.0)</h3>
+<p><strong>Change:</strong> Increase <code>k_feedback</code> from 15.0 to 25.0.</p>
+<p><strong>Question:</strong> What happens to the tipping point timing? How fast is the transition from 50-50 to A-dominance?</p>
+
+<h3>Variation 3: Equal Depreciation (r_A = r_B = 0.03)</h3>
+<p><strong>Change:</strong> Set both depreciation rates equal: <code>r_A = 0.03</code> and <code>r_B = 0.03</code>.</p>
+<p><strong>Question:</strong> Does tipping still occur? Why or why not? What does this tell you about the conditions required for Gresham's Law?</p>
+
+<h3>Open Extension (Optional)</h3>
+<p>Add a third currency C with <code>r_C = 0.00</code> (perfectly stable, like gold-backed currency).</p>
+<p><strong>Question:</strong> Does C get hoarded even more than B? Does A still drive out both B and C, or does C survive in circulation?</p>
+
+<hr>
+
+<h2>How to Run</h2>
+
+<ol>
+<li><strong>Download</strong> the source code: <code>L02_Monetary_Economics/05_greshams_law_simulation/chart.py</code></li>
+<li><strong>Open Google Colab</strong>: <a href="https://colab.research.google.com">colab.research.google.com</a></li>
+<li><strong>Upload</strong> the file, or copy-paste the code into a new notebook.</li>
+<li><strong>Modify parameters</strong> for each variation:
+<pre><code># For Variation 1 (weak feedback):
+k_feedback = 5.0
+
+# For Variation 2 (strong feedback):
+k_feedback = 25.0
+
+# For Variation 3 (equal depreciation):
+r_A = 0.03
+r_B = 0.03</code></pre>
+</li>
+<li><strong>Run</strong> the code (Shift+Enter or click Run). The chart will display inline.</li>
+<li><strong>Save</strong> each chart (right-click → Save Image).</li>
+</ol>
+
+<hr>
+
+<h2>Deliverables</h2>
+
+<p>Prepare a <strong>7-slide presentation</strong> (PowerPoint, Google Slides, or PDF):</p>
+
+<ol>
+<li><strong>Title slide</strong>: Your name, course, "Gresham's Law Simulation"</li>
+<li><strong>The Model</strong>: Explain the logit feedback rule and what each parameter means.</li>
+<li><strong>Baseline Results</strong>: Show the original chart (k=15). When does tipping occur?</li>
+<li><strong>Variation 1</strong>: Show weak feedback chart (k=5). What changed?</li>
+<li><strong>Variation 2</strong>: Show strong feedback chart (k=25). What changed?</li>
+<li><strong>Variation 3</strong>: Show equal depreciation chart (r_A=r_B=0.03). What changed?</li>
+<li><strong>Key Insight</strong>: In 1-2 sentences, explain what controls WHETHER tipping happens vs HOW FAST it happens.</li>
+</ol>
+
+<hr>
+
+<h2>Time Allocation</h2>
+
+<ul>
+<li><strong>Reading &amp; Setup</strong>: 10 minutes</li>
+<li><strong>Running Variations</strong>: 20 minutes</li>
+<li><strong>Analysis</strong>: 15 minutes</li>
+<li><strong>Slides</strong>: 10 minutes</li>
+<li><strong>Total</strong>: 45 minutes + 10 minutes presentation</li>
+</ul>
+
+<hr>
+
+<h2>Assessment Criteria</h2>
+
+<table>
+<thead>
+<tr><th>Criterion</th><th>Weight</th></tr>
+</thead>
+<tbody>
+<tr><td>Correct implementation of variations</td><td>30%</td></tr>
+<tr><td>Accurate description of tipping behavior</td><td>30%</td></tr>
+<tr><td>Clear charts with appropriate labels</td><td>20%</td></tr>
+<tr><td>Insightful explanation of k vs depreciation difference</td><td>20%</td></tr>
+</tbody>
+</table>
+
+<hr>
+
+<h2>Reference</h2>
+
+<p>Selgin, G. (1996). <em>Salvaging Gresham's Law: The Good, the Bad, and the Illegal</em>. Journal of Money, Credit and Banking, 28(4), 637-649.</p>
+
+</div>
+
+<div class="section-title">Your Variation Chart</div>
+
+<div class="chart-section">
+<a href="l02-presentation/chart_varied.pdf"><img src="l02-presentation/chart_varied.png" alt="Assignment 2 Variation Chart"></a>
+</div>
+
+<div class="resources">
+<a class="resource-link" href="l02-presentation/chart_varied.py">Download chart_varied.py</a>
+<a class="resource-link" href="l02-presentation/chart_varied.pdf">Download chart_varied.pdf</a>
+</div>
+
+<details class="model-answer" style="border-color:#22c55e">
+<summary>Model Answer Presentation (7 Slides)</summary>
+
+<div class="slide-card"><h4>Slide 1</h4>
+<h2>Gresham's Law: Why People Spend Bad Money and Hoard Good Money</h2>
+<p><strong>Economic Principle</strong>: "Bad money drives out good money"</p>
+<p><strong>Model</strong>: 1,000 agents decide each period whether to spend Currency A (depreciating 5%/period) or Currency B (depreciating 1%/period).</p>
+<p><strong>Key Reference</strong>: Selgin (1996) &ndash; <em>Salvaging Gresham's Law: The Good, the Bad, and the Illegal</em></p>
+</div>
+
+<div class="slide-card"><h4>Slide 2</h4>
+<h2>The Model: Logit Feedback Rule</h2>
+<p>Probability that an agent spends Currency A at time t:</p>
+<pre><code>P(spend A)_t = 1 / (1 + exp(-z_t))</code></pre>
+<p>where the logit argument evolves as:</p>
+<pre><code>z_t = k × (s_{t-1} - 0.5) + (r_A - r_B) × 10 + b × (t/T)</code></pre>
+<p><strong>Variables</strong>:</p>
+<ul>
+<li><code>s_{t-1}</code> = share of agents who spent A in previous period</li>
+<li><code>k</code> = feedback strength (how much past behavior amplifies current behavior)</li>
+<li><code>(r_A - r_B) × 10</code> = depreciation differential bias (higher depreciation of A relative to B incentivizes spending A)</li>
+<li><code>b</code> = small exogenous drift toward spending A (default 0.10)</li>
+<li><code>t/T</code> = time progress (0 at start, 1 at end)</li>
+</ul>
+<p><strong>Mechanism</strong>: When Currency A depreciates faster than B, agents prefer to spend A and hoard B. This depreciation differential enters the logit directly. When more people spend A, it becomes even more rational for you to also spend A (positive feedback). Together, these forces create a tipping point.</p>
+</div>
+
+<div class="slide-card"><h4>Slide 3</h4>
+<h2>Baseline: k = 15, Tipping at ~Period 48</h2>
+<p><img src="../L02_Monetary_Economics/05_greshams_law_simulation/chart.png" alt="Baseline chart"></p>
+<p><strong>Observations</strong>:</p>
+<ul>
+<li>Initially 50-50 split between spending A and B</li>
+<li>Tipping point at period ~48: Currency A reaches 80% circulation</li>
+<li>By period 100: A dominates spending (~98.5%), B is hoarded</li>
+</ul>
+<p>Note: The varied chart (next slides) uses an explicit depreciation differential term <code>(r_A - r_B) x 10</code> in the logit, which accelerates baseline tipping to t=27.</p>
+</div>
+
+<div class="slide-card"><h4>Slide 4</h4>
+<h2>Variation 1: Weak Feedback (k = 5)</h2>
+<p><img src="l02-presentation/chart_varied.png" alt="Variation chart"></p>
+<p><strong>Panel 2 (Top Right)</strong>: Weak feedback delays tipping significantly -- tipping occurs at t=57 (vs t=27 baseline). Currency A reaches ~90% by period 100.</p>
+<p><strong>Why?</strong> Lower k means past behavior has less influence. The depreciation differential (4 pp) and small exogenous drift still push toward spending A, but the feedback loop is too weak to create a rapid cascade. The transition from 50-50 to A-dominance takes more than twice as long as baseline.</p>
+<p><strong>Key Insight</strong>: Weak feedback = delayed tipping. Even with the same depreciation difference, insufficient feedback strength stretches the transition over many more periods.</p>
+</div>
+
+<div class="slide-card"><h4>Slide 5</h4>
+<h2>Variation 2: Strong Feedback (k = 25)</h2>
+<p><img src="l02-presentation/chart_varied.png" alt="Variation chart"></p>
+<p><strong>Panel 3 (Bottom Left)</strong>: Strong feedback accelerates tipping to ~period 23.</p>
+<p><strong>Why?</strong> Higher k means past behavior strongly amplifies current behavior. Combined with the depreciation differential of 0.4 pushing the logit positive, even a small deviation from 50-50 triggers a rapid cascade. The transition from 50-50 to A-dominance happens in roughly 10 periods.</p>
+<p><strong>Key Insight</strong>: Strong feedback = faster tipping, earlier tipping point. The S-curve transition is sharper. Tipping at t=23 vs baseline t=27 shows diminishing returns from increasing k when the depreciation differential already provides a strong push.</p>
+</div>
+
+<div class="slide-card"><h4>Slide 6</h4>
+<h2>Variation 3: Equal Depreciation (r_A = r_B = 3%)</h2>
+<p><img src="l02-presentation/chart_varied.png" alt="Variation chart"></p>
+<p><strong>Panel 4 (Bottom Right)</strong>: Tipping is significantly delayed to ~period 48 (vs baseline t=27). The depreciation differential is zero, so only the small exogenous drift (base_bias) gradually pushes spending toward A.</p>
+<p><strong>Why?</strong> With equal depreciation (r_A = r_B = 3%), the depreciation_bias term is zero. There is no quality difference to drive Gresham's Law. The only remaining force is the small base_bias drift (0.10 * t/T), which slowly nudges the logit positive over time. This eventually triggers the feedback loop, but the transition takes nearly twice as long as baseline.</p>
+<p><strong>Key Insight</strong>: Removing the depreciation differential delays tipping by ~21 periods (from t=27 to t=48). The depreciation difference is the primary accelerant of Gresham's Law &mdash; without it, the feedback loop lacks an initial push and must rely on weak exogenous drift to eventually trigger.</p>
+</div>
+
+<div class="slide-card"><h4>Slide 7</h4>
+<h2>Key Insight: k Controls HOW FAST, Depreciation Difference Controls WHETHER</h2>
+
+<table>
+<thead>
+<tr><th>Parameter</th><th>Effect</th><th>Evidence</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>k (feedback strength)</strong></td><td>Controls tipping SPEED</td><td>k=5: tipping delayed to t=57 (~90% by end)<br>k=15: tipping at t=27 (baseline)<br>k=25: tipping at t=23 (rapid)</td></tr>
+<tr><td><strong>Depreciation difference (r_A - r_B)</strong></td><td>Controls tipping ACCELERATION</td><td>r_A=5%, r_B=1%: tipping at t=27 (strong depreciation push)<br>r_A=3%, r_B=3%: tipping delayed to t=48 (no depreciation push, only slow drift)</td></tr>
+</tbody>
+</table>
+
+<p><strong>Economic Implication</strong>: Gresham's Law has two drivers that interact:</p>
+<ul>
+<li><strong>Depreciation difference</strong> provides the initial incentive to spend bad money. Removing it delays tipping by ~21 periods (t=27 to t=48).</li>
+<li><strong>Feedback strength</strong> determines how quickly a small initial bias cascades into full substitution. Weak feedback (k=5) delays tipping by ~30 periods (t=27 to t=57).</li>
+</ul>
+<p>The depreciation differential is the more powerful driver: it shifts the logit argument by 0.4 at every step (vs the exogenous drift which contributes at most 0.10 over the full horizon).</p>
+<p><strong>Historical Example</strong>: During hyperinflation (very large depreciation difference + strong social feedback), everyone rushes to spend depreciating currency, creating rapid collapse. During mild inflation (small depreciation difference), weak feedback allows dual-currency systems to persist for decades (e.g., dollarization in Latin America).</p>
+</div>
+
+</details>
+
+<div class="prev-next">
+<a href="assignment1.html">&larr; Prev: S-Curve Adoption</a>
+<a href="assignment3.html">Next: CBDC Disintermediation &rarr;</a>
+</div>
+
+<div class="foot">
+<a href="../index.html">Dashboard</a> <a href="../assignments.html">All Assignments</a> <a href="https://github.com/Digital-AI-Finance/digital-finance-economics" target="_blank">GitHub Repository</a> · &copy; Joerg Osterrieder 2026
+</div>
+
+</div>
+
+</body>
+</html>

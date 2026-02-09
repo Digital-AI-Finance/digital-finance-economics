@@ -22,6 +22,17 @@
 | 7 | S-Curve Adoption Simulator | Python/Simulation | Individual or Pairs | Laptop with Python |
 | 8 | Quadratic Voting Calculator | Python/Framework | Individual or Pairs | Laptop with Python |
 
+### Exercise Pairing Recommendations
+
+Choose exercise pairs based on your pedagogical goals:
+
+| Goal | Recommended Pair | Rationale |
+|------|------------------|-----------|
+| Quantitative focus | 1 + 8 | Both involve Python-based economic analysis |
+| Conceptual depth | 2 + 4 | Framework application paired with debate |
+| Creative design | 5 + 6 | Token design paired with market prediction |
+| Mixed methods | 7 + 2 | Simulation paired with hands-on redesign |
+
 ---
 
 ## Exercise 1: Token Velocity Deep Dive
@@ -29,13 +40,150 @@
 **Category**: Python/Data
 **Time**: 30 min work + 5 min presentation
 **Group Size**: Individual or Pairs
-**Materials Needed**: Laptop with Python (pandas, matplotlib, requests), internet access
+**Materials Needed**: Laptop with Python (pandas, matplotlib, numpy), internet access
+
+> **Key Terms**
+>
+> - **Velocity sink**: A mechanism that encourages token holders to lock or hold tokens rather than transact, reducing how fast tokens circulate. Examples: staking, governance voting, fee discounts.
+> - **MV = PQ (Equation of Exchange)**: From monetary economics. M = money supply (token market cap), V = velocity (turnover rate), P*Q = nominal transaction volume. Rearranged: M = PQ/V, so lower velocity means higher market cap for the same transaction volume.
+> - **Staking rate**: The fraction of total token supply locked in staking contracts, removed from active circulation.
+> - **Effective velocity**: Velocity calculated using only the circulating (non-staked) supply rather than total supply. Effective V = Transaction Volume / (Market Cap * (1 - Staking Rate)).
 
 ### Task
 
 Analyze and compare token velocity for different types of crypto assets. Using the Equation of Exchange (MV = PQ), calculate implied token velocity and assess which tokens have effective "velocity sinks." Create visualizations showing velocity differences and explain the economic implications for token value.
 
-### Complete Code
+### Setup Verification
+
+Before starting, verify your environment:
+
+```python
+# Run this cell first to check your setup
+import sys
+print(f"Python version: {sys.version}")
+
+try:
+    import pandas as pd
+    print(f"pandas: {pd.__version__}")
+except ImportError:
+    print("ERROR: pandas not installed. Run: pip install pandas")
+
+try:
+    import matplotlib
+    print(f"matplotlib: {matplotlib.__version__}")
+except ImportError:
+    print("ERROR: matplotlib not installed. Run: pip install matplotlib")
+
+try:
+    import numpy as np
+    print(f"numpy: {np.__version__}")
+except ImportError:
+    print("ERROR: numpy not installed. Run: pip install numpy")
+
+print("\nAll dependencies OK!" if all(
+    __import__(m) for m in ['pandas', 'matplotlib', 'numpy']
+) else "Fix missing dependencies above.")
+```
+
+### Student Task
+
+Complete the skeleton code below. Fill in each `# YOUR CODE HERE` section.
+
+**Step-by-step instructions:**
+
+1. Calculate base velocity using V = Transaction Volume / Market Cap
+2. Calculate effective velocity accounting for staked/locked supply
+3. Classify velocity sink mechanisms for each token
+4. Compute a Value Capture Score and explain its economic meaning
+5. Create a multi-panel visualization
+
+```python
+"""
+Token Velocity Analysis: Comparing Payment vs. Staking Tokens
+L05 Exercise - Platform and Token Economics
+
+The Equation of Exchange: M * V = P * Q
+Rearranged: V = (P * Q) / M
+
+Requirements: pip install pandas matplotlib numpy
+"""
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+# Data as of early 2025
+# Illustrative data for educational purposes
+token_data = {
+    'Token': ['ETH', 'ETH (Staked)', 'BNB', 'SOL', 'USDT', 'USDC', 'UNI', 'AAVE'],
+    'Type': ['L1 Platform', 'Staked L1', 'L1 Platform', 'L1 Platform',
+             'Stablecoin', 'Stablecoin', 'Governance', 'Governance'],
+    'Market_Cap_B': [280, 112, 85, 65, 95, 45, 6, 2.5],
+    'Annual_Transfer_Volume_B': [2800, 56, 850, 1300, 19000, 9000, 30, 8],
+    'Staking_Rate': [0.0, 0.40, 0.0, 0.65, 0.0, 0.0, 0.0, 0.45],
+    'Has_Governance': [False, True, False, True, False, False, True, True],
+    'Has_Fee_Discount': [False, False, True, False, False, False, False, False],
+}
+
+df = pd.DataFrame(token_data)
+
+# ---- STEP 1: Calculate base velocity ----
+# Hint: V = Annual_Transfer_Volume_B / Market_Cap_B
+df['Velocity'] = None  # YOUR CODE HERE
+
+# ---- STEP 2: Calculate effective velocity (accounting for staked supply) ----
+# Hint: Effective supply ratio = 1 - Staking_Rate
+# Effective V = Volume / (Market_Cap * Effective_Supply_Ratio)
+df['Effective_Supply_Ratio'] = None  # YOUR CODE HERE
+df['Effective_Velocity'] = None  # YOUR CODE HERE
+
+print("Base Velocity vs Effective Velocity:\n")
+print(df[['Token', 'Type', 'Velocity', 'Staking_Rate', 'Effective_Velocity']].to_string(index=False))
+
+# ---- STEP 3: Classify velocity sinks ----
+# For each token, list which velocity sinks it has:
+#   - Staking (if Staking_Rate > 0)
+#   - Governance voting (if Has_Governance)
+#   - Fee discounts (if Has_Fee_Discount)
+# Hint: Loop through df.iterrows() and build a list of sink descriptions
+velocity_sinks = []
+for _, row in df.iterrows():
+    sinks = []
+    # YOUR CODE HERE - check each sink type and append to sinks list
+    velocity_sinks.append(', '.join(sinks) if sinks else 'None')
+
+df['Velocity_Sinks'] = velocity_sinks
+
+# ---- STEP 4: Value Capture Score ----
+# Economic justification: From M = PQ/V, lower V means higher M,
+# so value capture is proportional to 1/V.
+# Score formula: 100 / (1 + V) --- higher score = better value retention
+# Hint: Use df['Velocity'] in the formula
+df['Value_Capture_Score'] = None  # YOUR CODE HERE
+
+print("\nValue Capture Score (higher = better):")
+for _, row in df[['Token', 'Velocity', 'Value_Capture_Score']].sort_values(
+        'Value_Capture_Score', ascending=False).iterrows():
+    print(f"  {row['Token']:12} | Score: {row['Value_Capture_Score']:5.1f} | V={row['Velocity']:.1f}")
+
+# ---- STEP 5: Visualization ----
+# Create a 2x2 figure with:
+#   (0,0): Bar chart of velocity by token
+#   (0,1): Scatter plot of velocity vs market cap
+#   (1,0): Grouped bar chart comparing base vs effective velocity for staking tokens
+#   (1,1): Horizontal bar chart of value capture scores
+# Hint: See the reference code below for a complete example
+
+# YOUR CODE HERE - create the 4-panel chart
+```
+
+**Expected output for verification:**
+
+- Stablecoins should have velocity of 100--200x/year
+- Governance tokens should have velocity of 3--5x/year
+- Value Capture Scores: governance tokens highest (~20--30), stablecoins lowest (~0.5--1)
+
+### Complete Reference Code (Model Answer)
 
 ```python
 """
@@ -58,7 +206,7 @@ import numpy as np
 import pandas as pd
 from datetime import datetime
 
-# Data as of February 2025
+# Data as of early 2025
 # =============================================================================
 # SIMULATED DATA (representing real patterns from 2024-2025)
 # In practice, you would fetch this from APIs like CoinGecko, Etherscan, etc.
@@ -139,6 +287,9 @@ for token_type, vel in type_velocity.items():
 
 # Calculate value capture efficiency
 # Lower velocity = better value capture (tokens held longer)
+# Economic justification: From M = PQ/V, lower V means higher M,
+# so value capture is proportional to 1/V.
+# Score formula: 100 / (1 + V) --- higher score = better value retention
 df['Value_Capture_Score'] = 100 / (1 + df['Velocity'])  # Higher score = better
 
 print("\nValue Capture Score (higher = better, based on 100/(1+V)):")
@@ -149,6 +300,8 @@ for _, row in df[['Token', 'Velocity', 'Value_Capture_Score']].sort_values('Valu
 # PUBLICATION-READY CHARTS
 # =============================================================================
 
+# Try modern matplotlib style name first, fall back to legacy name
+# (matplotlib renamed styles in v3.6: 'seaborn-whitegrid' -> 'seaborn-v0_8-whitegrid')
 try:
     plt.style.use('seaborn-v0_8-whitegrid')
 except:
@@ -324,12 +477,26 @@ Use the Tokenomics Design Framework to evaluate and improve a hypothetical proto
 | Parameter | Initial Design |
 |-----------|---------------|
 | Total Supply | Unlimited (inflationary) |
-| Initial Distribution | 80% to team, 20% ICO |
+| Initial Distribution | 80% to team, 20% ICO (Initial Coin Offering) |
 | Vesting | None (all unlocked at launch) |
 | Utility | Pay transaction fees only |
 | Governance | None |
 | Staking | None |
 | Burn Mechanism | None |
+
+### Worksheet Template
+
+Use this structured worksheet to organize your analysis. For each category, identify the problem, explain why it is harmful, and propose your fix.
+
+| Category | Problem | Why Bad? | Your Fix |
+|----------|---------|----------|----------|
+| **Supply** | Unlimited inflationary supply | No scarcity; supply growth faster than demand erodes token value (like printing money causes inflation) | _Your redesign here_ |
+| **Distribution** | 80% to team, 20% ICO | Extreme concentration; team can dump immediately; community has no stake | _Your redesign here_ |
+| **Vesting** | No vesting (all unlocked at launch) | No long-term commitment; massive sell pressure at launch | _Your redesign here_ |
+| **Utility** | Fee payment only | High velocity (tokens circulate fast); poor value capture; no reason to hold | _Your redesign here_ |
+| **Governance** | None | No community ownership; users cannot influence protocol direction | _Your redesign here_ |
+| **Staking** | None | No velocity sink; tokens constantly circulating; no holder incentives | _Your redesign here_ |
+| **Burns** | None | No deflationary pressure; supply only grows | _Your redesign here_ |
 
 ### Model Answer / Expected Output
 
@@ -337,7 +504,7 @@ Use the Tokenomics Design Framework to evaluate and improve a hypothetical proto
 
 | Problem | Economic Issue | Impact |
 |---------|----------------|--------|
-| Unlimited supply | No scarcity, inflation erodes value | Token price will trend to zero |
+| Unlimited supply | No scarcity, inflation erodes value | Token price will trend to zero (if supply grows faster than demand, each token becomes worth less---like printing money causes inflation) |
 | 80% team allocation | Misaligned incentives, dump risk | Team can exit immediately |
 | No vesting | No long-term commitment | Selling pressure at launch |
 | Fee-only utility | High velocity | Poor value capture |
@@ -353,7 +520,7 @@ Use the Tokenomics Design Framework to evaluate and improve a hypothetical proto
 | **Vesting** | Team: 1yr cliff + 3yr linear; Investors: 6mo cliff + 2yr linear | Long-term alignment |
 | **Utility** | Fee payment (20% discount), governance, liquidity rewards | Multi-use creates holding demand |
 | **Governance** | Token-weighted voting on fees, listings, treasury | Community ownership |
-| **Staking** | 30% APY for liquidity providers, 10% for governance stakers | Velocity sink |
+| **Staking** | 30% APY for liquidity providers, 10% for governance stakers | Velocity sink. **Note:** 30% APY must be funded from somewhere (inflation, fees, treasury). Ask: what token inflation rate is needed to fund this? If 40% of supply is staked at 30% APY, that requires 12% annual inflation in rewards---which must come from fee revenue or new issuance. Unsustainable APYs are a common tokenomics red flag. |
 | **Burn** | 0.1% of all fees burned | Deflationary pressure |
 
 **Velocity Analysis:**
@@ -385,9 +552,43 @@ Use the Tokenomics Design Framework to evaluate and improve a hypothetical proto
 **Group Size**: Groups of 3-4
 **Materials Needed**: Internet access for research, comparison worksheet
 
+> **Key Terms**
+>
+> - **EIP-1559**: Ethereum Improvement Proposal 1559---a fee mechanism introduced in August 2021 that splits transaction fees into a base fee (burned, permanently destroyed) and a priority tip (paid to validators). When burns exceed new issuance, ETH becomes deflationary.
+> - **PoS (Proof of Stake)**: A consensus mechanism where validators lock (stake) tokens as collateral to propose and validate blocks. If they misbehave, their stake is "slashed" (partially destroyed). Replaces energy-intensive Proof of Work mining.
+> - **Halving**: Bitcoin's mechanism where the block reward paid to miners is cut in half every 210,000 blocks (~4 years). Started at 50 BTC per block in 2009, currently 3.125 BTC (after the April 2024 halving).
+> - **Staking rate**: The percentage of a token's total supply currently locked in staking contracts, earning rewards but removed from active circulation.
+
 ### Task
 
-Compare the tokenomics of three major L1 blockchains: Bitcoin, Ethereum, and Solana. Analyze their supply schedules, velocity sinks, and value capture mechanisms. Determine which tokenomics design is most sustainable for long-term value retention.
+Compare the tokenomics of three major L1 blockchains: Bitcoin, Ethereum, and Solana. The factual data is pre-filled below---your job is to **analyze the economic trade-offs**, not look up numbers.
+
+> **Note on data currency**: Exact numbers change frequently; focus on relative patterns and economic reasoning rather than precise figures.
+
+### Pre-Filled Data Matrix
+
+Use this reference data for your analysis (approximate figures as of early 2025):
+
+| Dimension | Bitcoin (BTC) | Ethereum (ETH) | Solana (SOL) |
+|-----------|---------------|----------------|--------------|
+| **Supply Cap** | 21M (hard cap) | No hard cap | No hard cap |
+| **Current Supply** | ~19.5M (93% issued) | ~120M | ~550M |
+| **Issuance** | Block rewards, halving every ~4 years | PoS validator rewards | PoS validator rewards |
+| **Current Inflation** | ~1.8%/year (decreasing) | ~0.5%/year (offset by burns) | ~5-8%/year (decreasing) |
+| **Burn Mechanism** | None | EIP-1559 burns base fee (~1-3%/year) | 50% of tx fees burned |
+| **Net Inflation** | ~1.8% (decreasing to 0%) | ~-0.5% to +0.5% (often net deflationary) | ~4-6% (decreasing) |
+| **Staking Rate** | N/A (Proof of Work) | ~27% staked | ~65% staked |
+| **Consensus** | Proof of Work (mining) | Proof of Stake (since Sept 2022 "Merge") | Proof of Stake |
+| **Governance** | Off-chain (BIPs) | Off-chain (EIPs) | Off-chain + on-chain |
+| **Primary Velocity Sink** | Store of value narrative | Staking + DeFi lockup | Staking (very high rate) |
+
+**Your analysis tasks** (focus on reasoning, not data lookup):
+
+1. Which tokenomics model creates the strongest scarcity commitment? Why?
+2. Which model best aligns validator/miner incentives with long-term holders?
+3. What happens to Bitcoin security when block rewards approach zero?
+4. Is Ethereum's lack of a hard cap a weakness or a strength? Argue both sides.
+5. Does Solana's 65% staking rate help or hurt non-staking users?
 
 ### Model Answer / Expected Output
 
@@ -398,10 +599,10 @@ Compare the tokenomics of three major L1 blockchains: Bitcoin, Ethereum, and Sol
 | **Supply Schedule** | Fixed 21M cap, halving every 4 years | No hard cap, ~0.5% annual issuance (post-merge) | No hard cap, ~5-8% inflation (decreasing) |
 | **Current Supply** | ~19.5M (93% issued) | ~120M | ~550M |
 | **Issuance Model** | Block rewards only (mining) | Block rewards + priority fees | Block rewards + validator rewards |
-| **Burn Mechanism** | None | EIP-1559 burns base fee (~1-3% annually) | 50% of transaction fees burned |
+| **Burn Mechanism** | None | EIP-1559 (Ethereum Improvement Proposal 1559---a fee mechanism introduced in 2021 that burns a portion of transaction fees) burns base fee (~1-3% annually) | 50% of transaction fees burned |
 | **Net Inflation** | ~1.8% (decreasing to 0%) | ~-0.5% to +0.5% (often deflationary) | ~4-6% (decreasing) |
 | **Staking Rate** | N/A (PoW) | ~27% staked | ~65% staked |
-| **Governance** | Off-chain (BIPs) | Off-chain (EIPs) | Off-chain + on-chain voting |
+| **Governance** | Off-chain (BIPs---Bitcoin Improvement Proposals) | Off-chain (EIPs---Ethereum Improvement Proposals) | Off-chain + on-chain voting |
 | **Primary Velocity Sink** | Store of value narrative | Staking + DeFi lockup | Staking (very high rate) |
 | **Estimated Velocity** | ~5-8x/year | ~10-15x/year | ~8-12x/year |
 
@@ -453,7 +654,7 @@ Solana:     |████████████████████░░�
 ## Exercise 4: Token Voting is Plutocracy
 
 **Category**: Debate/Discussion
-**Time**: 30 min work + 5 min presentation (final debate)
+**Time**: 35 min work + 5 min closing
 **Group Size**: Two teams of 4-6 students each
 **Materials Needed**: None (timer helpful)
 
@@ -463,6 +664,8 @@ Structured debate on the motion: **"One-token-one-vote governance is plutocracy 
 
 **Team A (Pro)**: Token voting is plutocracy and must change
 **Team B (Con)**: Token voting is the best available mechanism
+
+> **Key Term - Rational Apathy**: The economically rational decision not to vote when the cost of researching and voting exceeds the expected impact of your individual vote. Example: If you hold $50 of governance tokens and a vote takes 2 hours of research, the expected value of your single vote influencing a $10M treasury decision is far less than the cost of your time. Most small holders therefore never vote, which concentrates effective power among large holders who do find it worth their time.
 
 **Debate Structure**:
 | Phase | Time | Activity |
@@ -481,6 +684,10 @@ Structured debate on the motion: **"One-token-one-vote governance is plutocracy 
 - Skin-in-the-game
 - Rational apathy
 
+> **Key Term - Sybil Attack**: Creating many fake identities to gain disproportionate influence in a system. Named after a book about multiple personality disorder. In crypto, one person creates hundreds of wallets to multiply their votes or rewards.
+
+> **Key Term - Flash Loan**: A loan that must be borrowed and repaid within a single blockchain transaction (seconds). Enables attacks where someone temporarily borrows millions of tokens to manipulate a governance vote, then repays instantly---gaining influence with no real economic stake.
+
 ### Model Answer / Expected Output
 
 **Team A (Pro - Token Voting is Plutocracy):**
@@ -495,11 +702,10 @@ Structured debate on the motion: **"One-token-one-vote governance is plutocracy 
 
 **Argument 2: Quadratic Voting Solves This**
 - L05 Concept: *Quadratic voting*
-- Weyl & Lalley (2018) proved quadratic voting is more efficient
+- Weyl & Lalley (2018) showed that quadratic voting leads to outcomes that better reflect how strongly people feel about issues, not just how many tokens they hold
 - Cost to vote scales with square of votes: 1 vote = 1 token, 4 votes = 16 tokens
 - This gives minorities a voice - 100 small holders can outvote 1 whale
 - Already implemented: Gitcoin Grants, some DAO experiments
-- Mathematical proof exists that this leads to better collective outcomes
 
 **Argument 3: Governance Attacks Are Real**
 - L05 Concept: *Governance attacks*
@@ -563,6 +769,7 @@ Both sides have valid points. The economically strongest position:
 - Delegation systems (small holders can delegate to active participants)
 - Conviction voting (longer holding = more weight)
 - Off-chain signaling + on-chain execution (Snapshot + multisig)
+- veTokens (vote-escrow tokens---tokens locked for a set period to gain voting power; longer lock = more votes)
 
 ### Presentation Talking Points
 - Plutocracy is a feature, not a bug, from certain perspectives (aligns voting power with economic stake)
@@ -580,6 +787,8 @@ Both sides have valid points. The economically strongest position:
 **Group Size**: Groups of 3-4
 **Materials Needed**: Whiteboard, flip chart, or paper; colored markers
 
+> **Note**: This is a simplified exercise---real tokenomics design takes months of iteration, simulation, and security review. The goal here is to practice applying the frameworks from L05, not to produce a production-ready design.
+
 ### Task
 
 Your group is the tokenomics team for a new decentralized social media protocol called "OpenFeed." Design a token (FEED) that achieves ALL of the following goals:
@@ -592,8 +801,22 @@ Your group is the tokenomics team for a new decentralized social media protocol 
 
 **Constraints**:
 - Must not require centralized content moderation
-- Must be resistant to Sybil attacks (fake accounts farming rewards)
+- Must be resistant to Sybil attacks (see Key Term in Exercise 4: creating fake identities to farm rewards)
 - Must have sustainable tokenomics (not just inflate forever)
+
+**Three mechanisms are already pre-designed for you** (accept these as given):
+
+| Mechanism | Design (Pre-Filled) |
+|-----------|---------------------|
+| **Token Supply** | 1 billion FEED, fixed cap. Community Rewards 50% (released over 10 years, declining), Team 15% (1yr cliff + 4yr linear), Investors 10% (6mo cliff + 2yr linear), Treasury 15% (DAO-controlled), Ecosystem Grants 10% |
+| **Spam Prevention** | To post, stake 10 FEED (refundable if not flagged as spam). Repeat offenders need higher stakes. This creates skin-in-the-game cost for spammers. |
+| **Governance** | Token-weighted voting on protocol parameters (10% quorum), conviction voting on treasury allocation (15% quorum), quadratic voting on content policies (5% quorum) |
+
+**Your task**: Design the remaining 2 mechanisms:
+
+**Mechanism A --- Content Creator Rewards**: How do content creators earn FEED tokens? Design a reward formula or system that incentivizes quality over quantity. Consider: What determines "quality"? How do you prevent gaming?
+
+**Mechanism B --- Curation System**: How do curators (users who evaluate content) earn or lose FEED? Design a system where good judgment is rewarded and bad judgment is penalized. Consider: How do you measure "good judgment"?
 
 ### Model Answer / Expected Output
 
@@ -643,6 +866,8 @@ Your group is the tokenomics team for a new decentralized social media protocol 
 - If content is popular (engagement > threshold), curators profit
 - If content is spam/unpopular, curators lose stake
 - This creates decentralized quality filtering without centralized moderation
+
+> **Note**: The prediction market curation model is an advanced/stretch design. Simpler alternatives include: weighted upvote/downvote with small FEED stakes, or time-delayed rewards based on sustained engagement metrics.
 
 **C. Spam Prevention (Skin-in-the-Game)**
 - Posting requires stake = economic cost for spammers
@@ -743,7 +968,11 @@ For each, assess:
 3. Multi-homing feasibility
 4. Developer ecosystem lock-in
 
+> **Developer ecosystem lock-in** refers to how difficult it is for developers to leave a platform once they have invested in learning its programming language, tools, and patterns. Assess this using: (a) language specificity (e.g., Solidity is Ethereum-only vs. Rust is multi-platform), (b) tooling maturity (debuggers, testing frameworks, deployment pipelines), (c) developer community size (Stack Overflow answers, GitHub repos, tutorials), and (d) code portability (can existing smart contracts run on another chain without rewriting?).
+
 Then make a 10-year prediction with economic justification.
+
+> **Constraint**: Your market share predictions across all L1s must sum to 100%.
 
 ### Model Answer / Expected Output
 
@@ -784,6 +1013,8 @@ Then make a 10-year prediction with economic justification.
 | **Solana** | ~2,000+ active | Growing (Anchor) | STRONG |
 | **Cardano** | ~500 active | Limited | WEAK |
 | **Avalanche** | ~1,000 active | EVM-compatible (can use Ethereum tools) | MODERATE |
+
+> **Key Term - Polya Urn Model**: A thought experiment: draw a ball from an urn, then put it back with one extra of the same color. Early random draws determine the long-run composition---illustrating how small early advantages compound into market dominance. This is the mathematical model behind the winner-take-all chart simulations.
 
 ---
 
@@ -827,6 +1058,7 @@ Then make a 10-year prediction with economic justification.
 | Avalanche | 2% | 4% | +2% (niche growth) |
 | Cardano | 2% | 1% | -1% (decline) |
 | Others | 11% | 8% | -3% (consolidation) |
+| **Total** | **100%** | **100%** | |
 
 ---
 
@@ -864,11 +1096,97 @@ Then make a 10-year prediction with economic justification.
 **Group Size**: Individual or Pairs
 **Materials Needed**: Laptop with Python (numpy, matplotlib, scipy)
 
+> **Note**: This exercise combines three models from L05: the Bass diffusion model (S-curve adoption), Katz & Shapiro network externalities (critical mass), and Schelling coordination games (multiple equilibria). The code lets you explore how these interact.
+
+### Setup Verification
+
+Before starting, verify your environment:
+
+```python
+# Run this cell first to check your setup
+import sys
+print(f"Python version: {sys.version}")
+
+for pkg_name, import_name in [('numpy', 'numpy'), ('matplotlib', 'matplotlib'),
+                                ('scipy', 'scipy')]:
+    try:
+        mod = __import__(import_name)
+        print(f"{pkg_name}: {mod.__version__}")
+    except ImportError:
+        print(f"ERROR: {pkg_name} not installed. Run: pip install {pkg_name}")
+
+print("\nAll dependencies OK!" if all(
+    __import__(m) for m in ['numpy', 'matplotlib', 'scipy']
+) else "Fix missing dependencies above.")
+```
+
 ### Task
 
 Build an S-curve adoption model for cryptocurrency platform adoption. Simulate how network effects create tipping points and multiple equilibria. Explore how subsidies (airdrops, liquidity mining) can push adoption past critical mass.
 
-### Complete Code
+### Student Task
+
+Before writing the full simulation, start with this guided exploration. Modify parameters and observe how adoption changes.
+
+**Step 1**: Run the base model and record the final adoption rate.
+
+**Step 2**: Change `alpha` (network effect strength) to 1.5, 3.0, and 5.0. What happens to the S-curve shape?
+
+**Step 3**: Change the subsidy amount from 0.1 to 0.5. When does the subsidy stop mattering?
+
+**Step 4**: Try setting `n_critical = 0.05` vs `n_critical = 0.30`. How does the critical mass threshold affect time-to-takeoff?
+
+```python
+"""
+S-Curve Adoption: Quick Exploration
+Modify the parameters below and observe the output.
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import odeint
+
+# ---- PARAMETERS (MODIFY THESE) ----
+alpha = 3.0       # Network effect intensity (try: 1.5, 3.0, 5.0)
+u_0 = 0.1         # Base utility without network effects
+c = 0.5           # Adoption cost (friction)
+p = 0.01          # Innovation coefficient (early adopters)
+q = 0.3           # Imitation coefficient (network effects)
+n0 = 0.001        # Initial adoption (0.1%)
+
+def adoption_utility(n_frac, alpha, u_0, c):
+    """U(n) = u_0 + alpha * n^2 - c"""
+    return u_0 + alpha * (n_frac ** 2) - c
+
+def adoption_dynamics(n, t, alpha, u_0, c, p, q):
+    """Bass diffusion with network effects"""
+    utility = adoption_utility(n, alpha, u_0, c)
+    adopt_prob = 1 / (1 + np.exp(-10 * utility))
+    return (p + q * n) * (1 - n) * adopt_prob
+
+t_years = np.linspace(0, 20, 1000)
+n_result = odeint(adoption_dynamics, n0, t_years, args=(alpha, u_0, c, p, q)).flatten()
+
+plt.figure(figsize=(8, 5))
+plt.plot(t_years, n_result * 100, linewidth=2)
+plt.xlabel('Years')
+plt.ylabel('Adoption (%)')
+plt.title(f'S-Curve: alpha={alpha}, p={p}, q={q}')
+plt.axhline(y=15, color='gray', linestyle=':', label='Critical mass (15%)')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()
+
+print(f"Final adoption after 20 years: {n_result[-1]*100:.1f}%")
+
+# YOUR CODE HERE: Try different parameter combinations and note the results
+# Record your observations:
+# alpha=1.5 -> final adoption = ____%
+# alpha=3.0 -> final adoption = ____%
+# alpha=5.0 -> final adoption = ____%
+```
+
+### Complete Reference Code (Model Answer)
 
 ```python
 """
@@ -886,7 +1204,7 @@ Requirements: pip install numpy matplotlib scipy
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import odeint
-from scipy.optimize import fsolve
+from scipy.optimize import fsolve  # fsolve: finds where a function equals zero (used here to find equilibrium points where adoption utility = 0)
 
 # =============================================================================
 # MODEL PARAMETERS
@@ -1034,6 +1352,8 @@ print(f"  Equilibria at: {eq_weak}")
 # VISUALIZATION
 # =============================================================================
 
+# Try modern matplotlib style name first, fall back to legacy name
+# (matplotlib renamed styles in v3.6: 'seaborn-whitegrid' -> 'seaborn-v0_8-whitegrid')
 try:
     plt.style.use('seaborn-v0_8-whitegrid')
 except:
@@ -1228,7 +1548,7 @@ KEY FINDINGS:
 5. **The S-curve explains crypto adoption patterns**:
    - Bitcoin (2009-2017): Slow early growth, explosive 2017 takeoff
    - DeFi (2020): "DeFi Summer" was the tipping point
-   - NFTs (2021): Rapid S-curve from nicheto mainstream
+   - NFTs (2021): Rapid S-curve from niche to mainstream
 
 ### Presentation Talking Points
 - The S-curve is not just empirical - it emerges from network effect mathematics
@@ -1247,11 +1567,136 @@ KEY FINDINGS:
 **Group Size**: Individual or Pairs
 **Materials Needed**: Laptop with Python (numpy, matplotlib)
 
+### Setup Verification
+
+Before starting, verify your environment:
+
+```python
+# Run this cell first to check your setup
+import sys
+print(f"Python version: {sys.version}")
+
+for pkg_name in ['numpy', 'matplotlib', 'pandas']:
+    try:
+        mod = __import__(pkg_name)
+        print(f"{pkg_name}: {mod.__version__}")
+    except ImportError:
+        print(f"ERROR: {pkg_name} not installed. Run: pip install {pkg_name}")
+
+print("\nAll dependencies OK!" if all(
+    __import__(m) for m in ['numpy', 'matplotlib', 'pandas']
+) else "Fix missing dependencies above.")
+```
+
 ### Task
 
 Build a quadratic voting calculator to demonstrate how it mitigates plutocracy compared to one-token-one-vote. Simulate governance scenarios where whales and small holders have different preferences, and show how outcomes differ under linear vs. quadratic voting.
 
-### Complete Code
+### Student Task
+
+Complete the skeleton code below. Fill in each `# YOUR CODE HERE` section.
+
+**Step-by-step instructions:**
+
+1. Set up the voter population with whales, medium holders, and small holders
+2. Implement the linear voting function (1 token = 1 vote)
+3. Implement the quadratic voting function (cost of n votes = n^2 tokens, so votes = sqrt(tokens))
+4. Compare the results and analyze the plutocracy effect
+5. Create visualizations
+
+```python
+"""
+Quadratic Voting vs Linear Voting: Mitigating Plutocracy
+L05 Exercise - Platform and Token Economics
+
+Quadratic voting: Cost of n votes = n^2 credits
+Linear voting: Cost of n votes = n credits (one-token-one-vote)
+
+Requirements: pip install numpy matplotlib pandas
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+np.random.seed(42)
+
+# ---- STEP 1: Create voter population ----
+# 5 whales (large holders), 50 medium holders, 500 small holders
+# Each voter has: tokens (their budget) and preference (+1 for, -1 against)
+
+voters = {}
+
+# Whales (given)
+voters['Whale_1'] = {'tokens': 1_000_000, 'preference': -1}   # Against
+voters['Whale_2'] = {'tokens': 800_000, 'preference': -1}
+voters['Whale_3'] = {'tokens': 600_000, 'preference': 1}      # For
+voters['Whale_4'] = {'tokens': 500_000, 'preference': -1}
+voters['Whale_5'] = {'tokens': 400_000, 'preference': 1}
+
+# Medium holders: 50 voters, 5000-50000 tokens, 60% prefer proposal
+for i in range(50):
+    tokens = np.random.randint(5_000, 50_000)
+    preference = 1 if np.random.random() < 0.6 else -1
+    voters[f'Medium_{i}'] = {'tokens': tokens, 'preference': preference}
+
+# Small holders: 500 voters, 100-5000 tokens, 70% prefer proposal
+for i in range(500):
+    tokens = np.random.randint(100, 5_000)
+    preference = 1 if np.random.random() < 0.7 else -1
+    voters[f'Small_{i}'] = {'tokens': tokens, 'preference': preference}
+
+# ---- STEP 2: Linear voting ----
+# Each token = 1 vote. Sum tokens*preference for each side.
+# Hint: votes_for = sum of tokens for all voters with preference == 1
+def linear_voting(voters):
+    votes_for = None  # YOUR CODE HERE
+    votes_against = None  # YOUR CODE HERE
+    return votes_for, votes_against
+
+# ---- STEP 3: Quadratic voting ----
+# Each voter casts sqrt(tokens) votes in their preferred direction
+# Hint: votes = sqrt(budget), direction based on preference
+def quadratic_voting(voters):
+    votes_for = 0
+    votes_against = 0
+    for v in voters.values():
+        votes = None  # YOUR CODE HERE - calculate sqrt of tokens
+        if v['preference'] == 1:
+            votes_for += votes
+        else:
+            votes_against += votes
+    return votes_for, votes_against
+
+# ---- STEP 4: Compare results ----
+linear_for, linear_against = linear_voting(voters)
+quad_for, quad_against = quadratic_voting(voters)
+
+print("VOTING RESULTS:")
+print(f"Linear:    FOR={linear_for:,.0f}  AGAINST={linear_against:,.0f}  "
+      f"Result={'PASS' if linear_for > linear_against else 'FAIL'}")
+print(f"Quadratic: FOR={quad_for:,.1f}  AGAINST={quad_against:,.1f}  "
+      f"Result={'PASS' if quad_for > quad_against else 'FAIL'}")
+
+# Count people
+n_for = sum(1 for v in voters.values() if v['preference'] == 1)
+print(f"\n{n_for} of {len(voters)} people ({n_for/len(voters)*100:.0f}%) prefer the proposal")
+
+# ---- STEP 5: Visualization ----
+# Create charts comparing linear vs quadratic voting power distribution
+# YOUR CODE HERE
+```
+
+**Expected output for verification:**
+
+- Approximately 63% of people prefer the proposal
+- Linear voting should FAIL (whales against override community)
+- Quadratic voting should PASS (sqrt reduces whale dominance)
+- Whale voting power should drop from ~75% (linear) to ~35% (quadratic)
+
+### Complete Reference Code (Model Answer)
+
+> **Note**: The "Equal QV" variant (equal budget for all voters) is included as a **bonus extension**. It shows the theoretical ideal where all voters get the same credit budget regardless of token holdings. This is not standard in crypto governance due to Sybil resistance challenges, but is useful for understanding the full spectrum of voting mechanisms.
 
 ```python
 """
@@ -1340,7 +1785,9 @@ def quadratic_voting(voters, budget_per_person=None):
 def equal_quadratic_voting(voters):
     """
     Quadratic voting with equal budgets (1000 credits each)
-    This is the "fair" version
+    This is the "fair" version --- BONUS VARIANT
+    (Not standard in crypto due to Sybil resistance challenges,
+    but useful for understanding the theoretical ideal)
     """
     return quadratic_voting(voters, budget_per_person=1000)
 
@@ -1379,7 +1826,7 @@ print("VOTING RESULTS COMPARISON")
 print("="*70)
 
 results = pd.DataFrame({
-    'Mechanism': ['Linear (1T1V)', 'Quadratic (sqrt)', 'Equal QV (1000 each)'],
+    'Mechanism': ['Linear (1T1V)', 'Quadratic (sqrt)', 'Equal QV (1000 each) [BONUS]'],
     'Votes FOR': [linear_for, quad_for, equal_quad_for],
     'Votes AGAINST': [linear_against, quad_against, equal_quad_against],
 })
@@ -1405,6 +1852,8 @@ Quadratic voting gives minorities a voice.
 # VISUALIZATION
 # =============================================================================
 
+# Try modern matplotlib style name first, fall back to legacy name
+# (matplotlib renamed styles in v3.6: 'seaborn-whitegrid' -> 'seaborn-v0_8-whitegrid')
 try:
     plt.style.use('seaborn-v0_8-whitegrid')
 except:
@@ -1464,7 +1913,7 @@ for bars in [bars1, bars2]:
 # Chart 2: Vote Outcome Comparison
 ax2 = axes[0, 1]
 
-mechanisms = ['Linear\n(1T1V)', 'Quadratic', 'Equal QV']
+mechanisms = ['Linear\n(1T1V)', 'Quadratic', 'Equal QV\n[BONUS]']
 for_pct = [results.iloc[0]['FOR %'], results.iloc[1]['FOR %'], results.iloc[2]['FOR %']]
 against_pct = [100 - p for p in for_pct]
 
@@ -1529,7 +1978,7 @@ linear_cost = votes  # 1 token per vote
 quad_cost = votes ** 2  # n^2 tokens for n votes
 
 ax4.plot(votes, linear_cost, linewidth=2.5, color=MLBLUE, label='Linear: Cost = n')
-ax4.plot(votes, quad_cost, linewidth=2.5, color=MLGREEN, label='Quadratic: Cost = n²')
+ax4.plot(votes, quad_cost, linewidth=2.5, color=MLGREEN, label='Quadratic: Cost = n^2')
 
 ax4.set_xlabel('Number of Votes', fontsize=11)
 ax4.set_ylabel('Total Cost (tokens/credits)', fontsize=11)
@@ -1590,7 +2039,7 @@ print(f"""
 5. IMPLEMENTATION CHALLENGES
    - Sybil attack: Split tokens across wallets to get more sqrt votes
    - Solution: Require identity verification (but adds centralization)
-   - Alternative: Commit-reveal schemes, time-weighted voting
+   - Alternative: Commit-reveal schemes (voters first submit encrypted votes, then reveal them simultaneously---prevents copying others' votes), time-weighted voting
    - Real implementations: Gitcoin Grants, some DAO experiments
 """)
 ```

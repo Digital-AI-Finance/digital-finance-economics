@@ -90,13 +90,13 @@
       "id": 8,
       "question": "How does Bitcoin's velocity compare to traditional fiat money?",
       "options": {
-        "A": "Bitcoin velocity is stable at 5-7 like traditional money",
+        "A": "Bitcoin velocity is stable at 1.5 like traditional M2 money",
         "B": "Bitcoin velocity is always lower than fiat money",
-        "C": "Bitcoin velocity varies from 2 to 20+, much more volatile than fiat's 5-7",
+        "C": "Bitcoin velocity varies from 2 to 20+, much more volatile than fiat M2 velocity of ~1.5",
         "D": "Bitcoin has zero velocity due to being a store of value"
       },
       "correct": "C",
-      "explanation": "Traditional money has relatively stable velocity at approximately 5-7, while Bitcoin's velocity varies dramatically from 2 to 20+. This high volatility makes it difficult to apply the quantity theory reliably to Bitcoin and reflects its speculative nature rather than use as transaction medium."
+      "explanation": "Traditional M2 money has relatively stable velocity at approximately 1.5 (M1 velocity is higher at 5-7), while Bitcoin's velocity varies dramatically from 2 to 20+. This high volatility makes it difficult to apply the quantity theory reliably to Bitcoin and reflects its speculative nature rather than use as transaction medium."
     },
     {
       "id": 9,

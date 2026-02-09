@@ -1,6 +1,14 @@
 """Correspondent Banking Network: Scale-Free Topology
 
 Barabasi-Albert preferential attachment model showing hub vulnerability.
+
+Economic Model:
+    Preferential attachment (Barabasi-Albert):
+    $$\Pi(k_i) = \frac{k_i}{\sum_j k_j}$$
+    where $k_i$ = degree (number of connections) of node $i$.
+    New banks preferentially connect to already well-connected hubs,
+    producing a scale-free (power-law) degree distribution $P(k) \sim k^{-\gamma}$.
+
 Theory: Barabasi & Albert (1999), Network Science.
 """
 import matplotlib.pyplot as plt
@@ -271,7 +279,7 @@ ax1.text(0.02, 0.98, metrics_text, transform=ax1.transAxes,
 ax1.set_xlim(-0.05, 1.05)
 ax1.set_ylim(-0.05, 1.05)
 ax1.axis('off')
-ax1.set_title('Correspondent Banking Network Topology\n(Barabasi-Albert Scale-Free Model)',
+ax1.set_title('Correspondent Banking Network Topology\n(Hub-and-Spoke Pattern: Few Banks Handle Most Connections)',
              fontsize=14, fontweight='bold', color=MLPURPLE, pad=10)
 
 # Legend
@@ -283,6 +291,10 @@ legend_elements = [
            markersize=8, label='Regional Banks')
 ]
 ax1.legend(handles=legend_elements, loc='lower right', framealpha=0.9, fontsize=10)
+
+ax1.text(0.02, 0.02, 'Why hubs form: New banks connect to well-connected\nbanks (preferential attachment), creating natural hubs.',
+        transform=ax1.transAxes, fontsize=9, verticalalignment='bottom',
+        bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8))
 
 # ============================================================================
 # Panel 2: Degree Distribution (Power Law)
@@ -313,7 +325,7 @@ ax2.set_xscale('log')
 ax2.set_yscale('log')
 ax2.set_xlabel('Degree (k)', fontweight='bold')
 ax2.set_ylabel('Frequency', fontweight='bold')
-ax2.set_title('Degree Distribution\n(Scale-Free Property)', fontsize=13,
+ax2.set_title('Degree Distribution\n(Hub-and-Spoke Pattern)', fontsize=13,
              fontweight='bold', color=MLPURPLE)
 ax2.grid(True, alpha=0.3, linestyle='--')
 ax2.legend(framealpha=0.9, fontsize=10)

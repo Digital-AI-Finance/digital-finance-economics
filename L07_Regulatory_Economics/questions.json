@@ -28,15 +28,15 @@
     },
     {
       "id": 3,
-      "question": "Which market failure is NOT typically addressed by financial regulation?",
+      "question": "A new cryptocurrency exchange offers high returns but publishes no audited financial statements. Which market failure does this primarily illustrate?",
       "options": {
         "A": "Information asymmetry",
-        "B": "Systemic risk externalities",
-        "C": "Perfect competition",
-        "D": "Consumer protection failures"
+        "B": "Natural monopoly",
+        "C": "Negative externality",
+        "D": "Perfect competition"
       },
-      "correct": "C",
-      "explanation": "Financial regulation addresses market failures like information asymmetry, systemic risk, and consumer protection issues. Perfect competition is not a market failure—it's the ideal state that regulation may help achieve."
+      "correct": "A",
+      "explanation": "The exchange's lack of transparency creates information asymmetry -- investors cannot assess the true risk. This is the classic Akerlof lemons problem applied to crypto exchanges."
     },
     {
       "id": 4,
@@ -48,7 +48,7 @@
         "D": "It increases linearly"
       },
       "correct": "C",
-      "explanation": "The marginal benefit curve (MB = 1.5 * e^(-2r)) shows exponential decay, reflecting diminishing returns to additional regulation as the most critical risks are addressed first."
+      "explanation": "The marginal benefit of regulation decreases as regulation intensity increases, reflecting diminishing returns -- the most critical risks are addressed first by initial regulation, leaving smaller improvements for additional rules."
     },
     {
       "id": 5,
@@ -108,7 +108,7 @@
         "D": "Are zero for large firms"
       },
       "correct": "B",
-      "explanation": "The model shows avg_cost_pct = (5e6 / revenue + 0.001) * 100, demonstrating that fixed compliance costs become a smaller percentage of revenue for larger firms, creating scale economies."
+      "explanation": "The model shows average compliance cost as AC = (FC + VC*revenue + RC*revenue^exponent) / revenue * 100, where FC is fixed compliance costs. As revenue grows, FC/revenue shrinks, creating economies of scale -- the percentage cost falls for larger firms."
     },
     {
       "id": 10,
@@ -172,15 +172,15 @@
     },
     {
       "id": 15,
-      "question": "Regulatory arbitrage occurs when:",
+      "question": "A crypto exchange currently based in the EU considers moving to a jurisdiction with no crypto-specific laws. What economic concept best describes this strategy?",
       "options": {
-        "A": "Regulators coordinate perfectly",
-        "B": "Firms exploit differences between jurisdictions to minimize regulatory costs",
-        "C": "All jurisdictions have identical rules",
-        "D": "Regulation is eliminated globally"
+        "A": "Regulatory capture",
+        "B": "Regulatory arbitrage -- exploiting differences between jurisdictions",
+        "C": "Information asymmetry",
+        "D": "Natural monopoly"
       },
       "correct": "B",
-      "explanation": "Regulatory arbitrage involves firms strategically locating operations or structuring activities to exploit regulatory differences across jurisdictions, minimizing compliance costs."
+      "explanation": "The exchange is engaging in regulatory arbitrage -- strategically relocating to exploit differences in regulatory stringency across jurisdictions to minimize compliance costs."
     },
     {
       "id": 16,

@@ -4,55 +4,55 @@
   "questions": [
     {
       "id": 1,
-      "question": "In a traditional order book, what does the bid-ask spread represent?",
+      "question": "A market maker widens the bid-ask spread from $0.50 to $2.00. What economic condition most likely caused this?",
       "options": {
-        "A": "The difference between the highest bid price and the lowest ask price",
-        "B": "The cumulative volume of all buy orders",
-        "C": "The average price of executed trades",
-        "D": "The volatility of the asset"
+        "A": "Increased informed trading (adverse selection risk)",
+        "B": "Higher trading volume",
+        "C": "Lower asset volatility",
+        "D": "More market makers joining"
       },
       "correct": "A",
-      "explanation": "The bid-ask spread is the difference between the best (highest) bid price and the best (lowest) ask price. It represents a transaction cost and measures market liquidity."
+      "explanation": "Wider spreads compensate market makers for adverse selection risk. When informed trading increases (higher sigma_v in Kyle's model), market makers widen spreads to protect themselves from trading against better-informed counterparties. Higher volume (B) would narrow spreads, lower volatility (C) reduces risk so spreads tighten, and more market makers (D) increase competition which narrows spreads."
     },
     {
       "id": 2,
-      "question": "What is the mid-price in an order book?",
+      "question": "In an order book where the best bid is $1,795 and the best ask is $1,805, a trader submits a market buy order for 1 ETH. What price do they pay?",
       "options": {
-        "A": "The last executed trade price",
-        "B": "The average of the best bid and best ask prices",
-        "C": "The most common price in the order book",
-        "D": "The price with the highest volume"
+        "A": "$1,795 (best bid)",
+        "B": "$1,800 (mid-price)",
+        "C": "$1,805 (best ask)",
+        "D": "$1,810 (above best ask)"
       },
-      "correct": "B",
-      "explanation": "The mid-price is calculated as (best_bid + best_ask) / 2 and serves as a reference price when no trade has recently occurred."
+      "correct": "C",
+      "explanation": "Market buy orders execute against the best ask (lowest sell price). The buyer takes the best available sell offer at $1,805. The bid price ($1,795) is what buyers are willing to pay, not what sellers are offering. The mid-price ($1,800) is a reference only, not an executable price."
     },
     {
       "id": 3,
-      "question": "Which side of the order book represents buyers willing to purchase an asset?",
+      "question": "A DEX pool has 500 ETH and 1,000,000 USDC (k = 500,000,000). What is the spot price of ETH?",
       "options": {
-        "A": "Ask side",
-        "B": "Bid side",
-        "C": "Spread side",
-        "D": "Depth side"
+        "A": "$500",
+        "B": "$1,000",
+        "C": "$2,000",
+        "D": "$5,000"
       },
-      "correct": "B",
-      "explanation": "Bids represent buy orders - buyers willing to purchase the asset at specified prices. Bids are sorted in descending order with the highest bid at the top."
+      "correct": "C",
+      "explanation": "Spot price P = y/x = 1,000,000/500 = $2,000 per ETH. The spot price in a constant product AMM is always the ratio of the quote token reserve (USDC) to the base token reserve (ETH)."
     },
     {
       "id": 4,
-      "question": "What does cumulative volume in an order book depth chart represent?",
+      "question": "If you buy 50 ETH from a pool with 500 ETH and 1,000,000 USDC, what is your approximate effective price per ETH?",
       "options": {
-        "A": "The number of unique traders",
-        "B": "The total volume available up to a given price level",
-        "C": "The average order size",
-        "D": "The trading frequency"
+        "A": "$2,000 (same as spot)",
+        "B": "$2,222 (11% slippage)",
+        "C": "$2,500 (25% slippage)",
+        "D": "$3,000 (50% slippage)"
       },
       "correct": "B",
-      "explanation": "Cumulative volume shows the total quantity of assets available for buying or selling up to each price level, illustrating market depth and potential price impact."
+      "explanation": "New x = 450, new y = k/450 = 500,000,000/450 = 1,111,111. Cost = 1,111,111 - 1,000,000 = $111,111. Effective price = 111,111/50 = $2,222. Slippage = (2,222-2,000)/2,000 = 11.1%. This illustrates that buying 10% of a pool's reserves causes significant price impact."
     },
     {
       "id": 5,
-      "question": "In an AMM using the constant product formula x·y=k, what happens to k when trades occur?",
+      "question": "In an AMM using the constant product formula x*y=k, what happens to k when trades occur?",
       "options": {
         "A": "k increases with each trade",
         "B": "k decreases with each trade",
@@ -60,7 +60,7 @@
         "D": "k fluctuates randomly"
       },
       "correct": "C",
-      "explanation": "The constant product formula maintains k constant during trades (ignoring fees). This ensures that x·y=k always holds, where x and y are the token reserves."
+      "explanation": "The constant product formula maintains k constant during trades (ignoring fees). This ensures that x*y=k always holds, where x and y are the token reserves."
     },
     {
       "id": 6,
@@ -84,37 +84,37 @@
         "D": "Both x and y decrease"
       },
       "correct": "B",
-      "explanation": "When buying Token X, you remove X from the pool (x decreases) and add Token Y to the pool (y increases), maintaining x·y=k."
+      "explanation": "When buying Token X, you remove X from the pool (x decreases) and add Token Y to the pool (y increases), maintaining x*y=k."
     },
     {
       "id": 8,
       "question": "According to the AMM constant product model, what causes slippage?",
       "options": {
         "A": "Network congestion",
-        "B": "The non-linear price curve along x·y=k",
+        "B": "The non-linear price curve along x*y=k",
         "C": "Gas fees",
         "D": "Exchange rate fluctuations"
       },
       "correct": "B",
-      "explanation": "Slippage arises because the price changes along the hyperbolic curve x·y=k. Larger trades move further along this curve, resulting in progressively worse prices."
+      "explanation": "Slippage arises because the price changes along the hyperbolic curve x*y=k. Larger trades move further along this curve, resulting in progressively worse prices."
     },
     {
       "id": 9,
       "question": "What is price discovery in fragmented markets?",
       "options": {
-        "A": "The process by which discount prices are found",
+        "A": "The process by which a single exchange sets the official price for all markets",
         "B": "The mechanism through which information is incorporated into prices across multiple venues",
         "C": "The algorithm used to calculate mid-prices",
-        "D": "The fee structure of different exchanges"
+        "D": "The arbitrage mechanism that eliminates price differences across venues"
       },
       "correct": "B",
-      "explanation": "Price discovery is the process through which new information is incorporated into asset prices. In fragmented markets, this occurs across multiple trading venues with varying speeds."
+      "explanation": "Price discovery is the process through which new information is incorporated into asset prices. In fragmented markets, this occurs across multiple trading venues with varying speeds. Option A is wrong because no single exchange sets prices. Option D describes arbitrage, which is a component of price discovery but not the full definition."
     },
     {
       "id": 10,
       "question": "In fragmented markets, what is a 'leader' exchange?",
       "options": {
-        "A": "The exchange with the highest trading volume",
+        "A": "The exchange with the highest number of listed trading pairs",
         "B": "The exchange where price movements occur first",
         "C": "The exchange with the lowest fees",
         "D": "The most regulated exchange"
@@ -144,7 +144,7 @@
         "D": "Use leverage to increase buying power"
       },
       "correct": "B",
-      "explanation": "Breaking large trades into smaller chunks reduces the immediate price impact along the x·y=k curve. This is the principle behind limit orders and TWAP (Time-Weighted Average Price) strategies."
+      "explanation": "Breaking large trades into smaller chunks reduces the immediate price impact along the x*y=k curve. This is the principle behind limit orders and TWAP (Time-Weighted Average Price) strategies."
     },
     {
       "id": 13,
@@ -180,31 +180,31 @@
         "D": "25%"
       },
       "correct": "B",
-      "explanation": "For a 2x price change, the impermanent loss is approximately 5.7%. The formula is: IL = (2√r)/(1+r) - 1, where r is the price ratio. At r=2, IL ≈ -5.7%."
+      "explanation": "For a 2x price change, the impermanent loss is approximately 5.7%. The formula is: IL = (2*sqrt(r))/(1+r) - 1, where r is the price ratio. At r=2, IL = 2*sqrt(2)/(1+2) - 1 = 2*1.414/3 - 1 = -5.7%."
     },
     {
       "id": 16,
-      "question": "What is the mathematical relationship for calculating LP position value given initial deposit V₀ and price ratio r?",
+      "question": "What is the mathematical relationship for calculating LP position value given initial deposit V_0 and price ratio r?",
       "options": {
-        "A": "V₀ × r",
-        "B": "V₀ × √r",
-        "C": "V₀ × r²",
-        "D": "V₀ / √r"
+        "A": "V_0 * r",
+        "B": "V_0 * sqrt(r)",
+        "C": "V_0 * r^2",
+        "D": "V_0 / sqrt(r)"
       },
       "correct": "B",
-      "explanation": "The LP position value follows V = V₀ × √r due to the constant product formula. This is why impermanent loss occurs - the square root function grows slower than a linear hold strategy."
+      "explanation": "The LP position value follows V = V_0 * sqrt(r) due to the constant product formula. This is why impermanent loss occurs -- the square root function grows slower than a linear hold strategy."
     },
     {
       "id": 17,
-      "question": "What does MEV stand for in blockchain trading?",
+      "question": "Why is MEV possible on blockchains but not typically in traditional stock exchanges?",
       "options": {
-        "A": "Maximum Exchange Value",
-        "B": "Miner Extractable Value",
-        "C": "Market Efficiency Variable",
-        "D": "Minimum Execution Value"
+        "A": "Blockchains have higher fees",
+        "B": "Block producers can choose the order of transactions within a block",
+        "C": "Blockchain prices are more volatile",
+        "D": "Traditional exchanges have more liquidity"
       },
       "correct": "B",
-      "explanation": "MEV stands for Miner Extractable Value (or now Maximal Extractable Value). It refers to the value that can be extracted by reordering, inserting, or censoring transactions within blocks."
+      "explanation": "MEV (Maximal Extractable Value, formerly Miner Extractable Value) exists because block producers (validators) control transaction ordering within blocks. In traditional exchanges, orders are processed by time priority (first-come-first-served), preventing most ordering-based extraction. This asymmetry in transaction ordering power is the fundamental source of MEV."
     },
     {
       "id": 18,
@@ -220,15 +220,15 @@
     },
     {
       "id": 19,
-      "question": "In an AMM sandwich attack, what is the attacker's strategy?",
+      "question": "How does Uniswap v3's concentrated liquidity improve capital efficiency compared to v2?",
       "options": {
-        "A": "Buy tokens before the victim and sell after to profit from the price increase",
-        "B": "Sell tokens to crash the price",
-        "C": "Provide liquidity to earn fees",
-        "D": "Wait for arbitrage opportunities"
+        "A": "It reduces trading fees",
+        "B": "LPs deposit liquidity only within a chosen price range, so more capital is active near the current price",
+        "C": "It eliminates impermanent loss entirely",
+        "D": "It uses a different formula than x*y=k"
       },
-      "correct": "A",
-      "explanation": "The attacker buys tokens (front-runs) before the victim's purchase, which drives the price up. The victim then buys at the inflated price. Finally, the attacker sells back (back-runs) at the higher price for a profit."
+      "correct": "B",
+      "explanation": "In v2, liquidity is spread across all prices (0 to infinity), so most capital is idle. V3 lets LPs concentrate liquidity in a specific range, providing much deeper liquidity near the current price. This can provide up to 4000x better capital efficiency for tight ranges, though LPs must actively manage their positions."
     },
     {
       "id": 20,
@@ -241,6 +241,54 @@
       },
       "correct": "C",
       "explanation": "The optimal front-run size balances price manipulation (moving the price enough to profit) against the cost of moving the price too far. There's a profit-maximizing front-run size that depends on the victim's trade size and the pool's liquidity."
+    },
+    {
+      "id": 21,
+      "question": "An LP provides liquidity to an ETH/USDC pool. If ETH price triples (3x), what is the approximate impermanent loss?",
+      "options": {
+        "A": "-5.7%",
+        "B": "-13.4%",
+        "C": "-25.5%",
+        "D": "-50%"
+      },
+      "correct": "B",
+      "explanation": "IL = 2*sqrt(3)/(1+3) - 1 = 2*1.732/4 - 1 = 3.464/4 - 1 = 0.866 - 1 = -0.134 = -13.4%. A 3x price move causes significant impermanent loss, illustrating why LPs in volatile pairs need high fee income to remain profitable."
+    },
+    {
+      "id": 22,
+      "question": "Which characteristic makes AMMs superior to order books for long-tail (rarely traded) assets?",
+      "options": {
+        "A": "Lower slippage for large trades",
+        "B": "Guaranteed liquidity without requiring active market makers",
+        "C": "Faster execution speed",
+        "D": "Lower transaction fees"
+      },
+      "correct": "B",
+      "explanation": "AMMs provide guaranteed liquidity through the x*y=k formula -- anyone can trade at any time as long as the pool has reserves. Order books for illiquid assets may have no market makers willing to quote, meaning no counterparty to trade with. This permissionless liquidity is AMMs' key innovation for the long tail of assets."
+    },
+    {
+      "id": 23,
+      "question": "Which mechanism would most effectively prevent sandwich attacks?",
+      "options": {
+        "A": "Increasing gas fees to make attacks expensive",
+        "B": "Encrypted mempools that hide pending transactions from attackers",
+        "C": "Larger liquidity pools that reduce slippage",
+        "D": "Faster block times"
+      },
+      "correct": "B",
+      "explanation": "Sandwich attacks require seeing the victim's pending transaction in the mempool. Encrypted mempools hide transaction details until they are included in a block, preventing attackers from identifying and front-running victim trades. Larger pools (C) reduce profitability but don't eliminate the attack vector. Faster blocks (D) reduce the window but don't prevent ordering manipulation within a block."
+    },
+    {
+      "id": 24,
+      "question": "In a fragmented market with both CEXs and DEXs, what role do arbitrageurs play in price discovery?",
+      "options": {
+        "A": "They increase volatility by making large speculative trades",
+        "B": "They align prices across venues by buying low on one exchange and selling high on another",
+        "C": "They provide liquidity by placing limit orders on all exchanges",
+        "D": "They reduce trading volume by discouraging retail participation"
+      },
+      "correct": "B",
+      "explanation": "Arbitrageurs enforce the law of one price by buying assets on exchanges where they are cheaper and selling where they are more expensive. This cross-venue activity transmits price information between markets, ensuring that CEX and DEX prices stay aligned. Without arbitrage, prices could diverge significantly across fragmented venues."
     }
   ]
 }

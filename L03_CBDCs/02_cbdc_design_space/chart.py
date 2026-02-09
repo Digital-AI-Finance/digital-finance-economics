@@ -1,9 +1,15 @@
-"""CBDC Design Space: Multi-Attribute Utility Optimization
+r"""CBDC Design Space: Multi-Attribute Utility Optimization
 
 Pareto frontier showing tradeoffs between privacy, programmability, accessibility.
-Theory: Keeney & Raiffa (1976) Multi-Attribute Utility Theory.
+Theory: Keeney & Raiffa (1976) - Decisions with Multiple Objectives: Preferences and Value Tradeoffs.
 
 Based on: Auer & Böhme (2020) - The technology of retail central bank digital currency
+
+Economic Model:
+    Multi-attribute utility optimization:
+    $U = \sum_i w_i \cdot a_i$ subject to $\sum_i a_i \leq C$
+    where $a_i \in \{privacy, programmability, accessibility\}$
+    and $w_i$ reflects central bank policy preferences.
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -75,7 +81,7 @@ for name, weights in profiles.items():
 
 # Specific CBDC examples (approximate attributes)
 cbdc_examples = {
-    'e-CNY': np.array([0.65, 0.55, 0.75]),    # High privacy, programmability, accessibility
+    'e-CNY': np.array([0.35, 0.55, 0.75]),    # "Controllable anonymity" = government has full access
     'e-Krona': np.array([0.45, 0.70, 0.80]),  # Lower privacy, high programmability
     'Sand Dollar': np.array([0.50, 0.40, 0.85])  # Moderate privacy, high accessibility
 }

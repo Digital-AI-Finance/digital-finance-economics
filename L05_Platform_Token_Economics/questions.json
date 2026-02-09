@@ -16,27 +16,27 @@
     },
     {
       "id": 2,
-      "question": "According to the platform adoption simulations, which platform type reaches its inflection point fastest?",
+      "question": "In the Bass diffusion model, which combination of parameters produces the FASTEST platform adoption?",
       "options": {
-        "A": "Traditional Bank (p=0.01, q=0.1)",
-        "B": "Fintech (p=0.03, q=0.4)",
-        "C": "Crypto Exchange (p=0.05, q=0.25)",
-        "D": "All reach inflection at the same time"
+        "A": "Low p (innovation), low q (imitation)",
+        "B": "High p, high q",
+        "C": "High p, low q",
+        "D": "Low p, high q"
       },
       "correct": "B",
-      "explanation": "Fintech platforms show the fastest adoption with high innovation (p=0.03) and strong network effects (q=0.4), reaching their inflection point earliest. The combination of both external and internal adoption drivers accelerates the S-curve."
+      "explanation": "Both high external influence (p) and strong network effects (q) accelerate the S-curve. High p drives early adoption from external marketing and media, while high q amplifies growth through word-of-mouth and network effects once a user base exists. Together they produce the steepest adoption curve."
     },
     {
       "id": 3,
-      "question": "What is a direct network effect in platform economics?",
+      "question": "Uber connecting riders and drivers benefits from which type of network effect?",
       "options": {
-        "A": "The platform's value increases as it directly invests in infrastructure",
-        "B": "Each additional user increases the platform's value for other users of the same type",
-        "C": "The platform generates revenue directly from transaction fees",
-        "D": "Users can directly contact the platform support team"
+        "A": "Direct network effects (more riders benefit other riders)",
+        "B": "Indirect (cross-side) network effects (more riders attract more drivers, and vice versa)",
+        "C": "Negative network effects (more users reduce value)",
+        "D": "No network effects (Uber's value is independent of user count)"
       },
       "correct": "B",
-      "explanation": "Direct network effects occur when value increases with same-side adoption. Examples include social networks where more users mean more connections, or payment networks where more users mean wider acceptance."
+      "explanation": "Uber is a two-sided market where riders and drivers are distinct user groups. More riders attract more drivers (higher earning potential), and more drivers attract more riders (shorter wait times, lower prices). This cross-side feedback loop is the defining feature of indirect network effects."
     },
     {
       "id": 4,
@@ -64,7 +64,7 @@
     },
     {
       "id": 6,
-      "question": "According to the bifurcation diagram, what happens when adoption cost (c) is very low?",
+      "question": "When adoption cost is very low relative to network benefits, what is the most likely market outcome?",
       "options": {
         "A": "Multiple equilibria exist with path dependence",
         "B": "Only the high-adoption stable equilibrium exists",
@@ -79,7 +79,7 @@
       "question": "What defines a 'winner-take-all' market structure?",
       "options": {
         "A": "Legal monopolies enforced by government regulation",
-        "B": "Strong network effects and low multi-homing costs leading to market concentration",
+        "B": "Strong network effects and high switching costs leading to market concentration",
         "C": "First-mover advantage that cannot be overcome",
         "D": "Markets where only one company is profitable"
       },
@@ -100,15 +100,15 @@
     },
     {
       "id": 9,
-      "question": "What is a utility token's primary function?",
+      "question": "A token that lets you pay for cloud storage on a decentralized network is best classified as:",
       "options": {
-        "A": "Representing ownership shares in the protocol",
-        "B": "Providing access to or payment for platform services",
-        "C": "Securing the blockchain through proof-of-work",
-        "D": "Distributing profits to token holders"
+        "A": "A governance token (grants voting rights)",
+        "B": "A utility token (provides access to platform services)",
+        "C": "A security token (represents ownership shares)",
+        "D": "A stablecoin (maintains a fixed price)"
       },
       "correct": "B",
-      "explanation": "Utility tokens grant access to platform functionality or serve as medium of exchange within the ecosystem. Examples include paying for cloud storage, gas fees, or accessing premium features. They differ from governance and security tokens."
+      "explanation": "Utility tokens grant access to platform functionality or serve as medium of exchange within the ecosystem. Paying for cloud storage is a direct platform service, making this a utility token. Governance tokens grant voting rights, security tokens represent ownership, and stablecoins maintain price pegs."
     },
     {
       "id": 10,
@@ -138,37 +138,37 @@
       "id": 12,
       "question": "In the velocity model, what is the effect of staking 50% of tokens?",
       "options": {
-        "A": "It reduces velocity by half, doubling the potential market cap",
+        "A": "It removes 50% of tokens from circulation, approximately doubling value per circulating token",
         "B": "It has no effect on market cap since staked tokens still exist",
         "C": "It increases velocity as stakers earn more rewards to spend",
         "D": "It reduces the transaction volume (PQ) by half"
       },
       "correct": "A",
-      "explanation": "Staking creates a 'velocity sink' by removing tokens from circulation. If 50% of tokens are locked, effective velocity is halved, which doubles market cap for the same transaction volume (M = PQ/V). This is shown by the gap between the two curves."
+      "explanation": "Staking removes 50% of tokens from circulation. From MV=PQ, if the circulating supply halves but transaction volume stays constant, the value per circulating token approximately doubles. This is shown by the gap between the base velocity and effective velocity curves."
     },
     {
       "id": 13,
-      "question": "What is Bitcoin's maximum supply cap?",
+      "question": "What economic challenge does Bitcoin's fixed 21M supply cap create for long-term network security?",
       "options": {
-        "A": "18 million BTC",
-        "B": "21 million BTC",
-        "C": "100 million BTC",
-        "D": "Unlimited with halving reducing inflation over time"
+        "A": "Transaction fees must eventually replace block rewards to fund security",
+        "B": "Mining becomes more profitable as supply decreases",
+        "C": "The supply cap can be increased through a consensus vote",
+        "D": "Bitcoin will become inflationary once the cap is reached"
       },
-      "correct": "B",
-      "explanation": "Bitcoin has a hard cap of 21 million coins enforced by its protocol. New supply comes from block rewards that halve every 4 years (starting at 50 BTC, now 6.25 BTC), creating a deflationary issuance schedule approaching the cap asymptotically."
+      "correct": "A",
+      "explanation": "As block rewards halve toward zero, miners must be compensated through transaction fees alone. This creates uncertainty about whether fees will provide sufficient security incentive. If fees are too low, miners may leave, reducing network security. This is one of the most debated long-term challenges in Bitcoin's economic design."
     },
     {
       "id": 14,
       "question": "How does Bitcoin's halving mechanism affect its supply schedule?",
       "options": {
-        "A": "Supply is cut in half every 4 years",
+        "A": "The total supply of Bitcoin is permanently reduced by half every 4 years",
         "B": "Block rewards are cut in half every 4 years, gradually approaching the 21M cap",
         "C": "Mining difficulty is halved every 4 years",
         "D": "Transaction fees are halved every 4 years"
       },
       "correct": "B",
-      "explanation": "Bitcoin's block reward halves every 210,000 blocks (~4 years): 50→25→12.5→6.25→3.125 BTC. This controls inflation rate while approaching the 21M cap. The chart shows halvings as vertical dotted lines with diminishing new supply."
+      "explanation": "Bitcoin's block reward halves every 210,000 blocks (~4 years): 50->25->12.5->6.25->3.125 BTC. This controls inflation rate while approaching the 21M cap. The chart shows halvings as vertical dotted lines with diminishing new supply."
     },
     {
       "id": 15,
@@ -188,11 +188,11 @@
       "options": {
         "A": "Highly inflationary with 5%+ annual growth",
         "B": "Fixed cap like Bitcoin",
-        "C": "Net deflationary with burns exceeding issuance",
+        "C": "Often net deflationary, as burns can exceed issuance during high-activity periods",
         "D": "Zero inflation with perfectly balanced issuance and burns"
       },
       "correct": "C",
-      "explanation": "Post-Merge Ethereum has ~0.5M ETH/year issuance (PoS rewards) but ~0.8M burned (EIP-1559 base fee burns), resulting in net -0.3M/year deflation. The blue line shows declining supply, unlike Bitcoin's capped growth or pure inflationary models."
+      "explanation": "Post-Merge ETH issuance (~0.5M/year) can be exceeded by EIP-1559 burns during high network activity. However, during low-activity periods, ETH may be slightly inflationary. The net trend depends on network usage: high activity = deflationary, low activity = mildly inflationary."
     },
     {
       "id": 17,
@@ -225,10 +225,10 @@
         "A": "Patents and intellectual property protection",
         "B": "Network effects from liquidity concentration and composability",
         "C": "Government licensing requirements",
-        "D": "First protocols always maintain their lead"
+        "D": "First-mover advantage from early liquidity concentration"
       },
       "correct": "B",
-      "explanation": "DeFi exhibits path dependence through liquidity network effects (deeper liquidity attracts more traders), composability (protocols integrate with market leaders), and capital efficiency. The Polya urn model shows how early advantages compound through increasing returns."
+      "explanation": "DeFi exhibits path dependence through liquidity network effects (deeper liquidity attracts more traders), composability (protocols integrate with market leaders), and capital efficiency. The Polya urn model shows how early advantages compound through increasing returns. While first-mover advantage (option D) plays a role, it alone is insufficient without the ongoing network effects and composability that sustain dominance."
     },
     {
       "id": 20,
@@ -241,6 +241,42 @@
       },
       "correct": "B",
       "explanation": "The inset showing different random seeds demonstrates that identical platforms can reach vastly different market shares based on early adoption patterns. This path dependence means small initial advantages (luck, timing, marketing) can determine long-run winners through positive feedback loops."
+    },
+    {
+      "id": 21,
+      "question": "Under quadratic voting, a voter with 100 tokens can cast how many votes?",
+      "options": {
+        "A": "100 votes (same as linear voting)",
+        "B": "10 votes (square root of tokens)",
+        "C": "50 votes (half of tokens)",
+        "D": "10,000 votes (tokens squared)"
+      },
+      "correct": "B",
+      "explanation": "Quadratic voting: cost of n votes = n^2 tokens. With 100 tokens, sqrt(100) = 10 votes. This reduces whale dominance because a voter with 10,000 tokens only gets 100 votes (not 10,000), compressing the power gap between large and small holders."
+    },
+    {
+      "id": 22,
+      "question": "Why do some crypto exchanges offer zero trading fees to retail users?",
+      "options": {
+        "A": "They are charities that do not need revenue",
+        "B": "They subsidize one side of a two-sided market to build network effects",
+        "C": "Zero fees are required by regulation",
+        "D": "The exchange has no operating costs"
+      },
+      "correct": "B",
+      "explanation": "Two-sided market theory (Rochet & Tirole 2003): platforms subsidize one side (retail traders) to attract volume, then extract value from the other side (market makers, premium services, data sales). The subsidy is an investment in network effects---more retail volume attracts more market makers, which improves liquidity, attracting even more retail users."
+    },
+    {
+      "id": 23,
+      "question": "What makes flash loan governance attacks possible?",
+      "options": {
+        "A": "Flash loans are illegal and cannot be prevented",
+        "B": "Borrowed tokens can be used to vote, then returned immediately, requiring no real economic stake",
+        "C": "Flash loans permanently transfer token ownership",
+        "D": "All DAOs are vulnerable regardless of their design"
+      },
+      "correct": "B",
+      "explanation": "Flash loans allow borrowing and repaying within one transaction. An attacker borrows millions of governance tokens, votes on a malicious proposal, executes the result, and repays---all atomically. This gains governance power without economic commitment. Time-locked voting (requiring tokens to be held for a period before voting) prevents this by ensuring voters have real economic stake."
     }
   ]
 }

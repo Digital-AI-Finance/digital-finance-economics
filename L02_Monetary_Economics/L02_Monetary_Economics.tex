@@ -97,7 +97,7 @@ Economic rationale:
 \begin{itemize}
 \item Eliminates barter inefficiency
 \item Reduces search and matching costs (time and effort to find trading partners)
-\item Transaction cost = $c_b - c_m$ where $c_m \ll c_b$
+\item Transaction cost = $c_b - c_m$ where $c_m \ll c_b$ (where $\ll$ means ``much less than'')
 
 \textit{(Transaction cost with barter minus cost with money; money makes trading much cheaper)}
 \end{itemize}
@@ -128,9 +128,9 @@ Economic rationale:
 Requirements:
 \begin{itemize}
 \item Stable purchasing power
-\item Low volatility: $\sigma_{\text{money}} < \sigma_{\text{goods}}$
+\item Low volatility: the volatility of money's purchasing power should be low relative to the goods it buys
 
-\textit{(Money's price volatility must be lower than goods for it to work as stable measuring stick)}
+\textit{(If money's value fluctuates more than the things you buy, it fails as a reliable store of value)}
 \item Inflation protection
 \end{itemize}
 \end{columns}
@@ -160,7 +160,7 @@ $$MV = PY$$
 \item If $V$ stable: $\Delta M \rightarrow \Delta P$
 
 \textit{(If velocity is stable, increasing money supply leads to higher prices---more money chasing same goods)}
-\item Seigniorage = $\frac{\dot{M}}{P}$
+\item Seigniorage = $\frac{\dot{M}}{P}$, where $\dot{M}$ denotes the rate of change of $M$ over time
 
 \textit{(Rate of money creation divided by price level---profit from printing money)}
 \item Inflation tax on money holders
@@ -179,7 +179,7 @@ Bitcoin example:
 \vspace{0.3em}
 \textbf{Velocity Puzzle}
 \begin{itemize}
-\item Traditional money: $V \approx 5-7$
+\item Traditional money (M2): $V \approx 1.5$; M1 velocity is higher at 5--7
 \item Bitcoin: $V$ varies 2-20+---this unpredictable velocity makes quantity theory unreliable for crypto
 \item Stablecoins: Very high turnover
 \end{itemize}
@@ -293,7 +293,7 @@ Bitcoin example:
 \end{frame}
 
 % Stablecoin Market
-\begin{frame}[t]{Stablecoin Market Evolution}
+\begin{frame}[t]{Stablecoin Reserve Dynamics Under Stress}
 \begin{center}
 \includegraphics[width=0.65\textwidth]{02_stablecoin_market/chart.pdf}
 \end{center}

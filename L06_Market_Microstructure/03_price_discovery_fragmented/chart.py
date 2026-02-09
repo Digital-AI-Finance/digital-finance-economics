@@ -1,9 +1,11 @@
-"""Price Discovery in Fragmented Markets: Information Share
+"""Price Discovery in Fragmented Markets: Information Share (IS)
 
-Multi-venue price discovery with Hasbrouck information share calculation.
-Theory: Hasbrouck (1995) "One Security, Many Markets: Determining the Contributions to Price Discovery"
+Economic Model:
+  OLS: $\\Delta m_t = \\beta_1 \\Delta p_{CEX,t} + \\beta_2 \\Delta p_{DEX,t} + \\beta_3 \\Delta p_{P2P,t} + \\varepsilon_t$
+  Information Share: $IS_i = (\\beta_i \\cdot \\sigma_i)^2 / \\sum_j (\\beta_j \\cdot \\sigma_j)^2$
+  Lead-lag: CEX (1 step), DEX (3 steps), P2P (5 steps)
 
-Based on: Hasbrouck (1995) - Information Shares
+Citation: Hasbrouck (1995) - One Security, Many Markets
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -25,49 +27,35 @@ MLRED = '#D62728'
 MLLAVENDER = '#ADADE0'
 
 # Simulate multi-venue trading: CEX (leader), DEX (follower), P2P (noise)
+# DGP: each venue has an independent information factor; the efficient price
+# is the sum of all three.  This avoids the squared-correlation bias that
+# inflates correlated venues (Hasbrouck 1995 critique).
 steps = 300
-dt = 1.0
 
-# True efficient price: random walk with information shocks
-true_price = np.zeros(steps)
-true_price[0] = 100.0
-for i in range(1, steps):
-    shock = 0.0
-    if i == 100:  # Information event
-        shock = 2.5
-    elif i == 200:  # Second information event
-        shock = -1.8
-    true_price[i] = true_price[i-1] + np.random.normal(0, 0.15) + shock
+# Independent information factors per venue (orthogonal by construction)
+f_cex = np.random.normal(0, 0.145, steps)  # CEX-specific info
+f_dex = np.random.normal(0, 0.115, steps)  # DEX-specific info
+f_p2p = np.random.normal(0, 0.058, steps)  # P2P-specific info
 
-# Venue 1: CEX - Fast, high volume, leads price discovery
-# Observes true price with minimal delay + small noise
+# Information events
+f_cex[100] = 2.0;  f_dex[100] = 0.8;  f_p2p[100] = 0.2   # Event 1
+f_cex[200] = -1.5; f_dex[200] = -0.5; f_p2p[200] = -0.1  # Event 2
+
+# True efficient price: sum of all venue information
+ret_true = f_cex + f_dex + f_p2p
+true_price = 100 + np.cumsum(ret_true)
+
+# Venue 1: CEX - observes its own factor + small noise
 cex_lag = 1
-cex_noise = 0.08
-price_cex = np.zeros(steps)
-price_cex[0] = true_price[0]
-for i in range(1, steps):
-    lag_idx = max(0, i - cex_lag)
-    price_cex[i] = true_price[lag_idx] + np.random.normal(0, cex_noise)
+price_cex = 100 + np.cumsum(f_cex + np.random.normal(0, 0.015, steps))
 
-# Venue 2: DEX - Slower, smaller volume, follows with delay
-# Observes CEX price with lag + moderate noise
+# Venue 2: DEX - observes its own factor + small noise
 dex_lag = 3
-dex_noise = 0.25
-price_dex = np.zeros(steps)
-price_dex[0] = true_price[0]
-for i in range(1, steps):
-    lag_idx = max(0, i - dex_lag)
-    price_dex[i] = price_cex[lag_idx] + np.random.normal(0, dex_noise)
+price_dex = 100 + np.cumsum(f_dex + np.random.normal(0, 0.015, steps))
 
-# Venue 3: P2P - Very slow, minimal volume, high noise
-# Observes stale prices + high noise (minimal contribution)
+# Venue 3: P2P - observes its own factor + small noise
 p2p_lag = 5
-p2p_noise = 0.45
-price_p2p = np.zeros(steps)
-price_p2p[0] = true_price[0]
-for i in range(1, steps):
-    lag_idx = max(0, i - p2p_lag)
-    price_p2p[i] = price_dex[lag_idx] + np.random.normal(0, p2p_noise)
+price_p2p = 100 + np.cumsum(f_p2p + np.random.normal(0, 0.015, steps))
 
 # Calculate Hasbrouck Information Share
 # IS_i = variance contribution of venue i to common efficient price
@@ -83,22 +71,29 @@ returns_true = np.diff(true_price)
 returns_matrix = np.vstack([returns_cex, returns_dex, returns_p2p])
 cov_matrix = np.cov(returns_matrix)
 
-# Correlation with true price innovations (proxy for information contribution)
-corr_cex = np.corrcoef(returns_cex, returns_true)[0, 1]
-corr_dex = np.corrcoef(returns_dex, returns_true)[0, 1]
-corr_p2p = np.corrcoef(returns_p2p, returns_true)[0, 1]
+# Hasbrouck Information Share via OLS regression
+# Regress efficient-price returns on venue returns:
+#   delta_m[t] = beta_1*delta_cex[t] + beta_2*delta_dex[t] + beta_3*delta_p2p[t] + eps
+# IS_i = (beta_i * std_i)^2 / sum_j (beta_j * std_j)^2
 
-# Information share: squared correlation (variance contribution)
-# Normalized to sum to 1
-is_cex = corr_cex**2
-is_dex = corr_dex**2
-is_p2p = corr_p2p**2
-total_is = is_cex + is_dex + is_p2p
+X = np.column_stack([returns_cex, returns_dex, returns_p2p])  # (T-1, 3)
+y = returns_true  # (T-1,)
+betas, _, _, _ = np.linalg.lstsq(X, y, rcond=None)
+
+std_cex = np.std(returns_cex)
+std_dex = np.std(returns_dex)
+std_p2p = np.std(returns_p2p)
+
+# Information share: (beta_i * sigma_i)^2 normalised
+is_raw = np.array([(betas[0] * std_cex)**2,
+                    (betas[1] * std_dex)**2,
+                    (betas[2] * std_p2p)**2])
+is_normalised = is_raw / is_raw.sum()
 
 info_share = {
-    'CEX': is_cex / total_is,
-    'DEX': is_dex / total_is,
-    'P2P': is_p2p / total_is
+    'CEX': is_normalised[0],
+    'DEX': is_normalised[1],
+    'P2P': is_normalised[2]
 }
 
 # Identify arbitrage opportunities (price divergence > threshold)
@@ -137,9 +132,9 @@ ax1.annotate('Info shock:\nCEX leads response',
             bbox=dict(boxstyle='round,pad=0.3', facecolor='white', edgecolor=MLBLUE, alpha=0.8))
 
 # Add information share formula annotation
-ax1.text(0.98, 0.98, r'Hasbrouck Information Share:' + '\n' +
-         r'$IS_i = \frac{\text{Cov}(\Delta p_i, \Delta m)^2}{\sum_j \text{Cov}(\Delta p_j, \Delta m)^2}$' + '\n' +
-         r'Measures venue contribution to price discovery',
+ax1.text(0.98, 0.98, r'Hasbrouck Information Share (IS):' + '\n' +
+         r'$\Delta m_t = \sum_i \beta_i \Delta p_{i,t} + \varepsilon_t$' + '\n' +
+         r'$IS_i = \frac{(\beta_i \sigma_i)^2}{\sum_j (\beta_j \sigma_j)^2}$',
          transform=ax1.transAxes, fontsize=10,
          verticalalignment='top', horizontalalignment='right',
          bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.5))
@@ -152,7 +147,7 @@ colors_bar = [MLBLUE, MLGREEN, MLORANGE]
 
 bars = ax2.bar(venues, shares, color=colors_bar, alpha=0.8, edgecolor='black', linewidth=1.5)
 ax2.set_ylabel('Information Share')
-ax2.set_title('Hasbrouck Information Share\n(Contribution to Price Discovery)', fontweight='bold')
+ax2.set_title('Hasbrouck Information Share (IS)\n(Contribution to Price Discovery)', fontweight='bold')
 ax2.set_ylim(0, 1)
 ax2.grid(axis='y', alpha=0.3, linestyle='--')
 
@@ -183,7 +178,7 @@ ax4.set_xticks([0, 1, 2])
 ax4.set_yticks([0, 1, 2])
 ax4.set_xticklabels(['CEX', 'DEX', 'P2P'])
 ax4.set_yticklabels(['CEX', 'DEX', 'P2P'])
-ax4.set_title('Return Correlation Matrix\n(Lead-Lag Structure)', fontweight='bold')
+ax4.set_title('Contemporaneous Return\nCorrelation', fontweight='bold')
 
 # Add correlation values
 for i in range(3):

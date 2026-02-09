@@ -1,9 +1,21 @@
-"""Regulatory Cost-Benefit: Deadweight Loss Analysis
+r"""Regulatory Cost-Benefit: Deadweight Loss Analysis
 
 Welfare economics of financial regulation with Harberger triangles.
-Theory: Harberger (1954), Welfare Analysis of Taxation.
+The chart shows a supply-curve shift framework (equivalent to the MB=MC
+marginal analysis described in the slides).
 
-Based on: Stigler (1971) - Theory of Economic Regulation
+Economic Model: Harberger Deadweight Loss from Regulatory Compliance Costs
+Economic Formula: $DWL = \frac{1}{2}(b + s)(Q^* - Q_{\tau})^2$
+where:
+  - DWL = Deadweight loss (foregone efficient transactions)
+  - b = Demand slope (price sensitivity)
+  - s = Supply slope (cost sensitivity)
+  - Q* = Free-market equilibrium quantity
+  - Q_tau = Quantity after regulation adds compliance cost tau
+  - tau = Per-unit compliance cost imposed by regulation
+
+Citation: Harberger (1964) - The Measurement of Waste
+See also: Stigler (1971) - The Theory of Economic Regulation
 """
 import matplotlib.pyplot as plt
 import numpy as np
@@ -207,7 +219,7 @@ ax2.text(0.02, 0.98, 'Cost-Benefit: Regulate if\nSocial Benefit > DWL + τ',
 plt.tight_layout()
 
 # Add overall title with citation
-fig.suptitle('Deadweight Loss from Financial Regulation (Harberger, 1954)',
+fig.suptitle('Deadweight Loss from Financial Regulation (Harberger, 1964)',
              fontsize=15, y=1.00, fontweight='bold')
 
 plt.savefig(Path(__file__).parent / 'chart.pdf', dpi=300, bbox_inches='tight')

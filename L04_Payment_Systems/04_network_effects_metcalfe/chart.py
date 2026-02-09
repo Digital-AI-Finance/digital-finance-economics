@@ -5,6 +5,13 @@ according to different models: Metcalfe's Law (quadratic), Odlyzko-Tilly
 (n*log(n)), and linear growth. It shows the critical mass threshold where
 network value exceeds switching costs.
 
+Economic Model:
+    Metcalfe's Law: $V = \frac{n^2}{1000}$ (each of $n$ users can connect
+    to $n-1$ others, total connections $= n(n-1)/2$).
+    Odlyzko-Tilly: $V = \frac{n \ln(n)}{10}$ (marginal connection value
+    decreases logarithmically---more realistic for large networks).
+    Linear baseline: $V = n$ (no network effects).
+
 Citation: Metcalfe (2013) - Metcalfe's Law after 40 Years of Ethernet; Odlyzko and Tilly (2005)
 """
 import matplotlib.pyplot as plt
@@ -54,6 +61,13 @@ ax.plot(n, V_linear, label="Linear Growth ($V \propto n$)",
 # Switching cost threshold
 ax.axhline(y=switching_cost_threshold, color=MLRED, linestyle='--',
            linewidth=1.5, label='Switching Cost Threshold', alpha=0.8)
+
+ax.annotate('Switching Cost = time, effort,\nand money to change systems',
+           xy=(500, switching_cost_threshold),
+           xytext=(600, switching_cost_threshold * 1.5),
+           fontsize=10, ha='center',
+           bbox=dict(boxstyle='round', facecolor='lightyellow', alpha=0.8),
+           arrowprops=dict(arrowstyle='->', lw=1.5))
 
 # Shade viable region
 ax.fill_between(n, switching_cost_threshold, 1200, alpha=0.1,
