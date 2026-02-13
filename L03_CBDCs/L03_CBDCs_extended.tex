@@ -1,0 +1,868 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{CBDCs: Mathematical Models and Welfare Analysis}
+\subtitle{L03 Extended: Formalizing the Economics of Public Digital Money\\[0.3em]\normalsize From deposit market competition to international game theory}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+% Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+%% ============================================================
+%% SECTION 1: Bridge from Basic Lecture (3 slides)
+%% ============================================================
+\section{Bridge from Basic Lecture}
+
+% --- Frame 1: Opening Comic ---
+\begin{frame}[t]{Welcome Back: From Concepts to Math}
+\begin{center}
+\textit{[XKCD \#2030: ``Blockchain'']}\\[0.5em]
+\small Source: xkcd.com/2030 by Randall Munroe, CC BY-NC 2.5\\[1em]
+\normalsize ``Today we formalize the economic models behind the concepts introduced in the basic lecture.''
+\end{center}
+\bottomnote{Comic sets the stage for our mathematical deep dive into CBDC economics.}
+\end{frame}
+
+% --- Frame 2: From Concepts to Models ---
+\begin{frame}[t]{From Concepts to Models}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What We Know}
+\begin{enumerate}
+\item CBDC is a direct liability of the central bank
+\item Design trade-offs exist (privacy vs compliance, access vs control)
+\item Bank disintermediation (loss of deposits to CBDC) is a key risk
+\item CBDC can improve monetary policy transmission (how central bank rate changes flow through to the real economy)
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{What We'll Formalize}
+\begin{enumerate}
+\item Andolfatto (2021): bank competition model with CBDC entry
+\item Brunnermeier--Niepelt (2019): equivalence theorem for public vs private money
+\item Barrdear--Kumhof (2022): optimal CBDC interest rate
+\item Benigno et al.\ (2022): international CBDC game theory
+\end{enumerate}
+\end{columns}
+
+\bottomnote{This lecture builds mathematical foundations for the concepts introduced in the basic CBDC lecture}
+\end{frame}
+
+% --- Frame 3: Mathematical Toolkit ---
+\begin{frame}[t]{Mathematical Toolkit}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Mathematical Concepts}
+\begin{itemize}
+\item Utility maximization (choosing the best outcome given constraints)
+\item First-order conditions (FOC = setting the derivative equal to zero to find the optimum)
+\item Nash equilibrium (a situation where no player benefits from changing strategy unilaterally)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Notation Preview}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+$a$ & Inelastic deposit base (EUR trillions) \\
+$b$ & Deposit rate sensitivity \\
+$r_D$ & Bank deposit interest rate \\
+$r_L$ & Bank lending rate \\
+$r_{CBDC}$ & CBDC interest rate \\
+$D$ & Bank deposits (EUR trillions) \\
+$W$ & Aggregate welfare \\
+$V$ & Country payoff in game \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{columns}
+
+\bottomnote{All derivations use BSc-level calculus. Full notation table in Appendix A1}
+\end{frame}
+
+%% ============================================================
+%% SECTION 2: Andolfatto Bank Competition Model (5 slides)
+%% ============================================================
+\section{Andolfatto Bank Competition Model}
+
+% --- Frame 4: The Bank's Problem -- Setup ---
+\begin{frame}[t]{The Bank's Problem -- Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Model Setup}
+\begin{itemize}
+\item Monopoly bank chooses deposit rate $r_D$ to maximize profit
+\item Deposit supply: $D(r_D) = a + b \cdot r_D$ (depositors supply more when rate is higher)
+\item Parameters: $a = 5.4$ (EUR trillions, the inelastic deposit base---deposits that stay regardless of rate), $b = 200$ (EUR trillions per unit rate, deposit sensitivity to rate changes)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Worked example:} if $r_D = 0.4\%$ then $D = 5.4 + 200 \times 0.004 = 6.2$ trillion EUR
+
+\column{0.48\textwidth}
+\textbf{Bank Profit Function}
+\begin{itemize}
+\item $\Pi_B = (r_L - r_D) \cdot D(r_D) - FC$
+\item Spread $= r_L - r_D$ (the bank's margin on each euro of deposits)
+\item Lending rate $r_L = 3.5\%$, fixed costs $FC = 0$ (simplified)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Worked example:}
+$$\Pi_B = (0.035 - 0.004) \times 6{,}200\text{B} = 0.031 \times 6{,}200\text{B} = 192.2\text{B EUR}$$
+\end{columns}
+
+\bottomnote{Based on Andolfatto (2021), combining Klein--Monti monopoly bank with Diamond (1965) government debt}
+\end{frame}
+
+% --- Frame 5: The Bank's Optimal Choice (Pre-CBDC) ---
+\begin{frame}[t]{The Bank's Optimal Choice (Pre-CBDC)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Profit Maximization}
+\begin{itemize}
+\item FOC: $\dfrac{d\Pi_B}{dr_D} = 0$
+\item With linear deposit supply:
+$$r_D^* = \frac{r_L - a/b}{2}$$
+\item \textbf{Worked example:} $a/b = 5.4/200 = 0.027$, so
+$$r_D^* = \frac{0.035 - 0.027}{2} = 0.004 = 0.4\%$$
+\item At this rate: $D^* = 6.2$T EUR, $\Pi_B^* = 192.2$B EUR
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Monopoly Distortion}
+\begin{itemize}
+\item Monopoly bank pays LESS than competitive rate
+\item Competitive rate would approach $r_L = 3.5\%$ (zero profit)
+\item Gap $= r_L - r_D^* = 3.5\% - 0.4\% = 3.1$ percentage points measures monopoly power
+\item Depositors lose surplus; bank captures it as profit
+\end{itemize}
+\end{columns}
+
+\bottomnote{The monopoly bank restricts deposit rates below the competitive level, just as a monopolist restricts output}
+\end{frame}
+
+% --- Frame 6: Enter CBDC -- The Outside Option ---
+\begin{frame}[t]{Enter CBDC -- The Outside Option}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{CBDC as Competitive Constraint}
+\begin{itemize}
+\item Central bank introduces CBDC paying $r_{CBDC} = 1.0\%$
+\item Depositors now have an outside option: if $r_D < r_{CBDC}$, they switch
+\item CBDC acts as a floor on deposit rates
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Bank's New Problem}
+\begin{itemize}
+\item Bank must set $r_D \geq r_{CBDC}$ or lose all deposits
+\item Monopoly optimum was $r_D^* = 0.4\%$, but $r_{CBDC} = 1.0\% > 0.4\%$, so CBDC floor \textbf{binds}
+\item Bank forced to raise rate to $r_D = 1.0\%$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Worked example:}
+\begin{itemize}
+\item $D(0.01) = 5.4 + 200 \times 0.01 = 7.4$T EUR (up from 6.2T)
+\item $\Pi_{post} = (0.035 - 0.01) \times 7{,}400\text{B} = 185.0$B EUR (down from 192.2B)
+\item Higher $r_D$ $\Rightarrow$ higher $D$ $\Rightarrow$ more lending $\Rightarrow$ more inclusion
+\end{itemize}
+\end{columns}
+
+\bottomnote{CBDC disciplines the bank like a new competitor entering the market---depositors benefit from the threat}
+\end{frame}
+
+% --- Frame 7: Andolfatto Equilibrium Comparison ---
+\begin{frame}[t]{Andolfatto Equilibrium Comparison}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{06_andolfatto_bank_competition/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): CBDC floor at 1.0\% forces the bank above its monopoly optimum of 0.4\%, shifting equilibrium from 6.2T to 7.4T deposits
+\item Panel~(b): Bank profit falls from 192.2B to 185.0B~EUR as the monopoly margin is compressed, but total deposits increase by 1.2~trillion
+\item Panel~(c): Consumer surplus rises significantly; total welfare increases because the deposit market moves closer to the competitive outcome
+\end{itemize}
+
+\bottomnote{Andolfatto (2021) shows CBDC may increase total deposits despite reducing bank profit}
+\end{frame}
+
+% --- Frame 8: Andolfatto Key Results ---
+\begin{frame}[t]{Andolfatto Key Results}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Surprising Results}
+\begin{itemize}
+\item CBDC does NOT necessarily reduce lending
+\item Higher deposit rates $\Rightarrow$ more deposits $\Rightarrow$ more funds to lend
+\item Bank profit falls but depositor welfare rises
+\item Net welfare effect depends on parameters
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Numerical Summary}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Variable} & \textbf{Pre-CBDC} & \textbf{Post-CBDC} \\
+\midrule
+Deposit rate & 0.4\% & 1.0\% \\
+Deposits & 6.2T EUR & 7.4T EUR \\
+Bank profit & 192.2B & 185.0B \\
+Lending & 6.2T & 7.4T \\
+Profit change & -- & $-7.2$B ($-3.7\%$) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{columns}
+
+\bottomnote{Key insight: CBDC can be pro-competitive, increasing deposits and lending while reducing monopoly rents}
+\end{frame}
+
+%% ============================================================
+%% SECTION 3: Brunnermeier-Niepelt Equivalence (4 slides)
+%% ============================================================
+\section{Brunnermeier--Niepelt Equivalence}
+
+% --- Frame 9: The Equivalence Question ---
+\begin{frame}[t]{The Equivalence Question}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Core Question}
+\begin{itemize}
+\item If people swap bank deposits for CBDC, does it matter for the economy?
+\item Modigliani--Miller (a theorem showing that, under ideal conditions, how a firm is financed does not affect its value) analogy: does the \emph{composition} of money matter?
+\item Brunnermeier \& Niepelt (2019) answer: under specific conditions, NO
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Intuition}
+\begin{itemize}
+\item Deposits fund bank lending. If deposits leave for CBDC, banks lose funding
+\item BUT: central bank can lend those CBDC funds back to banks (pass-through funding)
+\item Net effect: banks' funding source changes, but total credit unchanged
+\item Like refinancing a mortgage---same house, different lender
+\end{itemize}
+\end{columns}
+
+\bottomnote{Brunnermeier \& Niepelt (2019), Journal of Monetary Economics. An equivalence result for private vs public money}
+\end{frame}
+
+% --- Frame 10: The Equivalence Theorem ---
+\begin{frame}[t]{The Equivalence Theorem}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Theorem (Simplified)}
+\begin{itemize}
+\item If: (1)~central bank provides pass-through funding at same terms, (2)~no bank runs, (3)~no friction differences
+\item Then: swapping deposits for CBDC leaves prices, output, and allocation unchanged
+\item Formally: equilibrium under $(D, 0_{CBDC})$ $=$ equilibrium under $(D-x, x_{CBDC})$ for any $x$
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Worked Example}
+\begin{itemize}
+\item Economy: 100B deposits, 0 CBDC
+\item Swap: 30B deposits move to CBDC
+\item Central bank lends 30B back to banks at same rate
+\item Banks: 70B deposits $+$ 30B CB funding $=$ 100B total funding
+\item Lending unchanged: still 100B
+\item Outcome identical
+\end{itemize}
+\end{columns}
+
+\bottomnote{The theorem shows CBDC need not cause a credit crunch---IF the central bank provides pass-through funding}
+\end{frame}
+
+% --- Frame 11: When Equivalence Breaks Down ---
+\begin{frame}[t]{When Equivalence Breaks Down}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{07_brunnermeier_niepelt_equivalence/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Balance sheet mechanics showing how pass-through funding preserves total bank funding despite deposit-to-CBDC migration
+\item Panel~(b): Parameter space showing where equivalence holds (green) vs breaks down (red)---frictions, bank runs, and funding term mismatches break the result
+\item Real-world implication: most economies have frictions that partially break equivalence, making CBDC design choices consequential
+\end{itemize}
+
+\bottomnote{Equivalence breaks when: banks face funding cost premium, depositors have heterogeneous preferences, or bank runs are possible}
+\end{frame}
+
+% --- Frame 12: Policy Implications of (Non-)Equivalence ---
+\begin{frame}[t]{Policy Implications of (Non-)Equivalence}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{If Equivalence Holds}
+\begin{itemize}
+\item CBDC is neutral for financial system
+\item Design choices are about convenience, not stability
+\item Central bank can freely issue CBDC without worrying about credit
+\item Holding limits unnecessary
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{If Equivalence Breaks (Likely)}
+\begin{itemize}
+\item CBDC design matters for credit supply
+\item Holding limits protect against disintermediation
+\item Pass-through funding design is critical
+\item Rate setting affects bank profitability
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Worked example:} if bank funding premium $= 0.5\%$ after CBDC, lending rate rises $0.5\%$, credit contracts by $\sim$10\%
+\end{columns}
+
+\bottomnote{Most CBDC researchers believe equivalence partially breaks---hence the careful design with holding limits and no interest}
+\end{frame}
+
+%% ============================================================
+%% SECTION 4: Optimal CBDC Interest Rate (4 slides)
+%% ============================================================
+\section{Optimal CBDC Interest Rate}
+
+% --- Frame 13: The Optimization Problem ---
+\begin{frame}[t]{The Optimization Problem}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Central Bank's Objective}
+\begin{itemize}
+\item Maximize welfare:
+$$W = \text{GDP gain} + \text{Inclusion gain} - \text{Disintermediation cost}$$
+\item GDP gain from Barrdear \& Kumhof (2022): $\Delta Y = f(\theta)$ where $\theta$ = CBDC share of money supply
+\item Calibration: $\theta = 30\%$ $\Rightarrow$ $\Delta Y = +3\%$ GDP permanently
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{The Trade-off}
+\begin{itemize}
+\item Higher $r_{CBDC}$ $\Rightarrow$ more CBDC adoption ($\theta$ rises)
+\item More adoption $\Rightarrow$ GDP benefits from lower transaction costs
+\item But also $\Rightarrow$ deposit flight, bank funding stress, potential credit contraction
+\item Optimal $r_{CBDC}$ balances these forces
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Worked example:} if $r_{CBDC}$ too high (3.5\%), disintermediation cost dominates ($W = -3.451$). If $r_{CBDC} = 0\%$, $W = 0$ (no benefit). Sweet spot near 0.8\%
+\end{columns}
+
+\bottomnote{Based on Barrdear \& Kumhof (2022), JEDC. DSGE model calibrated to pre-2008 US economy}
+\end{frame}
+
+% --- Frame 14: Deriving the Optimal Rate ---
+\begin{frame}[t]{Deriving the Optimal Rate}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Simplified Welfare Function}
+\begin{itemize}
+\item $W(r) = B(r) - C(r)$
+\item $B(r) = k_1 \sqrt{r}$ (concave: diminishing returns to higher CBDC rate)
+\item $C(r) = k_2 r^2$ (convex: accelerating disintermediation costs)
+\item FOC: $\dfrac{dW}{dr} = \dfrac{dB}{dr} - \dfrac{dC}{dr} = 0$
+\item $\dfrac{dB}{dr} = \dfrac{k_1}{2\sqrt{r}}$;\quad $\dfrac{dC}{dr} = 2k_2 r$
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Worked Example}
+\begin{itemize}
+\item Parameters: $k_1 = 14.3$, $k_2 = 5{,}000$
+\item Setting FOC: $\dfrac{14.3}{2\sqrt{r}} = 2 \times 5{,}000 \times r$
+\item $14.3 = 20{,}000 \cdot r^{3/2}$
+\item $r^{3/2} = 0.000715$
+\item $r^* = 0.000715^{2/3} = 0.008 = 0.8\%$
+\item Check: $W(0.8\%) = 14.3\sqrt{0.008} - 5{,}000 \times 0.008^2$
+\item $= 1.279 - 0.320 = 0.959$
+\item Compare: $W(0\%) = 0$, $W(3.5\%) = 2.674 - 6.125 = -3.451$
+\end{itemize}
+\end{columns}
+
+\bottomnote{The optimal CBDC rate is typically low---explaining why most central banks propose 0\% initially}
+\end{frame}
+
+% --- Frame 15: Visualizing the Optimum ---
+\begin{frame}[t]{Visualizing the Optimum}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{08_optimal_cbdc_rate/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item The welfare curve shows an inverted-U shape: welfare rises with low CBDC rates, peaks at $r^* = 0.8\%$, then turns sharply negative as disintermediation costs dominate
+\item The optimal rate $r^*$ sits where marginal benefit equals marginal cost---the classic optimization condition
+\item Sensitivity: the optimal rate shifts left (lower) when the banking sector is fragile, and right (higher) when financial inclusion is poor
+\end{itemize}
+
+\bottomnote{Key policy result: the optimal CBDC rate is positive but modest, typically 0--1\% depending on economy characteristics}
+\end{frame}
+
+% --- Frame 16: Sensitivity Analysis ---
+\begin{frame}[t]{Sensitivity Analysis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Factors Pushing $r^*$ Higher}
+\begin{itemize}
+\item High unbanked rate (strong inclusion gains)
+\item Inefficient banking sector (high monopoly rents)
+\item Strong digital infrastructure (low CBDC deployment costs)
+\item Example: Nigeria (62\% unbanked) $\Rightarrow$ $r^*$ higher than EU (2\% unbanked)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Factors Pushing $r^*$ Lower}
+\begin{itemize}
+\item Fragile banking sector (high disintermediation risk)
+\item High bank concentration (severe credit contraction)
+\item Low digital literacy (CBDC adoption slow anyway)
+\item Example: EU (concentrated banking) $\Rightarrow$ $r^*$ lower, hence 0\% initial rate
+\end{itemize}
+\end{columns}
+
+\bottomnote{The Digital Euro at 0\% is consistent with optimal policy for an economy with low unbanked rate and fragile bank margins}
+\end{frame}
+
+%% ============================================================
+%% SECTION 5: Welfare Analysis (4 slides)
+%% ============================================================
+\section{Welfare Analysis}
+
+% --- Frame 17: Deposit Market Welfare -- Setup ---
+\begin{frame}[t]{Deposit Market Welfare -- Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Consumer Surplus (CS)}
+\begin{itemize}
+\item CS = depositor welfare = benefit depositors get above the rate they receive
+\item Monopoly bank pays $r_D^* <$ competitive rate $\Rightarrow$ low CS
+\item $r_{max} = r_L$ in the competitive limit (at $r_L$ the bank earns zero spread)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Producer Surplus (PS) and Deadweight Loss (DWL)}
+\begin{itemize}
+\item $PS = (r_L - r_D) \cdot D(r_D)$ (bank profit, with $FC = 0$)
+\item $DWL = \frac{1}{2}(r_D^{comp} - r_D^{mono})(D^{comp} - D^{mono})$
+\item Monopoly $\Rightarrow$ high PS, low CS, positive DWL
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Worked example (pre-CBDC):}\\
+$DWL = \frac{1}{2} \times (0.035 - 0.004) \times (12.4\text{T} - 6.2\text{T}) = 96.1$B
+
+\vspace{0.2em}
+\textbf{Post-CBDC:} $DWL = \frac{1}{2} \times (0.035 - 0.01) \times (12.4\text{T} - 7.4\text{T}) = 62.5$B
+
+\vspace{0.2em}
+DWL reduction: $96.1 - 62.5 = 33.6$B welfare gain
+\end{columns}
+
+\bottomnote{Welfare analysis uses standard consumer/producer surplus framework applied to the deposit market}
+\end{frame}
+
+% --- Frame 18: Welfare Decomposition Chart ---
+\begin{frame}[t]{Welfare Decomposition Chart}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{09_welfare_surplus_analysis/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Pre-CBDC monopoly---large producer surplus, small consumer surplus, significant deadweight loss triangle ($DWL = 96.1$B)
+\item Panel~(b): Post-CBDC---CBDC floor at 1\% compresses monopoly margin, expanding consumer surplus and reducing deadweight loss to 62.5B
+\item Net welfare change: DWL falls by 33.6B---the pie gets bigger, not just redistributed
+\end{itemize}
+
+\bottomnote{Deadweight loss reduction is the key welfare argument for CBDC---it corrects monopoly distortion in the deposit market}
+\end{frame}
+
+% --- Frame 19: Who Wins, Who Loses? ---
+\begin{frame}[t]{Who Wins, Who Loses?}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Winners}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Group} & \textbf{Gain} & \textbf{Mechanism} \\
+\midrule
+Depositors & +33.6B & DWL recaptured, higher rates \\
+Unbanked & New access & Digital payment inclusion \\
+Treasury & Seigniorage & Revenue on CBDC issuance \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\column{0.48\textwidth}
+\textbf{Losers}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Group} & \textbf{Loss} & \textbf{Mechanism} \\
+\midrule
+Bank shareholders & $-7.2$B & Margin compression \\
+Privacy advocates & Hard to quantify & Surveillance risk \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.5em}
+Key point: net welfare positive because DWL reduction (33.6B) far exceeds profit loss (7.2B)
+\end{columns}
+
+\bottomnote{Like any policy reform, CBDC creates winners and losers. The welfare case depends on total gains exceeding total losses}
+\end{frame}
+
+% --- Frame 20: Welfare Under Uncertainty ---
+\begin{frame}[t]{Welfare Under Uncertainty}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Tail Risk}
+\begin{itemize}
+\item Normal times: CBDC improves welfare (deposit market competition)
+\item Crisis times: CBDC may amplify instability (instant flight to safety)
+\item $E[W] = P(\text{normal}) \cdot W_{\text{normal}} + P(\text{crisis}) \cdot W_{\text{crisis}}$
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Numerical Example}
+\begin{itemize}
+\item $P(\text{normal}) = 0.95$, $W_{\text{normal}} = +33.6$B
+\item $P(\text{crisis}) = 0.05$, $W_{\text{crisis}} = -400$B (severe bank run loss)
+\item $E[W] = 0.95 \times 33.6 + 0.05 \times (-400) = 31.92 - 20.0 = +11.92$B
+\end{itemize}
+
+\vspace{0.3em}
+With holding limits: $W_{\text{crisis}} = -100$B (capped flight)
+\begin{itemize}
+\item $E[W] = 0.95 \times 33.6 + 0.05 \times (-100) = 31.92 - 5.0 = +26.92$B
+\item Holding limits more than double expected welfare!
+\end{itemize}
+\end{columns}
+
+\bottomnote{Holding limits are welfare-optimal because they cap the downside risk of digital bank runs while preserving normal-time benefits}
+\end{frame}
+
+%% ============================================================
+%% SECTION 6: International CBDC Game Theory (4 slides)
+%% ============================================================
+\section{International CBDC Game Theory}
+
+% --- Frame 21: Closing Comic ---
+\begin{frame}[t]{The Standards Problem in International Finance}
+\begin{center}
+\textit{[XKCD \#927: ``Standards'']}\\[0.5em]
+\small Source: xkcd.com/927 by Randall Munroe, CC BY-NC 2.5\\[1em]
+\normalsize ``International CBDC competition risks the same outcome---more currencies, not more interoperability. Let's model why.''
+\end{center}
+\bottomnote{The game theory of CBDC competition explains why coordination is hard but necessary.}
+\end{frame}
+
+% --- Frame 22: Currency Competition as a Game ---
+\begin{frame}[t]{Currency Competition as a Game}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Setup}
+\begin{itemize}
+\item Two countries (A and B) each decide: Launch CBDC or Wait
+\item Payoffs depend on both countries' decisions
+\item First-mover advantage ($\gamma$ = bonus payoff for launching while rival waits): early launcher may capture cross-border payments
+\item Network effects (the phenomenon where a product becomes more valuable as more people use it): more users $\Rightarrow$ more valuable
+\item Based on Benigno, Schilling \& Uhlig (2022) framework
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Payoff Drivers}
+\begin{itemize}
+\item Benefits of launching: seigniorage, sanctions power, policy autonomy, payment efficiency
+\item Costs of launching: development cost, bank disruption, privacy backlash
+\item Strategic interaction: if rival launches first, your currency faces substitution pressure
+\end{itemize}
+\end{columns}
+
+\bottomnote{International CBDC competition is a strategic game---each country's optimal action depends on what others do}
+\end{frame}
+
+% --- Frame 23: The CBDC Game -- Payoff Matrix ---
+\begin{frame}[t]{The CBDC Game -- Payoff Matrix}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{10_cbdc_game_theory/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): The payoff matrix reveals a Prisoner's Dilemma structure---both countries launching is NOT the best joint outcome, but each has an incentive to launch regardless
+\item Panel~(b): Reaction functions show the Nash equilibrium (named after John Nash---the outcome where no country can improve its payoff by unilaterally changing strategy)
+\item The Nash equilibrium (both launch) may be welfare-inferior to coordination (both wait), explaining calls for international CBDC standards
+\end{itemize}
+
+\bottomnote{Nash equilibrium predicts mutual CBDC launch; international coordination could achieve the Pareto-superior outcome}
+\end{frame}
+
+% --- Frame 24: Cross-Border Settlement ---
+\begin{frame}[t]{Cross-Border Settlement}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{11_cross_border_settlement/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Multi-CBDC settlement dramatically reduces cost ($-83\%$), time ($-99.8\%$), and counterparty risk ($-75\%$) compared to correspondent banking (the traditional system where banks maintain accounts at each other to process cross-border payments)
+\item Panel~(b): The cost waterfall shows where savings come from---eliminating intermediary bank fees and FX markup generates the largest gains
+\item Benigno, Schilling \& Uhlig (2022): cross-border CBDC use enforces interest rate synchronization, limiting monetary policy autonomy---an extension of the impossible trinity (a country cannot simultaneously maintain a fixed exchange rate, free capital movement, and independent monetary policy)
+\end{itemize}
+
+\bottomnote{Source: BIS (2022) data. Wholesale CBDC reduces cross-border payment costs from 6\% to under 1\%}
+\end{frame}
+
+%% ============================================================
+%% SECTION 7: Synthesis, Policy Implications & References (3 slides)
+%% ============================================================
+\section{Synthesis and Policy Implications}
+
+% --- Frame 25: Model Synthesis ---
+\begin{frame}[t]{Model Synthesis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Converging Insights}
+\begin{itemize}
+\item Andolfatto: CBDC is pro-competitive (0.4\% $\rightarrow$ 1.0\%, +1.2T deposits)
+\item Brunnermeier--Niepelt: no credit crunch if pass-through
+\item Barrdear--Kumhof: optimal rate is low but positive ($r^* = 0.8\%$)
+\item Game theory: international coordination needed (Prisoner's Dilemma)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Policy Design Principles}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{Principle} & \textbf{Model Basis} \\
+\midrule
+Start with 0\% rate & Barrdear--Kumhof: uncertainty favors caution \\
+Holding limits essential & Welfare: doubles expected welfare \\
+Pass-through funding & Brunnermeier--Niepelt conditions \\
+International coordination & Benigno et al.: Prisoner's Dilemma \\
+Two-tier distribution & Andolfatto: preserves bank role \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{columns}
+
+\bottomnote{All four models converge on a common recommendation: cautious CBDC introduction with strong safeguards}
+\end{frame}
+
+% --- Frame 26: Open Questions ---
+\begin{frame}[t]{Open Questions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Unresolved Issues}
+\begin{itemize}
+\item Optimal holding limit level (3{,}000 EUR? 5{,}000? Dynamic?)
+\item Long-run bank adaptation (do banks find new business models?)
+\item Privacy-efficiency trade-off (can zero-knowledge proofs resolve it?)
+\item Digital divide implications (does CBDC worsen inequality?)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Your Assignment Connection}
+\begin{itemize}
+\item These models are the foundation for Exercise~6 (Disintermediation Calculator)
+\item Exercise~7 (Tiered Remuneration) applies the optimal rate framework
+\item Quiz questions 9--14 test understanding of these models
+\item Research paper topic: any of the open questions
+\end{itemize}
+\end{columns}
+
+\bottomnote{CBDCs remain an active research frontier. The models here provide the analytical toolkit for evaluating new proposals}
+\end{frame}
+
+% --- Frame 27: References ---
+\begin{frame}[t]{References}
+\small
+\begin{itemize}
+\setlength{\itemsep}{2pt}
+\item Andolfatto, D.\ (2021). Assessing the Impact of Central Bank Digital Currency on Private Banks. \textit{The Economic Journal}, 131(634), 525--540.
+\item Barrdear, J.\ \& Kumhof, M.\ (2022). The macroeconomics of central bank digital currencies. \textit{Journal of Economic Dynamics and Control}, 142, 104148.
+\item Benigno, P., Schilling, L.M.\ \& Uhlig, H.\ (2022). Cryptocurrencies, currency competition, and the impossible trinity. \textit{Journal of International Economics}, 136, 103601.
+\item Brunnermeier, M.K.\ \& Niepelt, D.\ (2019). On the equivalence of private and public money. \textit{Journal of Monetary Economics}, 106, 27--41.
+\item BIS (2022). Project mBridge: Connecting economies through CBDC. \textit{BIS Innovation Hub}.
+\item Bindseil, U.\ (2020). Tiered CBDC and the financial system. \textit{ECB Working Paper No.\ 2351}.
+\end{itemize}
+
+\bottomnote{Full references for all models and data sources cited in this lecture}
+\end{frame}
+
+%% ============================================================
+%% APPENDIX (3 slides)
+%% ============================================================
+\appendix
+\section{Appendix}
+
+% --- Frame 28 (A1): Complete Notation Table ---
+\begin{frame}[t]{Appendix A1: Complete Notation Table}
+\begin{center}
+\begin{adjustbox}{max width=0.95\textwidth, max totalheight=0.78\textheight}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Section} \\
+\midrule
+$D$ & Bank deposits (EUR trillions) & Andolfatto \\
+$r_D$ & Bank deposit interest rate & Andolfatto \\
+$r_{CBDC}$ & CBDC interest rate & Andolfatto / Optimal Rate \\
+$r_L$ & Bank lending rate & Andolfatto \\
+$r_{max}$ & Maximum deposit rate (competitive limit) & Welfare \\
+$a$ & Inelastic deposit base (EUR trillions) & Andolfatto \\
+$b$ & Deposit rate sensitivity (EUR trillions per unit rate) & Andolfatto \\
+$\Pi_B$ & Bank profit (EUR billions) & Andolfatto \\
+$FC$ & Fixed costs & Andolfatto \\
+$U(c)$ & Utility of consumption & Welfare \\
+$\alpha$ & Risk aversion parameter & Welfare \\
+$W$ & Aggregate welfare & Welfare / Optimal Rate \\
+$B(r)$ & Benefit function of CBDC rate & Optimal Rate \\
+$C(r)$ & Cost function of CBDC rate & Optimal Rate \\
+$k_1$ & Benefit scaling parameter ($= 14.3$) & Optimal Rate \\
+$k_2$ & Cost scaling parameter ($= 5{,}000$) & Optimal Rate \\
+$CS$ & Consumer surplus (depositor welfare) & Welfare \\
+$PS$ & Producer surplus (bank profit) & Welfare \\
+$DWL$ & Deadweight loss & Welfare \\
+$L(D)$ & Lending as function of deposits & Equivalence \\
+$\sigma$ & Volatility / uncertainty parameter & Welfare / Game Theory \\
+$Y$ & GDP / output & Optimal Rate \\
+$\theta$ & CBDC share of money supply & Optimal Rate \\
+$\gamma$ & First-mover advantage payoff bonus & Game Theory \\
+$V_i$ & Country $i$ payoff in CBDC game & Game Theory \\
+$\delta$ & Discount factor (present value weight) & Game Theory \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{center}
+
+\bottomnote{Reference page for all mathematical notation used in this lecture}
+\end{frame}
+
+% --- Frame 29 (A2): Andolfatto Full Derivation ---
+\begin{frame}[t]{Appendix A2: Andolfatto Full Derivation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Pre-CBDC FOC}
+\begin{align*}
+\Pi_B &= (r_L - r_D)(a + b \cdot r_D) \\
+&= r_L \cdot a + r_L \cdot b \cdot r_D - a \cdot r_D - b \cdot r_D^2
+\end{align*}
+\begin{align*}
+\frac{d\Pi_B}{dr_D} &= r_L \cdot b - a - 2b \cdot r_D = 0
+\end{align*}
+$$r_D^* = \frac{r_L \cdot b - a}{2b} = \frac{r_L - a/b}{2}$$
+
+\vspace{0.3em}
+With $a = 5.4$, $b = 200$, $r_L = 0.035$:
+$$r_D^* = \frac{0.035 - 0.027}{2} = 0.004$$
+
+\column{0.48\textwidth}
+\textbf{Post-CBDC (Kuhn--Tucker)}
+\begin{itemize}
+\item $\max \Pi_B$ \quad s.t.\ $r_D \geq r_{CBDC}$
+\item If $r_D^* < r_{CBDC}$: constraint binds, $r_D = r_{CBDC}$
+\item If $r_D^* \geq r_{CBDC}$: constraint slack, monopoly solution unchanged
+\item With $r_{CBDC} = 0.01 > r_D^* = 0.004$: binds.
+$$r_D = 0.01$$
+\end{itemize}
+
+\vspace{0.3em}
+Post-CBDC equilibrium:
+\begin{align*}
+D &= 5.4 + 200 \times 0.01 = 7.4\text{T} \\
+\Pi_B &= (0.035 - 0.01) \times 7{,}400\text{B} = 185.0\text{B}
+\end{align*}
+\end{columns}
+
+\bottomnote{Complete derivation for students who want the mathematical details}
+\end{frame}
+
+% --- Frame 30 (A3): Brunnermeier-Niepelt Sufficient Conditions ---
+\begin{frame}[t]{Appendix A3: Brunnermeier--Niepelt Sufficient Conditions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Three Sufficient Conditions}
+\begin{enumerate}
+\item \textbf{Pass-through funding:} CB lends to banks at rate $r_{CB} = r_D$ (no funding cost premium)
+\item \textbf{No bank runs:} depositors do not panic-withdraw (Diamond--Dybvig stability)
+\item \textbf{No friction asymmetry:} CBDC and deposits face identical regulatory, tax, and convenience costs
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Proof Sketch}
+\begin{itemize}
+\item Under conditions 1--3, bank balance sheets adjust: deposits $\downarrow$, CB funding $\uparrow$, total funding unchanged
+\item Loan supply unchanged $\Rightarrow$ real allocation unchanged
+\item Modigliani--Miller logic: liability composition is irrelevant when frictions are absent
+\item Policy implication: making conditions hold (e.g., credible pass-through) is the design goal
+\end{itemize}
+\end{columns}
+
+\bottomnote{Formal conditions from Brunnermeier \& Niepelt (2019), Journal of Monetary Economics, 106, 27--41}
+\end{frame}
+
+\end{document}
