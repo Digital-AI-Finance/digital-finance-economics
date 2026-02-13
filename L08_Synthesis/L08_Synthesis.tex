@@ -50,7 +50,7 @@
 }
 
 \title{Synthesis and Future Directions}
-\subtitle{L08: Integrating the Four Economic Lenses}
+\subtitle{L08: Why analyzing digital finance requires combining all four economic lenses simultaneously}
 \author{Economics of Digital Finance}
 \institute{BSc Course}
 \date{}
@@ -70,9 +70,9 @@
 \begin{enumerate}
 \item Reviewing the four economic lenses
 \item Systemic risk and contagion in digital finance
-\item TradFi-DeFi convergence
+\item TradFi-DeFi convergence (traditional and decentralized finance growing more similar)
 \item Integrating the lenses for holistic analysis
-\item The digital finance trilemma
+\item The digital finance trilemma (impossible to maximize decentralization, security, and scalability simultaneously)
 \item Policy effectiveness across domains
 \item Future research directions
 \end{enumerate}
@@ -106,7 +106,7 @@
 \textbf{Lens 2: Platform Economics}
 \begin{itemize}
 \item Network effects and adoption dynamics
-\item Token economics and mechanism design
+\item Token economics and mechanism design (designing rules so self-interested participants produce desired outcomes)
 \item Two-sided markets and intermediaries
 \item Platform governance
 \end{itemize}
@@ -139,10 +139,10 @@
 \includegraphics[width=0.65\textwidth]{01_systemic_risk_contagion/chart.pdf}
 \end{center}
 
-\bottomnote{Allen \& Gale (2000) contagion model: shows how financial distress spreads through interbank lending networks depending on network structure; digital finance adds instant velocity}
+\bottomnote{Acemoglu et al.\ (2015) network contagion model: nodes fail when cumulative losses from neighbors exceed capital buffers; contagion severity depends on network topology. Allen \& Gale (2000) originated the framework; digital finance adds instant velocity}
 \end{frame}
 
-% Understanding Systemic Risk
+% Understanding Systemic Risk (Part 1)
 \begin{frame}[t]{Understanding Systemic Risk Channels}
 \begin{columns}[T]
 \column{0.48\textwidth}
@@ -150,18 +150,25 @@
 \begin{itemize}
 \item Interbank lending networks
 \item Common asset exposures
-\item Fire sales and liquidity spirals
+\item Fire sales (forced selling at distressed prices) and liquidity spirals (price drops trigger more selling, pushing prices further down)
 \item Bank runs (Diamond-Dybvig model: bank runs occur when depositors panic and withdraw simultaneously)
 \end{itemize}
 
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{Allen \& Gale Framework}
 \begin{itemize}
 \item Complete vs. incomplete networks (how densely connected institutions are)
 \item Contagion (financial problems spreading) depends on structure
 \item Diversification can increase risk (paradox: more connections can spread problems faster)
 \end{itemize}
+\end{columns}
 
+\bottomnote{Classic contagion models focus on network topology and capital buffers; see chart on previous slide}
+\end{frame}
+
+% Understanding Systemic Risk (Part 2)
+\begin{frame}[t]{Understanding Systemic Risk Channels (cont.)}
+\begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Digital Finance Amplifications}
 \begin{itemize}
@@ -171,13 +178,13 @@
 \item Cross-platform contagion (CEX (Centralized Exchange) and DEX (Decentralized Exchange))
 \end{itemize}
 
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{New Systemic Risk Sources}
 \begin{itemize}
-\item Oracle failures
+\item Oracle failures (oracles feed real-world data to smart contracts; wrong data triggers wrong decisions)
 \item Protocol exploit contagion
-\item Collateral liquidation cascades
-\item Wrapped asset depegging
+\item Collateral liquidation cascades (borrowers fail to maintain collateral, assets are auto-sold, prices drop, triggering more liquidations)
+\item Wrapped asset depegging (a wrapped asset is a token representing an asset from another blockchain; depegging means losing its 1:1 value linkage)
 \end{itemize}
 \end{columns}
 
@@ -201,7 +208,7 @@
 \begin{itemize}
 \item Banks offering crypto custody
 \item Asset managers tokenizing funds
-\item Payment rails integration
+\item Payment rails (underlying infrastructure for transferring money) integration
 \item Regulated stablecoin issuance
 \end{itemize}
 
@@ -226,8 +233,8 @@
 \vspace{0.3em}
 \textbf{Hybrid Models Emerging}
 \begin{itemize}
-\item Permissioned DeFi
-\item Tokenized deposits
+\item Permissioned DeFi (DeFi protocols with restricted participation, combining decentralized technology with traditional compliance)
+\item Tokenized deposits (bank deposits represented as digital tokens on a blockchain, enabling programmable transfers)
 \item Programmable money with compliance
 \item Central bank-DeFi interoperability
 \end{itemize}
@@ -245,7 +252,7 @@
 \bottomnote{Real-world digital finance phenomena require simultaneous application of all four lenses}
 \end{frame}
 
-% Integration Examples
+% Integration Examples (Part 1)
 \begin{frame}[t]{Case Studies: Integrating Multiple Lenses}
 \begin{columns}[T]
 \column{0.48\textwidth}
@@ -259,7 +266,7 @@
 
 \textit{Example: Terra/Luna collapse (2022)---algorithmic stablecoin death spiral triggered by loss of confidence.}
 
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{Case 2: CBDC Adoption}
 \begin{itemize}
 \item \textbf{Monetary}: Bank disintermediation risk
@@ -268,8 +275,15 @@
 \item \textbf{Regulatory}: Privacy-AML (Anti-Money Laundering) trade-offs
 \end{itemize}
 
-\textit{Example: USDC depeg (March 2023)---exposure to Silicon Valley Bank failure showed TradFi-DeFi interconnection.}
+\textit{Example: USDC depeg (March 2023)---exposure to Silicon Valley Bank failure showed TradFi-DeFi interconnection. JPMorgan Onyx shows institutional blockchain adoption (tokenized deposits, programmable payments).}
+\end{columns}
 
+\bottomnote{Each case study requires all four lenses for complete analysis---single-lens thinking misses critical interactions}
+\end{frame}
+
+% Integration Examples (Part 2)
+\begin{frame}[t]{Case Studies: Integrating Multiple Lenses (cont.)}
+\begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Case 3: DEX Competition}
 \begin{itemize}
@@ -279,9 +293,9 @@
 \item \textbf{Regulatory}: Decentralization and liability
 \end{itemize}
 
-\textit{Example: JPMorgan Onyx---institutional blockchain platform for tokenized deposits and programmable payments.}
+\textit{Example: Uniswap vs.\ SushiSwap---competing DEX protocols illustrate platform forks, liquidity migration, and governance token incentives.}
 
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{Key Insight}
 
 Single-lens analysis misses interactions:
@@ -290,6 +304,11 @@ Single-lens analysis misses interactions:
 \item Microstructure influences monetary policy
 \item Platform effects amplify contagion
 \end{itemize}
+
+\vspace{0.3em}
+\textbf{Cross-Lens Interactions}
+
+Every real-world event involves \textit{all four lenses}. The skill is identifying which lens dominates and how they interact.
 \end{columns}
 
 \bottomnote{Holistic analysis requires tracing effects across all four economic domains}
@@ -301,7 +320,7 @@ Single-lens analysis misses interactions:
 \includegraphics[width=0.65\textwidth]{04_digital_finance_trilemma/chart.pdf}
 \end{center}
 
-\bottomnote{Similar to Mundell's impossible trinity (can't have fixed exchange rate, free capital flow, AND independent monetary policy), digital finance faces fundamental trade-offs between decentralization, efficiency, and security/compliance}
+\bottomnote{Similar to Mundell's impossible trinity (can't have fixed exchange rate, free capital flow, AND independent monetary policy), digital finance faces fundamental trade-offs between decentralization, security, and scalability}
 \end{frame}
 
 % Understanding the Trilemma
@@ -319,47 +338,53 @@ Single-lens analysis misses interactions:
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{2. Efficiency}
+\textbf{2. Security}
 \begin{itemize}
-\item High throughput, low latency
-\item Low transaction costs
-\item Scalability
+\item Resistance to attacks and fraud
+\item AML (Anti-Money Laundering)/CFT (Combating Financing of Terrorism) enforcement
+\item Systemic risk (risk of cascading failures) management
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{3. Security/Compliance}
+\textbf{3. Scalability}
 \begin{itemize}
-\item AML (Anti-Money Laundering)/CFT (Combating Financing of Terrorism) enforcement
-\item Consumer protection
-\item Systemic risk (risk of cascading failures) management
+\item High throughput (transactions per second), low latency
+\item Low transaction costs
+\item Capacity to serve millions of users
 \end{itemize}
 
 \column{0.48\textwidth}
 \textbf{Pick Any Two}
 
 \vspace{0.3em}
-\textbf{Decentralized + Efficient}
+\textbf{Decentralized + Scalable}
 \begin{itemize}
-\item Example: Early Bitcoin, DeFi protocols
-\item Problem: Regulatory arbitrage, illicit use
+\item Example: Solana, early DeFi protocols
+\item Problem: Harder to secure against attacks
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Decentralized + Secure/Compliant}
+\textbf{Decentralized + Secure}
 \begin{itemize}
-\item Example: Proof-of-work with whitelisting
-\item Problem: Slow, expensive (efficiency loss)
+\item Example: Bitcoin, Ethereum (proof-of-work)
+\item Problem: Slow, expensive (scalability loss)
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Efficient + Secure/Compliant}
+\textbf{Secure + Scalable}
 \begin{itemize}
-\item Example: CBDCs, permissioned blockchains
+\item Example: Visa, CBDCs, permissioned blockchains
 \item Problem: Centralized control (decentralization loss)
 \end{itemize}
+
+\vspace{0.3em}
+\textbf{Formal Constraint:} $D + S + Sc \leq K$
+
+\smallskip
+\textbf{Example:} If $K = 1$, Bitcoin allocates $D{=}0.45$, $S{=}0.45$, $Sc{=}0.10$. Visa allocates $D{=}0.05$, $S{=}0.45$, $Sc{=}0.50$. Both sum to $\leq 1$, but with very different trade-offs.
 \end{columns}
 
-\bottomnote{Fundamental trade-offs constrain design space; technological advances may shift boundaries but not eliminate trilemma}
+\bottomnote{Constraint: D + S + Sc $\leq$ K. Fundamental trade-offs constrain design space; technological advances may shift boundaries but not eliminate the trilemma}
 \end{frame}
 
 % Policy Effectiveness Heatmap
@@ -368,7 +393,7 @@ Single-lens analysis misses interactions:
 \includegraphics[width=0.65\textwidth]{05_policy_effectiveness_heatmap/chart.pdf}
 \end{center}
 
-\bottomnote{Policy effectiveness varies by domain; no one-size-fits-all regulatory approach}
+\bottomnote{Chart shows five policy instruments (CBDC, Stablecoin Regulation, DeFi Rules, Crypto Tax, KYC/AML) scored against four objectives (Financial Inclusion, Stability, Innovation, Consumer Protection). Green = positive effect, red = negative effect}
 \end{frame}
 
 % Policy Analysis Framework
@@ -387,7 +412,7 @@ Single-lens analysis misses interactions:
 \begin{itemize}
 \item Payment systems: Competing jurisdictions
 \item Tokenized assets: Classification issues
-\item Lending platforms: DeFi vs. CeFi ambiguity
+\item Lending platforms: DeFi vs. CeFi (Centralized Finance---platforms that custody user funds on internal systems) ambiguity
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -459,6 +484,10 @@ Policy evaluation must consider:
 
 % Methodological Frontiers
 \begin{frame}[t]{Methodological Frontiers}
+
+\textit{These are open research questions at the frontier of digital finance. The four economic lenses you learned in this course provide the foundation for engaging with them.}
+
+\vspace{0.3em}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Data Opportunities}
@@ -481,7 +510,7 @@ Policy evaluation must consider:
 \column{0.48\textwidth}
 \textbf{Empirical Methods}
 \begin{itemize}
-\item Agent-based simulation
+\item Agent-based simulation (computer models where many individual actors interact, revealing emergent system-wide behavior)
 \item Mechanism design experiments
 \item Event studies with second-level data
 \item Machine learning for pattern detection
@@ -603,7 +632,7 @@ Spread of financial distress from one institution or market to others through di
 
 \vspace{0.3em}
 \textbf{Digital Finance Trilemma}
-Trade-off between decentralization, efficiency, and security/compliance---difficult to maximize all three simultaneously.
+Trade-off between decentralization, security, and scalability---difficult to maximize all three simultaneously (constraint: $D + S + Sc \leq K$).
 
 \vspace{0.3em}
 \textbf{TradFi-DeFi Convergence}

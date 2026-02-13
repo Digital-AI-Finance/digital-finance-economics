@@ -50,7 +50,7 @@
 }
 
 \title{Regulatory Economics of Digital Finance}
-\subtitle{L07: Costs, Benefits, and Arbitrage}
+\subtitle{L07: Costs, Benefits, and Arbitrage\\[0.3em]\small Why do some crypto exchanges operate legally while others collapse? Regulatory economics explains when and how rules shape digital finance.}
 \author{Economics of Digital Finance}
 \institute{BSc Course}
 \date{}
@@ -91,8 +91,8 @@
 \bottomnote{This lesson applies regulatory economics frameworks to understand when and how to regulate digital finance}
 \end{frame}
 
-% Why Regulate Digital Finance?
-\begin{frame}[t]{Why Regulate Digital Finance?}
+% Why Regulate Digital Finance? -- Market Failures
+\begin{frame}[t]{Why Regulate Digital Finance? Market Failures}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Market Failures in Digital Finance}
@@ -104,7 +104,7 @@
 \begin{itemize}
 \item Complex technical protocols (sets of rules governing data exchange between systems)
 \item Opaque risk disclosures
-\item Retail investor sophistication gaps
+\item Retail investor (individual, non-professional investor) sophistication gaps
 \end{itemize}
 
 \vspace{0.3em}
@@ -132,17 +132,44 @@
 \item Irreversible transactions (once confirmed on the blockchain, transactions cannot be undone)
 \item Custody and loss risks
 \end{itemize}
-
-\vspace{0.3em}
-\textbf{Public Interest Rationale}
-\begin{itemize}
-\item Financial stability
-\item Consumer protection
-\item Market integrity
-\end{itemize}
 \end{columns}
 
-\bottomnote{Stigler (1971): Regulation can serve public interest or private capture (regulatory capture: when regulators serve the industry they oversee instead of the public)---evidence determines which}
+\bottomnote{These four market failures are the economic justification for regulation---without them, free markets would suffice}
+\end{frame}
+
+% Why Regulate Digital Finance? -- Public Interest
+\begin{frame}[t]{Why Regulate Digital Finance? Public Interest Rationale}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Beyond Market Failures}
+
+Even when markets function, regulation serves broader public goals:
+
+\vspace{0.3em}
+\textbf{Public Interest Goals}
+\begin{itemize}
+\item \textbf{Financial stability}---preventing crises that harm the entire economy
+\item \textbf{Consumer protection}---shielding individuals who cannot protect themselves
+\item \textbf{Market integrity}---ensuring prices reflect genuine supply and demand, not manipulation
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{But Who Does Regulation Really Serve?}
+
+\vspace{0.3em}
+\textbf{Stigler's Regulatory Capture Theory}
+
+Stigler (1971) warned that regulation can be ``captured'' by the very industry it oversees:
+\begin{itemize}
+\item Regulated firms lobby for rules that benefit them
+\item Barriers to entry protect incumbents from competition
+\item Regulators may prioritize industry relationships over public welfare
+\end{itemize}
+
+\textit{Example: Large banks lobbied for complex Basel rules that small banks cannot afford to implement---reducing competition.}
+\end{columns}
+
+\bottomnote{Stigler (1971): Regulation can serve public interest or private capture (regulatory capture)---evidence determines which}
 \end{frame}
 
 % Cost-Benefit Analysis
@@ -153,6 +180,8 @@
 
 \vspace{0.3em}
 \textbf{Marginal Analysis}: Optimal regulation occurs where the additional (marginal) cost of one more unit of regulation equals its additional benefit. Too little regulation leaves market failures uncorrected; too much creates deadweight loss (value destroyed by excessive rules).
+
+\smallskip\textbf{Example:} A new KYC rule costs exchanges \$30M/year in compliance but prevents \$50M/year in fraud losses. Since marginal benefit (\$50M) $>$ marginal cost (\$30M), this rule is worth adding. A \textit{second} rule costs another \$40M but only prevents \$20M more fraud---this one fails the test and should not be imposed.
 
 \bottomnote{Harberger (1964): Minimize deadweight loss---the welfare triangle representing foregone efficient transactions}
 \end{frame}
@@ -171,6 +200,8 @@
 
 \vspace{0.3em}
 \textbf{Akerlof's Lemons Problem (Adverse Selection)}
+
+\textit{(``Lemons'' is American slang for defective cars---Akerlof showed how information asymmetry degrades entire markets)}
 
 Without regulation:
 \begin{itemize}
@@ -234,12 +265,15 @@ Without regulation:
 \vspace{0.3em}
 \textbf{Harberger Deadweight Loss (Welfare Triangle)}
 
-Welfare means total economic value to society, combining consumer and producer surplus.
+Welfare means total economic value to society, combining:
+\begin{itemize}
+\item \textbf{Consumer surplus} (the extra value buyers get above what they actually pay---e.g., you'd pay \$5 for coffee but it costs \$3, so your surplus is \$2)
+\item \textbf{Producer surplus} (profit sellers earn above their minimum acceptable price)
+\end{itemize}
 
 \begin{itemize}
-\item Foregone efficient transactions
-\item Producer and consumer surplus loss (value destroyed)
-\item Optimal regulation minimizes total loss
+\item Regulation can destroy surplus: foregone efficient transactions
+\item Optimal regulation minimizes total welfare loss
 \end{itemize}
 
 The welfare loss triangle: area between supply and demand curves representing transactions killed by regulation.
@@ -255,9 +289,9 @@ The welfare loss triangle: area between supply and demand curves representing tr
 \end{center}
 
 \vspace{0.3em}
-\textbf{Regulatory Perimeter}: The boundary between regulated and unregulated activities. Firms just outside the perimeter avoid compliance costs but pose similar risks.
+\textbf{Regulatory Perimeter}: The boundary between regulated and unregulated activities. As the chart shows, when regulation intensity increases: \textbf{compliant firms} decrease (green), some move to the \textbf{informal sector} (orange, operating without licenses), and others \textbf{exit or relocate} (red, moving to jurisdictions with lighter rules). The policy challenge: set intensity where compliance is high but not so harsh that firms flee.
 
-\bottomnote{Determining what falls inside vs. outside the regulatory perimeter is a critical policy choice}
+\bottomnote{Chart: stacked area shows firm responses to regulation intensity---compliant, informal, or relocated}
 \end{frame}
 
 % Perimeter Challenges
@@ -308,7 +342,12 @@ The welfare loss triangle: area between supply and demand curves representing tr
 \includegraphics[width=0.65\textwidth]{03_compliance_cost_scale/chart.pdf}
 \end{center}
 
-\bottomnote{Stigler (1971): Regulation favors large firms through economies of scale in compliance---creates barrier to entry}
+\vspace{0.3em}
+\textbf{Key term:} MES (Minimum Efficient Scale)---the smallest firm size at which compliance cost per dollar of revenue is minimized. Firms smaller than MES face disproportionately high compliance burdens.
+
+\textbf{Note the U-shape:} Beyond MES, costs rise again---very large firms face \textit{diseconomies} of scale (increased regulatory scrutiny, complexity of multi-jurisdiction compliance, and systemic-importance surcharges).
+
+\bottomnote{Stigler (1971): Regulation favors large firms through economies of scale---but the chart's U-shape shows even giants face rising costs at extreme scale}
 \end{frame}
 
 % Economies of Scale Analysis
@@ -440,7 +479,7 @@ Two jurisdictions:
 \textbf{1. International Agreements}
 \begin{itemize}
 \item FATF (Financial Action Task Force) standards for AML
-\item Basel accords for capital
+\item Basel accords (international agreements setting minimum capital requirements for banks) for capital
 \item IOSCO (International Organization of Securities Commissions) principles
 \end{itemize}
 
@@ -449,7 +488,7 @@ Two jurisdictions:
 \vspace{0.3em}
 \textbf{2. Extraterritorial Enforcement}
 \begin{itemize}
-\item Long-arm jurisdiction
+\item Long-arm jurisdiction (authority to regulate foreign companies that serve domestic customers)
 \item Market access conditionality
 \item Reciprocity requirements
 \end{itemize}
@@ -497,9 +536,9 @@ Two jurisdictions:
 \textbf{Behavioral Rules}
 \begin{itemize}
 \item Advertising restrictions
-\item Prohibited practices (pump-and-dump)
+\item Prohibited practices (pump-and-dump: artificially inflating a token's price through false hype, then selling at the peak)
 \item Custody standards (self-custody: holding own private keys)
-\item Fiduciary duties
+\item Fiduciary duties (legal obligation to act in the client's best interest, not your own)
 \end{itemize}
 
 \textit{Example}: QuadrigaCX collapse (2019)---\$190M lost when CEO died with sole custody of private keys. No custody standards.
@@ -795,7 +834,9 @@ Regulatory economics provides tools to design efficient regulation: balancing ma
 \end{frame}
 
 % Key Terms
-\begin{frame}[t]{Key Terms (1/3)}
+\begin{frame}[t]{Key Terms (1/3) --- Reference Glossary}
+\textit{These three slides serve as a reference glossary. You do not need to memorize every term---use them to look up definitions when studying.}
+\vspace{0.3em}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Market Failure}
