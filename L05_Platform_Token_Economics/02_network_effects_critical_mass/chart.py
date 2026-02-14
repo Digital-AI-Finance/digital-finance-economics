@@ -78,7 +78,7 @@ ax.text(critical_c + 0.008, 0.62,
 # Mark the bifurcation point
 ax.plot(critical_c, 0.5, 'o', markersize=10, color=MLRED, markeredgecolor='darkred',
         markeredgewidth=2, zorder=5)
-ax.annotate('Saddle-node\nbifurcation\n$(c=0.25, x^*=0.5)$',
+ax.annotate('Tipping point\n$(c=0.25, x^*=0.5)$',
             xy=(critical_c, 0.5), xytext=(critical_c - 0.08, 0.7),
             fontsize=9, fontweight='bold', color='darkred',
             arrowprops=dict(arrowstyle='->', color='darkred', lw=1.5),

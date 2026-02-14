@@ -49,7 +49,7 @@
 }
 
 \title{Monetary Economics of Digital Currencies}
-\subtitle{L02: Money Theory Meets Cryptocurrency}
+\subtitle{L02: Money Theory Meets Cryptocurrency\\[0.3em]\normalsize Can Bitcoin replace the dollar? What monetary theory tells us.}
 \author{Economics of Digital Finance}
 \institute{BSc Course}
 \date{}
@@ -80,7 +80,7 @@
 \item Apply monetary theory to digital currencies
 \item Assess crypto against money functions
 \item Analyze stablecoin stability mechanisms
-\item Understand Gresham's Law implications
+\item Understand Gresham's Law (``bad money drives out good'') and its implications
 \end{itemize}
 \end{columns}
 
@@ -100,14 +100,16 @@ Economic rationale:
 \item Transaction cost = $c_b - c_m$ where $c_m \ll c_b$ (where $\ll$ means ``much less than'')
 
 \textit{(Transaction cost with barter minus cost with money; money makes trading much cheaper)}
+
+\smallskip\textbf{Example:} If barter costs \$5 per trade ($c_b$) but using money costs \$0.50 ($c_m$), the saving is $\$5 - \$0.50 = \$4.50$ per trade.
 \end{itemize}
 
 \vspace{0.3em}
 Requirements:
 \begin{itemize}
 \item Acceptability (network effect)
-\item Divisibility
-\item Portability
+\item Divisibility (can be split into small amounts for any transaction size)
+\item Portability (easy to carry or transfer)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -119,6 +121,8 @@ Economic rationale:
 \item With $n$ goods: $\frac{n(n-1)}{2} \rightarrow n-1$ prices
 
 \textit{(With n goods, barter needs n(n-1)/2 exchange rates; money needs only n-1 prices)}
+
+\smallskip\textbf{Example:} With 4 goods, barter needs $4 \times 3 / 2 = 6$ exchange rates. With money, you need only $4 - 1 = 3$ prices.
 \item Enables economic calculation
 \end{itemize}
 
@@ -160,10 +164,14 @@ $$MV = PY$$
 \item If $V$ stable: $\Delta M \rightarrow \Delta P$
 
 \textit{(If velocity is stable, increasing money supply leads to higher prices---more money chasing same goods)}
+
+\smallskip\textbf{Example:} If $M{=}\$100$, $V{=}2$, $Y{=}100$ units, then $P = MV/Y = \$2$. If $M$ doubles to \$200, $P$ doubles to \$4.
 \item Seigniorage = $\frac{\dot{M}}{P}$, where $\dot{M}$ denotes the rate of change of $M$ over time
 
 \textit{(Rate of money creation divided by price level---profit from printing money)}
-\item Inflation tax on money holders
+
+\smallskip\textbf{Example:} If a central bank prints \$10B in new money and $P{=}1$, seigniorage $= \$10\text{B}/1 = \$10\text{B}$ in real purchasing power.
+\item Inflation tax on money holders (when new money is printed, your existing money buys less---a hidden tax)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -171,7 +179,7 @@ $$MV = PY$$
 
 Bitcoin example:
 \begin{itemize}
-\item $M$ fixed at 21 million (deflationary)
+\item $M$ fixed at 21 million (deflationary---since supply cannot grow, prices in Bitcoin would fall over time, discouraging spending)
 \item $V$ highly volatile and hard to measure
 \item Which $P$? (Crypto priced in fiat)
 \end{itemize}
@@ -179,20 +187,42 @@ Bitcoin example:
 \vspace{0.3em}
 \textbf{Velocity Puzzle}
 \begin{itemize}
-\item Traditional money (M2): $V \approx 1.5$; M1 velocity is higher at 5--7
+\item Traditional money: M2 (cash + savings + money market) $V \approx 1.5$; M1 (cash + checking accounts) velocity is higher at 5--7
 \item Bitcoin: $V$ varies 2-20+---this unpredictable velocity makes quantity theory unreliable for crypto
-\item Stablecoins: Very high turnover
+\item Stablecoins: Very high turnover (velocity), meaning each stablecoin changes hands many times per year
 \end{itemize}
 \end{columns}
 
 \bottomnote{Quantity theory matters because it explains how Bitcoin's fixed supply creates deflationary pressure, making it impractical as everyday money}
 \end{frame}
 
+% Quantity Theory Velocity Chart
+\begin{frame}[t]{Quantity Theory: Fiat vs.\ Digital Velocity}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{04_quantity_theory_velocity/chart.pdf}
+\end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item Using $P = MV/Y$: higher velocity (orange, $V{=}10$) means the same money supply produces much higher prices than fiat velocity (blue, $V{=}1.5$).
+\item Digital currencies circulate faster, so fewer coins are needed to support the same level of economic activity.
+\item The shaded gap shows the ``inflation pressure'' created by higher velocity at every money supply level.
+\end{itemize}
+
+\bottomnote{Chart uses the Fisher equation $MV = PY$ with fixed real output $Y{=}100$; higher velocity amplifies money's impact on prices}
+\end{frame}
+
 % Bitcoin Volatility
 \begin{frame}[t]{Bitcoin as Money: The Volatility Problem}
 \begin{center}
-\includegraphics[width=0.65\textwidth]{01_bitcoin_volatility/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_bitcoin_volatility/chart.pdf}
 \end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Note:} This chart is a \textbf{GARCH(1,1) statistical simulation} mimicking Bitcoin-like volatility patterns---not actual Bitcoin price data.
+\item \textbf{Volatility clustering:} Big price swings tend to cluster together (shaded regions), then calm periods follow.
+\item \textbf{Annualized volatility} of 50--85\% means Bitcoin's value can roughly double or halve within a single year.
+\item Bitcoin-like returns (orange) swing far wider than stock-market-like returns (blue).
+\end{itemize}
 
 \bottomnote{High volatility (50-85\% annually) makes Bitcoin impractical as a unit of account---imagine if the dollar's value changed 50\% per year}
 \end{frame}
@@ -206,7 +236,7 @@ Bitcoin example:
 \item Limited merchant acceptance
 \item High transaction costs (at times)
 \item 10-60 min confirmation times
-\item Scalability trilemma (must sacrifice one of: decentralization, security, speed)
+\item Scalability trilemma (must sacrifice one of: decentralization (no single controller), security (resistant to attacks), or speed (fast transactions))
 \end{itemize}
 
 \vspace{0.3em}
@@ -214,15 +244,15 @@ Bitcoin example:
 \begin{itemize}
 \item Extreme volatility
 \item ``Menu cost'' (cost of constantly repricing goods) of repricing
-\item No contracts denominated in BTC
+\item No contracts denominated in BTC (Bitcoin's ticker symbol)
 \end{itemize}
 
 \column{0.48\textwidth}
 \textbf{Store of Value: Grade C}
 \begin{itemize}
 \item Long-term appreciation (but volatile)
-\item Digital gold narrative
-\item Correlation with risk assets---this undermines Bitcoin's ``digital gold'' claim since it doesn't protect portfolios during crashes
+\item Digital gold narrative (the claim that Bitcoin, like physical gold, is a scarce store of value)
+\item Moves in sync with risk assets (tends to fall when stocks fall)---this undermines the ``digital gold'' claim since it doesn't protect portfolios during crashes
 \end{itemize}
 
 \vspace{0.3em}
@@ -242,10 +272,16 @@ Bitcoin example:
 % Money Functions Matrix
 \begin{frame}[t]{Money Functions: Comparative Assessment}
 \begin{center}
-\includegraphics[width=0.60\textwidth]{03_money_functions_matrix/chart.pdf}
+\includegraphics[width=0.50\textwidth]{03_money_functions_matrix/chart.pdf}
 \end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item Scores are \textbf{illustrative assessments} based on current properties, not measured data.
+\item \textbf{CBDC scores are projections} based on design goals---no major retail CBDC has been fully deployed yet.
+\item Traditional fiat excels as unit of account; Bitcoin scores poorly due to volatility; stablecoins trade off decentralization for stability.
+\end{itemize}
 
-\bottomnote{CBDCs designed to achieve high scores across all functions; stablecoins compromise}
+\bottomnote{CBDCs designed to achieve high scores across all functions; stablecoins compromise on decentralization}
 \end{frame}
 
 % Stablecoin Economics
@@ -255,7 +291,7 @@ Bitcoin example:
 \textbf{Types by Collateral}
 
 \vspace{0.3em}
-\textbf{1. Fiat-backed (USDT, USDC)}
+\textbf{1. Fiat-backed (USDT/Tether, USDC/USD Coin)}
 \begin{itemize}
 \item 1:1 reserve in bank accounts
 \item Trust in issuer and audits
@@ -263,27 +299,27 @@ Bitcoin example:
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{2. Crypto-backed (DAI)}
+\textbf{2. Crypto-backed (DAI/MakerDAO)}
 \begin{itemize}
 \item Over-collateralized (150\%+)
 
-\textit{(e.g., deposit \$150 in ETH to borrow \$100 in DAI)}
-\item Smart contract enforcement
+\textit{(e.g., deposit \$150 in ETH (Ether) to borrow \$100 in DAI)}
+\item Smart contract enforcement (automated rules coded into the blockchain that execute without human intervention)
 \item Liquidation mechanisms (forced sale when collateral value drops)
 \end{itemize}
 
 \column{0.48\textwidth}
-\textbf{3. Algorithmic (failed: UST)}
+\textbf{3. Algorithmic (failed: UST/TerraUSD)}
 \begin{itemize}
 \item No collateral backing
 \item Arbitrage-based (relying on profit-seekers to keep prices aligned) stability
-\item Prone to death spirals
+\item Prone to death spirals (falling price triggers more selling, which pushes price lower still---a self-reinforcing collapse)
 \end{itemize}
 
 \vspace{0.5em}
 \textbf{Economic Trade-offs}
 \begin{itemize}
-\item Capital efficiency vs. safety
+\item Capital efficiency (getting maximum lending from minimum reserves) vs.\ safety
 \item Centralization vs. transparency
 \item Scalability vs. collateral needs
 \end{itemize}
@@ -295,8 +331,14 @@ Bitcoin example:
 % Stablecoin Market
 \begin{frame}[t]{Stablecoin Reserve Dynamics Under Stress}
 \begin{center}
-\includegraphics[width=0.65\textwidth]{02_stablecoin_market/chart.pdf}
+\includegraphics[width=0.55\textwidth]{02_stablecoin_market/chart.pdf}
 \end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Reserve ratio} = how much real money backs each stablecoin (100\% = fully backed; below 100\% = fractional reserve).
+\item Based on the \textbf{Diamond \& Dybvig (1983)} bank-run model, which explains how rational depositors can cause collapses by all trying to withdraw at once.
+\item When reserves drop below a critical threshold, de-peg probability spikes---just like a traditional bank run.
+\end{itemize}
 
 \bottomnote{The Terra/UST collapse in May 2022 showed algorithmic stablecoins can fail catastrophically when confidence breaks (\$40B+ lost)}
 \end{frame}
@@ -309,15 +351,17 @@ Bitcoin example:
 
 ``Bad money drives out good''
 \begin{itemize}
-\item When two currencies circulate at fixed rate
-\item Undervalued currency hoarded
-\item Overvalued currency spent
+\item When two currencies circulate at a fixed exchange rate
+\item Undervalued (``good'') currency is hoarded
+\item Overvalued (``bad'') currency is spent
+
+\smallskip\textit{Note: Gresham's Law strictly requires a fixed exchange rate. In crypto, there is no fixed rate, but the \textbf{analog} is similar: users spend stablecoins (whose value doesn't rise) and hoard Bitcoin (hoping it appreciates).}
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Digital Application}
 \begin{itemize}
-\item Bitcoin hoarded (``HODL'')
+\item Bitcoin hoarded (``HODL''---crypto slang for ``hold,'' originally a famous typo)
 \item Stablecoins used for transactions
 \item Self-fulfilling (outcomes that occur because people expect them): reduces velocity
 \end{itemize}
@@ -331,7 +375,7 @@ Dollarization analogy:
 \item ``Crypto-ization'' in high-inflation countries
 \item Argentina, Venezuela, Turkey cases
 
-\textit{(countries where high inflation drove citizens to hold USD or crypto instead of local currency)}
+\textit{(countries where high inflation drove citizens to hold USD or crypto instead of local currency; e.g., Argentina had 5+ million crypto users (${\sim}10\%$ of population) with inflation exceeding 100\% in 2023)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -346,6 +390,21 @@ Dollarization analogy:
 \bottomnote{Currency competition creates both opportunities and risks for monetary systems}
 \end{frame}
 
+% Gresham's Law Simulation Chart
+\begin{frame}[t]{Gresham's Law: Simulation of Currency Substitution}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{05_greshams_law_simulation/chart.pdf}
+\end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Agent-based simulation:} 1,000 agents choose which currency to spend each period. Currency~A depreciates faster (``bad money'').
+\item As more people spend Currency~A, others follow (positive feedback), creating an S-curve tipping point around period 40--50.
+\item After the tipping point, Currency~B (``good money'') almost disappears from circulation---it is hoarded, not spent.
+\end{itemize}
+
+\bottomnote{Simulation uses a logit feedback model (Selgin, 1996); parameters calibrated to show tipping dynamics, not real currency data}
+\end{frame}
+
 % Money Demand
 \begin{frame}[t]{Money Demand for Digital Currencies}
 \begin{columns}[T]
@@ -356,20 +415,19 @@ $$M^d/P = L(Y, i)$$
 \textit{(Real money demand depends on income Y (positive) and interest rate i (negative))}
 
 \begin{itemize}
-\item $L_Y > 0$: Transaction motive
-\item $L_i < 0$: Opportunity cost
-
-\textit{(Higher income means more money needed for transactions; higher interest means higher cost of holding money)}
+\item $L_Y > 0$: higher income $\rightarrow$ hold more money (transaction motive)
+\item $L_i < 0$: higher interest rate $\rightarrow$ hold less money (opportunity cost of keeping cash instead of earning interest)
 \item Baumol-Tobin (a model of optimal cash holding) inventory model
 \end{itemize}
+
+\smallskip\textbf{Example:} If your monthly income is \$3{,}000 and rates are 5\%, you might hold \$500 in cash. If rates rise to 10\%, you reduce cash to \$300 (since the cost of not earning interest is higher).
 
 \vspace{0.3em}
 \textbf{Portfolio Approach}
 $$M^d = f(W, r_m, r_b, \pi^e, \sigma)$$
 \begin{itemize}
-\item Wealth effect
-\item Relative returns
-\item Inflation expectations
+\item $W$ = total wealth; $r_m$ = return on money; $r_b$ = return on bonds; $\pi^e$ = expected inflation; $\sigma$ = risk (uncertainty)
+\item Higher wealth $\rightarrow$ hold more money; higher bond returns $\rightarrow$ hold less money; higher expected inflation $\rightarrow$ hold less money
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -377,7 +435,7 @@ $$M^d = f(W, r_m, r_b, \pi^e, \sigma)$$
 
 Additional factors:
 \begin{itemize}
-\item Speculative motive dominates
+\item Speculative motive dominates (people hold crypto mainly hoping the price will rise, not for everyday purchases)
 \item Network effects matter
 \item Regulatory risk premium (extra return demanded due to regulatory uncertainty)
 \end{itemize}
@@ -403,6 +461,8 @@ $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
 
 \textit{(Seigniorage = growth rate of money times real money balances---how much value the money issuer extracts)}
 
+\smallskip\textbf{Example:} If money supply grows 5\% ($\Delta M/M = 0.05$) and real balances are $M/P = \$100\text{B}$, seigniorage $= 0.05 \times \$100\text{B} = \$5\text{B}$.
+
 \begin{itemize}
 \item Revenue from money creation
 \item Accrues to central bank/government
@@ -413,8 +473,8 @@ $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
 \textbf{Bitcoin ``Seigniorage''}
 \begin{itemize}
 \item Block rewards to miners (computers that validate transactions and earn new coins)
-\item Declining over time (halvings: Bitcoin events that cut mining rewards in half every 4 years)
-\item Dissipated in mining costs
+\item Declining over time (halvings: events that cut mining rewards in half every ${\sim}4$ years)
+\item Dissipated in mining costs (electricity and hardware expenses consume most of the reward)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -423,14 +483,14 @@ $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
 \item Interest on reserves kept by issuer
 \item Tether earns billions annually
 
-\textit{(Tether holds user deposits in Treasury bonds earning 4-5\% interest, keeping the yield for itself)}
+\textit{(Tether holds user deposits in Treasury bonds (government debt securities) earning 4--5\% interest, keeping the yield for itself)}
 \item Users bear opportunity cost
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Policy Implications}
 \begin{itemize}
-\item Who captures monetary rents (profits from controlling money creation)?
+\item Who captures monetary rents (profits earned simply from controlling money creation)?
 \item Private vs. public money trade-offs
 \item CBDC: Returns seigniorage to public
 \end{itemize}
@@ -444,8 +504,10 @@ $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Transmission Mechanism Risks}
+
+\textit{How it works: Central banks raise/lower interest rates $\rightarrow$ banks adjust lending rates $\rightarrow$ businesses and consumers borrow more or less $\rightarrow$ economy speeds up or slows down. If people hold crypto instead of bank deposits, this chain weakens:}
 \begin{itemize}
-\item Crypto reduces money multiplier
+\item Crypto reduces the money multiplier (the process by which bank lending amplifies deposits into a larger money supply---e.g., \$100 deposited can support \$1{,}000 in loans)
 \item Interest rate channel (how central bank rate changes affect borrowing) weakened
 \item Bank reserves less relevant
 \end{itemize}
@@ -495,7 +557,7 @@ $$S = \frac{\dot{M}}{P} = \frac{\Delta M}{M} \cdot \frac{M}{P}$$
 \column{0.48\textwidth}
 \textbf{Economic Framework}
 \begin{itemize}
-\item Money functions: MoE, UoA, SoV
+\item Money functions: Medium of Exchange (MoE), Unit of Account (UoA), Store of Value (SoV)
 \item Quantity theory: $MV = PY$
 \item Gresham's Law and hoarding
 \item Currency substitution dynamics
@@ -510,18 +572,61 @@ Monetary economics reveals why cryptocurrencies struggle as money: they optimize
 \bottomnote{Next lesson: Central Bank Digital Currencies (CBDCs)}
 \end{frame}
 
-% Key Terms
-\begin{frame}[t]{Key Terms}
+% Key Terms -- Slide 1 of 3: Money Fundamentals
+\begin{frame}[t]{Key Terms (1/3): Money Fundamentals}
 \begin{columns}[T]
 \column{0.48\textwidth}
+\textbf{Medium of Exchange}
+Money's function as accepted payment for transactions.
+
+\vspace{0.3em}
+\textbf{Unit of Account}
+Money's function as standard measure for pricing.
+
+\vspace{0.3em}
+\textbf{Store of Value}
+Money's function preserving purchasing power over time.
+
+\vspace{0.3em}
+\textbf{Barter}
+Direct goods exchange without money; requires double coincidence of wants.
+
+\vspace{0.3em}
 \textbf{Velocity of Money}
 Rate at which money circulates in economy.
 
 \vspace{0.3em}
-\textbf{Gresham's Law}
-``Bad money drives out good''; overvalued currency circulates, undervalued hoarded.
+\textbf{Quantity Theory of Money}
+MV = PY relationship linking money, velocity, prices, output.
+
+\column{0.48\textwidth}
+\textbf{Seigniorage}
+Profit from issuing money; face value minus production cost.
 
 \vspace{0.3em}
+\textbf{Inflation Tax}
+Hidden tax reducing purchasing power when government prints money.
+
+\vspace{0.3em}
+\textbf{Deflationary}
+Prices falling over time; fixed-supply currencies trend deflationary.
+
+\vspace{0.3em}
+\textbf{Opportunity Cost}
+Value of next best alternative foregone when choosing.
+
+\vspace{0.3em}
+\textbf{Menu Cost}
+Cost of changing prices (like reprinting menus); frequent repricing is expensive.
+\end{columns}
+
+\bottomnote{Master these terms before proceeding to subsequent lessons}
+\end{frame}
+
+% Key Terms -- Slide 2 of 3: Stablecoins & Market Mechanics
+\begin{frame}[t]{Key Terms (2/3): Stablecoins \& Market Mechanics}
+\begin{columns}[T]
+\column{0.48\textwidth}
 \textbf{Stablecoin}
 Cryptocurrency maintaining stable value, typically pegged to fiat.
 
@@ -534,36 +639,12 @@ Stablecoin backed 1:1 by fiat reserves.
 Stablecoin using supply adjustments without full collateral.
 
 \vspace{0.3em}
-\textbf{Quantity Theory of Money}
-MV = PY relationship linking money, velocity, prices, output.
-
-\vspace{0.3em}
-\textbf{Seigniorage}
-Profit from issuing money; face value minus production cost.
-
-\vspace{0.3em}
-\textbf{Barter}
-Direct goods exchange without money; requires double coincidence of wants.
-
-\vspace{0.3em}
 \textbf{Collateral}
 Assets pledged as security for loan or stablecoin.
 
 \vspace{0.3em}
 \textbf{Over-collateralization}
 Pledging more collateral than loan value for safety.
-
-\vspace{0.3em}
-\textbf{Scalability Trilemma}
-Trade-off where blockchains can achieve only two of three: decentralization, security, or speed.
-
-\vspace{0.3em}
-\textbf{Menu Cost}
-Cost of changing prices (like reprinting menus); frequent repricing is expensive.
-
-\vspace{0.3em}
-\textbf{Risk Assets}
-Investments that can lose value (stocks, crypto); opposite of safe assets like government bonds.
 
 \vspace{0.3em}
 \textbf{Capital Efficiency}
@@ -582,24 +663,31 @@ Profiting from price differences; maintains stablecoin pegs.
 Self-reinforcing collapse where falling prices trigger more selling.
 
 \vspace{0.3em}
+\textbf{Risk Assets}
+Investments that can lose value (stocks, crypto); opposite of safe assets like government bonds.
+
+\vspace{0.3em}
+\textbf{Scalability Trilemma}
+Trade-off where blockchains can achieve only two of three: decentralization, security, or speed.
+\end{columns}
+
+\bottomnote{Master these terms before proceeding to subsequent lessons}
+\end{frame}
+
+% Key Terms -- Slide 3 of 3: Monetary Policy & Crypto
+\begin{frame}[t]{Key Terms (3/3): Monetary Policy \& Crypto}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Gresham's Law}
+``Bad money drives out good''; overvalued currency circulates, undervalued hoarded.
+
+\vspace{0.3em}
 \textbf{HODL}
 Hold despite price drops; crypto slang resisting sales.
 
 \vspace{0.3em}
 \textbf{Dollarization}
 Country adopting foreign currency instead of own.
-
-\vspace{0.3em}
-\textbf{Opportunity Cost}
-Value of next best alternative foregone when choosing.
-
-\vspace{0.3em}
-\textbf{Inflation Tax}
-Hidden tax reducing purchasing power when government prints money.
-
-\vspace{0.3em}
-\textbf{Deflationary}
-Prices falling over time; fixed-supply currencies trend deflationary.
 
 \vspace{0.3em}
 \textbf{Money Multiplier}
@@ -609,19 +697,7 @@ Bank lending amplifies deposits into larger money supply.
 \textbf{TradFi}
 Traditional Finance; conventional banks versus DeFi.
 
-\vspace{0.3em}
-\textbf{Medium of Exchange}
-Money's function as accepted payment for transactions.
-
-\vspace{0.3em}
-\textbf{Unit of Account}
-Money's function as standard measure for pricing.
-
-\vspace{0.3em}
-\textbf{Store of Value}
-Money's function preserving purchasing power over time.
-
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{Monetary Policy Autonomy}
 A country's ability to set its own interest rates and control money supply.
 

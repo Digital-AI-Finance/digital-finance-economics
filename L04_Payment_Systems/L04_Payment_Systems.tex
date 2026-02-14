@@ -49,7 +49,7 @@
 }
 
 \title{Payment Systems Economics}
-\subtitle{L04: Economics of Value Transfer}
+\subtitle{L04: Economics of Value Transfer\\[0.3em]\small Why sending money abroad costs 6\% and takes 3 days---and how technology is changing that}
 \author{Economics of Digital Finance}
 \institute{BSc Course}
 \date{}
@@ -69,7 +69,7 @@
 \begin{enumerate}
 \item Economics of payment systems
 \item Network effects and adoption
-\item Two-sided market theory
+\item Two-sided market theory (how platforms like Visa balance merchants and consumers)
 \item Cross-border payment challenges
 \item Financial inclusion
 \end{enumerate}
@@ -78,7 +78,7 @@
 \textbf{Learning Objectives}
 \begin{itemize}
 \item Apply network economics to payments
-\item Analyze interchange fee economics
+\item Analyze interchange fee economics (the hidden fees merchants pay every time you use a credit card)
 \item Understand correspondent banking costs
 \item Evaluate digital solutions
 \end{itemize}
@@ -114,7 +114,7 @@ Payment systems enable:
 \vspace{0.3em}
 \textbf{Large Value (Wholesale)}
 \begin{itemize}
-\item Fedwire (US large-value transfer), TARGET2 (EU equivalent)
+\item Fedwire (US system handling \$5 trillion/day---mostly between banks), TARGET2 (EU equivalent)
 \item RTGS (Real-Time Gross Settlement): each payment settles individually and immediately
 \item Low volume, high value
 \end{itemize}
@@ -122,7 +122,7 @@ Payment systems enable:
 \vspace{0.3em}
 \textbf{Retail}
 \begin{itemize}
-\item Cards, ACH (Automated Clearing House---batch processing), instant payments
+\item Cards, ACH (Automated Clearing House---processes payroll deposits, bill payments, and bank transfers in batches, usually overnight), instant payments
 \item High volume, lower value
 \item Consumer-facing
 \end{itemize}
@@ -139,13 +139,14 @@ Payment systems enable:
 
 Value increases with users:
 $$V(n) = n \cdot v(n)$$
-\textit{(Total value = number of users times value per user. More users means each user gets more value---a virtuous cycle.)}
+\textit{(Total value = number of users times value per user.)}
 
-where $v(n)$ is per-user value.
+where $v(n)$ is per-user value. \textbf{The key insight:} $v(n)$ \textit{increases} with $n$. For a regular product (e.g., a toaster), value per unit is constant. For a network (e.g., Venmo), each user becomes more valuable as more people join---a virtuous cycle.
 
 \vspace{0.3em}
 \textbf{Metcalfe's Law (simplified)}
 $$V \propto n^2$$
+\textit{($\propto$ means ``is proportional to'' or ``grows with'')}
 \textit{(Value grows with the square of users: 10 users = 100 units of value, 100 users = 10,000 units. This explains why dominant networks stay dominant.)}
 \textit{(Real example: Venmo 2012: 10,000 users. Venmo 2023: 90 million users. Same app, 9,000x more useful.)}
 \begin{itemize}
@@ -161,7 +162,7 @@ $$V \propto n^2$$
 \begin{itemize}
 \item Critical mass threshold (minimum users needed before network becomes self-sustaining)
 \item Tipping points (moments when adoption suddenly accelerates)
-\textit{(Below 16\%: must convince each user individually. Above 16\%: ``everyone uses it''---adoption accelerates)}
+\textit{(Rogers (1962) showed: below $\sim$16\% (``early adopters''), must convince each user individually. Above 16\%: social proof kicks in and adoption accelerates)}
 \item Winner-take-most markets (where one or two players capture most market share)
 \end{itemize}
 
@@ -177,6 +178,21 @@ $$V \propto n^2$$
 \bottomnote{Network effects explain why few payment networks dominate---and why you use Venmo/PayPal not because they're best, but because your friends use them}
 \end{frame}
 
+% Network Effects Chart (Metcalfe's Law)
+\begin{frame}[t]{Network Value Growth: Metcalfe's Law vs.\ Alternatives}
+\begin{center}
+\includegraphics[width=0.62\textwidth]{04_network_effects_metcalfe/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item \textbf{Metcalfe's Law} ($V \propto n^2$) predicts explosive growth---network with strong effects reaches critical mass (the switching-cost threshold) far sooner than linear growth
+\item The \textbf{Odlyzko-Tilly} model ($V \propto n \log n$) is more conservative: not every new connection is equally valuable, so growth is fast but not quadratic
+\item \textbf{Practical implication:} Whichever model holds, payment networks with genuine network effects dominate within hundreds of users, not millions---explaining early-mover advantage
+\end{itemize}
+
+\bottomnote{Chart compares three growth models; vertical lines mark where each model first exceeds the switching-cost threshold}
+\end{frame}
+
 % Payment Adoption
 \begin{frame}[t]{Payment Technology Adoption Patterns}
 \begin{center}
@@ -186,8 +202,8 @@ $$V \propto n^2$$
 \bottomnote{S-curve adoption: slow start, rapid growth after critical mass (\textasciitilde16\%---once 1 in 6 people use something, social proof accelerates adoption), then saturation}
 \end{frame}
 
-% Two-Sided Markets
-\begin{frame}[t]{Two-Sided Market Theory}
+% Two-Sided Markets: The Concept
+\begin{frame}[t]{Two-Sided Market Theory: The Concept}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{The Platform Model}
@@ -201,6 +217,8 @@ Card networks connect:
 
 \vspace{0.3em}
 \textbf{Cross-Side Network Effects}
+
+\textit{(Cross-side: each side benefits when the OTHER side grows---different from direct network effects where users benefit from more of the SAME type of user)}
 \begin{itemize}
 \item More merchants $\rightarrow$ more cardholders
 \item More cardholders $\rightarrow$ more merchants
@@ -208,17 +226,6 @@ Card networks connect:
 \end{itemize}
 
 \column{0.48\textwidth}
-\textbf{Rochet-Tirole Model} \textit{(Tirole received the 2014 Nobel Prize in Economics)}
-
-Optimal pricing:
-$$p_B + p_S = c + m$$
-\textit{(Total price to both sides (buyers + sellers) equals cost plus margin---standard economics.)}
-$$\frac{p_B - c_B}{p_S - c_S} = \frac{\eta_S}{\eta_B}$$
-\textit{(Charge more to the side that's less price-sensitive. Cardholders barely notice 2\% fees; merchants feel it keenly. So: low/zero fees to cardholders, higher fees to merchants.)}
-
-where $\eta$ = price elasticity (how much demand changes when price changes)
-
-\vspace{0.3em}
 \textbf{Key Insight}
 
 Price structure matters, not just level:
@@ -226,13 +233,65 @@ Price structure matters, not just level:
 \item Subsidize price-sensitive side
 \item Charge price-insensitive side
 \item ``Get both sides on board''
-\textit{(Fee breakdown: Of \$2 merchant fee on \$100 purchase, \$1.80 goes to your bank as interchange, \$0.20 to Visa)}
 \end{itemize}
+
+\textit{(Fee breakdown: Of \$2 merchant fee on \$100 purchase, \$1.80 goes to your bank as interchange, \$0.20 to Visa)}
+
+\vspace{0.3em}
+\textbf{Beyond Payments}
 
 \textit{(This framework explains Uber, Airbnb, Amazon, dating apps---any platform connecting two groups)}
 \end{columns}
 
 \bottomnote{Rochet \& Tirole (2003): Two-sided markets require analysis beyond standard economics}
+\end{frame}
+
+% Two-Sided Markets: Rochet-Tirole Pricing Model
+\begin{frame}[t]{Two-Sided Market Theory: Rochet-Tirole Pricing Model}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Rochet-Tirole Model} \textit{(Tirole received the 2014 Nobel Prize in Economics)}
+
+Total price constraint:
+$$p_B + p_S = c + m$$
+\textit{where $c$ is total cost per transaction ($c = c_B + c_S$, split between serving buyers and sellers) and $m$ is the platform's profit margin.}
+
+\vspace{0.3em}
+Optimal price ratio:
+$$\frac{p_B - c_B}{p_S - c_S} = \frac{\eta_S}{\eta_B}$$
+\textit{(Charge more to the side that's less price-sensitive.)}
+
+where $\eta$ = price elasticity (how much demand changes when price changes---elasticity of 2 means a 1\% price increase causes a 2\% demand drop)
+
+\column{0.48\textwidth}
+\textbf{Worked Example}
+
+\smallskip\textbf{Example:} Suppose merchant elasticity $\eta_S = 0.5$ (merchants are trapped---they must accept cards) and consumer elasticity $\eta_B = 2.0$ (consumers can switch to cash).
+
+$$\frac{p_B - c_B}{p_S - c_S} = \frac{0.5}{2.0} = 0.25$$
+
+This means the markup on consumers should be \textbf{one-quarter} of the markup on merchants. Result: cardholders pay zero or negative fees (rewards!) while merchants pay 2--3\%.
+
+\vspace{0.3em}
+\textit{Real-world check: Visa charges cardholders \$0 annual fee (often with cashback), but merchants pay 1.5--3\% per transaction. The math matches reality.}
+\end{columns}
+
+\bottomnote{The elasticity ratio explains why YOUR card is free but the coffee shop pays Visa 2\% on every sale}
+\end{frame}
+
+% Two-Sided Market Pricing Chart
+\begin{frame}[t]{Interchange Fee Optimization: Balancing Both Sides}
+\begin{center}
+\includegraphics[width=0.62\textwidth]{05_two_sided_market_pricing/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item As the interchange fee rises, \textbf{merchant acceptance falls} (green) but \textbf{consumer adoption rises} (blue, because higher fees fund better rewards)
+\item \textbf{Platform profit} (purple) peaks at the optimal fee where the product of both sides is maximized---set the fee too low and consumers leave; too high and merchants leave
+\item The red line marks the profit-maximizing interchange fee---in practice, Visa/Mastercard set fees near this optimum
+\end{itemize}
+
+\bottomnote{This chart visualizes the Rochet-Tirole model: the platform's problem is finding the fee that keeps BOTH sides on board}
 \end{frame}
 
 % Interchange Fees
@@ -266,7 +325,7 @@ Price structure matters, not just level:
 \item Merchants pass costs to prices
 \item Regressive (poorer cash users subsidize wealthier card users through higher prices)
 \textit{(Mechanism: Merchant raises all prices 2\%; cash customer pays higher price but gets no rewards)}
-\item Anti-competitive coordination (competitors secretly agreeing on prices instead of competing)
+\item Centralized fee-setting (interchange fees are set by Visa/Mastercard, not negotiated between individual banks---critics argue this resembles price-fixing)
 \end{itemize}
 
 \vspace{0.3em}
@@ -278,7 +337,7 @@ Price structure matters, not just level:
 \end{itemize}
 \end{columns}
 
-\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment \textit{(2010 law capping debit card interchange fees)} capped debit at 0.05\%{}+21c. EU caps are lower due to stronger regulator intervention.}
+\bottomnote{EU capped interchange at 0.2-0.3\%; US Durbin Amendment \textit{(2010 law)} capped \textbf{debit} at 0.05\%{}+21c but left \textbf{credit uncapped}---debit was capped because issuers bear less risk (money is already in your account), while credit remains uncapped because banks bear default risk.}
 \end{frame}
 
 % Cross-Border Payments
@@ -287,9 +346,9 @@ Price structure matters, not just level:
 \column{0.48\textwidth}
 \textbf{The Problem}
 
-Cross-border payments are:
+As we discussed in L03 (CBDCs), cross-border payments are:
 \begin{itemize}
-\item Expensive: 6\%{}+ average cost (send \$100, only \$94 arrives)
+\item Expensive: 6\%{}+ average cost (send \$100, only \$94 arrives)---now we examine \textit{why}
 \item Slow: 2-5 days settlement
 \item Opaque: uncertain fees
 \item Fragmented: many intermediaries
@@ -378,7 +437,7 @@ Characteristics:
 \item Batch settlement at intervals
 \item Payments netted (offsetting opposite payments so only difference settles)
 \item Lower liquidity needs
-\textit{(Example: A owes B \$5M, B owes A \$4M. DNS: settle net \$1M. RTGS: two separate \$9M total transfers)}
+\textit{(Example: A owes B \$5M, B owes A \$4M. DNS: settle net \$1M in one transfer. RTGS: two separate transfers (\$5M + \$4M = \$9M total flowing through the system))}
 \end{itemize}
 
 \vspace{0.3em}
@@ -406,8 +465,8 @@ Major systems:
 \item UK: Faster Payments (2008)
 \item India: UPI (Unified Payments Interface, 2016)
 \item EU: SEPA (Single Euro Payments Area) Instant (2017)
-\item US: FedNow (2023)
-\textit{(US was late: thousands of fragmented banks made coordination hard; existing systems were ``good enough'' for incumbents)}
+\item US: FedNow (2023)---a \textbf{public} system competing with the private RTP network
+\textit{(Same public-vs-private question as CBDCs in L03. US was late: thousands of fragmented banks made coordination hard; existing systems were ``good enough'' for incumbents)}
 \end{itemize}
 
 \vspace{0.3em}
@@ -431,7 +490,7 @@ For consumers:
 For businesses:
 \begin{itemize}
 \item Working capital (cash needed for daily operations) optimization
-\item Reduced float costs
+\item Reduced float costs (money sitting in transit earns interest for intermediaries---instant payments eliminate this)
 \item Real-time reconciliation \textit{(matching payments to invoices instantly)}
 \end{itemize}
 
@@ -447,6 +506,7 @@ For economy:
 
 % Financial Inclusion
 \begin{frame}[t]{Financial Inclusion Economics}
+\textit{Building on the L03 inclusion discussion, here we examine M-Pesa---financial inclusion WITHOUT a CBDC.}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{The Unbanked}
@@ -502,7 +562,7 @@ M-Pesa (Kenya) model:
 \item Ripple/XRP \textit{(cross-border payment company using blockchain technology)} for cross-border
 \item Stablecoins for remittances
 \textit{(How it works: Buy stablecoins, send instantly, recipient converts locally---\$1-2 total vs \$6 traditional)}
-\item DeFi (Decentralized Finance---financial services on blockchain without traditional banks) payment rails
+\item DeFi (Decentralized Finance---financial services on blockchain without traditional banks) payment rails (using blockchain networks as infrastructure for moving money)
 \end{itemize}
 
 Advantages:
@@ -548,7 +608,7 @@ Advantages:
 \textbf{Regulatory Responses}
 \begin{itemize}
 \item Interchange caps (EU, US)
-\item Open banking mandates (regulations requiring banks to share customer data with authorized apps)
+\item Open banking mandates (regulations requiring banks to share customer data with authorized apps---e.g., EU's PSD2 (2018) forced banks to let apps like Revolut access your account data)
 \item Access to payment systems
 \end{itemize}
 
@@ -599,6 +659,8 @@ Advantages:
 \textbf{Core Insight}
 
 Payment system economics explains both why incumbents dominate and why digital disruption is difficult but potentially transformative.
+
+\textit{Memorable anchor: India's UPI processes 10+ billion transactions/month with near-zero fees---proof that digital can scale.}
 
 \bottomnote{Next lesson: Platform Economics and Token Economics}
 \end{frame}
@@ -675,7 +737,7 @@ Offsetting payments in opposite directions so only the net difference settles---
 
 \column{0.48\textwidth}
 \textbf{Price Elasticity}
-How much demand changes when price changes---card users are less price-sensitive than merchants.
+How much demand changes when price changes. An elasticity of 2 means a 1\% price increase causes a 2\% drop in demand. Card users are less price-sensitive (low elasticity) than merchants (higher elasticity).
 
 \vspace{0.3em}
 \textbf{Bid-Ask Spread}

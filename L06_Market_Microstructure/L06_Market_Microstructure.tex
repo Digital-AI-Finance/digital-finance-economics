@@ -50,7 +50,7 @@
 }
 
 \title{Market Microstructure in Digital Finance}
-\subtitle{L06: AMMs, Order Books, and Price Discovery}
+\subtitle{L06: When you swap ETH for USDC on Uniswap, who sets the price---and who profits?}
 \author{Economics of Digital Finance}
 \institute{BSc Course}
 \date{}
@@ -141,8 +141,8 @@ Market microstructure is the study of how trading works at the detailed level: h
 \bottomnote{Economic question: Which structure provides better price discovery and lower transaction costs?}
 \end{frame}
 
-% Order Book Mechanics
-\begin{frame}[t]{Order Book Mechanics and Liquidity}
+% Order Book Mechanics (Part 1: Basics)
+\begin{frame}[t]{Order Book Basics}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Order Book Structure}
@@ -152,46 +152,88 @@ Market microstructure is the study of how trading works at the detailed level: h
 \begin{itemize}
 \item Bid side (buy orders)
 \item Ask side (sell orders)
-\item Spread: ask price - bid price
+\item Spread: ask price $-$ bid price
 \item Depth: volume at each price level
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Example}
-If you buy 100 ETH and the order book is thin, you might pay \$1800 for first 50 and \$1850 for next 50.
-
-\vspace{0.3em}
-\textbf{Price Formation}
+\textbf{Two Order Types}
 \begin{itemize}
-\item Limit orders provide liquidity
-\item Market orders consume liquidity
-\item Spread compensates market makers
+\item \textbf{Limit orders} (offers at a specific price, waiting in the book)---provide liquidity
+\item \textbf{Market orders} (buy or sell immediately at the best available price)---consume liquidity
+\item The spread compensates market makers for the risk of holding inventory
 \end{itemize}
 
 \column{0.48\textwidth}
-\textbf{Economic Theory}
+\textbf{Price Impact Example}
+
+If you buy 100 ETH and the order book is thin (few orders near current price), you might pay \$1{,}800 for the first 50 and \$1{,}850 for the next 50. This is \textbf{price impact}: your trade moved the price against you.
 
 \vspace{0.3em}
-Adverse selection: informed traders profit at uninformed traders' expense, forcing market makers to widen spreads.
+\textbf{Adverse Selection}
 
-\vspace{0.2em}
-Kyle (1985) model:
-\begin{itemize}
-\item Price impact: $\lambda = \frac{\sigma_v}{2\sigma_u}$ (higher $\lambda$ = bigger price move per trade)
-\item Informed trading intensity: the more insider information exists, the worse the price impact for everyone
-\end{itemize}
-
-\textbf{Example:} For Bitcoin, if $\sigma_v = 0.015$ (high information asymmetry) and $\sigma_u = 0.10$ (moderate noise trading), then $\lambda = 0.015/(2 \times 0.10) = 0.075$. For S\&P 500, $\lambda = 0.005/(2 \times 0.20) = 0.0125$---meaning Bitcoin trades move prices 6$\times$ more per unit traded.
+Informed traders (those with private information about the asset's true value) buy when the market underprices and sell when it overprices, systematically profiting at market makers' expense. Market makers respond by widening spreads to protect themselves---making trading costlier for everyone.
 
 \vspace{0.3em}
-Glosten-Milgrom (1985):
-\begin{itemize}
-\item Bid-ask spread reflects asymmetry
-\item Sequential trade learning (market makers update beliefs about asset value after each trade)
-\end{itemize}
+\textbf{Why This Matters for Crypto}
+
+Crypto markets have higher information asymmetry than traditional markets: insiders may know about hacks, delistings, or protocol upgrades before the public.
 \end{columns}
 
-\bottomnote{Traditional microstructure assumes informed vs. uninformed traders; crypto markets add MEV extractors}
+\bottomnote{Order books match buyers and sellers by price priority; market makers earn the spread but face adverse selection risk}
+\end{frame}
+
+% Order Book Mechanics (Part 2: Price Impact Theory)
+\begin{frame}[t]{Price Impact Theory}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Kyle (1985) Model}
+
+Price impact per unit traded:
+$$\lambda = \frac{\sigma_v}{2\sigma_u}$$
+
+where:
+\begin{itemize}
+\item $\sigma_v$ = std.\ dev.\ of the asset's true value (how much private information moves the price)
+\item $\sigma_u$ = std.\ dev.\ of noise trading (uninformed trading volume)
+\item Higher $\lambda$ = bigger price move per unit traded
+\end{itemize}
+
+\smallskip\textbf{Example:} For Bitcoin: $\sigma_v = 0.015$ (high information asymmetry), $\sigma_u = 0.10$ (moderate noise trading). $\lambda = \frac{0.015}{2 \times 0.10} = 0.075$.
+
+For S\&P 500: $\sigma_v = 0.005$, $\sigma_u = 0.20$. $\lambda = \frac{0.005}{2 \times 0.20} = 0.0125$.
+
+Bitcoin trades move prices 6$\times$ more per unit---reflecting higher insider risk.
+
+\column{0.48\textwidth}
+\textbf{Glosten-Milgrom (1985)}
+
+\vspace{0.3em}
+\begin{itemize}
+\item Bid-ask spread reflects information asymmetry
+\item Sequential trade learning: market makers update beliefs about the asset's true value after each trade
+\item More informed traders $\to$ wider spreads
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Crypto vs.\ Traditional Markets}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{BTC} & \textbf{S\&P 500} \\
+\midrule
+$\lambda$ & 0.075 & 0.0125 \\
+Spread & 0.05\% & 0.01\% \\
+Depth & Low & Deep \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+Crypto markets add a new actor beyond Kyle's model: \textbf{MEV extractors} who profit from transaction ordering, not information.
+\end{columns}
+
+\bottomnote{Kyle's $\lambda$ measures price impact per unit traded; deeper order books and more noise trading reduce $\lambda$}
 \end{frame}
 
 % Order Book Depth Chart
@@ -226,7 +268,9 @@ This formula sets prices automatically: as traders buy token A, $x$ decreases, s
 \textbf{Price Determination}
 $$P = \frac{y}{x}$$
 
-\textbf{Example:} In a pool with 100 ETH and 180,000 USDC, the price is $\frac{180,000}{100} = 1800$ USDC/ETH.
+\textbf{Example:} In a pool with 100 ETH and 180,000 USDC, the price is $\frac{180{,}000}{100} = 1{,}800$ USDC/ETH, with $k = 100 \times 180{,}000 = 18{,}000{,}000$.
+
+\smallskip\textbf{Worked trade:} Buy 10 ETH. Pool goes from 100 to 90 ETH. New USDC reserve: $\frac{18{,}000{,}000}{90} = 200{,}000$. You pay $200{,}000 - 180{,}000 = 20{,}000$ USDC for 10 ETH $= \$2{,}000$/ETH. That is 11\% above the spot price of \$1{,}800---this is \textit{slippage}.
 
 \column{0.48\textwidth}
 \textbf{Economic Properties}
@@ -245,7 +289,7 @@ $$P = \frac{y}{x}$$
 \begin{itemize}
 \item Slippage (price change between order and execution) on large trades
 \item Impermanent loss for LPs (Liquidity Providers---people who deposit tokens)
-\item Capital inefficiency (much of the deposited money sits idle at extreme prices)
+\item Capital inefficiency (in Uniswap v2, only $\sim$5\% of deposited capital is actively used near the current price; the rest sits idle at extreme prices)
 \item MEV vulnerability
 \end{itemize}
 \end{columns}
@@ -295,9 +339,11 @@ $$P = \frac{y}{x}$$
 \item Amplified by volatility
 \end{itemize}
 
-IL formula: $IL = \frac{2\sqrt{r}}{1+r} - 1$ where $r = P_{\text{final}}/P_{\text{initial}}$.
+IL formula: $IL = \frac{2\sqrt{r}}{1+r} - 1$ where $r = P_{\text{final}}/P_{\text{initial}}$ (ETH dollar price at withdrawal / at deposit; USDC assumed stable).
 
-\textbf{Example:} If you provide ETH/USDC liquidity and ETH doubles in price ($r=2$), $IL = \frac{2\sqrt{2}}{3} - 1 = -5.7\%$ vs just holding ETH and USDC.
+\textit{Why $\sqrt{r}$?} The constant product formula forces the LP's ETH quantity to scale as $1/\sqrt{r}$---so if ETH doubles, the pool rebalances by selling ETH, leaving the LP with $\sqrt{2} \times$ original value while a holder gets $1.5\times$. The difference is IL.
+
+\textbf{Example:} ETH doubles ($r=2$): $IL = \frac{2\sqrt{2}}{3} - 1 = -5.7\%$ vs.\ holding. ETH 5$\times$ ($r=5$): $IL = -25.5\%$.
 
 \vspace{0.3em}
 \textbf{Other Risks}
@@ -347,10 +393,12 @@ IL formula: $IL = \frac{2\sqrt{r}}{1+r} - 1$ where $r = P_{\text{final}}/P_{\tex
 \textbf{Information Share}
 
 \vspace{0.3em}
-Hasbrouck (1995) information share (measures how much each venue contributes to price discovery---finding the "true" price):
-$$IS_i = \frac{\text{Variance contribution of venue } i}{\text{Total price discovery variance}}$$
+Hasbrouck (1995) information share (measures how much each venue contributes to price discovery---finding the ``true'' price):
+$$IS_i = \frac{(\beta_i \cdot \sigma_i)^2}{\sum_j (\beta_j \cdot \sigma_j)^2}$$
 
-Higher $IS_i$ means venue $i$ leads in price discovery.
+where $\beta_i$ is venue $i$'s price-impact coefficient and $\sigma_i$ is its innovation variance. Higher $IS_i$ means venue $i$ leads in price discovery---it incorporates new information first.
+
+\smallskip\textbf{Note:} IS measures \textit{variance contribution}, not temporal order. A venue can have high IS without always moving first.
 
 \textbf{Example:} If CEX contributes 64\% of price variance, DEX 28\%, and P2P 8\%, then $IS_{CEX} = 0.64$, $IS_{DEX} = 0.28$, $IS_{P2P} = 0.08$. The CEX leads price discovery.
 
@@ -394,7 +442,7 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \textbf{Types of MEV}
 \begin{itemize}
 \item Front-running (trading ahead of someone else's order)
-\item Back-running
+\item Back-running (placing a trade immediately \textit{after} someone else's large trade to profit from the resulting price change)
 \item Sandwich attacks (buying before and selling after a victim's trade)
 \item Liquidations
 \item Arbitrage
@@ -430,57 +478,91 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \includegraphics[width=0.65\textwidth]{05_mev_sandwich_attack/chart.pdf}
 \end{center}
 
-\bottomnote{Sandwich attacks optimize profit $\pi = Q_f(P'-P) - 2\cdot\text{gas}$; welfare panels show transfers from users to extractors}
+\bottomnote{Full sandwich profit: $\pi = Q_f(P'-P) - Q_f \cdot f_{\text{AMM}} \cdot (P + P') - 2 \cdot \text{gas} - c_{\text{PGA}}$ where $f_{\text{AMM}}$ is the AMM fee (e.g., 0.3\%) and $c_{\text{PGA}}$ is the priority gas auction cost (the bribe to get the transaction ordered correctly). Profitable only when price impact exceeds all costs.}
 \end{frame}
 
-% MEV Economics
-\begin{frame}[t]{Economics of MEV Extraction}
+% MEV Economics (Part 1: Supply Chain)
+\begin{frame}[t]{MEV Supply Chain}
 \begin{columns}[T]
 \column{0.48\textwidth}
-\textbf{MEV Supply Chain}
+\textbf{Actors in the MEV Pipeline}
 
 \vspace{0.3em}
-\textbf{Actors}
-\begin{itemize}
-\item Searchers (bots scanning the mempool for profitable transaction orderings): find MEV opportunities
-\item Builders (entities assembling transactions into candidate blocks): construct blocks
-\item Validators (nodes that propose and finalize blocks on the network): propose blocks
-\item Users: suffer MEV extraction
-\end{itemize}
+\begin{enumerate}
+\item \textbf{Searchers} (bots scanning the mempool for profitable transaction orderings): find MEV opportunities
+\item \textbf{Builders} (entities assembling transactions into candidate blocks): construct blocks
+\item \textbf{Validators} (nodes that propose and finalize blocks on the network): propose blocks
+\item \textbf{Users}: suffer MEV extraction
+\end{enumerate}
 
-\vspace{0.2em}
-{\small \textbf{Sandwich Profit:} $\pi = Q_f \cdot (P' - P) - 2 \cdot \text{gas}$
-
-\textbf{Example:} Front-run $Q_f = 10$ ETH, price $P{=}\$1800 \to P'{=}\$1805$. Profit $= 10 \times 5 - 2 \times \$3 = \$44$.}
-
-\vspace{0.2em}
+\vspace{0.3em}
 \textbf{Competition Dynamics}
 \begin{itemize}
 \item Priority gas auctions (PGAs---users bid up gas fees to get their transactions processed first)
-\item Flashbots auction mechanism (a private marketplace where searchers bid for block inclusion without spamming the network)
-\item MEV-Boost infrastructure (middleware connecting validators to block builders for fair MEV distribution)
+\item Flashbots auction (private marketplace where searchers bid for block inclusion without spamming the network)
+\item MEV-Boost (middleware connecting validators to block builders for fair MEV distribution)
 \end{itemize}
 
 \column{0.48\textwidth}
-\textbf{Mitigation Strategies}
+\textbf{Sandwich Profit: Full Calculation}
+
+Pool: 100 ETH / 180{,}000 USDC ($k = 18$M).
+
+\vspace{0.2em}
+\textbf{Step 1 -- Front-run:} Buy 5 ETH.
+
+New USDC: $18{,}000{,}000 / 95 = 189{,}474$. Cost: 9{,}474 USDC.
+
+New price: $189{,}474/95 = \$1{,}994$/ETH.
+
+\vspace{0.2em}
+\textbf{Step 2 -- Victim trades:} Buys 5 ETH at inflated price.
+
+\vspace{0.2em}
+\textbf{Step 3 -- Back-run:} Sell 5 ETH back.
+
+After victim: 85 ETH / $18$M$/85 = 211{,}765$ USDC.
+
+Sell 5 ETH: pool $\to$ 90 ETH / $18$M$/90 = 200{,}000$ USDC.
+
+Receive: $211{,}765 - 200{,}000 = 11{,}765$ USDC.
+
+\vspace{0.2em}
+\textbf{Profit:} $11{,}765 - 9{,}474 = \$2{,}291$ minus gas ($\sim$\$6) minus 0.3\% AMM fees ($\sim$\$63) $\approx \$2{,}222$.
+\end{columns}
+
+\bottomnote{MEV profit depends on pool depth, trade size, and competition among searchers; most MEV is competed away via PGAs}
+\end{frame}
+
+% MEV Economics (Part 2: Mitigation)
+\begin{frame}[t]{MEV Mitigation Strategies}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Protocol-Level Solutions}
 
 \vspace{0.3em}
-\textbf{Protocol-Level}
 \begin{itemize}
-\item Encrypted mempools (hiding pending transactions; the mempool is the waiting area for unconfirmed transactions)
-\item Fair ordering protocols
-\item Batch auctions
-\item Threshold encryption (multiple parties must cooperate to decrypt)
+\item \textbf{Encrypted mempools}---hiding pending transactions so searchers cannot see them; the mempool is the waiting area for unconfirmed transactions
+\item \textbf{Fair ordering protocols}---process transactions in the order received, not by gas price
+\item \textbf{Batch auctions}---collect all trades in a time window and execute at one clearing price
+\item \textbf{Threshold encryption}---multiple parties must cooperate to decrypt transaction contents
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Application-Level Solutions}
+
+\vspace{0.3em}
+\begin{itemize}
+\item \textbf{MEV-protected RPCs}---private endpoints for submitting transactions invisible to searchers
+\item \textbf{Slippage tolerance limits}---reject trades if price moves too much
+\item \textbf{TWAP orders} (time-weighted average pricing)---split a large trade over time to reduce impact
+\item \textbf{Private order flow}---route trades through channels hidden from MEV searchers
 \end{itemize}
 
 \vspace{0.3em}
-\textbf{Application-Level}
-\begin{itemize}
-\item MEV-protected RPCs (private endpoints for submitting transactions invisible to attackers)
-\item Slippage tolerance limits
-\item Time-weighted average pricing (splitting a large trade over time to reduce impact)
-\item Private order flow (routing trades through channels hidden from MEV searchers)
-\end{itemize}
+\textbf{The Fundamental Tension}
+
+MEV creates revenue for validators (which secures the network) but imposes costs on users. Eliminating MEV entirely may reduce network security. The research frontier seeks to \textit{redistribute} MEV back to users rather than eliminate it.
 \end{columns}
 
 \bottomnote{MEV creates tension between validator revenue and user welfare; no clear solution yet}
@@ -488,6 +570,9 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 
 % Market Efficiency
 \begin{frame}[t]{Market Efficiency in Crypto Markets}
+
+\textbf{What is market efficiency?} The Efficient Market Hypothesis (EMH) states that prices quickly reflect all available information---so nobody can consistently ``beat the market.'' We ask: how efficient are crypto markets compared to traditional ones?
+
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Efficiency Metrics}
@@ -604,6 +689,8 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \item Complexity barrier
 \end{itemize}
 
+\smallskip\textbf{Example:} \$100K concentrated in the \$1{,}700--\$1{,}900 range provides the same depth as \$2M spread across all prices in v2---a 20$\times$ capital efficiency improvement.
+
 \column{0.48\textwidth}
 \textbf{Curve: Stableswap}
 
@@ -611,8 +698,8 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \textbf{Innovation}
 \begin{itemize}
 \item Optimized for low-volatility pairs
-\item Hybrid constant sum + constant product
-\item Lower slippage for stablecoins
+\item Blends constant sum ($x+y=k$, zero slippage but can run dry) with constant product ($xy=k$, infinite liquidity but high slippage). Near the peg, Curve behaves like constant sum; far from it, like constant product.
+\item Result: 100$\times$ lower slippage for stablecoin-to-stablecoin swaps
 \end{itemize}
 
 \vspace{0.3em}
@@ -636,17 +723,17 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \vspace{0.3em}
 \textbf{Liquidity and Trading Costs}
 \begin{itemize}
-\item DEX spreads 2-5x CEX spreads
+\item DEX spreads 2--5$\times$ CEX spreads (Lehar \& Parlour, 2021)
 \item Improving with liquidity growth
-\item Uniswap v3 narrows gap
+\item Uniswap v3 narrows gap significantly
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Impermanent Loss}
 \begin{itemize}
-\item Most LPs lose vs. HODL (Hold On for Dear Life---crypto slang for holding)
-\item Fee income often insufficient
-\item Incentive programs crucial
+\item $\sim$49.5\% of LPs lose vs.\ HODL (Hold On for Dear Life---crypto slang for holding) (Adams et al., 2024)
+\item Fee income often insufficient to offset IL
+\item Incentive programs crucial for LP retention
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -655,7 +742,7 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \vspace{0.3em}
 \textbf{Magnitude}
 \begin{itemize}
-\item 5-10\% implicit cost on some trades
+\item 5--10\% implicit cost on some trades (Qin et al., 2022)
 \item Concentrated in large trades
 \item Growing with DeFi TVL (Total Value Locked---money deposited in DeFi)
 \end{itemize}
@@ -663,9 +750,9 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \vspace{0.3em}
 \textbf{Price Discovery}
 \begin{itemize}
-\item CEXs lead by 30-60 seconds
-\item Arbitrage profitable despite costs
-\item Cross-chain discovery slower
+\item CEXs lead by 30--60 seconds (Barbon \& Ranaldo, 2022)
+\item Arbitrage profitable despite gas costs
+\item Cross-chain discovery slower due to bridge latency
 \end{itemize}
 \end{columns}
 
@@ -684,7 +771,7 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \item Dynamic fees (volatility-adjusted)
 \item Just-in-time liquidity (providing liquidity for a single block to capture fees)
 \item Intent-based architectures (users specify desired outcomes, solvers compete to execute)
-\item ZK-rollup order books (order books on blockchain scaling technology)
+\item ZK-rollup order books (ZK-rollups bundle hundreds of trades into one blockchain transaction using cryptographic proofs, cutting costs by 50--100$\times$ while inheriting Ethereum's security)
 \end{itemize}
 
 \vspace{0.3em}
@@ -729,7 +816,7 @@ Higher $IS_i$ means venue $i$ leads in price discovery.
 \item Order books rely on active market makers
 \item Impermanent loss is key LP risk
 \item MEV extracts value via transaction ordering
-\item Price discovery faster but less efficient than TradFi
+\item Price discovery: faster arbitrage (24/7 trading) but less informationally efficient (prices can diverge from fundamentals longer than in TradFi)
 \end{enumerate}
 
 \column{0.48\textwidth}

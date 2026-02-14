@@ -50,7 +50,7 @@
 }
 
 \title{Introduction to the Economics of Digital Finance}
-\subtitle{L01: Setting the Economic Framework}
+\subtitle{L01: Setting the Economic Framework\\[0.3em]\normalsize Understanding the trillion-dollar shift from cash to code}
 \author{Economics of Digital Finance}
 \institute{BSc Course}
 \date{}
@@ -79,7 +79,7 @@
 \begin{itemize}
 \item Define digital finance from an economic perspective
 \item Distinguish economic from technical questions
-\item Apply multiple economic frameworks to digital finance
+\item Apply four structured ways of thinking (economic frameworks) to digital finance
 \end{itemize}
 \end{columns}
 
@@ -96,7 +96,33 @@ Digital finance encompasses financial services and instruments that:
 \begin{itemize}
 \item Rely on digital infrastructure for value transfer
 \item Create new forms of money and payment systems
-\item Enable disintermediation or re-intermediation
+\item Enable disintermediation (removing middlemen) or re-intermediation (replacing old middlemen with new digital ones like crypto exchanges)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Scope of Digital Finance}
+\begin{itemize}
+\item Cryptocurrencies (digital assets secured by cryptography---the mathematical science of encoding information to prevent tampering) and stablecoins (cryptocurrencies pegged to stable assets like USD)
+\item Central Bank Digital Currencies (CBDCs)---official digital money issued by central banks
+\item Digital payment systems
+\item Decentralized Finance (DeFi)---financial services on blockchain without banks
+\item Tokenized assets (traditional assets represented as digital tokens on blockchain)
+\end{itemize}
+
+\end{columns}
+
+\bottomnote{Economics analyzes incentives, efficiency, and welfare---not code or protocols}
+\end{frame}
+
+% What is Digital Finance? (cont.)
+\begin{frame}[t]{What is Digital Finance? (cont.)}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Economic Questions}
+\begin{itemize}
+\item Who captures value?
+\item What are the welfare effects (overall impact on society's well-being)?
+\item How does regulation affect outcomes?
 \end{itemize}
 
 \vspace{0.3em}
@@ -107,34 +133,29 @@ Digital finance encompasses financial services and instruments that:
 \end{itemize}
 
 \column{0.48\textwidth}
-\textbf{Scope of Digital Finance}
+\textbf{Why This Matters}
 \begin{itemize}
-\item Cryptocurrencies (digital assets using cryptography) and stablecoins (cryptocurrencies pegged to stable assets like USD)
-\item Central Bank Digital Currencies (CBDCs)---official digital money issued by central banks
-\item Digital payment systems
-\item Decentralized Finance (DeFi)---financial services on blockchain without banks
-\item Tokenized assets (traditional assets represented as digital tokens on blockchain)
-\end{itemize}
-
-\vspace{0.3em}
-\textbf{Economic Questions}
-\begin{itemize}
-\item Who captures value?
-\item What are the welfare effects?
-\item How does regulation affect outcomes?
+\item Digital finance is not just a technology story---it rewires \textit{who} earns, \textit{who} pays, and \textit{who} bears risk
+\item Every topic in this course returns to these three questions
 \end{itemize}
 \end{columns}
 
-\bottomnote{Economics analyzes incentives, efficiency, and welfare---not code or protocols}
+\bottomnote{This course focuses on economic incentives and outcomes, not on coding or protocols}
 \end{frame}
 
 % Historical Evolution
-\begin{frame}[t]{Historical Evolution of Payment Methods}
+\begin{frame}[t]{Payment Technology Adoption Over Time}
 \begin{center}
-\includegraphics[width=0.65\textwidth]{01_payment_evolution/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_payment_evolution/chart.pdf}
 \end{center}
 
-\bottomnote{Each transition was driven by economic forces: reducing transaction costs (time, fees, and friction in exchanges), enabling trade at scale}
+\begin{itemize}
+\item Each S-curve shows how a payment technology starts slow, accelerates, then levels off
+\item Notice how newer technologies (cards, digital) adopt \textit{faster} than older ones (checks)
+\item The inflection point (steepest part of curve) marks the moment adoption accelerates rapidly
+\end{itemize}
+
+\bottomnote{Each transition was driven by economic forces: reducing transaction costs (time, fees, and difficulty in exchanges), enabling trade at scale}
 \end{frame}
 
 % Functions of Money
@@ -163,7 +184,7 @@ Digital finance encompasses financial services and instruments that:
 \textbf{3. Store of Value}
 \begin{itemize}
 \item Preserves purchasing power
-\item Enables intertemporal trade
+\item Enables intertemporal trade (saving now to spend later---trading value across time)
 \item Requires stability
 \end{itemize}
 
@@ -173,7 +194,7 @@ Digital finance encompasses financial services and instruments that:
 Do cryptocurrencies fulfill these functions?
 \begin{itemize}
 \item Bitcoin: Limited as medium (volatility---rapid, unpredictable price swings)
-\item Stablecoins: Better but trust issues
+\item Stablecoins: Better but trust issues (are reserves really there? Who audits them?)
 \item CBDCs: Designed to fulfill all three
 \end{itemize}
 \end{columns}
@@ -184,10 +205,31 @@ Do cryptocurrencies fulfill these functions?
 % Four Economic Lenses
 \begin{frame}[t]{Four Economic Lenses for Digital Finance}
 \begin{center}
-\includegraphics[width=0.55\textwidth]{02_digital_finance_taxonomy/chart.pdf}
+\includegraphics[width=0.48\textwidth]{02_digital_finance_taxonomy/chart.pdf}
 \end{center}
 
+\begin{itemize}
+\item This course examines digital finance from four complementary perspectives (lenses)
+\item Do not worry about unfamiliar terms (AMMs, DEXs, etc.)---each lens is explained in detail on the next slides
+\item Every digital finance topic can be analyzed through multiple lenses simultaneously
+\end{itemize}
+
 \bottomnote{This course applies all four lenses to understand digital finance comprehensively}
+\end{frame}
+
+% Four Economic Lenses: Comparative Relevance
+\begin{frame}[t]{How the Four Lenses Apply to Each Topic}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{04_four_economic_lenses/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Each spoke represents one of the four economic perspectives; further from center = more relevant
+\item Bitcoin scores highly on Monetary and Regulatory lenses but lower on Platform Economics
+\item DeFi protocols engage all four lenses roughly equally---they are the most multi-dimensional topic
+\end{itemize}
+
+\bottomnote{Radar chart: scores are illustrative relevance ratings (0--10) to help prioritize which lens to apply first for each topic}
 \end{frame}
 
 % Lens 1: Monetary Economics
@@ -197,7 +239,7 @@ Do cryptocurrencies fulfill these functions?
 \textbf{Key Questions}
 \begin{itemize}
 \item How do digital currencies affect money supply?
-\item What happens to monetary policy transmission?
+\item What happens to monetary policy transmission (how central bank decisions affect the real economy)?
 \item Can cryptocurrencies replace fiat money (government-issued currency like dollars)?
 \end{itemize}
 
@@ -221,8 +263,8 @@ Do cryptocurrencies fulfill these functions?
 \textbf{Applications}
 \begin{itemize}
 \item CBDC design trade-offs
-\item Stablecoin stability mechanisms
-\item Dollarization vs. crypto-ization
+\item Stablecoin stability mechanisms (how stablecoins maintain their peg through reserves, arbitrage, or algorithms)
+\item Dollarization (adopting USD) vs.\ crypto-ization (adopting crypto instead of local currency)
 \end{itemize}
 \end{columns}
 
@@ -244,7 +286,7 @@ Do cryptocurrencies fulfill these functions?
 \textbf{Theoretical Tools}
 \begin{itemize}
 \item Network effects models
-\item Two-sided market theory
+\item Two-sided market theory (how platforms like Visa connect merchants and cardholders, creating value for both sides)
 \item Mechanism design (designing rules/incentives to achieve desired outcomes)
 \end{itemize}
 
@@ -252,7 +294,7 @@ Do cryptocurrencies fulfill these functions?
 \textbf{Key Concepts}
 \begin{itemize}
 \item Critical mass (minimum users needed for viability) and tipping points (moments when adoption accelerates rapidly)
-\item Winner-take-all dynamics
+\item Winner-take-all dynamics (markets where one player captures nearly all users, like Google in search)
 \item Platform governance
 \end{itemize}
 
@@ -275,8 +317,8 @@ Do cryptocurrencies fulfill these functions?
 \textbf{Key Questions}
 \begin{itemize}
 \item How do crypto markets discover prices?
-\item Why are spreads wider in crypto?
-\item How do Automated Market Makers (AMMs) differ from order books?
+\item Why are spreads (gaps between buy and sell prices) wider in crypto?
+\item How do Automated Market Makers (AMMs) differ from order books (lists of pending buy and sell orders)?
 \end{itemize}
 
 \vspace{0.3em}
@@ -313,9 +355,9 @@ Do cryptocurrencies fulfill these functions?
 \column{0.48\textwidth}
 \textbf{Key Questions}
 \begin{itemize}
-\item What market failures justify regulation?
+\item What market failures (situations where free markets produce harmful outcomes) justify regulation?
 \item How should crypto be classified legally?
-\item What are costs of regulatory arbitrage?
+\item What are costs of regulatory arbitrage (exploiting differences in rules across jurisdictions)?
 \end{itemize}
 
 \vspace{0.3em}
@@ -361,7 +403,7 @@ Do cryptocurrencies fulfill these functions?
 \textbf{Policy Relevance}
 \begin{itemize}
 \item Central banks need economic analysis
-\item Regulators need welfare frameworks
+\item Regulators need welfare frameworks (tools for measuring impact on society's well-being)
 \item Governments need tax policy guidance
 \end{itemize}
 
@@ -370,14 +412,14 @@ Do cryptocurrencies fulfill these functions?
 \begin{itemize}
 \item New forms of money creation
 \item Novel market mechanisms (AMMs)
-\item Programmable financial contracts
+\item Programmable financial contracts (agreements that automatically execute when conditions are met)
 \end{itemize}
 
 \vspace{0.3em}
 \textbf{Research Opportunities}
 \begin{itemize}
-\item High-frequency blockchain data
-\item Natural experiments in adoption
+\item High-frequency blockchain data (transaction-level records updated every few seconds)
+\item Natural experiments (real-world policy changes that create before/after comparisons) in adoption
 \item Cross-country regulatory variation
 \end{itemize}
 \end{columns}
@@ -388,10 +430,31 @@ Do cryptocurrencies fulfill these functions?
 % Global Digital Payments
 \begin{frame}[t]{The Scale of Digital Finance Transformation}
 \begin{center}
-\includegraphics[width=0.62\textwidth]{03_global_digital_payments/chart.pdf}
+\includegraphics[width=0.52\textwidth]{03_global_digital_payments/chart.pdf}
 \end{center}
 
+\begin{itemize}
+\item The shaded bands show uncertainty: the model runs many random scenarios (Monte Carlo simulation) to estimate a range of possible futures
+\item CAGR (Compound Annual Growth Rate) measures average yearly growth---e.g., 15\% CAGR means the market grows roughly 15\% each year, compounding
+\item Key takeaway: digital payments are growing rapidly regardless of model assumptions
+\end{itemize}
+
 \bottomnote{COVID-19 accelerated digital payment adoption; economists must understand these trends}
+\end{frame}
+
+% Digital Finance Growth Decomposition
+\begin{frame}[t]{What Drives Digital Finance Growth?}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{05_digital_finance_growth_decomposition/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Growth is decomposed (broken into parts) to show which factors contribute most: technology, adoption, network effects, or regulation
+\item Early growth was technology-driven (smartphones, cloud); recent growth is adoption- and network-driven
+\item Data is illustrative (not measured)---the pattern shows how economists think about growth accounting
+\end{itemize}
+
+\bottomnote{Growth accounting: total growth = technology contribution + adoption contribution + network effects + other factors}
 \end{frame}
 
 % Economic vs Technical Questions
@@ -460,8 +523,8 @@ Digital finance raises fundamental economic questions about money, markets, plat
 \bottomnote{Next lesson: Monetary Economics of Digital Currencies}
 \end{frame}
 
-% Key Terms
-\begin{frame}[t]{Key Terms}
+% Key Terms (1/2)
+\begin{frame}[t]{Key Terms (1/2)}
 \begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Blockchain}
@@ -483,7 +546,7 @@ Distribution of power away from single authority to many participants.
 \textbf{DeFi}
 Decentralized Finance; blockchain financial services without intermediaries.
 
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{Digital Finance}
 Financial services relying on digital infrastructure for value transfer.
 
@@ -502,7 +565,14 @@ Government-issued currency not backed by physical commodity.
 \vspace{0.3em}
 \textbf{Liquidity}
 How easily an asset trades without affecting its price.
+\end{columns}
 
+\bottomnote{Terms continued on next slide}
+\end{frame}
+
+% Key Terms (2/2)
+\begin{frame}[t]{Key Terms (2/2)}
+\begin{columns}[T]
 \column{0.48\textwidth}
 \textbf{Market Failure}
 When free markets fail to allocate resources efficiently.
@@ -523,13 +593,13 @@ Profit from issuing currency above production cost.
 \textbf{Stablecoin}
 Cryptocurrency designed to maintain stable value, pegged to fiat.
 
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{Token}
 Digital unit of value representing assets, rights, or access.
 
 \vspace{0.3em}
 \textbf{Transaction Costs}
-All exchange costs: time, fees, search, and friction.
+All exchange costs: time, fees, search, and difficulty.
 
 \vspace{0.3em}
 \textbf{Two-Sided Market}

@@ -49,7 +49,7 @@
 }
 
 \title{Central Bank Digital Currencies (CBDCs)}
-\subtitle{L03: The Economics of Public Digital Money}
+\subtitle{L03: The Economics of Public Digital Money\\[0.3em]\normalsize Why 130+ countries are racing to digitize money---and what it means for you}
 \author{Economics of Digital Finance}
 \institute{BSc Course}
 \date{}
@@ -78,8 +78,8 @@
 \textbf{Learning Objectives}
 \begin{itemize}
 \item Analyze CBDC design trade-offs
-\item Assess monetary policy implications
-\item Evaluate disintermediation risks
+\item Assess how CBDCs could change how central banks control the economy
+\item Evaluate disintermediation risks (the danger that people move money out of banks into CBDC)
 \item Understand global CBDC landscape
 \end{itemize}
 \end{columns}
@@ -171,7 +171,7 @@ A CBDC is a digital form of central bank money:
 \begin{itemize}
 \item Direct liability of central bank (a legal obligation---the central bank owes you that value)
 \item Digital (not physical)
-\item Widely accessible (retail) or restricted (wholesale)
+\item Widely accessible to the public (retail) or restricted to banks and financial institutions (wholesale)
 \end{itemize}
 
 \vspace{0.3em}
@@ -205,19 +205,31 @@ Does public benefit exceed costs and risks?
 % Global CBDC Status
 \begin{frame}[t]{Global CBDC Development Status}
 \begin{center}
-\includegraphics[width=0.65\textwidth]{01_cbdc_world_map/chart.pdf}
+\includegraphics[width=0.55\textwidth]{01_cbdc_world_map/chart.pdf}
 \end{center}
 
-\bottomnote{130+ countries exploring CBDCs; China's e-CNY (digital yuan) is most advanced large-economy pilot}
+\begin{itemize}
+\item As of 2024, 147 countries (representing 98\% of global GDP) are exploring or have launched CBDCs
+\item Colors indicate development stage: from early research to live deployment
+\item China's e-CNY (digital yuan) is the most advanced large-economy pilot; the Bahamas and Nigeria have fully launched
+\end{itemize}
+
+\bottomnote{Source: Atlantic Council CBDC Tracker. The pace of exploration has accelerated sharply since 2020}
 \end{frame}
 
 % CBDC Design Space
 \begin{frame}[t]{CBDC Design Space: Key Choices}
 \begin{center}
-\includegraphics[width=0.58\textwidth]{02_cbdc_design_space/chart.pdf}
+\includegraphics[width=0.48\textwidth]{02_cbdc_design_space/chart.pdf}
 \end{center}
 
-\bottomnote{Design choices involve trade-offs. Pareto frontier shows optimal trade-offs---no design can improve one attribute without sacrificing another. Dominated designs are inferior options.}
+\begin{itemize}
+\item Each axis represents a design goal (e.g., privacy, efficiency, control). No single design can maximize all goals simultaneously
+\item The Pareto frontier (curved surface) shows the \textit{best achievable} trade-offs---improving one dimension requires sacrificing another
+\item Dominated designs (dots below the frontier) are inferior: another design is better in \textit{every} dimension
+\end{itemize}
+
+\bottomnote{Pareto frontier: named after economist Vilfredo Pareto. Think of it as the ``best you can do'' boundary---you cannot move closer to one goal without moving away from another}
 \end{frame}
 
 % Retail vs Wholesale
@@ -306,7 +318,7 @@ Economic implications:
 \bottomnote{Most designs are hybrid: token-like for small values, account-like for large}
 \end{frame}
 
-% Monetary Policy Transmission
+% Monetary Policy Transmission (1/2)
 \begin{frame}[t]{Monetary Policy Transmission with CBDCs}
 \begin{columns}[T]
 \column{0.48\textwidth}
@@ -321,7 +333,7 @@ $$i_{\text{policy}} \rightarrow i_{\text{deposit}} \rightarrow C, I$$
 \item Time lags in transmission (months can pass before rate changes affect consumer behavior)
 \end{itemize}
 
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{CBDC Impact}
 
 If CBDC is interest-bearing:
@@ -332,8 +344,17 @@ $$i_{\text{CBDC}} \rightarrow i_{\text{deposit}}$$
 \item Floor on deposit rates
 \end{itemize}
 
+\smallskip\textbf{Example:} Suppose CBDC pays 2\% and your bank pays 0.5\% on savings. You would move money to CBDC. To keep your deposits, the bank must raise its rate to at least 2\%. This is the ``floor'' effect.
+\end{columns}
+
+\bottomnote{CBDC could strengthen monetary policy by providing a direct channel to households}
+\end{frame}
+
+% Monetary Policy Transmission (2/2)
+\begin{frame}[t]{Enhanced Policy Options with CBDCs}
+\begin{columns}[T]
 \column{0.48\textwidth}
-\textbf{Enhanced Policy Options}
+\textbf{New Policy Tools}
 
 Interest-bearing CBDC enables:
 \begin{itemize}
@@ -342,7 +363,7 @@ Interest-bearing CBDC enables:
 \item Time-limited money---e.g., China's Chengdu pilot gave citizens digital yuan that expired in 3 months, forcing spending to boost local businesses
 \end{itemize}
 
-\vspace{0.3em}
+\column{0.48\textwidth}
 \textbf{Concerns}
 \begin{itemize}
 \item Political resistance to negative rates
@@ -352,14 +373,35 @@ Interest-bearing CBDC enables:
 \end{itemize}
 \end{columns}
 
-\bottomnote{CBDC could strengthen monetary policy but raises political economy concerns}
+\bottomnote{These tools are powerful but raise fundamental questions about government control over spending}
+\end{frame}
+
+% Monetary Policy Transmission Chart
+\begin{frame}[t]{How Fast Does CBDC Transmit Policy?}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{04_monetary_policy_transmission/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item The chart compares how quickly a central bank rate change reaches consumers through traditional banks vs.\ through CBDC
+\item Traditional banking passes rate changes slowly (months of delay); CBDC transmits almost instantly
+\item Faster transmission means monetary policy becomes more powerful---but also more disruptive
+\end{itemize}
+
+\bottomnote{Impulse response model based on Bindseil (2020). CBDC pass-through rate exceeds traditional banking channel}
 \end{frame}
 
 % Bank Disintermediation
 \begin{frame}[t]{Bank Disintermediation Risk}
 \begin{center}
-\includegraphics[width=0.70\textwidth]{03_bank_disintermediation/chart.pdf}
+\includegraphics[width=0.55\textwidth]{03_bank_disintermediation/chart.pdf}
 \end{center}
+
+\begin{itemize}
+\item Each scenario shows how bank deposits evolve over time as CBDC becomes available
+\item Steeper decline = more deposits moving to CBDC = greater stress on banks
+\item The key variable is CBDC attractiveness: higher interest or better features accelerate deposit flight
+\end{itemize}
 
 \bottomnote{Deposit flight to CBDC could force banks to rely on costlier wholesale funding (borrowing from other banks instead of using deposits)}
 \end{frame}
@@ -382,7 +424,7 @@ If CBDC is attractive:
 \vspace{0.3em}
 \textbf{Andolfatto (2021), an economist at the Federal Reserve Bank of St. Louis, modeled this:}
 \begin{itemize}
-\item CBDC as outside option (an alternative that improves your bargaining power---if you can switch to CBDC, banks must treat you better)
+\item CBDC gives depositors a credible alternative: if your bank offers poor rates, you can switch to CBDC, forcing banks to compete
 \item Forces competitive deposit rates
 \item Net welfare effect ambiguous (welfare = total well-being of society---economists cannot agree if everyone is better or worse off overall)
 \end{itemize}
@@ -425,7 +467,7 @@ Globally 1.4 billion unbanked adults:
 \vspace{0.3em}
 \textbf{CBDC Potential}
 \begin{itemize}
-\item Lower KYC (Know Your Customer) requirements for small values
+\item Lower KYC (Know Your Customer) requirements for small values (e.g., open account with just a phone number for transactions under 500 EUR)
 \item Mobile-based access
 \item No minimum balance required
 \end{itemize}
@@ -450,6 +492,21 @@ Challenges:
 \end{columns}
 
 \bottomnote{Inclusion requires complementary policies; technology alone is insufficient}
+\end{frame}
+
+% Financial Inclusion Frontier Chart
+\begin{frame}[t]{Financial Inclusion: The Technology Shift}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{05_financial_inclusion_frontier/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item The production possibility frontier (PPF) shows the best achievable trade-off between cost and inclusion
+\item CBDC technology shifts the frontier outward: more inclusion is achievable at the same cost
+\item The gap between the two curves represents the efficiency gain from digital infrastructure
+\end{itemize}
+
+\bottomnote{PPF model: traditional banking (inner curve) vs.\ CBDC-enabled inclusion (outer curve). Based on World Bank Findex data framework}
 \end{frame}
 
 % International Dimension
@@ -518,9 +575,9 @@ CBDCs could intensify:
 \column{0.48\textwidth}
 \textbf{Multi-CBDC Projects}
 \begin{itemize}
-\item mBridge (China, UAE, HK, Thailand)
-\item Project Dunbar (Singapore, Australia)
-\item Project Icebreaker (Nordic countries)
+\item mBridge (China, UAE, HK, Thailand)---Asia-Middle East corridor, largest pilot
+\item Project Dunbar (Singapore, Australia)---ASEAN focus, tests multi-currency settlement
+\item Project Icebreaker (Nordic countries)---Nordic corridor, explores retail cross-border
 \end{itemize}
 
 \vspace{0.3em}
@@ -551,7 +608,7 @@ CBDCs could intensify:
 \begin{itemize}
 \item Tiered privacy (small = anonymous)
 \item Zero-knowledge proofs (proving you meet a requirement without revealing your data)
-\item Third-party anonymity services
+\item Third-party anonymity services (companies that act as privacy shields, similar to how a VPN hides internet activity)
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -565,12 +622,12 @@ CBDCs could intensify:
 \vspace{0.3em}
 \textbf{Economic Framework}
 
-Trade-off function:
-$$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
-\textit{(Usefulness (U) depends on both privacy and policy control---more of one often means less of the other.)}
+The core trade-off in practice:
 \begin{itemize}
-\item Social preferences vary by country
-\item No one-size-fits-all design
+\item Full anonymity: 0\% tax enforcement, easy money laundering
+\item Full transparency: 100\% tax compliance, but citizens lose all financial privacy
+\item Most designs aim for a middle ground (e.g., anonymous below 500 EUR, identified above)
+\item Social preferences vary by country---no one-size-fits-all design
 \end{itemize}
 \end{columns}
 
@@ -592,9 +649,10 @@ $$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
 \vspace{0.3em}
 \textbf{Timeline}
 \begin{itemize}
-\item Investigation phase: 2021-2023
-\item Preparation phase: 2023-2025
-\item Potential launch: 2027-2028
+\item Investigation phase: 2021--2023
+\item In October 2023, the ECB decided to move to the preparation phase
+\item Preparation phase: 2023--2025
+\item Potential launch: 2027--2028
 \end{itemize}
 
 \column{0.48\textwidth}
@@ -642,7 +700,7 @@ $$U = f(\text{Privacy}, \text{Policy Effectiveness})$$
 \vspace{0.5em}
 \textbf{Core Insight}
 
-CBDCs are not simply ``digital cash''---they require careful economic analysis of trade-offs between competing objectives. No design satisfies all goals simultaneously.
+CBDCs are not simply ``digital cash''---they require careful economic analysis of trade-offs between competing objectives. No design satisfies all goals simultaneously. Example: the Digital Euro proposes a \textasciitilde3000 EUR holding limit to balance usefulness against bank disintermediation risk.
 
 \bottomnote{Next lesson: Payment Systems Economics}
 \end{frame}
@@ -789,7 +847,7 @@ Economic penalties imposed by governments---restricting trade or freezing assets
 A bank run accelerated by digital technology---deposits can flee via mobile apps in hours, not days.
 \end{columns}
 
-\bottomnote{Understanding these foundational terms is essential for analyzing CBDC policy}
+\bottomnote{These Key Terms slides serve as a reference glossary---focus on the 5--8 bolded terms most relevant to your assignments; return here as needed}
 \end{frame}
 
 % References

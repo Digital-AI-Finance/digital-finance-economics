@@ -1,246 +1,246 @@
 {
   "lesson": "L08",
-  "title": "Synthesis: The Future of Digital Finance",
+  "title": "Synthesis: Integrating the Four Economic Lenses",
   "questions": [
     {
       "id": 1,
-      "question": "In a financial network contagion simulation, what mechanism causes healthy nodes to become stressed or fail?",
+      "question": "In the network contagion simulation, a healthy node fails when:",
       "options": {
-        "A": "Cumulative losses from failed neighbors exceed capital buffers",
-        "B": "Random market volatility affects all nodes simultaneously",
-        "C": "Government intervention forces weak nodes to close",
-        "D": "Self-imposed risk limits trigger automatic shutdown"
+        "A": "Its capital buffer is larger than average",
+        "B": "Cumulative losses from failed neighbors exceed its capital buffer",
+        "C": "It has the fewest network connections",
+        "D": "A regulator forces it to close"
       },
-      "correct": "A",
-      "explanation": "The simulation shows that failed nodes spread losses to their neighbors. When cumulative losses from connected failed nodes exceed a node's capital buffer, that node fails. This creates a cascade effect through the network."
+      "correct": "B",
+      "explanation": "The Acemoglu et al. (2015) contagion model shows that nodes fail when the cumulative losses transmitted by failed neighbors (each transmitting original_buffer / degree) exceed the receiving node's capital buffer. This is the core cascade mechanism."
     },
     {
       "id": 2,
-      "question": "Which factor determines the severity of contagion cascades in interconnected financial networks?",
+      "question": "In the contagion model, a failed node with 5 connections and a capital buffer of 0.10 transmits what loss to each neighbor?",
       "options": {
-        "A": "The number of regulatory agencies involved",
-        "B": "The ratio of capital buffers to interconnection losses",
-        "C": "The speed of electronic trading systems",
-        "D": "The market capitalization of failed institutions"
+        "A": "0.10 (the full buffer)",
+        "B": "0.50 (buffer times degree)",
+        "C": "0.02 (buffer divided by degree)",
+        "D": "0.05 (half the buffer)"
       },
-      "correct": "B",
-      "explanation": "Contagion spreads when losses transmitted through network connections (proportional to failed nodes' original buffers divided by their degree) exceed the receiving nodes' capital buffers. Higher capital buffers relative to interconnection losses limit cascade severity."
+      "correct": "C",
+      "explanation": "Loss per neighbor = original_buffer / degree = 0.10 / 5 = 0.02. Highly connected nodes spread losses more thinly across neighbors, while poorly connected nodes concentrate losses on fewer counterparts."
     },
     {
       "id": 3,
-      "question": "In the network cascade simulation, what role does node 'degree' (number of connections) play in loss propagation?",
+      "question": "A node in the contagion network becomes 'stressed' (orange) rather than 'failed' (red) when:",
       "options": {
-        "A": "Higher degree nodes fail first",
-        "B": "Losses from a failed node are divided among its neighbors",
-        "C": "Degree determines capital buffer requirements",
-        "D": "Only nodes with degree > 5 can cause contagion"
+        "A": "It has zero connections to failed nodes",
+        "B": "Its cumulative losses exceed 50% of its buffer but remain below 100%",
+        "C": "It voluntarily reduces lending",
+        "D": "Government provides emergency liquidity"
       },
       "correct": "B",
-      "explanation": "The simulation divides a failed node's original buffer by its degree to determine loss per neighbor. This means highly connected nodes spread losses more thinly across neighbors, while poorly connected nodes concentrate losses."
+      "explanation": "The simulation uses two thresholds: 'stressed' when cumulative losses exceed 50% of the capital buffer, and 'failed' when losses exceed 100%. This creates two distinct vulnerability states visible in the network visualization."
     },
     {
       "id": 4,
-      "question": "What distinguishes 'stressed' from 'failed' nodes in the contagion model?",
+      "question": "The cascade dynamics bar chart shows that most new failures occur in which round?",
       "options": {
-        "A": "Stressed nodes have negative equity; failed nodes are illiquid",
-        "B": "Stressed nodes absorb 50%+ of buffer in losses; failed nodes exceed 100%",
-        "C": "Stressed nodes face regulatory sanctions; failed nodes face closure",
-        "D": "Stressed nodes are pre-crisis; failed nodes are post-crisis"
+        "A": "Round 0 (the initial shock)",
+        "B": "Round 1 (the first cascade wave)",
+        "C": "Round 5 (delayed effects)",
+        "D": "Failures are spread equally across all rounds"
       },
       "correct": "B",
-      "explanation": "Nodes become 'stressed' when cumulative losses exceed 50% of their buffer but remain below 100%. Nodes 'fail' when cumulative losses exceed their entire capital buffer (100%). This creates two distinct vulnerability states."
+      "explanation": "Contagion cascades typically show the largest wave of new failures in Round 1 (immediate neighbors of the shock node), with each subsequent round producing fewer failures as remaining nodes are further from the epicenter or have larger buffers."
     },
     {
       "id": 5,
-      "question": "In the TradFi-DeFi convergence 'Absorption' scenario, what is the projected long-term outcome?",
+      "question": "The TradFi-DeFi convergence chart shows two S-curves approaching each other. What does the 'convergence corridor' represent?",
       "options": {
-        "A": "DeFi market share grows to 30% as retail adoption increases",
-        "B": "TradFi maintains ~85% market share, DeFi shrinks to 2%, hybrid grows",
-        "C": "TradFi and DeFi achieve equal 45% market shares",
-        "D": "Hybrid systems displace both TradFi and DeFi completely"
+        "A": "The period when both TradFi and DeFi adoption decline",
+        "B": "The zone where TradFi digitization and DeFi adoption levels become similar",
+        "C": "A government-mandated merger of traditional and decentralized finance",
+        "D": "The time when all financial institutions switch to DeFi"
       },
       "correct": "B",
-      "explanation": "Scenario A (Absorption) shows traditional finance maintaining dominance at ~85% after 20 years, with DeFi declining to just 2% market share. Hybrid systems capture the remainder as TradFi absorbs DeFi innovations without ceding control."
+      "explanation": "The convergence corridor marks where the gap between TradFi digitization and DeFi adoption narrows below a threshold. The coupled S-curve model includes spillover effects: TradFi learns from DeFi innovations, and DeFi benefits from TradFi infrastructure."
     },
     {
       "id": 6,
-      "question": "Which convergence scenario features the most balanced long-term outcome between TradFi and DeFi?",
+      "question": "According to the convergence model, why does DeFi adoption grow more slowly than its base growth rate would suggest?",
       "options": {
-        "A": "Absorption (TradFi 85%, DeFi 2%)",
-        "B": "Coexistence (TradFi 50%, DeFi 30%)",
-        "C": "Displacement (TradFi 15%, DeFi 60%)",
-        "D": "All scenarios converge to identical outcomes"
+        "A": "DeFi technology is inherently inferior",
+        "B": "Regulatory friction (parameter 0.85) reduces DeFi's effective growth",
+        "C": "TradFi actively blocks DeFi development",
+        "D": "Users prefer cash over digital systems"
       },
       "correct": "B",
-      "explanation": "Scenario B (Coexistence) shows a balanced outcome where TradFi declines to 50%, DeFi grows to 30%, and hybrid systems capture 20%. This represents mutual adaptation rather than domination by either paradigm."
+      "explanation": "The model includes a regulatory friction parameter (0.85) that multiplies DeFi's growth rate, reducing it below its theoretical maximum. Similarly, TradFi faces a technology friction parameter (0.92). These frictions model real-world adoption barriers."
     },
     {
       "id": 7,
-      "question": "What distinguishes the 'Displacement' scenario from other convergence paths?",
+      "question": "Rogers' (1962) diffusion of innovation theory, referenced in the convergence slide, suggests DeFi is currently in which adoption phase?",
       "options": {
-        "A": "It assumes regulatory capture by incumbent institutions",
-        "B": "DeFi grows to 60% market share while TradFi shrinks to 15%",
-        "C": "It predicts complete elimination of hybrid models",
-        "D": "It requires no technological advancement"
+        "A": "Innovators (first 2.5%)",
+        "B": "Early adopters (next 13.5%)",
+        "C": "Early majority (next 34%)",
+        "D": "Late majority (next 34%)"
       },
-      "correct": "B",
-      "explanation": "Scenario C (Displacement) represents a radical transformation where DeFi captures 60% of the market after 20 years, while traditional finance shrinks to just 15%. This scenario implies fundamental competitive advantages for decentralized finance."
+      "correct": "C",
+      "explanation": "The slide states DeFi is entering the 'early majority' phase, with incumbent banks now adopting blockchain technology. The technology lifecycle shows: innovators (early crypto natives), early adopters (fintech firms), early majority (incumbent banks, happening now)."
     },
     {
       "id": 8,
-      "question": "All three convergence scenarios share which common feature?",
+      "question": "What does the spillover parameter alpha_D = 0.004 in the convergence model represent?",
       "options": {
-        "A": "Hybrid models achieve at least 20% market share in all scenarios",
-        "B": "TradFi never falls below 50% market share",
-        "C": "DeFi eventually captures majority market share",
-        "D": "Government intervention determines the outcome"
+        "A": "DeFi's maximum possible market share",
+        "B": "The rate at which DeFi benefits from TradFi's existing infrastructure",
+        "C": "The probability of DeFi protocol failure",
+        "D": "The regulatory approval rate for DeFi projects"
       },
-      "correct": "A",
-      "explanation": "Looking at the long-term outcomes, hybrid models capture 13% (Absorption), 20% (Coexistence), and 25% (Displacement) of market share. All scenarios show significant hybrid adoption as institutions blend traditional and decentralized elements."
+      "correct": "B",
+      "explanation": "The spillover parameter alpha_D captures how DeFi's growth rate increases as TradFi digitization advances. As TradFi builds digital infrastructure (APIs, digital identities, electronic settlement), DeFi protocols can leverage this infrastructure, accelerating their own adoption."
     },
     {
       "id": 9,
-      "question": "Which digital finance phenomenon scores highest on the Monetary lens in the Four Lenses framework?",
+      "question": "In the blockchain trilemma chart, Bitcoin is positioned near the Decentralization-Security edge. What does this mean?",
+      "options": {
+        "A": "Bitcoin is the fastest blockchain",
+        "B": "Bitcoin optimizes for decentralization and security but sacrifices scalability (only ~7 transactions per second)",
+        "C": "Bitcoin has no security features",
+        "D": "Bitcoin is controlled by a single entity"
+      },
+      "correct": "B",
+      "explanation": "Bitcoin's barycentric coordinates (D=0.45, S=0.45, Sc=0.10) show it strongly favors decentralization and security, with very low scalability. The chart's dashed arrow labeled 'Scaling tradeoff' shows that improving Bitcoin's scalability requires sacrificing some D or S."
+    },
+    {
+      "id": 10,
+      "question": "The trilemma chart places Visa at coordinates (D=0.05, S=0.45, Sc=0.50). What trade-off has Visa made?",
+      "options": {
+        "A": "High decentralization at the cost of speed",
+        "B": "High security and scalability at the cost of decentralization",
+        "C": "Equal balance across all three dimensions",
+        "D": "Maximum scalability with no security"
+      },
+      "correct": "B",
+      "explanation": "Visa's position near the Security-Scalability edge means it processes thousands of transactions per second (high Sc) with robust fraud protection (high S), but as a centralized payment network, it has almost no decentralization (D=0.05)."
+    },
+    {
+      "id": 11,
+      "question": "The trilemma constraint D + S + Sc <= K means that:",
+      "options": {
+        "A": "All systems must be equally decentralized, secure, and scalable",
+        "B": "Improving one dimension requires sacrificing at least one other",
+        "C": "K is always exactly 1.0 for all systems",
+        "D": "Only two of the three dimensions can exist at all"
+      },
+      "correct": "B",
+      "explanation": "The constraint means the total 'budget' across all three properties is limited. A system that maximizes two dimensions (like Bitcoin with D+S) must accept a low score on the third (Sc). This is analogous to Mundell's impossible trinity in monetary policy."
+    },
+    {
+      "id": 12,
+      "question": "Which system on the trilemma chart represents a balanced compromise across all three dimensions?",
+      "options": {
+        "A": "Bitcoin (D=0.45, S=0.45, Sc=0.10)",
+        "B": "Visa (D=0.05, S=0.45, Sc=0.50)",
+        "C": "Lightning Network (D=0.35, S=0.35, Sc=0.30)",
+        "D": "BSC (D=0.15, S=0.35, Sc=0.50)"
+      },
+      "correct": "C",
+      "explanation": "Lightning Network (D=0.35, S=0.35, Sc=0.30) is the most balanced system on the chart, positioned near the center of the triangle. It achieves this by operating as a Layer 2 solution on top of Bitcoin, trading some of each property for moderate scores across all three."
+    },
+    {
+      "id": 13,
+      "question": "In the policy effectiveness heatmap, which instrument has the strongest negative effect on Innovation?",
+      "options": {
+        "A": "CBDC (+0.2 on Innovation)",
+        "B": "Stablecoin Regulation (-0.4 on Innovation)",
+        "C": "KYC/AML (-0.7 on Innovation)",
+        "D": "Crypto Tax (-0.5 on Innovation)"
+      },
+      "correct": "C",
+      "explanation": "KYC/AML scores -0.7 on Innovation, the most negative effect in the matrix. Strict identity verification requirements create barriers to entry, increase compliance costs, and slow experimental development -- a key trade-off between security and innovation."
+    },
+    {
+      "id": 14,
+      "question": "According to the policy heatmap, which instrument is most effective at improving Financial Inclusion?",
+      "options": {
+        "A": "CBDC (+0.8)",
+        "B": "Stablecoin Regulation (+0.1)",
+        "C": "DeFi Rules (0.0)",
+        "D": "KYC/AML (-0.2)"
+      },
+      "correct": "A",
+      "explanation": "CBDC scores +0.8 on Financial Inclusion, the highest positive score in that column. CBDCs can provide bank-like services to unbanked populations through central bank accounts, bypassing commercial bank requirements."
+    },
+    {
+      "id": 15,
+      "question": "The policy heatmap's welfare analysis panel shows that 'Firms' are most negatively affected by which policy instrument?",
+      "options": {
+        "A": "CBDC, because it competes with private services",
+        "B": "KYC/AML, because firms weight Innovation at 0.5 and KYC/AML scores -0.7 on Innovation",
+        "C": "Crypto Tax, because it reduces revenue",
+        "D": "All instruments affect firms equally"
+      },
+      "correct": "B",
+      "explanation": "Firms weight Innovation highest (w=0.5). Since KYC/AML has the most negative Innovation score (-0.7), multiplying weight times impact (0.5 x -0.7 = -0.35) creates the largest negative welfare contribution for firms from any single policy-objective combination."
+    },
+    {
+      "id": 16,
+      "question": "The policy effectiveness matrix shows Stablecoin Regulation scoring +0.9 on Stability and +0.8 on Consumer Protection, but -0.4 on Innovation. This illustrates:",
+      "options": {
+        "A": "Stablecoin regulation is ineffective",
+        "B": "A fundamental trade-off where safety-focused regulation reduces room for experimentation",
+        "C": "Innovation and stability are always compatible",
+        "D": "Consumer protection always harms financial inclusion"
+      },
+      "correct": "B",
+      "explanation": "Stablecoin regulation exemplifies the innovation-stability trade-off. Reserve requirements, redemption rights, and licensing protect consumers and financial stability but restrict the design space for novel stablecoin mechanisms, reducing innovation scores."
+    },
+    {
+      "id": 17,
+      "question": "In the four lenses integration heatmap, which digital finance phenomenon scores highest on the Monetary lens?",
       "options": {
         "A": "Bitcoin (score: 9)",
         "B": "Stablecoins (score: 8)",
         "C": "CBDCs (score: 10)",
-        "D": "Payment Platforms (score: 2)"
+        "D": "DeFi/AMMs (score: 3)"
       },
       "correct": "C",
-      "explanation": "CBDCs score a perfect 10 on the Monetary lens, reflecting their direct connection to monetary policy, central bank operations, and sovereign currency functions. This is higher than Bitcoin (9) and Stablecoins (8)."
-    },
-    {
-      "id": 10,
-      "question": "The Platform lens is most relevant for analyzing which digital finance phenomenon?",
-      "options": {
-        "A": "CBDCs (score: 4)",
-        "B": "DeFi/AMMs (score: 8)",
-        "C": "Payment Platforms (score: 9)",
-        "D": "Bitcoin (score: 3)"
-      },
-      "correct": "C",
-      "explanation": "Payment Platforms score highest (9) on the Platform lens, reflecting network effects, two-sided markets, and platform competition dynamics. DeFi/AMMs score 8, showing strong but slightly lower platform characteristics."
-    },
-    {
-      "id": 11,
-      "question": "Which phenomenon demonstrates the highest score on the Microstructure lens?",
-      "options": {
-        "A": "Bitcoin (score: 7)",
-        "B": "Stablecoins (score: 6)",
-        "C": "DeFi/AMMs (score: 10)",
-        "D": "CBDCs (score: 3)"
-      },
-      "correct": "C",
-      "explanation": "DeFi/AMMs achieve a perfect score (10) on the Microstructure lens due to automated market makers, liquidity pools, price discovery mechanisms, and orderbook-free trading. These are quintessentially microstructure phenomena."
-    },
-    {
-      "id": 12,
-      "question": "Applying all four lenses, which two phenomena have the most similar analytical profiles?",
-      "options": {
-        "A": "Bitcoin and DeFi/AMMs (both innovation-focused)",
-        "B": "Stablecoins and Tokenized Assets (balanced across lenses)",
-        "C": "CBDCs and Payment Platforms (both centralized)",
-        "D": "Bitcoin and Payment Platforms (both payment-focused)"
-      },
-      "correct": "B",
-      "explanation": "Stablecoins (8,5,6,9) and Tokenized Assets (5,6,8,7) show relatively balanced profiles across all four lenses, each scoring 5-9 on different dimensions. This reflects their multi-faceted nature spanning monetary, platform, market, and regulatory concerns."
-    },
-    {
-      "id": 13,
-      "question": "In the Digital Finance Trilemma, which corner does Visa occupy and why?",
-      "options": {
-        "A": "Innovation corner - due to continuous technological advancement",
-        "B": "Stability corner - due to decades of operational reliability",
-        "C": "Efficiency-Stability edge - high throughput with established safeguards",
-        "D": "Center - balancing all three dimensions equally"
-      },
-      "correct": "C",
-      "explanation": "Visa is positioned with barycentric coordinates (0.5, 0.4, 0.1), heavily favoring Efficiency (50%) and Stability (40%) with minimal Innovation (10%). This reflects its focus on transaction speed and system reliability over novel features."
-    },
-    {
-      "id": 14,
-      "question": "Which system demonstrates the strongest bias toward Innovation in the trilemma?",
-      "options": {
-        "A": "Ethereum (45% innovation)",
-        "B": "Bitcoin (50% innovation)",
-        "C": "DeFi (70% innovation)",
-        "D": "Stablecoins (35% innovation)"
-      },
-      "correct": "C",
-      "explanation": "DeFi systems score highest on Innovation (70%), with only 15% each for Efficiency and Stability. This reflects rapid protocol experimentation, novel financial primitives, and acceptance of higher risk for innovation gains."
-    },
-    {
-      "id": 15,
-      "question": "The Trilemma visualization shows an arrow from Ethereum toward Efficiency. What does this represent?",
-      "options": {
-        "A": "Historical trend - Ethereum was once more efficient",
-        "B": "Planned trajectory - Layer 2 scaling and protocol upgrades",
-        "C": "Competitor pressure - losing market share to faster chains",
-        "D": "Regulatory requirement - mandated performance standards"
-      },
-      "correct": "B",
-      "explanation": "The arrow indicates Ethereum's development path from (0.3, 0.25, 0.45) toward higher Efficiency through Layer 2 rollups, sharding, and protocol improvements. This represents strategic evolution to address the efficiency-innovation trade-off."
-    },
-    {
-      "id": 16,
-      "question": "According to the trilemma, what fundamental trade-off do CBDCs face?",
-      "options": {
-        "A": "High Efficiency (35%) and Stability (50%) come at cost of Innovation (15%)",
-        "B": "Prioritizing Innovation (50%) sacrifices Stability (25%)",
-        "C": "Balanced approach (33% each) is optimal",
-        "D": "No trade-offs exist for government-backed systems"
-      },
-      "correct": "A",
-      "explanation": "CBDCs are positioned at (0.35, 0.5, 0.15), prioritizing Stability (50%) and moderate Efficiency (35%) while scoring lowest on Innovation (15%). This reflects central bank mandates for monetary stability over experimental features."
-    },
-    {
-      "id": 17,
-      "question": "Which policy tool demonstrates the most comprehensive positive effectiveness across all objectives?",
-      "options": {
-        "A": "Capital Requirements (+2 Stability, but negative on Inclusion/Innovation)",
-        "B": "Cross-border Coordination (+1 on all objectives, +2 AML)",
-        "C": "Sandbox (+2 Innovation, but mixed on others)",
-        "D": "CBDC (+2 Inclusion, +1 on most others)"
-      },
-      "correct": "B",
-      "explanation": "Cross-border coordination scores positively on all five objectives: Stability (+1), Inclusion (+1), Innovation (+1), Consumer Protection (+1), and AML (+2). This makes it the most uniformly beneficial policy tool without major trade-offs."
+      "explanation": "CBDCs score a perfect 10 on the Monetary lens, reflecting their direct connection to central bank operations, monetary policy transmission, and sovereign currency functions. This is the highest score of any phenomenon on any single lens."
     },
     {
       "id": 18,
-      "question": "The Policy Effectiveness Matrix shows which tool as most harmful to Innovation?",
+      "question": "DeFi/AMMs score 10 on Microstructure but only 3 on Monetary in the four lenses heatmap. This suggests:",
       "options": {
-        "A": "Capital Requirements (-1)",
-        "B": "Licensing (-2)",
-        "C": "Disclosure (0)",
-        "D": "Sandbox (+2)"
+        "A": "DeFi is irrelevant to economics",
+        "B": "DeFi is primarily about trading mechanisms and price discovery, not money creation or central banking",
+        "C": "The Monetary lens is unimportant",
+        "D": "All phenomena should score equally across lenses"
       },
       "correct": "B",
-      "explanation": "Licensing scores -2 on Innovation, the most negative impact in that category. Heavy licensing requirements create barriers to entry, increase compliance costs, and slow down experimental development compared to all other policy tools."
+      "explanation": "DeFi/AMMs are quintessentially microstructure phenomena -- automated market makers, liquidity pools, and on-chain price discovery. Their low Monetary score reflects that DeFi protocols are primarily about exchange mechanisms, not money supply or monetary policy."
     },
     {
       "id": 19,
-      "question": "According to the policy matrix, which objective benefits most from Stablecoin Regulation?",
+      "question": "Applying all four lenses to the Terra/Luna collapse (2022), which lens explains the initial trigger?",
       "options": {
-        "A": "Stability (+2)",
-        "B": "Consumer Protection (+2)",
-        "C": "AML (+2)",
-        "D": "All three equally (+2)"
+        "A": "Monetary: the algorithmic peg was unbacked private money that lost confidence",
+        "B": "Platform: insufficient network effects prevented adoption",
+        "C": "Microstructure: AMM design was technically flawed",
+        "D": "Regulatory: regulators forced Terra to shut down"
       },
-      "correct": "D",
-      "explanation": "Stablecoin Regulation scores +2 on three objectives: Stability, Consumer Protection, and AML. This reflects the systemic importance of stablecoins and their vulnerability to runs, fraud, and illicit finance without proper oversight."
+      "correct": "A",
+      "explanation": "The Monetary lens explains the trigger: Terra/UST was an algorithmic stablecoin (unbacked private money) that collapsed when confidence broke, creating a reflexive death spiral. The other lenses explain amplification (Platform: network effects reversed; Microstructure: liquidity dried up) and prevention failure (Regulatory: no oversight)."
     },
     {
       "id": 20,
-      "question": "Synthesizing across all frameworks, which future scenario appears most likely by 2045?",
+      "question": "The course's central thesis is that 'no single economic lens suffices' for analyzing digital finance. Which case best demonstrates why all four lenses are needed simultaneously?",
       "options": {
-        "A": "Pure DeFi dominance (70%+ market share) with minimal regulation",
-        "B": "Balanced Coexistence: TradFi ~50%, DeFi ~30%, with hybrid models bridging both",
-        "C": "Complete Absorption: TradFi assimilates all innovations, DeFi becomes irrelevant",
-        "D": "Regulatory fragmentation prevents any coherent convergence"
+        "A": "A simple Bitcoin purchase on a centralized exchange",
+        "B": "A stablecoin run that triggers DeFi liquidations, spreads to exchanges, and prompts regulatory intervention",
+        "C": "A central bank raising interest rates",
+        "D": "A company issuing traditional stock on a stock exchange"
       },
       "correct": "B",
-      "explanation": "The Coexistence scenario best integrates insights from all frameworks: (1) policies can be effective without eliminating innovation, (2) the trilemma allows different systems to optimize different corners, (3) network effects support multiple equilibria, and (4) hybrid models resolve regulatory-innovation tensions."
+      "explanation": "A stablecoin run requires Monetary analysis (money demand shock), Platform analysis (network effects in redemptions), Microstructure analysis (liquidity spirals, price impact), and Regulatory analysis (reserve requirements, intervention). This cross-cutting event cannot be fully understood through any single lens."
     }
   ]
 }

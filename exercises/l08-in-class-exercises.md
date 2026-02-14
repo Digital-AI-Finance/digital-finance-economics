@@ -721,7 +721,7 @@ The economically strongest position is **TradFi transforms but doesn't disappear
 
 ### Task
 
-Your group is a founding team launching a new financial institution that combines the best of TradFi and DeFi. Design the institution using insights from all four economic lenses. You must address the Digital Finance Trilemma (Decentralization, Efficiency, Compliance - pick two and explain the trade-off for the third).
+Your group is a founding team launching a new financial institution that combines the best of TradFi and DeFi. Design the institution using insights from all four economic lenses. You must address the Digital Finance Trilemma (Decentralization, Security, Scalability - pick two and explain the trade-off for the third).
 
 **Cross-reference**:
 - **L02**: Monetary policy implications of private money creation
@@ -846,7 +846,7 @@ Your group is a founding team launching a new financial institution that combine
 
 ### Task
 
-Map 10 crypto/digital finance projects onto the Digital Finance Trilemma triangle. For each project, assign scores from 0-10 for each dimension (Decentralization, Efficiency, Compliance), justify your scoring, and identify the trade-off each project has made.
+Map 10 crypto/digital finance projects onto the Digital Finance Trilemma triangle. For each project, assign scores from 0-10 for each dimension (Decentralization, Security, Scalability), justify your scoring, and identify the trade-off each project has made.
 
 **Projects to Map:**
 1. Bitcoin
@@ -864,18 +864,18 @@ Map 10 crypto/digital finance projects onto the Digital Finance Trilemma triangl
 
 **COMPLETED TRILEMMA MAP:**
 
-| Project | Decentralization | Efficiency | Compliance | Trade-off Made |
+| Project | Decentralization | Security | Scalability | Trade-off Made |
 |---------|------------------|------------|------------|----------------|
-| **Bitcoin** | 9 | 2 | 1 | Maximum decentralization, sacrifices efficiency (7 TPS, high fees) and compliance (pseudonymous) |
-| **Ethereum** | 8 | 4 | 2 | High decentralization, moderate efficiency (15 TPS, improving with L2s), low compliance |
-| **Solana** | 5 | 9 | 2 | Sacrifices decentralization (validator concentration) for efficiency (65K TPS), no compliance focus |
-| **USDC (Circle)** | 2 | 7 | 9 | Centralized issuer (Circle) with high compliance (regulated, reserves audited), efficient on modern chains |
-| **Tether (USDT)** | 2 | 8 | 4 | Centralized, efficient, but compliance questions (reserve transparency issues) |
-| **Uniswap** | 8 | 6 | 2 | Protocol is decentralized, efficient for swaps, no KYC or compliance features |
-| **Aave** | 7 | 6 | 3 | Decentralized governance, efficient lending, some institutional compliance features (Aave Arc) |
-| **Binance (CEX)** | 1 | 9 | 5 | Fully centralized exchange, maximum efficiency, variable compliance (improving, multiple regulatory issues) |
-| **Coinbase** | 1 | 7 | 10 | Fully centralized, US-regulated, public company - maximum compliance at cost of decentralization |
-| **Digital Euro (CBDC)** | 1 | 8 | 10 | Central bank issued (no decentralization), designed for efficiency and full regulatory compliance |
+| **Bitcoin** | 9 | 9 | 2 | Maximum decentralization and security (PoW), sacrifices scalability (7 TPS, high fees) |
+| **Ethereum** | 8 | 8 | 3 | High decentralization, strong security (PoS), moderate scalability (15 TPS, improving with L2s) |
+| **Solana** | 5 | 5 | 9 | Sacrifices decentralization (validator concentration) and security (multiple outages) for scalability (65K TPS) |
+| **USDC (Circle)** | 2 | 8 | 7 | Centralized issuer (Circle), strong security (regulated reserves), good scalability on modern chains |
+| **Tether (USDT)** | 2 | 6 | 8 | Centralized, scalable across many chains, but security concerns (reserve transparency questions) |
+| **Uniswap** | 8 | 7 | 4 | Decentralized protocol with smart-contract security, limited scalability (L1 gas costs) |
+| **Aave** | 7 | 7 | 4 | Decentralized governance, audited smart contracts, scalability limited by L1 throughput |
+| **Binance (CEX)** | 1 | 6 | 9 | Fully centralized, maximum scalability (matching engine), security risks (single point of failure, hacks) |
+| **Coinbase** | 1 | 8 | 8 | Fully centralized, strong security (US-regulated, insured), high scalability at cost of decentralization |
+| **Digital Euro (CBDC)** | 1 | 9 | 8 | Central bank issued (no decentralization), maximum security (sovereign backing), designed for scalability |
 
 ---
 
@@ -899,7 +899,7 @@ Map 10 crypto/digital finance projects onto the Digital Finance Trilemma triangl
                 /      BNB    BASE         \
                /                            \
               /________________________________\
-   EFFICIENCY (10)                        COMPLIANCE (10)
+   SECURITY (10)                         SCALABILITY (10)
               CBDC     COINBASE
 ```
 
