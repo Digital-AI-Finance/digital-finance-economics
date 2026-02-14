@@ -1,0 +1,1216 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Market Microstructure: Mathematical Models and DeFi Analysis}
+\subtitle{L06 Extended: Formalizing AMM Design, Price Discovery, and LP Profitability\\[0.3em]\normalsize From Kyle's lambda to concentrated liquidity and MEV game theory}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+%% ===== SECTION 1: Bridge from Basic Lecture (4 frames: 1 title + 3) =====
+\section{Bridge from Basic Lecture}
+
+% Frame 1 (title)
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Frame 2
+\begin{frame}[t]{L06 Extended: What This Lecture Adds}
+
+\textbf{In the basic L06 lecture} you learned the constant product formula $x \cdot y = k$, impermanent loss (IL), and MEV (Maximal Extractable Value---profit from reordering transactions). This extended lecture formalizes those ideas mathematically and introduces new models.
+
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{New Mathematical Tools}
+\begin{enumerate}
+\item Kyle's price impact model (quantifies adverse selection)
+\item Concentrated liquidity mechanics (Uniswap v3)
+\item StableSwap invariant (Curve Finance)
+\item LP profitability frontier (fee vs IL trade-off)
+\item MEV game theory (sandwich attack optimization)
+\item DEX vs CEX multi-dimensional comparison
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Why Formalize?}
+\begin{itemize}
+\item Qualitative intuition from L06 basic is necessary but not sufficient for design or policy
+\item Mathematical models let us predict outcomes: ``If volatility doubles, do LPs still profit?''
+\item DeFi protocols are themselves mathematical---understanding the math lets you audit the code
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Prerequisites}
+\begin{itemize}
+\item L06 basic lecture (AMM, IL, MEV definitions)
+\item Algebra and basic calculus (derivatives)
+\item No prior knowledge of market microstructure theory required
+\end{itemize}
+\end{columns}
+
+\bottomnote{This lecture bridges qualitative understanding from L06 basic with formal models used in DeFi research}
+\end{frame}
+
+% Frame 3 (NO GREEK)
+\begin{frame}[t]{Notation and Variable Reference}
+
+\textbf{We use plain-letter notation throughout this lecture.} Greek letters are introduced only where standard in the literature and always with explicit definitions.
+
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{AMM Variables}
+\begin{itemize}
+\item $x$, $y$: token reserves in a liquidity pool
+\item $k$: constant product invariant ($x \cdot y = k$)
+\item $P = y/x$: spot price (units of $y$ per unit of $x$)
+\item $L$: liquidity (geometric mean of reserves, $L = \sqrt{k}$)
+\item $r$: price ratio $P_{\text{final}}/P_{\text{initial}}$
+\item $f$: fee rate (e.g., 0.003 for 0.3\%)
+\item $IL$: impermanent loss $= 2\sqrt{r}/(1+r) - 1$
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Trading Variables}
+\begin{itemize}
+\item $Q$: trade quantity (number of tokens)
+\item $Q_f$: front-runner's trade size in a sandwich attack
+\item $fee$: total fee paid on a trade ($= f \times Q \times P$)
+\item $gas$: blockchain transaction cost (in USD)
+\item $V$: trading volume; $TVL$: total value locked in pool
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Efficiency Variables}
+\begin{itemize}
+\item $IS$: information share (venue's contribution to price discovery)
+\item $A$: amplification factor (Curve's StableSwap parameter)
+\item $D$: StableSwap invariant parameter
+\end{itemize}
+\end{columns}
+
+\bottomnote{All variables use plain letters; Greek symbols are introduced with definitions when they appear in Frames 4+ onward}
+\end{frame}
+
+%% ===== SECTION 2: Kyle Model Extensions for Crypto (4 frames) =====
+\section{Kyle Model Extensions for Crypto}
+
+% Frame 4 (introduce Greek lambda)
+\begin{frame}[t]{Kyle's Lambda: Formalizing Price Impact}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Kyle (1985) Model}
+
+Kyle introduced $\lambda$ (``lambda''), which measures how much prices move per unit traded. $\lambda$ is the \textit{price impact coefficient}---the core concept in market microstructure.
+
+$$\lambda = \frac{\sigma_v}{2\sigma_u}$$
+
+where:
+\begin{itemize}
+\item $\sigma_v$ = standard deviation of the asset's true value changes (how much private information moves the price)
+\item $\sigma_u$ = standard deviation of noise trading volume (uninformed, random trading)
+\item Higher $\sigma_v$ (more insider info) $\to$ higher $\lambda$
+\item Higher $\sigma_u$ (more noise trading) $\to$ lower $\lambda$
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Crypto vs Traditional Markets}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Market} & $\sigma_v$ & $\lambda$ \\
+\midrule
+S\&P 500 & 0.01 & 0.0125 \\
+AAPL & 0.016 & 0.02 \\
+BTC (Binance) & 0.024 & 0.06 \\
+BTC (Coinbase) & 0.03 & 0.075 \\
+ETH (Uniswap) & 0.048 & 0.12 \\
+SOL (DEX) & 0.06 & 0.15 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Key insight:} Crypto markets have $\lambda$ values 5--12$\times$ higher than traditional equities. This means a 1-unit trade moves crypto prices 5--12$\times$ more.
+
+\textbf{Why?} Higher $\sigma_v$ (protocol hacks, governance votes, delistings known to insiders) and lower $\sigma_u$ (less passive index-fund flow).
+\end{columns}
+
+\bottomnote{Kyle (1985): $\lambda = \sigma_v / (2\sigma_u)$ measures adverse selection; crypto $\lambda$ is 5--12x TradFi due to higher info asymmetry}
+\end{frame}
+
+% Frame 5
+\begin{frame}[t]{From Lambda to Execution Cost}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Price Impact of a Trade}
+
+For a trade of size $Q$, Kyle's model predicts the price moves by:
+$$\Delta P = \lambda \cdot Q$$
+
+\textbf{Total execution cost} (what you pay above the fair price):
+$$C(Q) = \lambda \cdot Q^2 / 2$$
+
+This is quadratic: doubling your trade size quadruples your execution cost. This is why large traders split orders across time.
+
+\vspace{0.3em}
+\textbf{Worked example:} Buy 10 ETH on Uniswap ($\lambda = 0.12$, $P_0 = \$1{,}800$).
+
+Price impact: $\Delta P = 0.12 \times 10 = \$1.20$/ETH.
+
+Execution cost: $C = 0.12 \times 10^2 / 2 = \$6$ above fair value.
+
+As a percentage: $6 / (10 \times 1800) = 0.033\%$.
+
+\column{0.48\textwidth}
+\textbf{Comparing Venues}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Venue} & $\lambda$ & \textbf{Cost (10 ETH)} \\
+\midrule
+Binance & 0.06 & \$3.00 \\
+Coinbase & 0.075 & \$3.75 \\
+Uniswap v3 & 0.12 & \$6.00 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+Binance is cheapest because it has deepest order books (lowest $\lambda$). Uniswap costs 2$\times$ more per trade, but offers permissionless access and censorship resistance.
+
+\vspace{0.3em}
+\textbf{AMMs vs Order Books}
+
+In an AMM, $\lambda$ is not fixed---it depends on pool depth:
+$$\lambda_{\text{AMM}} = \frac{P}{2 \cdot x}$$
+where $x$ is the token reserve. Deeper pools $\to$ lower $\lambda$.
+
+For Uniswap v3 concentrated liquidity, effective $\lambda$ can be much lower within the active range.
+\end{columns}
+
+\bottomnote{Execution cost $C = \lambda Q^2 / 2$ is quadratic in trade size; venue choice depends on $\lambda$ vs access trade-off}
+\end{frame}
+
+% Frame 6 (Chart 06)
+\begin{frame}[t]{Kyle Lambda: Traditional vs Crypto Markets}
+\begin{center}
+\includegraphics[width=0.72\textwidth]{06_kyle_lambda_comparison/chart.pdf}
+\end{center}
+
+\bottomnote{Kyle (1985), Barbon \& Ranaldo (2022): crypto $\lambda$ reflects higher $\sigma_v$ (insider info) and lower $\sigma_u$ (less passive flow)}
+\end{frame}
+
+% Frame 7
+\begin{frame}[t]{Implications for DeFi Protocol Design}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Reducing Lambda in AMMs}
+
+Protocol designers can lower $\lambda$ (reduce price impact) through:
+\begin{enumerate}
+\item \textbf{Deeper pools:} More TVL reduces $\lambda_{\text{AMM}} = P/(2x)$
+\item \textbf{Concentrated liquidity:} Uniswap v3 concentrates reserves near the current price, effectively increasing $x$ in the active range
+\item \textbf{Dynamic fees:} Raise fees during high-volatility periods (when $\sigma_v$ spikes) to compensate LPs for increased adverse selection
+\item \textbf{Batch auctions:} CoW Protocol collects orders over a time window and executes at a single clearing price, eliminating front-running
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Lambda and LP Profitability}
+
+High $\lambda$ is a double-edged sword for LPs:
+\begin{itemize}
+\item \textbf{Pro:} Higher $\lambda$ $\to$ more fee revenue per trade (trades generate larger price moves, earning LPs more in percentage terms)
+\item \textbf{Con:} Higher $\lambda$ $\to$ more adverse selection loss (informed traders systematically extract value from the pool)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{The Informed Trader Problem}
+
+Kyle's model assumes one informed trader, one market maker, and noise traders. In DeFi:
+\begin{itemize}
+\item \textbf{Informed traders} include MEV searchers, arbitrageurs, and insiders
+\item \textbf{Market makers} are passive LPs (cannot adjust quotes in real time)
+\item LPs are structurally disadvantaged: they always trade against informed flow
+\end{itemize}
+\end{columns}
+
+\bottomnote{Protocol design directly controls $\lambda$; the challenge is reducing adverse selection without eliminating LP incentives}
+\end{frame}
+
+%% ===== SECTION 3: Concentrated Liquidity: Uniswap v3 (5 frames) =====
+\section{Concentrated Liquidity: Uniswap v3}
+
+% Frame 8 (introduce Greek eta)
+\begin{frame}[t]{Concentrated Liquidity: The Capital Efficiency Revolution}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{From v2 to v3}
+
+Uniswap v2 spreads liquidity uniformly across all prices from 0 to infinity. Most of this liquidity sits idle---ETH will never trade at \$0.01 or \$10 million.
+
+Uniswap v3 lets LPs choose a price range $[P_{\text{low}}, P_{\text{high}}]$, concentrating their capital where it is actually used.
+
+\vspace{0.3em}
+\textbf{Capital Efficiency Multiplier $\eta$}
+
+We define $\eta$ (``eta'') as the capital efficiency gain from concentrating liquidity:
+$$\eta = \frac{1}{\sqrt{1+r} - \sqrt{1-r}}$$
+where $r$ is the half-width of the price range as a fraction of current price.
+
+\textbf{Example:} $\pm 5\%$ range ($r = 0.05$):
+$$\eta = \frac{1}{\sqrt{1.05} - \sqrt{0.95}} = \frac{1}{1.0247 - 0.9747} = 20.0\times$$
+
+\$100K concentrated = \$2M full-range equivalent.
+
+\column{0.48\textwidth}
+\textbf{Efficiency by Range Width}
+
+\vspace{0.3em}
+\begin{tabular}{ccc}
+\toprule
+\textbf{Range} & $\eta$ & \textbf{Equivalent} \\
+\midrule
+$\pm 1\%$ & 100x & \$100K $=$ \$10M \\
+$\pm 2\%$ & 50x & \$100K $=$ \$5M \\
+$\pm 5\%$ & 20x & \$100K $=$ \$2M \\
+$\pm 10\%$ & 10x & \$100K $=$ \$1M \\
+$\pm 20\%$ & 5x & \$100K $=$ \$500K \\
+$\pm 50\%$ & 2x & \$100K $=$ \$200K \\
+$\pm 100\%$ & 1x & Full range (v2) \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{The catch:} If the price moves outside your range, you earn \textbf{zero fees} and hold 100\% of the depreciating token. Narrow ranges amplify both gains and losses.
+\end{columns}
+
+\bottomnote{Adams et al.\ (2021): $\eta = 1/(\sqrt{1+r} - \sqrt{1-r})$ measures capital efficiency; $\pm$5\% range gives 20x efficiency}
+\end{frame}
+
+% Frame 9
+\begin{frame}[t]{How Concentrated Liquidity Works Mathematically}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Virtual Reserves}
+
+In v3, an LP providing liquidity in $[P_a, P_b]$ creates ``virtual reserves'' that behave like a v2 pool within that range:
+
+$$x_{\text{virtual}} = L \left(\frac{1}{\sqrt{P}} - \frac{1}{\sqrt{P_b}}\right)$$
+$$y_{\text{virtual}} = L \left(\sqrt{P} - \sqrt{P_a}\right)$$
+
+where $L = \sqrt{k}$ is the liquidity parameter. The constant product $x \cdot y = k$ still holds locally, but with $L$ amplified by the concentration factor $\eta$.
+
+\vspace{0.3em}
+\textbf{Price Representation}
+
+v3 uses $\sqrt{P}$ (square root of price) as the fundamental variable, not $P$ itself. This makes the math simpler: swaps change $\sqrt{P}$ linearly in the trade amount.
+
+\column{0.48\textwidth}
+\textbf{Tick System}
+
+Prices are discretized into ``ticks'' (minimum price increments):
+$$P(i) = 1.0001^i$$
+
+Each tick represents a 0.01\% price change. This logarithmic spacing means:
+\begin{itemize}
+\item Low prices have small absolute tick sizes
+\item High prices have large absolute tick sizes
+\item Same percentage precision everywhere
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Active Liquidity}
+
+Only LPs whose range includes the current price earn fees. As price moves through ticks:
+\begin{itemize}
+\item Entering a tick: LP position activates
+\item Leaving a tick: LP position deactivates
+\item The pool's effective depth changes at every tick boundary
+\end{itemize}
+\end{columns}
+
+\bottomnote{v3 uses virtual reserves and tick-based discretization; $\sqrt{P}$ is the native variable for swap computation}
+\end{frame}
+
+% Frame 10 (Chart 07)
+\begin{frame}[t]{Capital Efficiency vs Range Risk}
+\begin{center}
+\includegraphics[width=0.72\textwidth]{07_concentrated_liquidity_efficiency/chart.pdf}
+\end{center}
+
+\bottomnote{Adams et al.\ (2021): Narrower ranges give exponentially higher $\eta$ but exponentially higher out-of-range risk}
+\end{frame}
+
+% Frame 11
+\begin{frame}[t]{Active LP Management in v3}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The JIT Liquidity Problem}
+
+Just-in-time (JIT) liquidity providers deposit for a single block to capture fees from a known large trade, then withdraw immediately.
+
+\textbf{Impact on passive LPs:}
+\begin{itemize}
+\item JIT providers dilute fee share for the block
+\item Passive LPs earn fewer fees per dollar deposited
+\item JIT effectively front-runs passive LP fee income
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Rebalancing Costs}
+
+Active LPs must frequently adjust their range as price moves. Each adjustment costs:
+\begin{itemize}
+\item Gas fees (\$5--\$50 on Ethereum mainnet)
+\item Potential slippage on the rebalancing trade
+\item Realized impermanent loss (becomes permanent)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Professional vs Retail LPs}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+& \textbf{Professional} & \textbf{Retail} \\
+\midrule
+Range width & $\pm 2$--5\% & $\pm 20$--50\% \\
+Rebalancing & Minutes & Days/never \\
+Gas budget & High & Low \\
+Fee capture & 60--80\% & 20--40\% \\
+IL management & Hedged & Unhedged \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+Adams et al.\ (2024) find that professional LPs capture the majority of Uniswap v3 fees. Retail LPs who set-and-forget wide ranges underperform relative to simply holding the tokens.
+
+\textbf{Implication:} v3 shifted LP from a passive activity to a professional skill, similar to traditional market making.
+\end{columns}
+
+\bottomnote{v3 professionalized LP provision; JIT liquidity and rebalancing costs disadvantage passive retail LPs}
+\end{frame}
+
+% Frame 12
+\begin{frame}[t]{Concentrated Impermanent Loss: Amplified Risk}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{IL Amplification Formula}
+
+For a concentrated position with efficiency $\eta$:
+$$IL_{\text{conc}} = IL_{\text{v2}} \times \eta$$
+
+where $IL_{\text{v2}} = \frac{2\sqrt{r}}{1+r} - 1$ is standard impermanent loss and $r = P_{\text{final}} / P_{\text{initial}}$.
+
+\vspace{0.3em}
+\textbf{Worked Example}
+
+ETH moves 10\% ($r = 1.10$):
+\begin{itemize}
+\item v2 IL: $\frac{2\sqrt{1.10}}{1 + 1.10} - 1 = -0.12\%$ (small)
+\item $\pm 5\%$ range ($\eta = 20$): $IL_{\text{conc}} = -0.12\% \times 20 = -2.4\%$
+\item $\pm 2\%$ range ($\eta = 50$): $IL_{\text{conc}} = -0.12\% \times 50 = -6.0\%$
+\end{itemize}
+
+For a 5$\times$ concentration ($\eta = 5$, range $\pm 20\%$):
+\begin{itemize}
+\item v2 IL at 10\% move: $-0.12\%$
+\item Concentrated: $-0.12\% \times 5 = -0.6\%$
+\item At larger moves: 20\% move gives $-0.6\% \times 5 = -3.0\%$
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Risk-Return Comparison}
+
+\vspace{0.3em}
+\begin{tabular}{lccc}
+\toprule
+& \textbf{v2} & \textbf{5x} & \textbf{20x} \\
+\midrule
+Range & Full & $\pm 20\%$ & $\pm 5\%$ \\
+$\eta$ & 1 & 5 & 20 \\
+Fee mult. & 1x & 5x & 20x \\
+IL (10\%) & 0.12\% & 0.6\% & 2.4\% \\
+IL (50\%) & 2.0\% & 10\% & 40\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Key insight:} Concentration amplifies both fee income and IL by the same factor $\eta$. The net effect depends on the ratio of fee income to IL:
+\begin{itemize}
+\item High volume, low volatility $\to$ concentration helps
+\item Low volume, high volatility $\to$ concentration hurts
+\end{itemize}
+
+\textbf{Decision rule:} Concentrate only if $\frac{f \cdot V/TVL}{\sigma^2} > \text{threshold}$, where $\sigma$ is the asset's volatility.
+\end{columns}
+
+\bottomnote{Concentrated IL $= IL_{\text{v2}} \times \eta$; 10\% price move with 5x concentration: 0.6\% loss (vs 0.12\% in v2)}
+\end{frame}
+
+%% ===== SECTION 4: Curve StableSwap Invariant (4 frames) =====
+\section{Curve StableSwap Invariant}
+
+% Frame 13
+\begin{frame}[t]{The StableSwap Invariant: Best of Both Worlds}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Three AMM Invariants}
+
+\vspace{0.3em}
+\textbf{1. Constant-Sum:} $x + y = D$
+\begin{itemize}
+\item Zero slippage (price always = 1)
+\item But: reserves can be fully depleted (one token goes to zero)
+\end{itemize}
+
+\textbf{2. Constant-Product:} $x \cdot y = k$
+\begin{itemize}
+\item Infinite liquidity (always tradable)
+\item But: high slippage for large trades
+\end{itemize}
+
+\textbf{3. StableSwap (Curve):} Interpolates between both
+$$A \cdot n^n \cdot \sum x_i + D = A \cdot n^n \cdot D + \frac{D^{n+1}}{n^n \cdot \prod x_i}$$
+
+For $n = 2$ tokens:
+$$4A(x + y) + D = 4AD + \frac{D^3}{4xy}$$
+
+\column{0.48\textwidth}
+\textbf{The Amplification Parameter $A$}
+
+$A$ controls how ``stableswap-like'' vs ``constant-product-like'' the curve is:
+\begin{itemize}
+\item $A = 0$: pure constant product (high slippage)
+\item $A = 1$: mild concentration near peg
+\item $A = 100$: very flat near peg (Curve default for stablecoins)
+\item $A \to \infty$: approaches constant sum (zero slippage but fragile)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Why This Matters}
+
+Stablecoin pairs (USDC/USDT) rarely deviate from 1:1. Curve exploits this by concentrating liquidity near the peg:
+\begin{itemize}
+\item 100$\times$ lower slippage than Uniswap for same-peg swaps
+\item Still provides safety: if one token depegs, curve transitions smoothly to constant-product behavior
+\end{itemize}
+\end{columns}
+
+\bottomnote{Egorov (2019): StableSwap invariant with amplification $A$ achieves 100x lower slippage for pegged assets}
+\end{frame}
+
+% Frame 14
+\begin{frame}[t]{StableSwap: Numerical Example}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Setup:} Pool with 100M USDC and 100M USDT.
+
+$D = 200$M, $A = 100$.
+
+\vspace{0.3em}
+\textbf{Swap 1M USDC for USDT}
+
+\begin{tabular}{lcc}
+\toprule
+\textbf{AMM Type} & \textbf{USDT Out} & \textbf{Slippage} \\
+\midrule
+Constant-Sum & 1{,}000{,}000 & 0.000\% \\
+StableSwap & 999{,}990 & 0.001\% \\
+Constant-Prod & 999{,}010 & 0.099\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+StableSwap gives 99$\times$ less slippage than constant product for this stablecoin swap.
+
+\column{0.48\textwidth}
+\textbf{Swap 10M USDC (10\% of pool)}
+
+\begin{tabular}{lcc}
+\toprule
+\textbf{AMM Type} & \textbf{USDT Out} & \textbf{Slippage} \\
+\midrule
+Constant-Sum & 10{,}000{,}000 & 0.000\% \\
+StableSwap & 9{,}999{,}100 & 0.009\% \\
+Constant-Prod & 9{,}090{,}909 & 9.09\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+At 10\% of pool, constant product loses 9\% to slippage. StableSwap loses only 0.009\%.
+
+\vspace{0.3em}
+\textbf{When StableSwap fails:} If USDC depegs to \$0.90, the pool becomes unbalanced. StableSwap transitions to constant-product behavior, protecting LPs from complete loss but increasing slippage dramatically.
+\end{columns}
+
+\bottomnote{StableSwap efficiency depends on assets remaining pegged; depeg events trigger constant-product fallback behavior}
+\end{frame}
+
+% Frame 15 (Chart 08)
+\begin{frame}[t]{AMM Invariant Comparison}
+\begin{center}
+\includegraphics[width=0.72\textwidth]{08_amm_invariant_comparison/chart.pdf}
+\end{center}
+
+\bottomnote{Egorov (2019): StableSwap (green) hugs the constant-sum line near the peg but curves like constant-product far from it}
+\end{frame}
+
+% Frame 16
+\begin{frame}[t]{Choosing the Right AMM Design}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Design Decision Matrix}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Asset Pair} & \textbf{Best AMM} & \textbf{Why} \\
+\midrule
+USDC/USDT & StableSwap & Near-peg \\
+ETH/USDC & Uni v3 conc. & Moderate vol \\
+MEME/ETH & Uni v2 full & High vol \\
+wBTC/BTC & StableSwap & Near-peg \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{The Specialization Trend}
+
+Different AMM designs optimize for different volatility regimes:
+\begin{itemize}
+\item Low volatility (stablecoins): StableSwap dominates
+\item Medium volatility (majors): Concentrated liquidity
+\item High volatility (memecoins): Full-range v2 safest for LPs
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Hybrid Approaches}
+
+Newer protocols combine multiple invariants:
+\begin{itemize}
+\item \textbf{Curve v2:} Dynamic $A$ that adjusts to market conditions
+\item \textbf{Maverick:} LPs choose directional concentration (bet on price direction)
+\item \textbf{Ambient (CrocSwap):} Combines concentrated and ambient (full-range) liquidity in one pool
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Open Research Question}
+
+Can an AMM dynamically switch invariants based on real-time volatility? This would require an oracle (external price feed) and introduces new attack surfaces (oracle manipulation).
+
+The fundamental tension: \textit{efficiency requires assumptions about asset behavior; robustness requires minimal assumptions.}
+\end{columns}
+
+\bottomnote{No single AMM design dominates; optimal choice depends on asset volatility, correlation, and LP sophistication}
+\end{frame}
+
+%% ===== SECTION 5: LP Profitability Analysis (4 frames) =====
+\section{LP Profitability Analysis}
+
+% Frame 17
+\begin{frame}[t]{The LP Profitability Equation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Net LP Return}
+
+An LP's net return combines fee income and impermanent loss:
+$$R_{\text{net}} = \underbrace{f \cdot \frac{V}{TVL} \cdot T}_{\text{fee income}} + \underbrace{IL(r)}_{\text{impermanent loss (negative)}}$$
+
+where:
+\begin{itemize}
+\item $f$: fee rate (0.05\%, 0.3\%, or 1\%)
+\item $V/TVL$: daily volume relative to pool size
+\item $T$: number of days
+\item $IL(r) = \frac{2\sqrt{r}}{1+r} - 1$ (always $\leq 0$)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Breakeven condition:} $R_{\text{net}} = 0$ when:
+$$f \cdot \frac{V}{TVL} \cdot T = |IL(r)|$$
+
+\column{0.48\textwidth}
+\textbf{Empirical Data (Adams et al., 2024)}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Pool} & \textbf{Avg APR} & \textbf{\% LPs losing} \\
+\midrule
+ETH/USDC 0.3\% & 12.5\% & 49.5\% \\
+ETH/USDC 0.05\% & 8.2\% & 55.1\% \\
+WBTC/ETH 0.3\% & 5.1\% & 62.3\% \\
+USDC/USDT 0.01\% & 2.8\% & 28.4\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Striking finding:} Nearly half of all Uniswap v3 LPs lose money compared to simply holding their tokens. The profitable LPs tend to be:
+\begin{itemize}
+\item Professional market makers
+\item Active rebalancers
+\item Concentrated in high-volume pools
+\end{itemize}
+\end{columns}
+
+\bottomnote{$R_{\text{net}} = f \cdot V/TVL \cdot T + IL$; Adams et al.\ (2024) find 49.5\% of v3 LPs underperform holding}
+\end{frame}
+
+% Frame 18
+\begin{frame}[t]{Fee Tier Selection and Volume Dynamics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Uniswap v3 Fee Tiers}
+
+\vspace{0.3em}
+\begin{tabular}{cll}
+\toprule
+\textbf{Fee} & \textbf{Pairs} & \textbf{$V/TVL$} \\
+\midrule
+0.01\% & Stablecoins & 5--20 \\
+0.05\% & Major pairs & 2--5 \\
+0.30\% & Standard & 0.5--2 \\
+1.00\% & Exotic/volatile & 0.1--0.5 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+Higher fee tiers attract less volume but earn more per trade. The market finds an equilibrium:
+\begin{itemize}
+\item If a pool's fee is too high, traders route to lower-fee alternatives
+\item If too low, LPs exit (fees do not cover IL)
+\item Competition among fee tiers is a coordination game
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Volume-to-TVL Ratio}
+
+$V/TVL$ is the key metric for LP profitability:
+
+\vspace{0.3em}
+\textbf{High $V/TVL$ (good for LPs):}
+\begin{itemize}
+\item Popular trading pairs (ETH/USDC)
+\item High market volatility (more trading)
+\item Low TVL (less competition among LPs)
+\end{itemize}
+
+\textbf{Low $V/TVL$ (bad for LPs):}
+\begin{itemize}
+\item Obscure pairs
+\item Calm markets
+\item Oversubscribed pools (too much TVL)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Paradox:} When markets are volatile, both fee income \textit{and} IL increase. The question is: which grows faster? For moderate volatility, fees win. For extreme moves, IL dominates.
+\end{columns}
+
+\bottomnote{Fee tier selection is a coordination game; $V/TVL$ ratio determines LP profitability more than fee rate alone}
+\end{frame}
+
+% Frame 19 (Chart 09)
+\begin{frame}[t]{LP Profitability Frontier}
+\begin{center}
+\includegraphics[width=0.72\textwidth]{09_lp_profitability_frontier/chart.pdf}
+\end{center}
+
+\bottomnote{Adams et al.\ (2024), Lambert et al.\ (2022): LPs profitable only below breakeven volatility for their fee tier}
+\end{frame}
+
+% Frame 20
+\begin{frame}[t]{LP Strategies and Hedging}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Strategy 1: Passive Full-Range}
+\begin{itemize}
+\item Set wide range, collect fees
+\item Low maintenance, low gas costs
+\item Returns: $\sim$5--15\% APR minus IL
+\item \textbf{Risk:} Unhedged IL exposure
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Strategy 2: Active Concentrated}
+\begin{itemize}
+\item Narrow range ($\pm$2--5\%), frequent rebalancing
+\item High fee capture, high gas costs
+\item Returns: $\sim$20--50\% APR minus IL minus gas
+\item \textbf{Risk:} Out-of-range losses, gas costs
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Strategy 3: Delta-Hedged LP}
+\begin{itemize}
+\item LP position + perpetual futures hedge
+\item Eliminates directional exposure
+\item Isolates pure fee income
+\item \textbf{Risk:} Funding rate cost, basis risk
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Hedging IL with Perpetuals}
+
+An LP in ETH/USDC is long ETH (from the pool) and short ETH (from IL). To hedge:
+\begin{itemize}
+\item Short $\Delta$ ETH via perpetual swap
+\item $\Delta$ changes with price (gamma exposure)
+\item Must continuously rebalance hedge
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Cost-Benefit Analysis}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Strategy} & \textbf{Gross} & \textbf{Net} \\
+\midrule
+Passive & 12\% & 5--8\% \\
+Active & 35\% & 15--25\% \\
+Hedged & 12\% & 8--10\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+Hedged LP removes IL risk but at the cost of futures funding rates (typically 5--15\% annualized). Professional LPs use this approach when funding rates are below fee income.
+\end{columns}
+
+\bottomnote{Optimal LP strategy depends on risk tolerance, capital, and ability to actively manage positions}
+\end{frame}
+
+%% ===== SECTION 6: MEV Game Theory and DeFi Efficiency (4 frames) =====
+\section{MEV Game Theory and DeFi Efficiency}
+
+% Frame 21
+\begin{frame}[t]{MEV as a Game: Searcher Competition}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The MEV Game Structure}
+
+MEV extraction is a multi-player game:
+\begin{itemize}
+\item \textbf{Players:} Searchers (bots scanning the mempool for profit opportunities), builders (assembling blocks), validators (proposing blocks)
+\item \textbf{Strategy:} Choose which transactions to include, in what order, and how much to bid
+\item \textbf{Payoff:} Profit from reordering minus gas and priority bids
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Priority Gas Auction (PGA)}
+
+Searchers compete by bidding higher gas prices. In equilibrium, competition drives profits toward zero:
+$$\pi_{\text{net}} = \pi_{\text{gross}} - c_{\text{PGA}}$$
+
+where $c_{\text{PGA}}$ is the auction cost. With $N$ competing searchers, expected profit per searcher approaches $\pi_{\text{gross}} / N$.
+
+\column{0.48\textwidth}
+\textbf{Flashbots and PBS}
+
+Flashbots introduced Proposer-Builder Separation (PBS):
+\begin{enumerate}
+\item Searchers submit ``bundles'' (ordered transaction sets) to builders
+\item Builders assemble optimal blocks from bundles
+\item Validators choose the highest-paying block
+\item Most MEV revenue flows to validators
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Welfare Implications}
+\begin{itemize}
+\item \textbf{Without Flashbots:} PGA creates network congestion (wasted gas) and front-running visible in mempool
+\item \textbf{With Flashbots:} MEV extraction is more efficient (less wasted gas) but still extracts value from users
+\item \textbf{Net effect:} Flashbots reduced gas waste by $\sim$40\% but did not eliminate MEV costs for traders
+\end{itemize}
+\end{columns}
+
+\bottomnote{MEV is a competitive game; Flashbots/PBS reduce waste but do not eliminate extraction from users}
+\end{frame}
+
+% Frame 22 (cross-ref to L07)
+\begin{frame}[t]{MEV Taxonomy and Welfare Analysis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Beneficial MEV}
+\begin{itemize}
+\item \textbf{Arbitrage:} Aligns prices across venues, improving efficiency. Arbitrage MEV is socially useful because it makes prices more accurate.
+\item \textbf{Liquidations:} Maintains protocol solvency in lending markets (Aave, Compound). Without MEV-motivated liquidators, bad debt accumulates.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Harmful MEV}
+\begin{itemize}
+\item \textbf{Sandwich attacks:} Pure wealth transfer from victims to attackers with no social benefit
+\item \textbf{Front-running:} Trades ahead of user orders, increasing execution cost
+\item \textbf{Time-bandit attacks:} Re-mining past blocks to extract MEV (threatens consensus security)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{MEV Flow of Funds}
+
+\vspace{0.3em}
+\begin{tabular}{lc}
+\toprule
+\textbf{Recipient} & \textbf{Share} \\
+\midrule
+Validators & 60--80\% \\
+Searchers & 10--20\% \\
+Builders & 5--10\% \\
+Burned (gas) & 5--10\% \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Policy Question}
+
+Should regulators treat sandwich attacks as market manipulation? Traditional finance prohibits front-running. DeFi operates in a regulatory gray zone.
+
+\vspace{0.3em}
+\textit{For regulatory response to MEV, see L07 Extended (Regulatory Economics of Digital Finance).}
+\end{columns}
+
+\bottomnote{Some MEV (arbitrage, liquidations) is socially useful; sandwich attacks are pure extraction; regulation remains unsettled}
+\end{frame}
+
+% Frame 23 (Chart 10)
+\begin{frame}[t]{MEV Extraction: Optimal Sandwich Profit}
+\begin{center}
+\includegraphics[width=0.72\textwidth]{10_mev_extraction_profit/chart.pdf}
+\end{center}
+
+\bottomnote{Daian et al.\ (2020), Qin et al.\ (2022): interior maximum exists because AMM fees + PGA costs eventually dominate revenue}
+\end{frame}
+
+% Frame 24 (Chart 11)
+\begin{frame}[t]{DEX vs CEX: Multi-Dimensional Quality Comparison}
+\begin{center}
+\includegraphics[width=0.72\textwidth]{11_dex_cex_radar_comparison/chart.pdf}
+\end{center}
+
+\bottomnote{Barbon \& Ranaldo (2022): CEX excels at execution quality; DEX excels at transparency and censorship resistance}
+\end{frame}
+
+%% ===== SECTION 7: Synthesis and Policy Implications (3 frames) =====
+\section{Synthesis and Policy Implications}
+
+% Frame 25
+\begin{frame}[t]{The DeFi Microstructure Trilemma}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Three Desirable Properties}
+
+DeFi market design faces a trilemma---you can optimize for at most two of three properties:
+
+\begin{enumerate}
+\item \textbf{Capital efficiency:} Low slippage per dollar of liquidity deployed
+\item \textbf{LP safety:} Low impermanent loss and adverse selection risk
+\item \textbf{Decentralization:} Permissionless, non-custodial, censorship-resistant
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Trade-offs in Practice}
+\begin{itemize}
+\item Uniswap v3: High efficiency + decentralization, but LP risk
+\item Curve: Moderate efficiency + LP safety (for pegged assets), decentralized
+\item CEX: High efficiency + LP safety, but centralized
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{The Impossibility}
+
+Why can't we have all three?
+\begin{itemize}
+\item Capital efficiency requires concentrating liquidity (narrowing range), which amplifies IL
+\item LP safety requires wide ranges or hedging, which reduces efficiency
+\item Decentralization means no circuit breakers, no order cancellation during crashes
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Emerging Solutions}
+
+\begin{itemize}
+\item \textbf{Oracle-based AMMs:} Use external price feeds to reduce adverse selection (at cost of oracle dependency)
+\item \textbf{Intent-based trading:} Users specify desired outcome; solvers compete to execute optimally
+\item \textbf{Application-specific ordering:} Protocols control transaction ordering within their domain
+\end{itemize}
+\end{columns}
+
+\bottomnote{DeFi faces a capital efficiency--LP safety--decentralization trilemma; no current design achieves all three}
+\end{frame}
+
+% Frame 26
+\begin{frame}[t]{What Traditional Finance Can Learn from DeFi}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Innovations Worth Adopting}
+\begin{itemize}
+\item \textbf{Transparent pricing formulas:} AMM math is open-source; traditional market makers use proprietary algorithms
+\item \textbf{Permissionless LP:} Anyone can provide liquidity; traditional markets require broker-dealer licenses
+\item \textbf{24/7 trading:} No market hours, no holidays. Crypto showed demand exists for always-on markets.
+\item \textbf{Composability:} DeFi protocols can be combined (``money legos''). TradFi systems are siloed.
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{What DeFi Can Learn from TradFi}
+\begin{itemize}
+\item \textbf{Circuit breakers:} TradFi halts trading during extreme moves; DeFi liquidates ruthlessly
+\item \textbf{Best execution rules:} Brokers must route orders to best venue; DeFi has no such obligation
+\item \textbf{Market surveillance:} TradFi monitors for manipulation; DeFi relies on code (which can be exploited)
+\item \textbf{Insurance and compensation:} TradFi has deposit insurance; DeFi hacks result in total loss
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Convergence Thesis}
+
+Hybrid systems combining TradFi regulation with DeFi infrastructure may offer the best of both worlds. Examples: tokenized securities on regulated DEXs, KYC-gated AMM pools.
+\end{columns}
+
+\bottomnote{TradFi and DeFi each have structural advantages; convergence toward hybrid models is likely}
+\end{frame}
+
+% Frame 27
+\begin{frame}[t]{Key Takeaways and Exam Preparation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Core Models to Know}
+\begin{enumerate}
+\item \textbf{Kyle's $\lambda$:} $\lambda = \sigma_v / (2\sigma_u)$ measures price impact; crypto $\lambda$ is 5--12$\times$ TradFi
+\item \textbf{Concentrated efficiency:} $\eta = 1/(\sqrt{1+r} - \sqrt{1-r})$; narrow ranges amplify both fees and IL by $\eta$
+\item \textbf{StableSwap:} Curve's $A$ parameter interpolates between constant-sum and constant-product
+\item \textbf{LP frontier:} $R_{\text{net}} = f \cdot V/TVL \cdot T + IL$; 49.5\% of v3 LPs lose
+\item \textbf{MEV sandwich:} Profit has interior maximum due to AMM fees + PGA costs
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Conceptual Questions}
+\begin{itemize}
+\item Why is crypto $\lambda$ higher than TradFi?
+\item When does concentrated liquidity help vs.\ hurt LPs?
+\item Why does StableSwap dominate for pegged assets?
+\item Under what conditions are LPs profitable?
+\item Is MEV always harmful? What is the social cost?
+\item Can the trilemma be resolved?
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Connection to Other Lectures}
+\begin{itemize}
+\item L05: Platform economics $\to$ why DEXs have network effects
+\item L06 basic: Qualitative AMM/MEV $\to$ this lecture formalizes
+\item L07: Regulation $\to$ policy responses to MEV and market manipulation
+\end{itemize}
+\end{columns}
+
+\bottomnote{Master the five core models and their comparative statics; connect to platform economics (L05) and regulation (L07)}
+\end{frame}
+
+%% ===== SECTION 8: Appendix (3 frames) =====
+\section*{Appendix}
+
+% Frame 28
+\begin{frame}[t]{Appendix A: Mathematical Derivations}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Deriving IL from Constant Product}
+
+Start with $x \cdot y = k$ and an LP deposit at price $P_0 = y_0/x_0$.
+
+After price changes to $P_1 = r \cdot P_0$:
+$$x_1 = \sqrt{k/P_1} = x_0 / \sqrt{r}$$
+$$y_1 = \sqrt{k \cdot P_1} = y_0 \cdot \sqrt{r}$$
+
+LP value: $V_{LP} = x_1 \cdot P_1 + y_1 = 2y_0\sqrt{r}$.
+
+Hold value: $V_{hold} = x_0 \cdot P_1 + y_0 = y_0(r + 1)$.
+
+$$IL = \frac{V_{LP}}{V_{hold}} - 1 = \frac{2\sqrt{r}}{1+r} - 1$$
+
+\column{0.48\textwidth}
+\textbf{Kyle's Lambda Derivation (Simplified)}
+
+Market maker observes total order flow $Q = Q_{\text{informed}} + Q_{\text{noise}}$.
+
+Bayesian update: $E[V | Q] = \bar{V} + \lambda \cdot Q$.
+
+Equilibrium $\lambda$ minimizes market maker expected loss:
+$$\lambda = \frac{\text{Cov}(V, Q)}{\text{Var}(Q)} = \frac{\sigma_v}{2\sigma_u}$$
+
+This is the OLS regression coefficient of value on order flow. Higher $\sigma_v$ (more informed trading) increases $\lambda$; higher $\sigma_u$ (more noise) decreases it.
+\end{columns}
+
+\bottomnote{Appendix: IL derivation follows from constant product rebalancing; Kyle's $\lambda$ is Bayesian signal extraction}
+\end{frame}
+
+% Frame 29
+\begin{frame}[t]{Appendix B: StableSwap Derivation and Curve v2}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{StableSwap Invariant Derivation}
+
+Egorov (2019) combines constant-sum and constant-product:
+$$\chi \cdot D^{n-1} \cdot \sum x_i + \prod x_i = \chi \cdot D^n + \left(\frac{D}{n}\right)^n$$
+
+where $\chi = \frac{A \cdot \prod x_i}{(D/n)^n}$ is a dynamic leverage factor.
+
+For $n = 2$, near the peg ($x \approx y \approx D/2$), $\chi \approx A$, and the curve is nearly flat (constant-sum-like).
+
+Far from peg ($x \gg y$ or $y \gg x$), $\chi \to 0$, and the invariant reduces to $xy = (D/2)^2$ (constant-product).
+
+\column{0.48\textwidth}
+\textbf{Curve v2: Dynamic Peg}
+
+Curve v2 (2021) extends StableSwap to volatile pairs by:
+\begin{enumerate}
+\item Using an internal oracle to track the ``peg'' price
+\item Dynamically adjusting $A$ and $D$ to center liquidity around the oracle price
+\item Concentrating liquidity like Uniswap v3 but automatically
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Comparison}
+\begin{itemize}
+\item \textbf{Uniswap v3:} LPs manually set ranges
+\item \textbf{Curve v2:} Protocol automatically adjusts concentration
+\item \textbf{Trade-off:} Automation vs LP control
+\end{itemize}
+\end{columns}
+
+\bottomnote{Appendix: StableSwap uses dynamic leverage $\chi$ that transitions from constant-sum to constant-product}
+\end{frame}
+
+% Frame 30 (Frame 31 coming next)
+\begin{frame}[t]{Appendix C: Further Reading and Research Frontier}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Foundational Papers}
+\begin{itemize}
+\item Kyle (1985): ``Continuous Auctions and Insider Trading'' --- price impact model
+\item Glosten \& Milgrom (1985): ``Bid, Ask and Transaction Prices'' --- spread model
+\item Hasbrouck (1995): ``One Security, Many Markets'' --- information share
+\item Adams et al.\ (2021): ``Uniswap v3 Core'' --- concentrated liquidity whitepaper
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{DeFi Market Microstructure}
+\begin{itemize}
+\item Egorov (2019): ``StableSwap'' --- Curve invariant
+\item Adams et al.\ (2024): ``Am I too Liquidity?'' --- LP profitability
+\item Lambert et al.\ (2022): ``Uniswap v3: The Universal AMM''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{MEV Research}
+\begin{itemize}
+\item Daian et al.\ (2020): ``Flash Boys 2.0'' --- MEV taxonomy
+\item Qin et al.\ (2022): ``Quantifying Blockchain Extractable Value''
+\item Barbon \& Ranaldo (2022): ``On the Quality of Cryptocurrency Markets''
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Research Frontier}
+\begin{itemize}
+\item Loss-vs-rebalancing (LVR): new framework for LP costs (Milionis et al., 2022)
+\item Mechanism design for MEV redistribution
+\item Cross-chain arbitrage and bridge MEV
+\item Dynamic fee mechanisms with oracle integration
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform; research frontier includes LVR, MEV redistribution, and cross-chain design}
+\end{frame}
+
+% Frame 31
+\begin{frame}[t]{Appendix D: Glossary of Extended Terms}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{$\lambda$ (Kyle's Lambda)}
+Price impact coefficient: how much the price moves per unit of order flow. Higher $\lambda$ = less liquid market.
+
+\vspace{0.3em}
+\textbf{$\eta$ (Capital Efficiency)}
+Multiplier from concentrating liquidity. $\eta = 20$ means \$1 of concentrated liquidity provides the depth of \$20 full-range.
+
+\vspace{0.3em}
+\textbf{Amplification Factor ($A$)}
+Curve parameter controlling curvature. Higher $A$ = flatter curve near peg = lower stablecoin slippage.
+
+\vspace{0.3em}
+\textbf{PGA (Priority Gas Auction)}
+Competitive bidding among MEV searchers for transaction ordering priority. Drives MEV profits toward zero.
+
+\vspace{0.3em}
+\textbf{PBS (Proposer-Builder Separation)}
+Architecture separating block building from block proposing. Searchers $\to$ builders $\to$ validators.
+
+\column{0.48\textwidth}
+\textbf{LVR (Loss-Versus-Rebalancing)}
+Alternative to IL that measures LP cost as the difference between LP returns and a continuously rebalanced portfolio. More accurate than IL for measuring true LP costs.
+
+\vspace{0.3em}
+\textbf{JIT (Just-In-Time) Liquidity}
+Providing liquidity for a single block to capture fees from a known trade. Dilutes passive LP income.
+
+\vspace{0.3em}
+\textbf{Virtual Reserves}
+In Uniswap v3, the effective reserves within a concentrated range. Virtual reserves are larger than actual deposits by factor $\eta$.
+
+\vspace{0.3em}
+\textbf{Tick}
+Minimum price increment in Uniswap v3, defined as $P(i) = 1.0001^i$. Each tick represents a 0.01\% price change (basis point).
+
+\vspace{0.3em}
+\textbf{Intent-Based Trading}
+Users specify desired trade outcomes; solvers compete to execute optimally. Emerging MEV mitigation approach.
+\end{columns}
+
+\bottomnote{Master these terms for exam preparation; connect each to its mathematical model and economic intuition}
+\end{frame}
+
+\end{document}

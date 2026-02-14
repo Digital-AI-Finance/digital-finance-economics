@@ -1,0 +1,1267 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Regulatory Economics: Mathematical Models and Game Theory Analysis}
+\subtitle{L07 Extended: Formalizing Market Failures, Regulatory Games, and Optimal Design\\[0.3em]\normalsize From Harberger welfare triangles to FATF coordination game theory}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+%% ===== SECTION 1: Bridge from Basic Lecture (4 frames: 1 title + 3 content) =====
+\section{Bridge from Basic Lecture}
+
+% Frame 1: Title slide
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Frame 2: Lesson overview
+\begin{frame}[t]{Lesson Overview: Why Formalize Regulation?}
+
+\textbf{Connection to L07 Basic:} The basic lecture introduced regulatory concepts qualitatively. This extended lecture formalizes them with mathematical models, enabling precise welfare analysis and policy comparison.
+
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Today's Topics}
+\begin{enumerate}
+\item Harberger welfare analysis of regulation costs
+\item Akerlof lemons model applied to crypto
+\item Regulatory sandbox evaluation metrics
+\item FATF coordination game theory
+\item RegTech cost optimization
+\item Multi-criteria framework comparison
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Learning Objectives}
+\begin{itemize}
+\item Calculate deadweight loss from regulatory distortions
+\item Model information asymmetry in token markets
+\item Evaluate sandbox efficiency with data
+\item Solve coordination games for international regulation
+\item Optimize compliance technology investment
+\item Compare regulatory frameworks across stakeholder perspectives
+\end{itemize}
+\end{columns}
+
+\bottomnote{This extended lecture builds mathematical foundations for the qualitative concepts introduced in L07 Basic}
+\end{frame}
+
+% Frame 3: Mathematical toolkit (NO Greek)
+\begin{frame}[t]{Mathematical Toolkit for Regulatory Analysis}
+
+\textbf{Core notation used throughout this lecture:}
+
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Welfare Variables}
+\begin{itemize}
+\item W = total social welfare (sum of all gains and losses in society)
+\item CS = consumer surplus (benefit consumers get above what they pay)
+\item PS = producer surplus (revenue firms earn above their costs)
+\item DWL = deadweight loss (welfare destroyed by market distortions---value that nobody captures)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Market Variables}
+\begin{itemize}
+\item p = market price
+\item q = quantity traded or quality level
+\item c = cost of compliance per unit
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Regulatory Variables}
+\begin{itemize}
+\item V = transaction volume (number of compliance checks)
+\item s = signal quality (how well a test reveals true quality)
+\item r = regulation intensity (strictness of rules, from 0 = none to high)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key Relationships}
+\begin{itemize}
+\item W = CS + PS $-$ DWL (welfare accounting identity)
+\item DWL = 0.5 $\times$ price change $\times$ quantity change (the Harberger triangle)
+\item Higher r raises compliance costs but may reduce fraud losses
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Goal:} Find the regulation intensity r that maximizes W
+\end{columns}
+
+\bottomnote{All notation is standard Latin letters; Greek symbols will be introduced one at a time in later slides}
+\end{frame}
+
+% Frame 4: Introducing tau and DWL formula
+\begin{frame}[t]{Deadweight Loss from Regulatory Burden}
+
+\textbf{New symbol:} Let $\tau$ (tau, the Greek letter) represent the tax or regulatory burden imposed on each transaction---the per-unit compliance cost that acts like a tax.
+
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Harberger Triangle}
+
+When regulation imposes cost $\tau$ per transaction:
+\begin{itemize}
+\item Price rises by $\Delta p$ (part of $\tau$ passed to consumers)
+\item Quantity falls by $\Delta q$ (some transactions no longer worth doing)
+\item \textbf{Deadweight loss:}
+$$\text{DWL} = \frac{1}{2} \cdot \Delta p \cdot \Delta q$$
+\end{itemize}
+
+\textbf{Example:} KYC (Know Your Customer---identity verification) costs \$25 per customer. If this deters 10\% of a 100{,}000-customer market:
+$$\text{DWL} = \frac{1}{2} \times \$25 \times 10{,}000 = \$125{,}000$$
+
+But if KYC prevents \$500{,}000 in fraud, net welfare is positive: \$500{,}000 $-$ \$125{,}000 $-$ \$250{,}000 (direct cost) = \$125{,}000 gain.
+
+\column{0.48\textwidth}
+\textbf{Why DWL Matters for Crypto}
+
+\vspace{0.3em}
+\begin{itemize}
+\item DWL is not a transfer---it is value destroyed
+\item Crypto regulation creates DWL when:
+\begin{itemize}
+\item Compliance costs deter legitimate innovation
+\item Small projects cannot afford licensing
+\item Cross-border friction reduces trade
+\end{itemize}
+\item But \textit{absence} of regulation also creates losses:
+\begin{itemize}
+\item Fraud losses (scams, rug pulls)
+\item Market manipulation
+\item Systemic risk from unregulated leverage
+\end{itemize}
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{The Regulator's Problem:}
+
+Choose $\tau$ to maximize:
+$$W(\tau) = \text{Fraud prevented}(\tau) - \text{DWL}(\tau) - \text{Direct cost}(\tau)$$
+\end{columns}
+
+\bottomnote{Harberger (1964): DWL grows with the square of $\tau$---doubling regulatory burden quadruples the deadweight loss}
+\end{frame}
+
+%% ===== SECTION 2: Harberger Welfare Analysis (4 frames) =====
+\section{Harberger Welfare Analysis of Regulation}
+
+% Frame 5: Marginal benefit/cost framework
+\begin{frame}[t]{Optimal Regulation: When to Stop Adding Rules}
+
+\textbf{Framework:} Regulation intensity r has diminishing marginal benefit (MB) and increasing marginal cost (MC). Optimal regulation is where MB = MC.
+
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Welfare Function}
+$$W(r) = B(r) - C(r)$$
+
+where:
+\begin{itemize}
+\item $B(r)$ = total benefits (fraud prevented, consumer confidence gained, market stability improved)
+\item $C(r)$ = total costs (compliance spending, innovation deterred, DWL from reduced activity)
+\end{itemize}
+
+\textbf{Optimality condition:}
+$$\frac{dW}{dr} = 0 \implies MB(r^*) = MC(r^*)$$
+
+\column{0.48\textwidth}
+\textbf{Worked Example: KYC Regulation}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Per customer} & \textbf{Total (10K)} \\
+\midrule
+KYC cost & \$25 & \$250{,}000 \\
+Fraud prevented & \$150 & \$1{,}500{,}000 \\
+Net benefit & \$125 & \$1{,}250{,}000 \\
+\midrule
+DWL (deterred) & --- & \$125{,}000 \\
+\textbf{Net welfare} & --- & \textbf{\$1{,}125{,}000} \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+At this level, $MB = \$150 > MC = \$25 + \text{DWL}$, so adding more KYC checks is still welfare-improving. But as $r$ increases, MB falls (fewer frauds left to catch) and MC rises (more legitimate users deterred).
+\end{columns}
+
+\bottomnote{$W(r) = B(r) - C(r)$; the optimal regulation intensity $r^*$ equates marginal benefit to marginal cost}
+\end{frame}
+
+% Frame 6: Chart - Regulatory welfare optimization
+\begin{frame}[t]{Regulatory Welfare Optimization}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{06_regulatory_welfare_optimization/chart.pdf}
+\end{center}
+
+\bottomnote{$MB(r) = \frac{100}{1+2r}$, $MC(r) = 10 + 15r$. The inverted-U welfare curve peaks at $r^*$ where MB = MC; over-regulation destroys more value than it creates}
+\end{frame}
+
+% Frame 7: Comparative statics of regulation
+\begin{frame}[t]{Comparative Statics: What Shifts Optimal Regulation?}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Factors Shifting Optimal $r^*$ Higher}
+
+\vspace{0.3em}
+\begin{itemize}
+\item \textbf{Higher fraud rate:} More benefit from each unit of regulation. When 80\% of ICOs are scams, the MB curve shifts up---more regulation is justified.
+\item \textbf{Lower compliance technology cost:} RegTech reduces MC, so the MC curve shifts down, allowing more regulation before costs exceed benefits.
+\item \textbf{Larger market:} Fixed regulatory costs spread over more participants, reducing per-unit MC.
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Factors Shifting Optimal $r^*$ Lower}
+
+\vspace{0.3em}
+\begin{itemize}
+\item \textbf{Innovation sensitivity:} If regulation deters valuable innovation (high DWL per unit of $r$), the MC curve shifts up, pulling $r^*$ down.
+\item \textbf{Regulatory arbitrage:} If firms can easily relocate to less-regulated jurisdictions, the MB curve shifts down (regulation catches fewer bad actors).
+\item \textbf{Market maturity:} As crypto markets develop self-regulatory mechanisms, MB from government rules decreases.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy Implication:}
+
+Different countries should have different $r^*$ values depending on their market conditions, enforcement capacity, and innovation goals.
+\end{columns}
+
+\bottomnote{Comparative statics: any change that raises MB or lowers MC increases optimal regulation intensity $r^*$, and vice versa}
+\end{frame}
+
+% Frame 8: Akerlof introduction with mu
+\begin{frame}[t]{Information Asymmetry: The Lemons Problem}
+
+\textbf{New symbol:} Let $\mu$ (mu, the Greek letter) represent the average quality in the market.
+
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Akerlof (1970) Setup}
+
+\vspace{0.3em}
+\begin{itemize}
+\item Project quality $q$ drawn from uniform distribution: $q \sim U[0,1]$
+\item Sellers know true quality; buyers only know the distribution
+\item Average quality: $\mu = E[q] = 0.5$
+\item Buyers willing to pay $p = \mu$ (expected value)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{The Unraveling}
+\begin{enumerate}
+\item Buyers offer $p = 0.5$ (the average)
+\item Sellers with $q > 0.5$ exit (their project is worth more than the offered price)
+\item Remaining: $q \sim U[0, 0.5]$, so $E[q | q < 0.5] = 0.25$
+\item Buyers revise offer to $p = 0.25$
+\item Sellers with $q > 0.25$ exit \ldots
+\item Market collapses to only the worst projects
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Why This Applies to Crypto}
+
+\vspace{0.3em}
+\begin{itemize}
+\item Token buyers cannot verify project quality
+\item Good projects are indistinguishable from scams
+\item The ICO boom of 2017--2018 saw exactly this dynamic
+\item Result: only ``lemons'' (low-quality projects) remain
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Regulatory Solutions}
+\begin{itemize}
+\item \textbf{Disclosure requirements:} Force sellers to reveal information, improving signal quality $s$
+\item \textbf{Quality floors:} Set minimum quality $q_{\min}$ (licensing, audits)---excludes projects below threshold
+\item \textbf{Signaling:} Voluntary compliance as quality signal (e.g., registering with a regulator)
+\end{itemize}
+\end{columns}
+
+\bottomnote{Akerlof (1970): when buyers cannot observe quality, adverse selection drives good sellers out---only ``lemons'' remain}
+\end{frame}
+
+%% ===== SECTION 3: Akerlof Lemons Model in Crypto (4 frames) =====
+\section{Akerlof Lemons Model in Crypto}
+
+% Frame 9: ICO market evidence
+\begin{frame}[t]{ICO Market as a Lemons Market}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Empirical Evidence}
+
+\vspace{0.3em}
+\textbf{The 2017--2018 ICO Boom:}
+\begin{itemize}
+\item Over 5{,}000 ICOs (Initial Coin Offerings---a fundraising method where a project sells tokens to investors) raised \$25B+
+\item \textbf{80\% were classified as scams} (Dowlat \& Hodapp, 2018)
+\item Average investor return: $-$87\% (Benedetti \& Kostovetsky, 2021)
+\item Classic adverse selection: good projects could not credibly distinguish themselves
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{The Unraveling in Practice}
+\begin{enumerate}
+\item Early ICOs raised millions with just a whitepaper
+\item Scammers flooded in (low cost of entry)
+\item Legitimate projects moved to alternative fundraising (VCs, IEOs)
+\item ICO market collapsed by late 2018
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Mathematical Analysis}
+
+\vspace{0.3em}
+With $q \sim U[0,1]$ and no regulation:
+\begin{itemize}
+\item Round 1: $E[q] = 0.5$, buyers offer $p_1 = 0.5$
+\item Sellers with $q > 0.5$ leave (50\% of market exits)
+\item Round 2: $E[q | q < 0.5] = 0.25$, offer $p_2 = 0.25$
+\item Round 3: $E[q | q < 0.25] = 0.125$, offer $p_3 = 0.125$
+\item \ldots converges to $p \to 0$, volume $\to 0$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{With Quality Floor $q_{\min}$:}
+$$E[q \mid q \geq q_{\min}] = \frac{1 + q_{\min}}{2}$$
+
+If regulators set $q_{\min} = 0.4$ (basic due diligence, code audit):
+$$E[q] = \frac{1 + 0.4}{2} = 0.7$$
+
+Market stabilizes at higher quality, but volume drops to $1 - 0.4 = 0.6$ (60\% of projects remain eligible).
+\end{columns}
+
+\bottomnote{Dowlat \& Hodapp (2018): 80\% of ICOs were scams; the market for lemons predicts exactly this adverse selection outcome}
+\end{frame}
+
+% Frame 10: Chart - Crypto lemons
+\begin{frame}[t]{Akerlof Lemons Model: Unraveling and Quality Floors}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{07_akerlof_crypto_lemons/chart.pdf}
+\end{center}
+
+\bottomnote{Panel (a): Without regulation, market unravels as good projects exit. Panel (b): Quality floor $q_{\min}$ raises average quality but reduces volume}
+\end{frame}
+
+% Frame 11: Welfare analysis of disclosure regulation
+\begin{frame}[t]{Welfare Analysis: Optimal Disclosure Requirements}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Disclosure as Signal}
+
+\vspace{0.3em}
+Mandatory disclosure (financial audits, team backgrounds, code reviews) improves the signal quality $s$ that buyers observe.
+
+\vspace{0.3em}
+\textbf{Effect on Market:}
+\begin{itemize}
+\item Perfect signal ($s = 1$): buyers observe true $q$, no adverse selection, all projects priced at true value
+\item No signal ($s = 0$): full lemons problem, market collapses
+\item Partial signal ($0 < s < 1$): some separation of good from bad projects
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Welfare from Disclosure:}
+$$W(s) = \underbrace{\text{Market quality gain}}_{\text{from separating good/bad}} - \underbrace{\text{Disclosure cost}}_{\text{audits, legal, reporting}}$$
+
+\column{0.48\textwidth}
+\textbf{The MiCA Approach}
+
+\vspace{0.3em}
+The EU's Markets in Crypto-Assets Regulation (MiCA, enacted 2023) mandates:
+\begin{itemize}
+\item Whitepaper with standardized disclosures
+\item Reserve proof for stablecoins
+\item Management fitness tests
+\item Ongoing reporting requirements
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Trade-off Table}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{No reg.} & \textbf{MiCA} \\
+\midrule
+Avg quality $\mu$ & 0.15 & 0.65 \\
+Volume & 100\% & 60\% \\
+Fraud rate & 80\% & $\sim$15\% \\
+Entry cost & \$0 & $\sim$\$100K \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+MiCA improves quality dramatically but raises barriers for small innovators.
+\end{columns}
+
+\bottomnote{Disclosure regulation increases signal quality $s$, reducing adverse selection; MiCA is the most comprehensive crypto disclosure framework}
+\end{frame}
+
+% Frame 12: Signaling equilibrium
+\begin{frame}[t]{Spence Signaling in Crypto: Voluntary Compliance}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Spence (1973) Signaling Model}
+
+\vspace{0.3em}
+High-quality projects can signal their type by undertaking costly actions that low-quality projects would find unprofitable:
+
+\begin{itemize}
+\item \textbf{Signal cost for high-quality:} $c_H$ (e.g., \$200K for code audit + legal review)
+\item \textbf{Signal cost for low-quality:} $c_L > c_H$ (scammers must fabricate evidence, hire actors---higher marginal cost)
+\item \textbf{Separating equilibrium:} Only high-quality projects signal if $c_H < p_H - p_L < c_L$
+\end{itemize}
+
+\vspace{0.3em}
+The signal works because it is differentially costly: legitimate projects already have auditable code and real teams.
+
+\column{0.48\textwidth}
+\textbf{Crypto Signaling Mechanisms}
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Signal} & \textbf{Cost} & \textbf{Effective?} \\
+\midrule
+Code audit & \$50--200K & Strong \\
+VC backing & Equity dilution & Strong \\
+Reg.\ registration & \$100K+ & Moderate \\
+Bug bounty & Variable & Moderate \\
+Token lockup & Opportunity cost & Weak \\
+Celebrity endorsement & \$50K+ & Very weak \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Key insight:} Effective signals are those where cost is \textit{correlated with quality}. Celebrity endorsements fail because scams can afford them equally easily.
+
+\vspace{0.3em}
+Regulation can amplify signaling by certifying specific signals (e.g., registered auditor requirement).
+\end{columns}
+
+\bottomnote{Spence (1973): costly signaling can solve adverse selection when signal cost is negatively correlated with quality}
+\end{frame}
+
+%% ===== SECTION 4: Regulatory Sandbox Evaluation (5 frames) =====
+\section{Regulatory Sandbox Evaluation}
+
+% Frame 13: Sandbox concept and metrics
+\begin{frame}[t]{Regulatory Sandboxes: Concept and Evaluation Framework}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What is a Regulatory Sandbox?}
+
+\vspace{0.3em}
+A sandbox is a controlled testing environment where fintech firms can operate under relaxed regulations for a limited period. The regulator monitors outcomes to learn whether new rules are needed.
+
+\vspace{0.3em}
+\textbf{Key Parameters}
+\begin{itemize}
+\item Cohort size: number of firms admitted per round
+\item Duration: typically 6--24 months
+\item Restrictions: customer limits, capital requirements
+\item Exit: graduate to full license, extend, or exit
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Economic Rationale}
+\begin{itemize}
+\item Reduces regulatory uncertainty (lowers barrier to innovation)
+\item Provides regulators with real-world data
+\item Enables ``learning by doing'' for both sides
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Evaluation Metrics}
+
+\vspace{0.3em}
+\begin{tabular}{ll}
+\toprule
+\textbf{Metric} & \textbf{Definition} \\
+\midrule
+Graduation rate & \% of firms receiving \\
+ & full license \\
+Cost per firm & Regulator spend / firms \\
+Efficiency & Graduation / cost \\
+Innovation index & New products launched \\
+Consumer harm & Complaints per firm \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Global Sandbox Landscape}
+\begin{itemize}
+\item First: UK FCA (2016)
+\item Over 50 jurisdictions by 2024
+\item Crypto-focused: Abu Dhabi ADGM, MAS, HK SFC
+\item Variant: ``regulatory beach'' (lighter, e.g., El Salvador)
+\end{itemize}
+\end{columns}
+
+\bottomnote{Regulatory sandboxes reduce uncertainty for innovators while generating evidence for policymakers}
+\end{frame}
+
+% Frame 14: Chart - Sandbox performance scatter
+\begin{frame}[t]{Sandbox Performance: Graduation vs. Cost}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{08_sandbox_performance_scatter/chart.pdf}
+\end{center}
+
+\bottomnote{Data from FCA (2023), Cornelli et al.\ (2020). Efficiency = graduation rate / cost per firm. Bubble size = cohort size}
+\end{frame}
+
+% Frame 15: Sandbox design trade-offs
+\begin{frame}[t]{Sandbox Design: Economic Trade-offs}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Strictness vs. Innovation}
+
+\vspace{0.3em}
+\begin{itemize}
+\item \textbf{Strict sandbox} (Abu Dhabi ADGM): high entry bar (\$3M cost/firm), fewer firms, but higher quality graduates
+\item \textbf{Open sandbox} (Australia ASIC): low bar (\$0.8M), more firms, but lower graduation rate
+\item \textbf{Balanced} (UK FCA): moderate cost (\$2M), largest cohort (50 firms), highest graduation (80\%)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{The Screening Function}
+
+A sandbox serves as a screening device (a mechanism that reveals firm quality through self-selection): firms that apply and succeed are more likely to be high-quality. This is valuable information for regulators even if the firm does not graduate.
+
+\column{0.48\textwidth}
+\textbf{Lessons from Global Experience}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item \textbf{Scale matters:} Fixed regulatory costs mean larger cohorts are more efficient per firm
+\item \textbf{Clear exit criteria:} Firms need to know what ``graduation'' requires upfront
+\item \textbf{Mutual learning:} The regulator must actually update rules based on sandbox evidence (many do not)
+\item \textbf{Consumer protection:} Sandbox users must be informed they are testing unproven products
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Success Factors} (Cornelli et al., 2020):
+\begin{itemize}
+\item Dedicated sandbox team at regulator
+\item Public reporting of outcomes
+\item Cross-border recognition (graduates accepted in other jurisdictions)
+\end{itemize}
+\end{columns}
+
+\bottomnote{Sandbox efficiency depends on cohort size, exit clarity, and whether regulators update rules based on evidence}
+\end{frame}
+
+% Frame 16: Sandbox cost-benefit model
+\begin{frame}[t]{Cost-Benefit Model for Sandbox Programs}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Regulator's Decision}
+
+\vspace{0.3em}
+Should a jurisdiction establish a sandbox? Compare:
+
+\vspace{0.3em}
+\textbf{Benefits:}
+\begin{itemize}
+\item Innovation attracted: firms that would otherwise go elsewhere (estimated at 15--30 per sandbox cohort)
+\item Regulatory learning: reduces future policy mistakes
+\item Revenue: licensing fees from graduates
+\item Reputation: signals ``innovation-friendly'' jurisdiction
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Costs:}
+\begin{itemize}
+\item Setup: \$2--5M (technology, staffing, legal framework)
+\item Per-cohort operating: \$0.5--1M
+\item Risk: consumer harm from sandbox failures
+\item Opportunity cost: regulatory staff diverted
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Break-even Calculation}
+
+\vspace{0.3em}
+For UK FCA sandbox (per cohort of 50):
+\begin{itemize}
+\item Setup cost (amortized): \$1M
+\item Operating cost: \$1M
+\item Total cost: \$2M
+\item Graduation: 40 firms $\times$ \$50K license fee = \$2M
+\item Tax revenue from graduates: \$5M+ annually
+\item Innovation premium: attracts 200+ fintech firms to London
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Net present value:} Strongly positive when accounting for ecosystem effects.
+
+\vspace{0.3em}
+\textbf{Key insight:} The sandbox pays for itself through licensing fees alone; innovation and ecosystem effects are bonus welfare gains. Jurisdictions without sandboxes lose firms to those that have them---a coordination game.
+\end{columns}
+
+\bottomnote{Sandbox programs are net positive for most jurisdictions; the main risk is doing them poorly (no learning, weak exit criteria)}
+\end{frame}
+
+% Frame 17: FATF introduction with delta_g
+\begin{frame}[t]{International Regulatory Coordination: The FATF Game}
+
+\textbf{New symbol:} Let $\delta_g$ (delta-g, a Greek letter) represent the discount factor (how much a country values future payoffs relative to today; $\delta_g = 0.9$ means future periods are worth 90\% of the present).
+
+\vspace{0.3em}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Coordination Problem}
+
+\vspace{0.3em}
+The FATF (Financial Action Task Force---the international body setting AML/CFT standards) faces a classic coordination game:
+\begin{itemize}
+\item Each country chooses: \textbf{Comply} (C) or \textbf{Defect} (D)
+\item Compliance is costly but creates mutual benefits
+\item Defection is individually tempting (save costs, attract business) but collectively harmful
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Stage Game Payoffs}
+
+\begin{tabular}{lcc}
+\toprule
+& \textbf{Other: C} & \textbf{Other: D} \\
+\midrule
+\textbf{Country: C} & (5, 5) & (3, 7) \\
+\textbf{Country: D} & (7, 3) & (2, 2) \\
+\bottomrule
+\end{tabular}
+
+\column{0.48\textwidth}
+\textbf{Repeated Game Analysis}
+
+\vspace{0.3em}
+In a one-shot game, defection dominates (7 > 5). But FATF evaluations repeat every 5--8 years, creating a repeated game.
+
+\vspace{0.3em}
+\textbf{Trigger Strategy:}
+\begin{itemize}
+\item Start by cooperating
+\item If the other country defects, switch to defection forever (punishment)
+\item Cooperation sustained if $\delta_g$ is high enough
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Cooperation condition:}
+$$\delta_g > \frac{7 - 5}{7 - 2} = \frac{2}{5} = 0.4$$
+
+Since most countries have $\delta_g > 0.8$ (they care about long-term reputation), cooperation is sustainable---but only with credible punishment (greylisting).
+\end{columns}
+
+\bottomnote{FATF coordination is a repeated prisoner's dilemma; cooperation requires $\delta_g > 0.4$ and credible punishment via greylisting}
+\end{frame}
+
+%% ===== SECTION 5: FATF Coordination Game Theory (4 frames) =====
+\section{FATF Coordination Game Theory}
+
+% Frame 18: Detection probability and expected payoffs
+\begin{frame}[t]{FATF Detection and Expected Payoffs}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Detection Probability}
+
+\vspace{0.3em}
+FATF mutual evaluations detect non-compliance with probability $p = 0.8$ (high detection rate due to peer review, on-site visits, and quantitative benchmarks).
+
+\vspace{0.3em}
+\textbf{Payoff Structure with Detection:}
+\begin{itemize}
+\item \textbf{Comply:} Payoff = 5 (certain)
+\item \textbf{Defect, caught} ($p = 0.8$): Payoff = 1 (greylisted: capital flight, restricted banking access)
+\item \textbf{Defect, escaped} ($1-p = 0.2$): Payoff = 7 (save compliance costs, attract illicit finance)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Expected payoff from defection:}
+$$E[\text{Defect}] = 0.2 \times 7 + 0.8 \times 1 = 2.2$$
+
+Since $2.2 < 5$, \textbf{compliance is rational even in a one-shot game} when detection is sufficiently high.
+
+\column{0.48\textwidth}
+\textbf{Critical Detection Threshold}
+
+\vspace{0.3em}
+Defection is rational only when:
+$$E[\text{Defect}] > E[\text{Comply}]$$
+$$(1-p) \times 7 + p \times 1 > 5$$
+$$7 - 6p > 5$$
+$$p < \frac{1}{3} \approx 0.33$$
+
+So compliance breaks down only if detection falls below 33\%. FATF's current $p = 0.8$ provides a large safety margin.
+
+\vspace{0.3em}
+\textbf{Greylisting in Practice (2024):}
+\begin{itemize}
+\item 21 countries currently greylisted
+\item Average GDP growth penalty: $-$0.4\% (Masciandaro, 2022)
+\item Average time on greylist: 3--5 years
+\item 85\% eventually achieve compliance
+\end{itemize}
+\end{columns}
+
+\bottomnote{With detection $p = 0.8$: $E[\text{Defect}] = 2.2 < 5 = E[\text{Comply}]$; compliance is individually rational, not just collectively optimal}
+\end{frame}
+
+% Frame 19: Chart - FATF game tree
+\begin{frame}[t]{FATF Coordination Game: Decision Tree and Payoffs}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{09_fatf_greylisting_game_tree/chart.pdf}
+\end{center}
+
+\bottomnote{Panel (a): Game tree with detection $p = 0.8$. Panel (b): Expected payoff comparison; cooperation sustained when $\delta_g > 0.4$}
+\end{frame}
+
+% Frame 20: Cross-jurisdictional coordination
+\begin{frame}[t]{Cross-Jurisdictional Regulatory Coordination}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Regulatory Race}
+
+\vspace{0.3em}
+Without coordination, jurisdictions face two races:
+
+\vspace{0.3em}
+\textbf{Race to the bottom:}
+\begin{itemize}
+\item Compete for crypto business by lowering standards
+\item Attracts illicit finance alongside legitimate firms
+\item Increases systemic risk globally
+\item Example: Some Caribbean jurisdictions offered ``crypto licenses'' with minimal oversight
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Race to the top:}
+\begin{itemize}
+\item Compete for legitimacy by raising standards
+\item Attracts institutional investors
+\item May deter early-stage innovation
+\item Example: Swiss FINMA, Singapore MAS
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{FATF as Coordination Mechanism}
+
+\vspace{0.3em}
+FATF resolves the coordination failure by:
+\begin{enumerate}
+\item \textbf{Setting minimum standards:} 40 Recommendations create a floor
+\item \textbf{Monitoring compliance:} Mutual evaluations every 5--8 years
+\item \textbf{Punishing defection:} Greylist/blacklist with real economic consequences
+\item \textbf{Rewarding compliance:} Reputation effects attract legitimate business
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Crypto-Specific Challenge:}
+
+The ``Travel Rule'' (FATF Recommendation 16) requires VASPs (Virtual Asset Service Providers---crypto exchanges, wallets, custodians) to share sender/receiver information. This is difficult for decentralized protocols where there is no intermediary to collect information.
+
+\vspace{0.3em}
+\textit{For multi-criteria policy scoring across jurisdictions, see L08 Extended.}
+\end{columns}
+
+\bottomnote{FATF resolves the international coordination game through monitoring, minimum standards, and credible punishment (greylisting)}
+\end{frame}
+
+% Frame 21: Nash equilibrium analysis
+\begin{frame}[t]{Nash Equilibrium Analysis of Regulatory Competition}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Three Possible Equilibria}
+
+\vspace{0.3em}
+\textbf{1. Race to the Bottom (Bad Equilibrium)}
+\begin{itemize}
+\item All jurisdictions defect (D, D)
+\item Payoff: (2, 2) for each
+\item Occurs when $\delta_g < 0.4$ or punishment not credible
+\item Real-world analog: pre-2019 crypto regulation
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Coordination (Good Equilibrium)}
+\begin{itemize}
+\item All comply (C, C)
+\item Payoff: (5, 5) for each
+\item Sustained by repeated game + FATF monitoring
+\item Real-world analog: post-2020 convergence on Travel Rule
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{3. Asymmetric (Mixed)}
+\begin{itemize}
+\item Some comply, some defect
+\item Defectors attract regulatory arbitrage
+\item Compliers bear higher costs without full benefits
+\item Real-world analog: current state (MiCA vs.\ unregulated jurisdictions)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Moving Toward Coordination}
+
+\vspace{0.3em}
+\begin{tabular}{lc}
+\toprule
+\textbf{Mechanism} & \textbf{Effect} \\
+\midrule
+FATF greylisting & Raises cost of D \\
+Trade agreements & Links compliance to trade \\
+Technology (RegTech) & Lowers cost of C \\
+Information sharing & Raises detection $p$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+All four mechanisms push $r^*$ toward more coordination by either raising the cost of defection or lowering the cost of compliance.
+\end{columns}
+
+\bottomnote{The good equilibrium (C, C) requires credible punishment, high detection, and low compliance costs---all of which FATF and RegTech improve}
+\end{frame}
+
+%% ===== SECTION 6: RegTech and Compliance Automation (4 frames) =====
+\section{RegTech and Compliance Automation}
+
+% Frame 22: RegTech cost functions
+\begin{frame}[t]{RegTech: Compliance Cost Functions}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Three Compliance Approaches}
+
+\vspace{0.3em}
+Each approach has a different cost structure (fixed setup + variable per-transaction cost):
+
+\vspace{0.3em}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Approach} & \textbf{Fixed} & \textbf{Variable} \\
+\midrule
+Manual & \$500K & \$5/txn \\
+Basic RegTech & \$1.5M & \$1/txn \\
+AI RegTech & \$3M & \$0.20/txn \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Cost Functions:}
+\begin{itemize}
+\item $C_{\text{manual}}(V) = 500{,}000 + 5V$
+\item $C_{\text{basic}}(V) = 1{,}500{,}000 + V$
+\item $C_{\text{AI}}(V) = 3{,}000{,}000 + 0.2V$
+\end{itemize}
+
+where $V$ = number of transactions to screen per year.
+
+\column{0.48\textwidth}
+\textbf{Crossover Points}
+
+\vspace{0.3em}
+\textbf{Manual = Basic:}
+$$500{,}000 + 5V = 1{,}500{,}000 + V$$
+$$4V = 1{,}000{,}000 \implies V_1 = 250{,}000$$
+
+\textbf{Basic = AI:}
+$$1{,}500{,}000 + V = 3{,}000{,}000 + 0.2V$$
+$$0.8V = 1{,}500{,}000 \implies V_2 = 1{,}875{,}000$$
+
+\vspace{0.3em}
+\textbf{Optimal Choice:}
+\begin{itemize}
+\item $V < 250{,}000$: manual cheapest (small exchanges, startups)
+\item $250K < V < 1.875M$: basic RegTech (mid-size firms)
+\item $V > 1.875M$: AI RegTech (large exchanges processing millions of transactions)
+\end{itemize}
+
+This explains why Binance (\$50B+ daily volume) invests heavily in AI compliance while small exchanges use spreadsheets.
+\end{columns}
+
+\bottomnote{Technology choice depends on transaction volume; AI RegTech only breaks even above $V_2 = 1.875M$ transactions}
+\end{frame}
+
+% Frame 23: Chart - RegTech cost analysis
+\begin{frame}[t]{RegTech Cost Analysis: Technology Choice Optimization}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{10_regtech_cost_analysis/chart.pdf}
+\end{center}
+
+\bottomnote{Panel (a): Cost curves cross at $V_1 = 250K$ and $V_2 = 1.875M$. Panel (b): Savings vs.\ manual process increase dramatically with volume}
+\end{frame}
+
+% Frame 24: Chart - Regulatory framework comparison
+\begin{frame}[t]{Regulatory Framework Comparison: Multi-Criteria Analysis}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{11_regulatory_framework_comparison/chart.pdf}
+\end{center}
+
+\bottomnote{MCDA scores: MiCA [7,8,9,7,5], SEC [4,7,5,9,4], MAS [9,6,7,6,7], None [10,1,1,1,10]. Winner depends on stakeholder weights}
+\end{frame}
+
+% Frame 25: RegTech innovation and future
+\begin{frame}[t]{RegTech Innovation: From Rules to Algorithms}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{RegTech Categories}
+
+\vspace{0.3em}
+\begin{itemize}
+\item \textbf{Identity verification:} KYC/AML automation (e.g., Chainalysis, Elliptic)---tracing blockchain transactions to identify suspicious patterns
+\item \textbf{Transaction monitoring:} Real-time screening of transactions against sanctions lists and risk models
+\item \textbf{Reporting:} Automated regulatory filings (e.g., suspicious activity reports)
+\item \textbf{Risk assessment:} AI-based risk scoring of customers, transactions, counterparties
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Market Size:} RegTech market projected at \$55B by 2028 (Grand View Research, 2024), up from \$12B in 2023.
+
+\column{0.48\textwidth}
+\textbf{Impact on Regulatory Design}
+
+\vspace{0.3em}
+RegTech changes the optimal regulatory equilibrium:
+
+\begin{enumerate}
+\item \textbf{Lowers MC curve:} Cheaper compliance $\to$ more regulation is welfare-improving
+\item \textbf{Raises detection $p$:} Better monitoring $\to$ stronger deterrence in FATF game
+\item \textbf{Reduces DWL:} Automated compliance has lower per-transaction friction
+\item \textbf{Enables proportionality:} Risk-based approaches possible at scale
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{The ``Embedded Regulation'' Vision:}
+
+Future where regulatory compliance is built into the technology itself. Smart contracts that automatically enforce rules, blockchain analytics that flag suspicious activity in real-time, and programmable money that cannot be used for sanctioned purposes.
+\end{columns}
+
+\bottomnote{RegTech lowers the MC of compliance, shifting optimal regulation intensity $r^*$ higher and strengthening coordination incentives}
+\end{frame}
+
+%% ===== SECTION 7: Synthesis and Policy Implications (3 frames) =====
+\section{Synthesis and Policy Implications}
+
+% Frame 26: Integrated framework
+\begin{frame}[t]{Integrated Framework: Connecting All Models}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{How the Models Fit Together}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item \textbf{Harberger} answers: How much regulation? ($r^*$ where MB = MC)
+\item \textbf{Akerlof} answers: Why regulate? (adverse selection destroys markets without quality floors)
+\item \textbf{Sandbox} answers: How to regulate uncertain markets? (test before scaling)
+\item \textbf{FATF game} answers: How to coordinate across borders? (repeated game + punishment)
+\item \textbf{RegTech} answers: How to reduce compliance costs? (technology lowers MC)
+\item \textbf{MCDA} answers: How to compare frameworks? (weight criteria by stakeholder)
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{The Regulatory Design Loop}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item Identify market failure (Akerlof: adverse selection)
+\item Design intervention (quality floor, disclosure)
+\item Calculate optimal intensity (Harberger: $r^*$)
+\item Test in sandbox (measure efficiency)
+\item Coordinate internationally (FATF game)
+\item Reduce costs with technology (RegTech)
+\item Evaluate and compare (MCDA)
+\item Return to step 1 with updated data
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Key principle:} Regulation should be evidence-based and iterative, not static. The sandbox model embodies this: test, learn, adjust.
+\end{columns}
+
+\bottomnote{Optimal regulation combines: right intensity (Harberger), right target (Akerlof), right testing (sandbox), right coordination (FATF), right technology (RegTech)}
+\end{frame}
+
+% Frame 27: Policy recommendations
+\begin{frame}[t]{Policy Recommendations from the Models}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{For Regulators}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item \textbf{Set quality floors, not bans:} Akerlof shows that minimum standards (licensing, audits) preserve market function while reducing fraud
+\item \textbf{Invest in RegTech:} Every dollar spent on compliance technology lowers the MC curve, enabling more effective regulation at lower cost
+\item \textbf{Use sandboxes for uncertainty:} When the right rule is unknown, test before mandating
+\item \textbf{Coordinate via FATF:} The repeated game structure means greylisting works---but only if detection remains high
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{For Industry}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item \textbf{Signal quality early:} Code audits, regulatory registration, and VC backing are credible signals that differentiate from scams
+\item \textbf{Invest in compliance at the right scale:} Use the RegTech crossover analysis to choose the right technology tier
+\item \textbf{Engage with sandboxes:} Sandbox participation is both a learning opportunity and a quality signal
+\item \textbf{Support coordination:} Industry benefits from FATF compliance through reduced uncertainty and access to institutional capital
+\end{enumerate}
+\end{columns}
+
+\bottomnote{Good regulation is an investment that generates returns through market confidence, fraud reduction, and institutional participation}
+\end{frame}
+
+% Frame 28: Key takeaways
+\begin{frame}[t]{Key Takeaways}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Core Results}
+\begin{enumerate}
+\item Optimal regulation intensity $r^*$ balances marginal benefit against marginal cost (Harberger)
+\item Without quality standards, adverse selection drives good projects out (Akerlof)
+\item Sandboxes are net positive when designed with clear exit criteria and learning mechanisms
+\item FATF coordination works because detection $p = 0.8$ makes defection irrational ($E[\text{D}] = 2.2 < 5$)
+\item RegTech shifts the optimal equilibrium toward more regulation at lower cost
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Quantitative Results}
+\begin{itemize}
+\item DWL grows with $\tau^2$: doubling regulatory burden quadruples deadweight loss
+\item Quality floor $q_{\min} = 0.4$ raises avg quality from 0.15 to 0.70
+\item FATF cooperation threshold: $\delta_g > 0.4$
+\item RegTech crossovers: $V_1 = 250K$, $V_2 = 1.875M$
+\item MiCA scores highest for consumer and regulator stakeholders; MAS for startups
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Next Lecture:} L08 Extended will apply multi-criteria decision analysis to broader digital finance policy questions.
+\end{columns}
+
+\bottomnote{Regulation is a design problem with an optimal solution; mathematical models help find it rather than relying on ideology}
+\end{frame}
+
+%% ===== SECTION 8: Appendix (3 frames) =====
+\section{Appendix}
+
+% Frame 29: Key terms
+\begin{frame}[t]{Key Terms}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Deadweight Loss (DWL)}
+Welfare destroyed by market distortions---value that nobody captures; the Harberger triangle.
+
+\vspace{0.3em}
+\textbf{Adverse Selection}
+When uninformed buyers cannot distinguish quality, leading high-quality sellers to exit the market.
+
+\vspace{0.3em}
+\textbf{Lemons Problem}
+Akerlof's (1970) model showing how information asymmetry causes market unraveling.
+
+\vspace{0.3em}
+\textbf{Regulatory Sandbox}
+A controlled testing environment where fintech firms operate under relaxed rules for a limited period.
+
+\vspace{0.3em}
+\textbf{FATF}
+Financial Action Task Force---the international body setting AML/CFT (Anti-Money Laundering / Countering the Financing of Terrorism) standards.
+
+\vspace{0.3em}
+\textbf{Greylisting}
+FATF's punishment for non-compliant countries: increased monitoring, restricted banking access, capital flight.
+
+\column{0.48\textwidth}
+\textbf{RegTech}
+Regulatory technology---software that automates compliance processes like KYC, transaction monitoring, and reporting.
+
+\vspace{0.3em}
+\textbf{Trigger Strategy}
+In a repeated game, cooperate until the opponent defects, then punish forever; sustains cooperation when $\delta_g$ is high enough.
+
+\vspace{0.3em}
+\textbf{Quality Floor}
+A minimum quality standard ($q_{\min}$) imposed by regulation; prevents the worst projects from entering the market.
+
+\vspace{0.3em}
+\textbf{MCDA}
+Multi-Criteria Decision Analysis---a method for comparing options across multiple weighted dimensions.
+
+\vspace{0.3em}
+\textbf{MiCA}
+Markets in Crypto-Assets Regulation---the EU's comprehensive framework for crypto regulation (enacted 2023).
+
+\vspace{0.3em}
+\textbf{VASP}
+Virtual Asset Service Provider---a crypto exchange, wallet, or custodian subject to FATF Travel Rule requirements.
+\end{columns}
+
+\bottomnote{These terms form the vocabulary for regulatory economics in digital finance}
+\end{frame}
+
+% Frame 30: Mathematical summary
+\begin{frame}[t]{Mathematical Summary}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Welfare Optimization}
+$$W(r) = \int_0^r [MB(s) - MC(s)]\,ds$$
+$$MB(r) = \frac{a}{1+br}, \quad MC(r) = c + dr$$
+$$r^* \text{ where } MB(r^*) = MC(r^*)$$
+
+\vspace{0.3em}
+\textbf{Deadweight Loss}
+$$\text{DWL} = \frac{1}{2} \cdot \Delta p \cdot \Delta q \propto \tau^2$$
+
+\vspace{0.3em}
+\textbf{Akerlof Unraveling}
+$$q \sim U[0,1], \quad E[q | q < p] = \frac{p}{2}$$
+$$\text{With floor } q_{\min}: \quad E[q] = \frac{1 + q_{\min}}{2}$$
+
+\vspace{0.3em}
+\textbf{RegTech Crossovers}
+$$V_1 = \frac{F_{\text{basic}} - F_{\text{manual}}}{m_{\text{manual}} - m_{\text{basic}}} = 250{,}000$$
+$$V_2 = \frac{F_{\text{AI}} - F_{\text{basic}}}{m_{\text{basic}} - m_{\text{AI}}} = 1{,}875{,}000$$
+
+\column{0.48\textwidth}
+\textbf{FATF Game}
+\begin{tabular}{lcc}
+\toprule
+& \textbf{C} & \textbf{D} \\
+\midrule
+\textbf{C} & (5, 5) & (3, 7) \\
+\textbf{D} & (7, 3) & (2, 2) \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+$$E[\text{Defect}] = (1-p) \times 7 + p \times 1$$
+$$= 0.2 \times 7 + 0.8 \times 1 = 2.2 < 5$$
+
+\vspace{0.3em}
+\textbf{Cooperation Threshold:}
+$$\delta_g > \frac{7 - 5}{7 - 2} = 0.4$$
+
+\vspace{0.3em}
+\textbf{Detection Threshold:}
+$$p > \frac{7 - 5}{7 - 1} = \frac{1}{3} \approx 0.33$$
+
+\vspace{0.3em}
+\textbf{Sandbox Efficiency:}
+$$\text{Efficiency}_i = \frac{\text{Graduation rate}_i}{\text{Cost per firm}_i}$$
+\end{columns}
+
+\bottomnote{All formulas use standard welfare economics, game theory, and decision analysis---no specialized mathematical background required}
+\end{frame}
+
+% Frame 31: Further reading
+\begin{frame}[t]{Further Reading}
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Foundational Papers}
+\begin{itemize}
+\item Akerlof (1970): ``The Market for `Lemons' ''
+\item Harberger (1964): ``Taxation, Resource Allocation, and Welfare''
+\item Posner (1974): ``Theories of Economic Regulation''
+\item Spence (1973): ``Job Market Signaling''
+\item Stigler (1971): ``The Theory of Economic Regulation''
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Crypto Regulation}
+\begin{itemize}
+\item Auer, Cornelli \& Frost (2020): ``Rise of the Central Bank Digital Currencies''
+\item Cornelli et al.\ (2020): ``Fintech and Big Tech Credit''
+\item Dowlat \& Hodapp (2018): ``ICO Quality: Development \& Trading''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Regulatory Policy}
+\begin{itemize}
+\item FSB (2023): ``High-level Recommendations for Crypto-Asset Regulation''
+\item FATF (2023): ``Updated Guidance for Virtual Assets and VASPs''
+\item FCA (2023): ``Regulatory Sandbox Annual Report''
+\item Masciandaro (2022): ``The Governance of Financial Supervision''
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{RegTech}
+\begin{itemize}
+\item Deloitte (2023): ``RegTech Universe Report''
+\item Arner, Barberis \& Buckley (2017): ``FinTech, RegTech, and the Reconceptualization of Financial Regulation''
+\item Grand View Research (2024): ``RegTech Market Size Report''
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform; foundational papers are essential for understanding regulatory economics}
+\end{frame}
+
+\end{document}

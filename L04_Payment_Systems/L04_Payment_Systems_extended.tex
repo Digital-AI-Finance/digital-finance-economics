@@ -1,0 +1,1098 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Payment Systems: Mathematical Models and Welfare Optimization}
+\subtitle{L04 Extended: Formalizing Network Economics of Value Transfer\\[0.3em]\normalsize From Rochet-Tirole interchange to RTGS liquidity optimization}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+%% ============================================================
+%% SECTION 1: Bridge from Basic Lecture (4 frames: 1 title + 3 content)
+%% ============================================================
+\section{Bridge from Basic Lecture}
+
+% --- Frame 0 (title) ---
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% --- Frame 1 ---
+\begin{frame}[t]{Welcome Back: From Concepts to Math}
+\begin{center}
+\textit{[XKCD \#1838: ``Machine Learning'']}\\[0.5em]
+\small Source: xkcd.com/1838 by Randall Munroe, CC BY-NC 2.5\\[1em]
+\normalsize ``You've learned what payment systems do. Today we learn to \textbf{optimize} them.''
+\end{center}
+
+\vspace{0.5em}
+\begin{center}
+\textit{``If you can't model it, you can't regulate it. If you can't regulate it, you can't protect consumers.''}\\
+\small --- Adapted from Lord Kelvin
+\end{center}
+
+\bottomnote{This lecture formalizes the economic models behind the payment system concepts introduced in the basic lecture.}
+\end{frame}
+
+% --- Frame 2 ---
+\begin{frame}[t]{From Concepts to Models}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What We Know}
+\begin{enumerate}
+\item Network effects drive payment adoption
+\item Two-sided markets require special pricing (platforms must ``get both sides on board'')
+\item Cross-border payments are expensive (6\%+ average)
+\item Correspondent banking adds intermediary costs
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{What We'll Formalize}
+\begin{enumerate}
+\item Rochet-Tirole (2003): optimal platform pricing with cross-side externalities
+\item Interchange welfare: who benefits from fee caps?
+\item RTGS vs DNS: liquidity cost trade-offs
+\item Suri \& Jack (2016): M-Pesa causal impact via difference-in-differences
+\end{enumerate}
+\end{columns}
+
+\bottomnote{This lecture builds mathematical foundations for the payment concepts introduced in the basic L04 lecture}
+\end{frame}
+
+% --- Frame 3: NO GREEK ---
+\begin{frame}[t]{Mathematical Toolkit}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Mathematical Concepts}
+\begin{itemize}
+\item Optimization (choosing the best outcome given constraints)
+\item Welfare analysis (measuring total benefit to society, not just one firm)
+\item Game theory (strategic interaction where each player's best action depends on others' choices)
+\item Causal inference (proving that X \textit{caused} Y, not just correlated with it)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Notation Preview}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+$p_B, p_S$ & Buyer / seller price \\
+$c$ & Platform cost per transaction \\
+$m$ & Platform profit margin \\
+$n_B, n_S$ & Number of buyers / sellers \\
+$V$ & Network value \\
+$L$ & Liquidity required \\
+$W$ & Total welfare (societal benefit) \\
+$IF$ & Interchange fee (\% per transaction) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\small All notation uses plain letters. Greek symbols introduced one at a time starting next slide.
+\end{columns}
+
+\bottomnote{All derivations use BSc-level calculus. Full notation table including Greek symbols in Appendix A1}
+\end{frame}
+
+%% ============================================================
+%% SECTION 2: Rochet-Tirole Two-Sided Market Optimization (5 frames)
+%% ============================================================
+\section{Rochet-Tirole Two-Sided Market Optimization}
+
+% --- Frame 4 ---
+\begin{frame}[t]{The Platform's Problem -- Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Model Setup}
+
+A platform (e.g., Visa) connects buyers (B) and sellers (S):
+\begin{itemize}
+\item Revenue from buyers: $p_B \times n_B$
+\item Revenue from sellers: $p_S \times n_S$
+\item Cost of serving buyers: $c_B = 0.5$ per user
+\item Cost of serving sellers: $c_S = 0.3$ per user
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{New symbol:} $\pi$ = platform profit (Greek letter ``pi'')
+$$\pi = (p_B - c_B) \cdot n_B + (p_S - c_S) \cdot n_S$$
+
+\column{0.48\textwidth}
+\textbf{Demand Functions (with Cross-Side Effects)}
+
+Each side's demand depends on the \textit{other} side's size:
+\begin{itemize}
+\item $n_B = a_B - b_B \cdot p_B + d_B \cdot n_S$
+\item $n_S = a_S - b_S \cdot p_S + d_S \cdot n_B$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Parameters:}
+\begin{itemize}
+\item $a_B = 100$, $b_B = 20$, $d_B = 0.3$
+\item $a_S = 80$, $b_S = 15$, $d_S = 0.2$
+\end{itemize}
+
+\vspace{0.3em}
+\textit{$d_B = 0.3$ means: for every additional seller, 0.3 more buyers join. This is the cross-side externality.}
+\end{columns}
+
+\bottomnote{Based on Rochet \& Tirole (2003, 2006). $\pi$ (pi) is standard notation for profit in economics}
+\end{frame}
+
+% --- Frame 5 ---
+\begin{frame}[t]{Optimal Price Structure Derivation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{First-Order Conditions}
+
+Setting $\dfrac{d\pi}{dp_B} = 0$ and $\dfrac{d\pi}{dp_S} = 0$ yields Lerner-type pricing conditions:
+
+\vspace{0.3em}
+\textbf{New symbol:} $\varepsilon$ = elasticity (Greek ``epsilon''), measuring how sensitive demand is to price
+
+$$\frac{p_B - c_B}{p_B} = \frac{1}{\varepsilon_B} - \frac{d_B \cdot n_S}{p_B \cdot b_B}$$
+
+The second term is the \textbf{cross-side adjustment}: the platform internalizes that charging buyers less attracts more sellers.
+
+\column{0.48\textwidth}
+\textbf{Worked Example}
+
+With $\varepsilon_B = 2.0$ (buyers are price-sensitive) and $\varepsilon_S = 0.5$ (sellers are captive):
+
+$$\frac{p_B - c_B}{p_S - c_S} = \frac{\varepsilon_S}{\varepsilon_B} = \frac{0.5}{2.0} = 0.25$$
+
+\vspace{0.3em}
+\textbf{Interpretation:} The markup on buyers should be one-quarter of the markup on sellers. The platform subsidizes the price-sensitive side (buyers get rewards) and charges the captive side (merchants pay 2--3\%).
+
+\vspace{0.3em}
+\textit{Real-world check: Visa charges cardholders \$0 (often with cashback), but merchants pay 1.5--3\%. The math matches reality.}
+\end{columns}
+
+\bottomnote{The Lerner index measures market power: higher index = more markup above cost. The cross-side term is the Rochet-Tirole innovation}
+\end{frame}
+
+% --- Frame 6 ---
+\begin{frame}[t]{Cross-Side Externality Internalization}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Insight: Level vs Structure}
+
+Rochet-Tirole's central result: in two-sided markets, the \textbf{price structure} (how the total price is split between sides) matters separately from the \textbf{price level} (the total price).
+
+\vspace{0.3em}
+\textbf{Cross-side externalities} occur when one side's participation increases value for the other side:
+\begin{itemize}
+\item More merchants $\to$ card is more useful $\to$ more consumers join
+\item More consumers $\to$ merchants cannot afford to refuse cards $\to$ more merchants join
+\end{itemize}
+
+This differs from \textbf{standard externalities} (e.g., pollution) because both sides benefit, and the platform can internalize it through pricing.
+
+\column{0.48\textwidth}
+\textbf{The Subsidy Logic}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lcc}
+\toprule
+& \textbf{Buyers} & \textbf{Sellers} \\
+\midrule
+Elasticity & High (2.0) & Low (0.5) \\
+If overcharged & Switch to cash & Must accept \\
+Platform strategy & Subsidize & Charge \\
+Real-world price & \$0 + rewards & 1.5--3\% \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{Why not charge both?} Losing the price-sensitive side collapses the whole market (chicken-and-egg problem). Subsidizing buyers creates a positive externality for sellers through increased transaction volume.
+
+\vspace{0.3em}
+\textit{Analogy: nightclubs let women in free (price-sensitive, attract the other side) and charge men (captive, high willingness to pay).}
+\end{columns}
+
+\bottomnote{Cross-side externalities distinguish two-sided markets from ordinary markets. Standard antitrust (focusing on one side) can get the wrong answer}
+\end{frame}
+
+% --- Frame 7 ---
+\begin{frame}[t]{Rochet-Tirole Platform Optimization}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{06_rochet_tirole_platform_optimization/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Contour plot of platform profit over $(p_B, p_S)$ space. The monopoly optimum (red dot) charges sellers more than buyers, reflecting the elasticity ratio. The social optimum (green square) lowers both prices
+\item Panel~(b): Welfare decomposition shows the deadweight loss (DWL) from monopoly pricing---the welfare destroyed by the platform's market power. Socially optimal pricing recovers this DWL
+\end{itemize}
+
+\bottomnote{Rochet \& Tirole (2003, 2006). Monopoly pricing distorts the price structure away from the social optimum}
+\end{frame}
+
+% --- Frame 8 ---
+\begin{frame}[t]{Comparison: Monopoly vs Socially Optimal Pricing}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Monopoly Overcharges the Captive Side}
+\begin{itemize}
+\item Monopoly platform sets $p_S$ above marginal cost because merchants have low elasticity ($\varepsilon_S = 0.5$)
+\item Buyer price may be below cost (subsidized via rewards)
+\item Total welfare is lower because some efficient transactions do not occur (merchants priced out)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Why Can't Merchants Refuse?}
+\begin{itemize}
+\item Consumer expectation: ``everywhere I shop accepts Visa''
+\item Competitive pressure: if your competitor accepts cards, you must too
+\item The ``must-take'' card phenomenon
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Regulator's Problem}
+
+Maximize total welfare:
+$$W = CS_B + CS_S + PS$$
+where $CS$ = consumer surplus (benefit to each side above what they pay), $PS$ = producer surplus (platform profit).
+
+\vspace{0.3em}
+The monopolist maximizes only $PS$, ignoring $CS_B + CS_S$.
+
+\vspace{0.3em}
+\textbf{Key difference:} The social planner internalizes cross-side externalities differently---subsidizes \textit{both} sides more because the network effects benefit everyone.
+
+\vspace{0.3em}
+\textit{For multi-platform dynamics (what happens when Visa and Mastercard compete for merchants), see L05 Extended.}
+\end{columns}
+
+\bottomnote{Regulators must analyze BOTH sides of the market. Capping merchant fees without considering consumer effects can reduce welfare}
+\end{frame}
+
+%% ============================================================
+%% SECTION 3: Interchange Fee Regulation and Welfare (4 frames)
+%% ============================================================
+\section{Interchange Fee Regulation and Welfare}
+
+% --- Frame 9 ---
+\begin{frame}[t]{Welfare Analysis of Interchange Caps}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Welfare Framework}
+
+Total welfare under interchange fee $IF$:
+$$W = CS_B + CS_S + PS_{\text{platform}}$$
+
+where:
+\begin{itemize}
+\item $CS_B$ = consumer surplus (cardholders benefit from rewards funded by IF)
+\item $CS_S$ = merchant surplus (lower IF $\to$ lower merchant costs $\to$ higher surplus)
+\item $PS$ = platform/issuer profit
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{New symbol:} $\Delta$ = change in welfare (Greek ``delta'')
+
+$\Delta W = W_{\text{cap}} - W_{\text{unregulated}}$
+
+\column{0.48\textwidth}
+\textbf{Three Regimes Compared}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Regime} & \textbf{IF Rate} & \textbf{Example} \\
+\midrule
+Unregulated & 2.0\% & US credit cards \\
+EU Cap & 0.3\% & EU IFR (2015) \\
+Zero Cap & 0\% & Theoretical ideal \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{The Trade-off:}
+\begin{itemize}
+\item Lower IF $\to$ merchants pay less $\to$ $CS_S$ rises
+\item Lower IF $\to$ fewer card rewards $\to$ $CS_B$ may fall
+\item Lower IF $\to$ less issuer profit $\to$ $PS$ falls
+\item Net effect depends on elasticities
+\end{itemize}
+
+\textbf{Calibration:} 1 trillion transactions, $\varepsilon_B = 2.0$, $\varepsilon_S = 0.5$
+\end{columns}
+
+\bottomnote{The EU IFR (Interchange Fee Regulation, 2015) capped interchange at 0.2\% (debit) and 0.3\% (credit). The US left credit uncapped}
+\end{frame}
+
+% --- Frame 10 ---
+\begin{frame}[t]{Interchange Cap Welfare Effects}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{07_interchange_welfare_decomposition/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Welfare decomposition under three regimes. The EU cap shifts surplus from platforms/issuers to merchants while modestly reducing consumer rewards
+\item Panel~(b): Net welfare change relative to the unregulated baseline. The EU cap achieves a near-optimal balance---further reduction to zero actually \textit{reduces} welfare by eliminating the card network's ability to subsidize consumers
+\end{itemize}
+
+\bottomnote{The EU 0.3\% cap is near-optimal: it reduces merchant costs without destroying the two-sided market mechanism}
+\end{frame}
+
+% --- Frame 11 ---
+\begin{frame}[t]{Who Really Pays? Pass-Through Analysis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Merchant Cost Pass-Through}
+
+When merchants pay interchange fees, they raise retail prices:
+$$\frac{dP_{\text{retail}}}{dIF} = \rho$$
+where $\rho$ = pass-through rate (what fraction of the fee increase the merchant passes to consumers in higher prices).
+
+\vspace{0.3em}
+\textbf{Empirical estimates:} $\rho \approx 0.5$--$0.7$ (merchants pass 50--70\% of interchange to all consumers via higher prices).
+
+\vspace{0.3em}
+\textit{If Visa charges merchants 2\% and $\rho = 0.6$, retail prices rise 1.2\% for EVERYONE---including cash customers.}
+
+\column{0.48\textwidth}
+\textbf{Regressive Effects on Cash Users}
+
+\vspace{0.3em}
+The cross-subsidy is regressive (benefits the rich, hurts the poor):
+\begin{itemize}
+\item Card users: pay 1.2\% higher prices, receive 1.5\% cashback $\to$ \textbf{net gain: +0.3\%}
+\item Cash users: pay 1.2\% higher prices, receive \$0 cashback $\to$ \textbf{net loss: $-1.2\%$}
+\end{itemize}
+
+\vspace{0.3em}
+Cash users are disproportionately:
+\begin{itemize}
+\item Lower income
+\item Unbanked or underbanked
+\item Elderly or rural populations
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Schuh et al.\ (2010): average US cash-using household transfers \$149/year to card-using households through this mechanism.}
+\end{columns}
+
+\bottomnote{Interchange fees create a hidden regressive transfer from cash users to card users---a key argument for caps}
+\end{frame}
+
+% --- Frame 12 ---
+\begin{frame}[t]{Optimal Interchange Rate}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Deriving the Optimum}
+
+Maximize $W(IF)$ by setting $\dfrac{dW}{dIF} = 0$:
+
+\vspace{0.3em}
+Marginal benefit of IF:
+$$\frac{dCS_B}{dIF} > 0 \quad\text{(funds consumer rewards)}$$
+
+Marginal cost of IF:
+$$\frac{dCS_S}{dIF} < 0 \quad\text{(raises merchant costs)}$$
+
+At the optimum:
+$$\frac{dCS_B}{dIF} + \frac{dCS_S}{dIF} + \frac{dPS}{dIF} = 0$$
+
+\column{0.48\textwidth}
+\textbf{Worked Example}
+
+With our calibration ($\varepsilon_B = 2.0$, $\varepsilon_S = 0.5$):
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lcc}
+\toprule
+\textbf{IF Rate} & \textbf{Net Welfare} & \textbf{Notes} \\
+\midrule
+0\% & Lower & No rewards, low adoption \\
+0.3\% (EU) & Near-optimal & Good balance \\
+0.8\% & Theoretical max & Hard to implement \\
+2.0\% (US) & Sub-optimal & Merchant distortion \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+The optimal rate $IF^* \approx 0.8\%$ sits between the EU cap (0.3\%) and the US market rate (2.0\%).
+
+\vspace{0.3em}
+\textit{Implication: The EU cap is conservative but welfare-improving. The US rate is too high.}
+\end{columns}
+
+\bottomnote{The optimal interchange rate balances consumer rewards against merchant cost distortion. Neither zero nor 2\% is optimal}
+\end{frame}
+
+%% ============================================================
+%% SECTION 4: RTGS vs DNS Liquidity Models (4 frames)
+%% ============================================================
+\section{RTGS vs DNS Liquidity Models}
+
+% --- Frame 13 ---
+\begin{frame}[t]{Liquidity Cost Model -- Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{RTGS (Real-Time Gross Settlement)}
+
+Each payment needs full liquidity upfront:
+$$L_{\text{RTGS}} = \sum_{i,j} |P_{ij}|$$
+where $P_{ij}$ = payment from bank $i$ to bank $j$.
+
+\vspace{0.3em}
+\textit{With $N$ banks and average bilateral flow of 1B, total gross liquidity = $N(N-1) \times 1$B.}
+
+\vspace{0.3em}
+\textbf{Cost:} Banks must hold this as reserves at the central bank, earning below-market returns. Liquidity cost = opportunity cost of holding reserves.
+
+\column{0.48\textwidth}
+\textbf{DNS (Deferred Net Settlement)}
+
+Batch netting reduces liquidity needs:
+$$L_{\text{DNS}} = \sum_{i} |\text{Net}_i|$$
+where $\text{Net}_i = \sum_j P_{ij} - \sum_j P_{ji}$ (each bank's net position).
+
+\vspace{0.3em}
+\textbf{Netting Ratio:}
+$$NR = 1 - \frac{L_{\text{DNS}}}{L_{\text{RTGS}}}$$
+
+\textit{NR = 0.82 means DNS uses only 18\% of RTGS liquidity---82\% savings.}
+
+\vspace{0.3em}
+\textbf{Empirical fit:} $NR = 0.7 + 0.05 \ln(N)$
+
+More banks $\to$ more netting opportunities $\to$ higher NR (logarithmic improvement).
+\end{columns}
+
+\bottomnote{Kahn \& Roberds (2009), BIS (2005). The liquidity-risk trade-off is the fundamental design choice in payment systems}
+\end{frame}
+
+% --- Frame 14 ---
+\begin{frame}[t]{Netting Efficiency}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Worked Example: 10 Banks}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lr}
+\toprule
+\textbf{Metric} & \textbf{Value} \\
+\midrule
+Banks ($N$) & 10 \\
+Bilateral pairs & $10 \times 9 = 90$ \\
+Average bilateral flow & \$1B \\
+Gross liquidity (RTGS) & \$90B \\
+Netting ratio & $0.7 + 0.05\ln(10) = 0.815$ \\
+Net liquidity (DNS) & $90 \times (1-0.815) = \$16.7$B \\
+Liquidity savings & \$73.3B (82\%) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textit{At 5\% opportunity cost of capital, saving \$73.3B in liquidity saves \$3.7B/year in holding costs.}
+
+\column{0.48\textwidth}
+\textbf{Why Not Always Use DNS?}
+
+\vspace{0.3em}
+\textbf{Settlement risk:} DNS batches payments until end of day. If a bank fails mid-day:
+\begin{itemize}
+\item All its pending payments unwind
+\item Counterparties face unexpected shortfalls
+\item Systemic contagion possible
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Hybrid systems} combine benefits:
+\begin{itemize}
+\item Continuous netting with RTGS finality
+\item Queue management (holding payments until funds arrive)
+\item Central bank intraday credit (lending during the day, repaid by close)
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Example: TARGET2 (EU) uses RTGS with liquidity-saving mechanisms that achieve partial netting.}
+\end{columns}
+
+\bottomnote{Hybrid systems achieve 60--70\% of full netting savings while maintaining real-time finality}
+\end{frame}
+
+% --- Frame 15 ---
+\begin{frame}[t]{RTGS vs DNS Liquidity Comparison}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{08_rtgs_dns_liquidity/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Liquidity required rises quadratically with $N$ for RTGS (every bank must fund every bilateral flow), but grows much more slowly for DNS thanks to netting. At $N=50$, DNS saves 89\% of liquidity
+\item Panel~(b): The netting ratio $NR = 0.7 + 0.05\ln(N)$ improves logarithmically---adding banks always helps, but with diminishing returns. At $N=10$, the worked-example value $NR = 0.815$ matches
+\end{itemize}
+
+\bottomnote{Kahn \& Roberds (2009). The choice between RTGS and DNS is a liquidity-risk trade-off, not a clear dominance}
+\end{frame}
+
+% --- Frame 16 ---
+\begin{frame}[t]{Intraday Liquidity and Gridlock}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Gridlock: The Coordination Failure}
+
+In RTGS, banks may \textbf{strategically delay} payments:
+\begin{itemize}
+\item Bank A waits for Bank B's payment before sending its own
+\item Bank B does the same
+\item Result: mutual waiting (gridlock), no payments settle
+\end{itemize}
+
+\vspace{0.3em}
+This is a \textbf{coordination game}---both banks prefer to settle, but each prefers the other to go first (to use incoming funds rather than costly reserves).
+
+\vspace{0.3em}
+\textit{Gridlock costs: BIS estimates 5--15\% of daily payment value can be delayed by gridlock in systems without resolution mechanisms.}
+
+\column{0.48\textwidth}
+\textbf{Resolution Mechanisms}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{Mechanism} & \textbf{How It Works} \\
+\midrule
+Priority queues & Process time-critical payments first \\
+Partial netting & Net a subset of queued payments \\
+Intraday credit & Central bank lends during the day \\
+LSM (Liquidity & Match offsetting payments \\
+Saving Mechanism) & in the queue simultaneously \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{Central bank intraday credit:}
+\begin{itemize}
+\item Free or very low cost (encourages timely payment)
+\item Must be repaid by close of day
+\item Collateralized (backed by government bonds)
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Fedwire provides free intraday credit with a cap---banks can overdraw their Fed account during the day.}
+\end{columns}
+
+\bottomnote{Gridlock is a coordination failure, not a liquidity shortage. Central bank mechanisms solve the game-theoretic problem}
+\end{frame}
+
+%% ============================================================
+%% SECTION 5: M-Pesa Impact Estimation (4 frames)
+%% ============================================================
+\section{M-Pesa Impact Estimation}
+
+% --- Frame 17 ---
+\begin{frame}[t]{M-Pesa Natural Experiment -- Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Suri \& Jack (2016, \textit{Science})}
+
+Study design: \textbf{difference-in-differences} (DID), a method that compares changes over time between a treatment group and a control group to isolate causal effects.
+
+\vspace{0.3em}
+\textbf{Treatment group:} Households near an M-Pesa agent (easy access to mobile money).
+
+\textbf{Control group:} Households far from agents (limited access).
+
+\vspace{0.3em}
+\textbf{Why this works:} Agent placement was driven by Safaricom's commercial rollout strategy (population density, road access), not by poverty levels. This creates \textit{quasi-random} variation in access.
+
+\column{0.48\textwidth}
+\textbf{Data and Scale}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lr}
+\toprule
+\textbf{Feature} & \textbf{Detail} \\
+\midrule
+Sample size & $\sim$194,000 households \\
+Country & Kenya \\
+Period & 2008--2014 \\
+Outcome & Poverty rate (\%) \\
+Treatment & Proximity to M-Pesa agent \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{M-Pesa basics:}
+\begin{itemize}
+\item Mobile money via basic phone (no smartphone needed)
+\item Agent network (not bank branches)
+\item Send/receive money, pay bills, save
+\item Transaction cost: $\sim$1\% (vs 5--10\% alternatives)
+\end{itemize}
+\end{columns}
+
+\bottomnote{Suri \& Jack (2016). M-Pesa launched in 2007; by 2014 it was used by 80\%+ of Kenyan adults}
+\end{frame}
+
+% --- Frame 18 ---
+\begin{frame}[t]{Identification Strategy}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{DID Formula}
+
+$$Y_{it} = \alpha + \beta \cdot T_i + \gamma \cdot P_t + \delta \cdot (T_i \times P_t) + \varepsilon_{it}$$
+
+where:
+\begin{itemize}
+\item $Y_{it}$ = poverty rate for household $i$ at time $t$
+\item $T_i = 1$ if treatment (near agent), 0 if control
+\item $P_t = 1$ if post-treatment period
+\item \textbf{New symbol:} $\delta$ = treatment effect (Greek ``delta'')---the causal impact of M-Pesa access
+\item $\varepsilon_{it}$ = error term
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Key Assumption: Parallel Trends}
+
+For DID to give a \textbf{causal} estimate, the two groups must have been trending similarly \textit{before} M-Pesa arrived:
+\begin{itemize}
+\item If both groups' poverty was falling at the same rate pre-2010, then any \textit{divergence} post-2010 is caused by M-Pesa
+\item If trends differed pre-treatment, the estimate is biased
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Suri \& Jack verify:} poverty trends in treatment and control areas were statistically parallel from 2008 to 2010 (pre-rollout). See Panel~(a) in the chart.
+
+\vspace{0.3em}
+\textit{This is the gold standard for causal inference when randomized experiments are not feasible.}
+\end{columns}
+
+\bottomnote{DID is the workhorse of empirical economics. The parallel trends assumption is its Achilles' heel---if it fails, the estimate is invalid}
+\end{frame}
+
+% --- Frame 19 ---
+\begin{frame}[t]{M-Pesa Poverty Impact}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{09_mpesa_did_poverty/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Pre-treatment parallel trends validate the DID design. Post-treatment, the treatment group's poverty rate drops 4pp (34\%$\to$30\%) while the control drops only 1pp (33\%$\to$32\%). The shaded area is the DID effect
+\item Panel~(b): The DID estimate $\delta = -3$pp with 95\% CI [$-4.96$, $-1.04$]pp---statistically significant. Poverty fell 3 percentage points \textit{more} in areas with M-Pesa access, controlling for background trends
+\end{itemize}
+
+\bottomnote{Suri \& Jack (2016, Science). DID = (30-34) - (32-33) = -4 - (-1) = -3pp. This is a CAUSAL estimate, not mere correlation}
+\end{frame}
+
+% --- Frame 20 ---
+\begin{frame}[t]{Welfare Implications}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Scale of Impact}
+
+Treatment poverty: 34\% $\to$ 30\% ($-4$pp raw change)\\
+Control poverty: 33\% $\to$ 32\% ($-1$pp raw change)\\
+DID = $(30-34) - (32-33) = -4 - (-1) = -3$pp net causal effect
+
+\vspace{0.3em}
+With $\sim$194,000 households in Kenya near M-Pesa agents:
+\begin{itemize}
+\item 3\% of 194,000 $\approx$ 5,820 households directly
+\item Extrapolated nationally: $\sim$196,000 households lifted from poverty (Suri \& Jack estimate)
+\end{itemize}
+
+\vspace{0.3em}
+\textit{This makes M-Pesa one of the most impactful financial innovations for poverty reduction ever measured.}
+
+\column{0.48\textwidth}
+\textbf{Mechanisms}
+
+\vspace{0.3em}
+\textbf{Why does mobile money reduce poverty?}
+\begin{enumerate}
+\item \textbf{Improved risk-sharing:} families send money instantly when crops fail or illness strikes
+\item \textbf{Women's empowerment:} 185,000 women moved from farming to business occupations (Suri \& Jack 2016)
+\item \textbf{Consumption smoothing:} households maintain spending during income shocks instead of cutting food or school fees
+\item \textbf{Savings:} mobile accounts provide a safe place to accumulate small amounts
+\end{enumerate}
+
+\vspace{0.3em}
+\textit{The poverty reduction effect was larger for female-headed households ($-4.2$pp vs $-2.1$pp for male-headed).}
+\end{columns}
+
+\bottomnote{M-Pesa demonstrates that payment infrastructure is not just plumbing---it is a poverty reduction tool with measurable causal impact}
+\end{frame}
+
+%% ============================================================
+%% SECTION 6: Cross-Border Payment Efficiency (4 frames)
+%% ============================================================
+\section{Cross-Border Payment Efficiency}
+
+% --- Frame 21 ---
+\begin{frame}[t]{Cross-Border Payments: The Last Frontier}
+\begin{center}
+\textit{[XKCD \#949: ``File Transfer'']}\\[0.5em]
+\small Source: xkcd.com/949 by Randall Munroe, CC BY-NC 2.5\\[1em]
+\normalsize ``It's easier to send a 1GB file to Mars than \$100 to Manila.\\At least the file doesn't lose 6\% on the way.''
+\end{center}
+
+\vspace{0.5em}
+\begin{center}
+Cross-border payments remain the most expensive, slowest, and most opaque part of the global financial system. Today we decompose \textit{why} and model how new technology addresses each cost component.
+\end{center}
+
+\bottomnote{G20 Cross-Border Payments Roadmap (2020) targets: cost below 3\%, speed under 1 hour, transparency by 2027}
+\end{frame}
+
+% --- Frame 22 ---
+\begin{frame}[t]{Cross-Border Cost Decomposition}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Total Cost = Four Components}
+
+$$TC = TC_{FX} + TC_{\text{comply}} + TC_{\text{intermed}} + TC_{\text{settle}}$$
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lp{5cm}}
+\toprule
+\textbf{Component} & \textbf{What It Is} \\
+\midrule
+$TC_{FX}$ & Foreign exchange markup (gap between market rate and rate you get) \\
+$TC_{\text{comply}}$ & Compliance costs (AML/KYC checks at each intermediary) \\
+$TC_{\text{intermed}}$ & Intermediary fees (each correspondent bank takes a cut) \\
+$TC_{\text{settle}}$ & Settlement costs (moving money between central banks) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\column{0.48\textwidth}
+\textbf{How Each Technology Helps}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lcccc}
+\toprule
+& \textbf{FX} & \textbf{Comply} & \textbf{Intermed} & \textbf{Settle} \\
+\midrule
+SWIFT gpi & -- & -- & \checkmark & \checkmark \\
+Stablecoin & \checkmark & -- & \checkmark & \checkmark \\
+Multi-CBDC & \checkmark & \checkmark & \checkmark & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{Key insight:} No single technology eliminates all costs. Multi-CBDC addresses all four components because central banks can:
+\begin{itemize}
+\item Provide direct FX conversion
+\item Standardize compliance
+\item Eliminate intermediaries
+\item Settle atomically (all-or-nothing, no partial settlement risk)
+\end{itemize}
+\end{columns}
+
+\bottomnote{BIS (2020). Each cost component requires a different technological solution. Correspondent banking has the worst score on all four}
+\end{frame}
+
+% --- Frame 23 ---
+\begin{frame}[t]{Cross-Border Payment Efficiency}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{10_cross_border_cost_waterfall/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Stacked cost decomposition. Correspondent banking (6.3\%) is dominated by FX markup (2.5\%) and intermediary fees (1.5\%). Each newer technology eliminates or compresses these components. Multi-CBDC achieves 0.5\% total cost
+\item Panel~(b): Settlement speed varies by 1,440x---from 3 days (correspondent banking) to 3 minutes (multi-CBDC). The G20 3\% cost target is only met by stablecoin and multi-CBDC channels
+\end{itemize}
+
+\bottomnote{BIS (2020), World Bank Remittance Prices. The G20 3\% cost target (red dashed line) is achievable with new technology}
+\end{frame}
+
+% --- Frame 24 ---
+\begin{frame}[t]{Network Adoption Threshold}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{11_network_adoption_subsidy/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Bifurcation diagram showing how subsidies push networks past the critical mass threshold. With weak network effects ($\sigma=0.5$), large subsidies are needed. With strong effects ($\sigma=1.5$), a small push triggers self-sustaining adoption
+\item Panel~(b): The optimal subsidy decreases with network effect strength---networks with strong effects need less initial investment because positive feedback loops do the work. Diminishing returns above $\sigma \approx 1.5$
+\end{itemize}
+
+\bottomnote{Katz \& Shapiro (1985), Cabral (2011). This model explains why UPI (strong effects) succeeded with modest government subsidy while many payment apps (weak effects) failed}
+\end{frame}
+
+%% ============================================================
+%% SECTION 7: Synthesis and Policy Implications (3 frames)
+%% ============================================================
+\section{Synthesis and Policy Implications}
+
+% --- Frame 25 ---
+\begin{frame}[t]{Model Synthesis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Converging Insights}
+\begin{itemize}
+\item \textbf{Rochet-Tirole:} Platform pricing must account for cross-side externalities. Subsidize the elastic side
+\item \textbf{Interchange regulation:} EU 0.3\% cap is near-optimal. Eliminates regressive cash-to-card transfer
+\item \textbf{RTGS/DNS:} Netting saves 80\%+ liquidity but introduces settlement risk. Hybrid systems optimize the trade-off
+\item \textbf{M-Pesa DID:} $\delta = -3$pp poverty reduction, causally identified. Payment infrastructure reduces poverty
+\item \textbf{Cross-border:} Multi-CBDC reduces costs from 6.3\% to 0.5\% across all four components
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Policy Design Principles}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{Principle} & \textbf{Model Basis} \\
+\midrule
+Cap interchange & Rochet-Tirole + welfare \\
+Promote interop & Network adoption model \\
+Invest in netting & RTGS/DNS trade-off \\
+Subsidize inclusion & M-Pesa evidence \\
+Coordinate cross-border & BIS cost decomposition \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{Common thread:} Payment systems are infrastructure with network effects. Market outcomes are often suboptimal. Targeted regulation improves welfare without destroying the two-sided market mechanism.
+\end{columns}
+
+\bottomnote{All five models converge: payment systems need careful regulation that respects network economics, not laissez-faire or heavy-handed control}
+\end{frame}
+
+% --- Frame 26 ---
+\begin{frame}[t]{Open Questions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Unresolved Issues}
+\begin{itemize}
+\item What is the globally optimal interchange rate? (Varies by market structure, elasticities, and pass-through rates)
+\item How should multi-CBDC interoperability be governed? (BIS mBridge vs bilateral agreements)
+\item Should Big Tech be licensed as payment providers? (Data concentration vs innovation)
+\item Can stablecoins deliver cross-border cost reduction at scale without regulatory arbitrage?
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Assignment Connections}
+\begin{itemize}
+\item Exercise 1: Compute Rochet-Tirole optimal prices with different elasticities
+\item Exercise 2: DID estimation with M-Pesa data
+\item Exercise 3: RTGS vs DNS liquidity calculator
+\item Quiz questions test interchange welfare reasoning
+\item Research paper: any open question above
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key skill:} After this lecture, you can model the welfare effects of payment system regulation using two-sided market theory and causal inference.
+\end{columns}
+
+\bottomnote{Payment systems economics is an active research frontier. These models provide the analytical toolkit for evaluating new proposals}
+\end{frame}
+
+% --- Frame 27 ---
+\begin{frame}[t]{References}
+\small
+\begin{itemize}
+\setlength{\itemsep}{2pt}
+\item Rochet, J.-C.\ \& Tirole, J.\ (2003). Platform Competition in Two-Sided Markets. \textit{Journal of the European Economic Association}, 1(4), 990--1029.
+\item Rochet, J.-C.\ \& Tirole, J.\ (2006). Two-Sided Markets: A Progress Report. \textit{The RAND Journal of Economics}, 37(3), 645--667.
+\item Rochet, J.-C.\ \& Tirole, J.\ (2011). Must-Take Cards: Merchant Discounts and Avoided Costs. \textit{Journal of the European Economic Association}, 9(3), 462--495.
+\item EU Interchange Fee Regulation (2015). Regulation (EU) 2015/751.
+\item Kahn, C.M.\ \& Roberds, W.\ (2009). Payments Settlement: Tiering in Private and Public Systems. \textit{Journal of Money, Credit and Banking}, 41(5), 855--884.
+\item BIS (2005). New Developments in Large-Value Payment Systems. \textit{CPSS Publications No.\ 67}.
+\item BIS (2020). Enhancing Cross-border Payments. \textit{Stage 3 Roadmap}.
+\item Suri, T.\ \& Jack, W.\ (2016). The Long-Run Poverty and Gender Impacts of Mobile Money. \textit{Science}, 354(6317), 1288--1292.
+\item Katz, M.L.\ \& Shapiro, C.\ (1985). Network Externalities, Competition, and Compatibility. \textit{American Economic Review}, 75(3), 424--440.
+\item Cabral, L.\ (2011). Dynamic Price Competition with Network Effects. \textit{Review of Economic Studies}, 78(1), 83--111.
+\end{itemize}
+
+\bottomnote{Full references for all models and data sources cited in this lecture}
+\end{frame}
+
+%% ============================================================
+%% APPENDIX (3 frames)
+%% ============================================================
+\appendix
+\section{Appendix}
+
+% --- Frame 28 (A1): Complete Notation Table ---
+\begin{frame}[t]{Appendix A1: Complete Notation Table}
+\begin{center}
+\begin{adjustbox}{max width=0.95\textwidth, max totalheight=0.78\textheight}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Section} \\
+\midrule
+$p_B, p_S$ & Buyer / seller price & Rochet-Tirole \\
+$c_B, c_S$ & Cost of serving buyers / sellers & Rochet-Tirole \\
+$n_B, n_S$ & Number of buyers / sellers & Rochet-Tirole \\
+$a_B, a_S$ & Demand intercept (base demand without price/network effects) & Rochet-Tirole \\
+$b_B, b_S$ & Price sensitivity of demand & Rochet-Tirole \\
+$d_B, d_S$ & Cross-side externality strength & Rochet-Tirole \\
+$\pi$ & Platform profit (Greek ``pi'') & Rochet-Tirole \\
+$\varepsilon_B, \varepsilon_S$ & Price elasticity of demand (Greek ``epsilon'') & Rochet-Tirole / Interchange \\
+$IF$ & Interchange fee rate & Interchange \\
+$W$ & Total welfare ($= CS_B + CS_S + PS$) & Interchange / Synthesis \\
+$CS_B, CS_S$ & Consumer surplus for buyers / sellers & Interchange / Welfare \\
+$PS$ & Producer surplus (platform profit) & Interchange / Welfare \\
+$\Delta$ & Change in a variable (Greek ``delta'') & Interchange \\
+$\rho$ & Pass-through rate (fraction of fee passed to retail prices) & Interchange \\
+$L$ & Liquidity required & RTGS/DNS \\
+$P_{ij}$ & Payment from bank $i$ to bank $j$ & RTGS/DNS \\
+$NR$ & Netting ratio ($= 1 - L_{\text{DNS}}/L_{\text{RTGS}}$) & RTGS/DNS \\
+$N$ & Number of banks & RTGS/DNS \\
+$Y_{it}$ & Outcome (poverty rate) for unit $i$ at time $t$ & M-Pesa DID \\
+$T_i$ & Treatment indicator (1 = near agent) & M-Pesa DID \\
+$P_t$ & Post-treatment indicator & M-Pesa DID \\
+$\delta$ & DID treatment effect ($= -3$pp) & M-Pesa DID \\
+$\sigma$ & Network effect strength & Network Adoption \\
+$s$ & Subsidy level & Network Adoption \\
+$x$ & Adoption rate & Network Adoption \\
+$\delta_d$ & Decay / churn rate & Network Adoption \\
+$TC$ & Total cross-border cost & Cross-Border \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{center}
+
+\bottomnote{Reference page for all mathematical notation used in this lecture. Greek letters introduced gradually through the slides}
+\end{frame}
+
+% --- Frame 29 (A2): Rochet-Tirole FOC Derivation ---
+\begin{frame}[t]{Appendix A2: Rochet-Tirole FOC Derivation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Simultaneous Demand System}
+
+Solve for equilibrium demands:
+\begin{align*}
+n_B &= a_B - b_B p_B + d_B n_S \\
+n_S &= a_S - b_S p_S + d_S n_B
+\end{align*}
+
+Substituting the second into the first:
+$$n_B(1 - d_B d_S) = (a_B - b_B p_B) + d_B(a_S - b_S p_S)$$
+
+$$n_B^* = \frac{a_B - b_B p_B + d_B(a_S - b_S p_S)}{1 - d_B d_S}$$
+
+With $d_B d_S = 0.3 \times 0.2 = 0.06$, the denominator $= 0.94$ (system is stable since $d_B d_S < 1$).
+
+\column{0.48\textwidth}
+\textbf{Profit Maximization}
+
+$$\pi = (p_B - c_B) n_B^*(p_B, p_S) + (p_S - c_S) n_S^*(p_B, p_S)$$
+
+FOC with respect to $p_B$:
+$$\frac{\partial \pi}{\partial p_B} = n_B^* + (p_B - c_B)\frac{\partial n_B^*}{\partial p_B} + (p_S - c_S)\frac{\partial n_S^*}{\partial p_B} = 0$$
+
+The third term captures the \textbf{cross-side effect}: raising $p_B$ reduces $n_B$, which reduces $n_S$ (via $d_S$), which reduces seller revenue.
+
+\vspace{0.3em}
+This is why monopoly two-sided pricing differs from standard monopoly: the platform internalizes the indirect effect on the other side.
+\end{columns}
+
+\bottomnote{Full derivation for students who want the mathematical details. The cross-side term is the key innovation of Rochet-Tirole}
+\end{frame}
+
+% --- Frame 30 (A3): DID Estimation Conditions ---
+\begin{frame}[t]{Appendix A3: DID Estimation Conditions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Three Key Assumptions}
+\begin{enumerate}
+\item \textbf{Parallel trends:} In the absence of treatment, treated and control groups would have followed the same trajectory. Verified by checking pre-treatment trends are statistically indistinguishable.
+
+\item \textbf{SUTVA} (Stable Unit Treatment Value Assumption): One household's treatment does not affect another's outcome. Potentially violated if M-Pesa creates spillovers to control areas.
+
+\item \textbf{No anticipation:} Households did not change behavior \textit{before} M-Pesa arrived. Verified by checking for pre-treatment jumps.
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Threats to Validity}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lp{4.5cm}}
+\toprule
+\textbf{Threat} & \textbf{How Addressed} \\
+\midrule
+Selection bias & Agent placement driven by commercial factors, not poverty \\
+Spillovers & Reduced-form estimates are lower bounds (spillovers dilute effect) \\
+Time-varying confounds & Placebo tests on unrelated outcomes show null effects \\
+Attrition & Panel balanced; attrition uncorrelated with treatment \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{Why DID, not RCT?}\\
+\textit{A randomized controlled trial (RCT) would randomly assign M-Pesa access. Ethically and practically impossible at national scale. DID exploits the natural variation in rollout timing.}
+\end{columns}
+
+\bottomnote{Suri \& Jack (2016) is considered one of the strongest DID designs in development economics due to the quasi-random agent rollout}
+\end{frame}
+
+\end{document}
