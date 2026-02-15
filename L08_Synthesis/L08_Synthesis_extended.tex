@@ -1,0 +1,1073 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Synthesis and Future Directions: Mathematical Models and Integrated Analysis}
+\subtitle{L08 Extended: Formalizing Systemic Risk, Policy Evaluation, and Cross-Lens Integration\\[0.3em]\normalsize From Acemoglu network contagion to multi-criteria welfare optimization}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+%% ============================================================
+%% SECTION 1: Bridge from Basic Lecture (4 frames: 1 title + 3)
+%% ============================================================
+\section{Bridge from Basic Lecture}
+
+% --- FRAME 1 (title) ---
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% --- FRAME 2 ---
+\begin{frame}[t]{Welcome Back: From Concepts to Formal Models}
+\begin{center}
+\textit{[XKCD \#2030: ``Blockchain'']}\\[0.5em]
+\small Source: xkcd.com/2030 by Randall Munroe, CC BY-NC 2.5\\[1em]
+\normalsize ``Today we formalize the economic models behind the synthesis lecture---moving from verbal arguments to equations you can actually compute.''
+\end{center}
+
+\bottomnote{This extended lecture adds mathematical depth to L08 Synthesis: every claim gets an equation, every equation gets a number.}
+\end{frame}
+
+% --- FRAME 3 (NO GREEK) ---
+\begin{frame}[t]{Mathematical Notation Overview}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Notation Used in This Lecture}
+
+All symbols are Roman letters. We introduce special notation only where needed later.
+
+\vspace{0.3em}
+\begin{tabular}{ll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+A & adjacency matrix (who is exposed to whom) \\
+c & capital buffer (money set aside for losses) \\
+d & depth of a protocol stack \\
+VaR & Value-at-Risk (maximum loss at confidence level) \\
+CoVaR & Conditional VaR (loss given another entity stressed) \\
+R & asset return \\
+W & weighted welfare score \\
+f & failure probability of a single layer \\
+P & chain failure probability \\
+n & number of layers or nodes \\
+\bottomrule
+\end{tabular}
+
+\column{0.48\textwidth}
+\textbf{Road Map}
+\begin{enumerate}
+\item \textbf{Acemoglu contagion}: how losses cascade through bank networks
+\item \textbf{CoVaR}: measuring spillover risk between crypto assets
+\item \textbf{Composability risk}: failure probability in DeFi stacks
+\item \textbf{MCDA}: comparing policies with multiple objectives
+\item \textbf{Trilemma frontier}: formalizing the D+S+Sc constraint
+\item \textbf{Cross-lens interactions}: how the four lenses connect
+\end{enumerate}
+\end{columns}
+
+\bottomnote{No Greek letters on this slide---all notation is plain Roman. We introduce Greek symbols gradually when each model needs them.}
+\end{frame}
+
+% --- FRAME 4 (introduce Greek theta_A) ---
+\begin{frame}[t]{From Notation to Models: The Cascade Threshold}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Introducing the Cascade Model}
+
+Let $\theta_A$ denote the \textbf{cascade threshold}---the minimum capital buffer that a node needs to survive incoming losses. When losses exceed $\theta_A$, the node fails.
+
+\vspace{0.3em}
+\textbf{Acemoglu Loss Propagation:}
+\[
+L_i = \max\!\bigl(0,\;\textstyle\sum_j a_{ij} L_j - c_i\bigr)
+\]
+where:
+\begin{itemize}
+\item $L_i$ = loss at node $i$
+\item $a_{ij}$ = share of node $j$'s losses transmitted to $i$
+\item $c_i$ = capital buffer of node $i$
+\item Node $i$ fails when $L_i > 0$ (i.e., losses exceed buffer)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{The Robust-Yet-Fragile Result}
+
+Dense networks (many connections) have a paradoxical property:
+\begin{itemize}
+\item \textbf{Small shocks}: absorbed---losses diluted across many links
+\item \textbf{Large shocks}: amplified---once one node fails, losses flood the entire system
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Numerical Example:}
+
+10 nodes, each with $c_i = 0.5$, shock $= 1.0$ to node 0.
+\begin{itemize}
+\item Ring network: cascade propagates sequentially
+\item Complete network: losses diluted but shared by all
+\item Star: hub failure can destroy periphery
+\end{itemize}
+
+\textit{The threshold $\theta_A = c_i$ determines whether a shock is ``small'' or ``large'' relative to the network.}
+\end{columns}
+
+\bottomnote{Acemoglu et al.\ (2015): dense networks diversify small shocks but propagate large ones everywhere---the robust-yet-fragile property.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 2: Acemoglu Network Contagion Model (5 frames)
+%% ============================================================
+\section{Acemoglu Network Contagion Model}
+
+% --- FRAME 5 ---
+\begin{frame}[t]{Acemoglu Contagion: Formal Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Model Components}
+
+Consider $n$ financial institutions (banks, protocols, exchanges) connected by exposures.
+
+\vspace{0.3em}
+\textbf{Adjacency Matrix $A$:}
+
+$a_{ij} \geq 0$ represents the fraction of node $j$'s loss that is transmitted to node $i$. Rows sum to at most 1.
+
+\vspace{0.3em}
+\textbf{Loss Function (Fixed Point):}
+\[
+L_i = \max\!\bigl(0,\;\textstyle\sum_{j=1}^{n} a_{ij} L_j - c_i\bigr)
+\]
+
+This is a \textbf{fixed-point equation}: we iterate until losses stabilize.
+
+\column{0.48\textwidth}
+\textbf{Key Insight: Topology Matters}
+
+Acemoglu et al.\ (2015) prove that:
+
+\begin{enumerate}
+\item \textbf{Ring}: Contagion propagates sequentially along the cycle, possibly reaching all nodes
+\item \textbf{Complete}: Each node receives $L_j / (n{-}1)$ from every other---dilution protects against small shocks
+\item \textbf{Star}: Hub connects all periphery. Hub failure instantly exposes every spoke
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Dense networks are robust-yet-fragile:}
+
+Below the critical shock threshold $\theta_A$, dense networks absorb shocks better. Above $\theta_A$, dense networks transmit losses to \emph{everyone} simultaneously.
+\end{columns}
+
+\bottomnote{Acemoglu, Ozdaglar \& Tahbaz-Salehi (2015): Systemic Risk and Stability in Financial Networks, American Economic Review.}
+\end{frame}
+
+% --- FRAME 6 (CHART) ---
+\begin{frame}[t]{Network Topologies: Ring, Complete, and Star}
+\begin{center}
+\includegraphics[width=0.85\textwidth]{06_network_contagion_topology/chart.pdf}
+\end{center}
+
+\bottomnote{Acemoglu contagion simulation: N=10, capital buffer=0.5, shock=1.0. Ring propagates sequentially; complete dilutes; star concentrates at hub.}
+\end{frame}
+
+% --- FRAME 7 ---
+\begin{frame}[t]{Digital Finance Amplification of Network Contagion}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Why Digital Finance Changes the Game}
+
+Classic contagion models (Allen \& Gale 2000) assumed slow, bilateral settlement. Digital finance introduces:
+
+\begin{itemize}
+\item \textbf{Instant settlement}: No time to intervene between cascade rounds
+\item \textbf{Algorithmic liquidation}: Smart contracts automatically sell collateral, triggering price spirals
+\item \textbf{Transparent exposures}: Everyone sees who is failing in real-time, accelerating panic
+\item \textbf{Composability}: DeFi protocols stack on each other---one failure cascades through the entire stack
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Case Study: Terra/Luna (May 2022)}
+
+The collapse followed the contagion model precisely:
+\begin{enumerate}
+\item Initial shock: UST depeg from \$1.00 to \$0.98
+\item Algorithmic minting flooded LUNA supply
+\item Anchor protocol (lending layer) lost deposits
+\item Bridge protocols transmitted stress cross-chain
+\item Result: \$40 billion destroyed in one week
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Network structure}: Star topology with UST as hub---exactly the most fragile configuration predicted by Acemoglu.
+\end{columns}
+
+\bottomnote{Terra/Luna collapse demonstrates Acemoglu's hub-vulnerability: star topology with algorithmic stablecoin as hub caused maximal cascade.}
+\end{frame}
+
+% --- FRAME 8 ---
+\begin{frame}[t]{Connection to Bank Runs: Diamond-Dybvig Meets DeFi}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Diamond-Dybvig (1983) Recap}
+
+\textit{(See L02 Extended for the full mathematical treatment.)}
+
+\vspace{0.3em}
+Key result: Bank runs are self-fulfilling equilibria (situations where expectations cause the outcome that was feared). If depositors \emph{believe} others will withdraw, it is rational for them to withdraw too.
+
+\vspace{0.3em}
+\textbf{In formal terms:}
+\begin{itemize}
+\item Early withdrawals exceed liquid reserves
+\item Fire sales of illiquid assets at discount
+\item Bank becomes insolvent---even if fundamentally sound
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{DeFi Equivalents}
+
+\begin{tabular}{ll}
+\toprule
+\textbf{TradFi} & \textbf{DeFi Equivalent} \\
+\midrule
+Bank deposits & Staking / lending pools \\
+Withdrawal queue & Unstaking cooldown \\
+Fire sales & Liquidation cascades \\
+Deposit insurance & None (usually) \\
+Lender of last resort & None (no central bank) \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Key difference}: DeFi has no deposit insurance and no lender of last resort. The Diamond-Dybvig ``bad equilibrium'' is therefore \emph{more likely} in DeFi than in traditional banking.
+
+\textit{This is why stablecoin regulation matters---it substitutes for the missing safety net.}
+\end{columns}
+
+\bottomnote{Cross-reference: L02 Extended covers Diamond-Dybvig in full mathematical detail. DeFi lacks the institutional safeguards that prevent bank-run equilibria.}
+\end{frame}
+
+% --- FRAME 9 (introduce Greek alpha_q) ---
+\begin{frame}[t]{From Network Contagion to Systemic Risk Measurement}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Measuring Spillovers: CoVaR}
+
+Contagion models show \emph{how} losses spread. But how do we \emph{measure} spillover intensity in practice? We use CoVaR (Adrian \& Brunnermeier, 2016).
+
+\vspace{0.3em}
+Let $\alpha_q$ denote the \textbf{VaR confidence level} (typically $q = 0.05$, meaning we look at the worst 5\% of outcomes).
+
+\vspace{0.3em}
+\textbf{Definitions:}
+
+$\text{VaR}_q^{i}$: the loss threshold such that
+\[
+\Pr(R^i \leq -\text{VaR}_q^{i}) = \alpha_q
+\]
+meaning institution $i$'s return falls below this level with probability $\alpha_q$.
+
+\column{0.48\textwidth}
+\textbf{Conditional Value-at-Risk:}
+\[
+\text{CoVaR}_q^{j|i} = \text{VaR}_q^{j} \;\big|\; R^i = \text{VaR}_q^{i}
+\]
+
+This measures: ``How bad are losses at $j$ when $i$ is at its worst 5\%?''
+
+\vspace{0.3em}
+\textbf{Delta-CoVaR} captures the \emph{additional} risk:
+\[
+\Delta\text{CoVaR}^{j|i} = \text{CoVaR}_q^{j|i} - \text{VaR}_q^{j}
+\]
+
+If $\Delta\text{CoVaR}^{j|i} > 0$, then stress at $i$ \emph{amplifies} tail risk at $j$ beyond its unconditional level.
+
+\vspace{0.3em}
+\textbf{Practical use}: Rank crypto assets by systemic importance---those with high outgoing $\Delta$CoVaR are contagion sources.
+\end{columns}
+
+\bottomnote{Adrian \& Brunnermeier (2016): CoVaR, American Economic Review. Confidence level $\alpha_q$ controls how deep into the tail we measure.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 3: CoVaR Systemic Risk Measurement (4 frames)
+%% ============================================================
+\section{CoVaR Systemic Risk Measurement}
+
+% --- FRAME 10 ---
+\begin{frame}[t]{CoVaR in Practice: Crypto Systemic Spillovers}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Example: BTC-ETH Spillover}
+
+\begin{itemize}
+\item BTC 5\% VaR = $-8\%$ (worst 5\% of daily BTC returns: losing 8\% or more)
+\item ETH unconditional VaR = $-6\%$
+\item ETH CoVaR (given BTC at its VaR) = $-12\%$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Delta-CoVaR:}
+\[
+\Delta\text{CoVaR}^{\text{ETH}|\text{BTC}} = -12\% - (-6\%) = -6\text{pp}
+\]
+
+Interpretation: When BTC is having a worst-5\% day, ETH's tail risk \emph{doubles} from 6\% to 12\%.
+
+\column{0.48\textwidth}
+\textbf{Why Stablecoins Matter Most}
+
+Stablecoins (USDT, USDC) show the highest outgoing $\Delta$CoVaR because:
+
+\begin{enumerate}
+\item They serve as the \textbf{medium of exchange} across all crypto markets
+\item A stablecoin depeg simultaneously affects every trading pair
+\item Redemption pressure creates fire-sale dynamics across protocols
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Key values (illustrative):}
+\begin{itemize}
+\item USDT $\rightarrow$ all: $\Delta$CoVaR $\approx$ 0.35
+\item BTC $\rightarrow$ ETH: $\Delta$CoVaR $\approx$ 0.25
+\item USDC $\rightarrow$ DeFi: $\Delta$CoVaR $\approx$ 0.30
+\end{itemize}
+
+\textit{Policy implication: Stablecoin regulation is the single highest-leverage point for reducing systemic risk.}
+\end{columns}
+
+\bottomnote{BTC 5\% VaR = $-$8\%. ETH CoVaR conditional on BTC stress = $-$12\%, unconditional = $-$6\%. Delta = $-$6pp---BTC stress doubles ETH tail risk.}
+\end{frame}
+
+% --- FRAME 11 (CHART) ---
+\begin{frame}[t]{CoVaR Network: Crypto Systemic Risk Map}
+\begin{center}
+\includegraphics[width=0.80\textwidth]{07_covar_crypto_network/chart.pdf}
+\end{center}
+
+\bottomnote{Adrian \& Brunnermeier (2016) CoVaR framework applied to crypto: USDT has highest outgoing delta-CoVaR, making it the biggest systemic risk source.}
+\end{frame}
+
+% --- FRAME 12 ---
+\begin{frame}[t]{Interpreting CoVaR for Policy Design}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What CoVaR Tells Regulators}
+
+The $\Delta$CoVaR network reveals:
+\begin{enumerate}
+\item \textbf{Contagion sources}: Nodes with high outgoing $\Delta$CoVaR (e.g., USDT) should face stricter requirements
+\item \textbf{Contagion sinks}: Nodes with high incoming $\Delta$CoVaR (e.g., DeFi protocols) need better buffers
+\item \textbf{Critical links}: The BTC$\rightarrow$ETH link shows that the two largest assets are tightly coupled in tail events
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Comparison to TradFi}
+
+\begin{tabular}{lll}
+\toprule
+\textbf{Measure} & \textbf{TradFi} & \textbf{Crypto} \\
+\midrule
+VaR & 1--3\% daily & 5--15\% daily \\
+$\Delta$CoVaR & 0.05--0.15 & 0.20--0.35 \\
+Speed & Days & Minutes \\
+Regulator & Central bank & None / mixed \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Key insight}: Crypto $\Delta$CoVaR values are 2--3$\times$ higher than banking sector equivalents, and contagion propagates orders of magnitude faster.
+\end{columns}
+
+\bottomnote{Crypto delta-CoVaR values (0.20-0.35) are 2-3 times higher than traditional banking equivalents (0.05-0.15), with propagation in minutes vs days.}
+\end{frame}
+
+% --- FRAME 13 (introduce Greek rho) ---
+\begin{frame}[t]{From Pairwise Spillovers to Chain Failure: Composability Risk}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Composability Problem}
+
+CoVaR measures pairwise spillovers. But DeFi protocols \emph{stack} on each other---a user might interact with 5+ protocols in a single transaction.
+
+\vspace{0.3em}
+Let $\rho$ denote the \textbf{correlation} between layer failures. For independent failures ($\rho = 0$):
+
+\[
+P(\text{chain fail}) = 1 - \prod_{i=1}^{n}(1 - p_i)
+\]
+
+If $\rho > 0$ (correlated failures), actual risk is \emph{higher} than this formula predicts.
+
+\column{0.48\textwidth}
+\textbf{Numerical Example}
+
+10 links, each with $p_i = 0.01$ (1\% individual failure probability):
+
+\[
+P(\text{chain}) = 1 - (1 - 0.01)^{10} = 1 - 0.904 = 9.6\%
+\]
+
+\textbf{Nearly 10\% failure probability from ten ``safe'' links!}
+
+\vspace{0.3em}
+This is the composability paradox: each layer seems safe individually, but the stack as a whole is surprisingly fragile.
+
+\vspace{0.3em}
+\textbf{Real-world DeFi stacks} often have 3--7 layers. With realistic per-layer probabilities, total stack risk of 3--15\% is common.
+\end{columns}
+
+\bottomnote{Chain failure: $P = 1 - \prod(1-p_i)$. 10 links at $p=0.01$ each gives 9.6\% total---the composability paradox.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 4: Composability Risk Modeling (4 frames)
+%% ============================================================
+\section{Composability Risk Modeling}
+
+% --- FRAME 14 ---
+\begin{frame}[t]{A Realistic DeFi Protocol Stack}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Five-Layer Stack Example}
+
+A typical yield-farming transaction touches:
+
+\vspace{0.3em}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Layer} & \textbf{$p_i$} & \textbf{Risk Source} \\
+\midrule
+L1 Consensus & 0.1\% & Chain halt, reorg \\
+Bridge & 2.0\% & Exploit, oracle failure \\
+Lending & 1.0\% & Bad debt, liquidation bug \\
+AMM & 0.5\% & Impermanent loss, drain \\
+Yield Aggregator & 1.5\% & Strategy bug, rug pull \\
+\bottomrule
+\end{tabular}
+
+\column{0.48\textwidth}
+\textbf{Cumulative Risk Calculation}
+
+\[
+P = 1 - \prod_{i=1}^{5}(1 - p_i)
+\]
+\[
+= 1 - (0.999)(0.98)(0.99)(0.995)(0.985)
+\]
+\[
+= 1 - 0.950 = 5.0\%
+\]
+
+\vspace{0.3em}
+\textbf{A 5\% failure probability is high} for what looks like a collection of individually safe layers.
+
+\vspace{0.3em}
+\textbf{Bridges are the weakest link}: at 2.0\%, the bridge layer contributes more risk than all other layers combined. This explains why bridge exploits (Ronin, Wormhole, Nomad) are the largest DeFi losses.
+\end{columns}
+
+\bottomnote{DeFi stack: L1(0.1\%) + Bridge(2.0\%) + Lending(1.0\%) + AMM(0.5\%) + Yield(1.5\%) = 5.0\% total failure probability. Bridges dominate.}
+\end{frame}
+
+% --- FRAME 15 (CHART) ---
+\begin{frame}[t]{Composability Risk: Depth vs.\ Failure Probability}
+\begin{center}
+\includegraphics[width=0.80\textwidth]{08_composability_risk_chain/chart.pdf}
+\end{center}
+
+\bottomnote{Werner et al.\ (2022): Chain failure probability rises sharply with stack depth, especially for higher per-layer risk. Bridges (2\%) dominate total stack risk.}
+\end{frame}
+
+% --- FRAME 16 ---
+\begin{frame}[t]{Mitigating Composability Risk}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Engineering Solutions}
+
+\begin{enumerate}
+\item \textbf{Reduce stack depth}: Fewer layers = lower compound risk. Protocols that combine lending + AMM in one contract (e.g., Aave v3 with flash loans) reduce $n$
+\item \textbf{Formal verification}: Mathematically prove contract correctness, reducing individual $p_i$ toward zero
+\item \textbf{Insurance}: Risk transfer via protocols like Nexus Mutual covers residual $P(\text{chain})$
+\item \textbf{Circuit breakers}: Pause mechanisms that halt cascading failures (like stock exchange halts)
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Economic Solutions}
+
+\begin{enumerate}
+\item \textbf{Risk pricing}: Yield should compensate for total stack risk, not just individual layer risk
+\item \textbf{Transparency}: Disclose the full dependency chain so users understand what they are exposed to
+\item \textbf{Stress testing}: Simulate correlated failures ($\rho > 0$) to estimate worst-case scenarios
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{The Fundamental Trade-Off}
+
+Composability is DeFi's greatest strength (enabling innovation) and its greatest vulnerability (amplifying risk). Policy must balance both.
+
+\textit{``Money Legos'' are powerful precisely because they stack---but a tower of Legos is only as strong as its weakest brick.''}
+\end{columns}
+
+\bottomnote{Composability is DeFi's strength and vulnerability. Mitigation requires engineering (formal verification, circuit breakers) and economics (risk pricing, stress testing).}
+\end{frame}
+
+% --- FRAME 17 (introduce Greek omega) ---
+\begin{frame}[t]{Evaluating Policies: Multi-Criteria Decision Analysis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Policy Evaluation Problem}
+
+We now have three risk models (Acemoglu contagion, CoVaR spillovers, composability risk). How do regulators choose the \emph{best} policy response?
+
+\vspace{0.3em}
+Let $\omega$ denote the \textbf{weight vector} over policy objectives. Different stakeholders assign different weights:
+
+\vspace{0.3em}
+\textbf{MCDA Formula:}
+\[
+W_i = \sum_{j=1}^{m} \omega_j \cdot s_{ij}
+\]
+where:
+\begin{itemize}
+\item $W_i$ = weighted score for policy $i$
+\item $\omega_j$ = weight for objective $j$
+\item $s_{ij}$ = raw score of policy $i$ on objective $j$
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Three Stakeholder Profiles}
+
+\vspace{0.3em}
+\begin{tabular}{lccccc}
+\toprule
+& \rotatebox{70}{Inclusion} & \rotatebox{70}{Stability} & \rotatebox{70}{Innovation} & \rotatebox{70}{Cons.\ Prot.} & \rotatebox{70}{Efficiency} \\
+\midrule
+Regulator & 0.15 & 0.30 & 0.10 & 0.30 & 0.15 \\
+Industry & 0.20 & 0.10 & 0.35 & 0.15 & 0.20 \\
+Consumer & 0.25 & 0.15 & 0.15 & 0.30 & 0.15 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Key observation}: The ``best'' policy depends entirely on who you ask. Regulators prioritize stability and protection; industry prioritizes innovation and efficiency.
+
+\textit{MCDA makes these trade-offs explicit and quantifiable, rather than leaving them implicit in political debates.}
+\end{columns}
+
+\bottomnote{MCDA: $W_i = \sum \omega_j \cdot s_{ij}$. Weight vector $\omega$ encodes stakeholder preferences---different weights produce different policy rankings.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 5: Multi-Criteria Policy Evaluation (4 frames)
+%% ============================================================
+\section{Multi-Criteria Policy Evaluation}
+
+% --- FRAME 18 ---
+\begin{frame}[t]{Six Policy Instruments, Five Objectives}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Policy Instruments}
+\begin{enumerate}
+\item \textbf{CBDC} (Central Bank Digital Currency): Direct public money
+\item \textbf{Stablecoin Regulation}: Reserve requirements, licensing
+\item \textbf{DeFi Rules}: Protocol-level compliance mandates
+\item \textbf{Crypto Taxation}: Capital gains, transaction taxes
+\item \textbf{KYC/AML}: Identity verification requirements
+\item \textbf{Regulatory Sandbox}: Controlled testing environments for innovation
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Five Evaluation Objectives}
+\begin{enumerate}
+\item \textbf{Financial Inclusion}: Can unbanked users access services?
+\item \textbf{Financial Stability}: Does the policy reduce systemic risk?
+\item \textbf{Innovation}: Does it preserve space for experimentation?
+\item \textbf{Consumer Protection}: Are users shielded from fraud and loss?
+\item \textbf{Market Efficiency}: Does it reduce transaction costs and frictions?
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Key insight}: No policy scores high on \emph{all five} objectives. Sandboxes score highest on innovation but lower on stability; KYC/AML scores highest on consumer protection but lowest on inclusion.
+\end{columns}
+
+\bottomnote{6 instruments and 5 objectives create a 6$\times$5 decision matrix---no single policy dominates on all dimensions.}
+\end{frame}
+
+% --- FRAME 19 (CHART) ---
+\begin{frame}[t]{MCDA Heatmap and Weighted Rankings}
+\begin{center}
+\includegraphics[width=0.82\textwidth]{09_policy_effectiveness_enhanced/chart.pdf}
+\end{center}
+
+\bottomnote{Left: raw effectiveness scores (0-10). Right: weighted totals by stakeholder profile. Sandbox preferred by industry; KYC/AML preferred by regulators.}
+\end{frame}
+
+% --- FRAME 20 ---
+\begin{frame}[t]{Interpreting the MCDA Results}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Winner Depends on Stakeholder}
+
+\begin{itemize}
+\item \textbf{Regulator perspective} ($\omega$: heavy on stability + protection): KYC/AML and stablecoin regulation rank highest
+\item \textbf{Industry perspective} ($\omega$: heavy on innovation + efficiency): Sandbox and CBDC rank highest
+\item \textbf{Consumer perspective} ($\omega$: heavy on inclusion + protection): CBDC and sandbox rank highest
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Consensus policies}: CBDCs score relatively well across \emph{all three} profiles, making them a potential consensus choice.
+
+\column{0.48\textwidth}
+\textbf{Robustness Analysis}
+
+A good policy recommendation should survive sensitivity analysis:
+
+\begin{itemize}
+\item If we change weights by $\pm 0.05$, does the ranking change?
+\item If scores are uncertain ($\pm 1$ point), does the top policy shift?
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Result}: CBDC is the most \emph{robust} top-3 policy (appears in top 3 under all reasonable weight combinations). KYC/AML is the most \emph{polarizing} (top 1 for regulators, bottom 2 for industry).
+
+\textit{MCDA does not eliminate disagreement---it clarifies exactly where and why stakeholders disagree.}
+\end{columns}
+
+\bottomnote{MCDA clarifies that policy disagreements stem from weight differences, not score disagreements. CBDC is the most robust consensus choice.}
+\end{frame}
+
+% --- FRAME 21 ---
+\begin{frame}[t]{From Policy to Technology Frontiers}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Policy Interacts with Technology}
+
+The MCDA results depend on what technology \emph{can} deliver. A blockchain that solves the trilemma (D + S + Sc = K with high K) would change every score in the matrix.
+
+\vspace{0.3em}
+\textbf{Example}: If Layer-2 solutions (off-chain computation settled on-chain) increase scalability without sacrificing decentralization, then:
+\begin{itemize}
+\item DeFi Rules become more enforceable (higher stability score)
+\item Innovation score rises (more design space)
+\item The ``optimal'' policy shifts
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{The Dynamic View}
+
+Policy evaluation must be \textbf{forward-looking}:
+
+\begin{enumerate}
+\item Assess the current technology frontier (K)
+\item Evaluate policies under current constraints
+\item Anticipate how technological progress shifts K
+\item Design adaptive regulation (sandboxes, sunset clauses)
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Key question}: Should regulation be designed for today's technology or tomorrow's?
+
+\textit{The answer is both: binding constraints today, with built-in mechanisms to relax as technology improves (i.e., sandboxes).}
+\end{columns}
+
+\bottomnote{Policy evaluation must account for technology evolution: today's binding constraint (D + S + Sc $\leq$ K) shifts as K increases with innovation.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 6: Technology Frontier and Course Integration (4 frames)
+%% ============================================================
+\section{Technology Frontier and Course Integration}
+
+% --- FRAME 22 ---
+\begin{frame}[t]{The Blockchain Trilemma: Formal Constraint}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Impossibility Constraint}
+
+The blockchain trilemma states that three desirable properties---decentralization (D), security (S), and scalability (Sc)---cannot all be maximized simultaneously:
+
+\[
+D + S + Sc \leq K
+\]
+
+where $K$ is the \textbf{technology frontier parameter}. Current technology sets $K \approx 1.0$; future advances may push $K$ toward 1.2--1.5.
+
+\vspace{0.3em}
+\textbf{This is a budget constraint}---exactly like a consumer who cannot afford everything they want. Systems must \emph{allocate} their limited budget across three goals.
+
+\column{0.48\textwidth}
+\textbf{System Allocations}
+
+\vspace{0.3em}
+\begin{tabular}{lccc}
+\toprule
+\textbf{System} & \textbf{D} & \textbf{S} & \textbf{Sc} \\
+\midrule
+BTC & 0.45 & 0.45 & 0.10 \\
+ETH & 0.35 & 0.40 & 0.25 \\
+Solana & 0.15 & 0.30 & 0.55 \\
+Visa & 0.05 & 0.45 & 0.50 \\
+CBDC & 0.10 & 0.50 & 0.40 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Observation}: BTC and Visa both sum to 1.0 but with opposite allocations. BTC sacrifices scalability for decentralization; Visa sacrifices decentralization for scalability. Neither is ``wrong''---they serve different goals.
+\end{columns}
+
+\bottomnote{Trilemma: $D + S + Sc \leq K$. BTC(0.45,0.45,0.10) and Visa(0.05,0.45,0.50) both sum to 1.0 with opposite allocation strategies.}
+\end{frame}
+
+% --- FRAME 23 (CHART) ---
+\begin{frame}[t]{Trilemma Visualization: Ternary and Radar}
+\begin{center}
+\includegraphics[width=0.82\textwidth]{10_trilemma_technology_frontier/chart.pdf}
+\end{center}
+
+\bottomnote{Buterin (2017) trilemma. Left: ternary plot shows each system's allocation within the D+S+Sc=K constraint. Right: radar chart reveals allocation profiles.}
+\end{frame}
+
+% --- FRAME 24 (CHART) ---
+\begin{frame}[t]{Cross-Lens Interaction: How the Four Frameworks Connect}
+\begin{center}
+\includegraphics[width=0.80\textwidth]{11_cross_lens_interaction_matrix/chart.pdf}
+\end{center}
+
+\bottomnote{4$\times$4 interaction matrix: P$\rightarrow$Mi=9 (platform network effects dominate liquidity), R$\rightarrow$M=9 (regulation shapes monetary transmission). No lens operates in isolation.}
+\end{frame}
+
+% --- FRAME 25 ---
+\begin{frame}[t]{Interpreting Cross-Lens Interactions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Strongest Cross-Domain Effects}
+
+\begin{enumerate}
+\item \textbf{Platform $\rightarrow$ Microstructure (9/10)}: Network effects determine which exchanges have liquidity. A platform with more users has tighter spreads, better price discovery---microstructure is downstream of platform dynamics
+
+\item \textbf{Regulatory $\rightarrow$ Monetary (9/10)}: Regulation of stablecoins, CBDCs, and crypto directly shapes the money supply, seigniorage, and monetary transmission channels
+
+\item \textbf{Monetary $\rightarrow$ Regulatory (8/10)}: Central bank decisions on CBDCs force regulatory responses---new money requires new rules
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Weakest Cross-Domain Effect}
+
+\textbf{Microstructure $\rightarrow$ Monetary (4/10)}: Trading mechanics (order book design, AMM formulas) have limited direct impact on money supply or monetary policy. This is the most ``contained'' lens.
+
+\vspace{0.3em}
+\textbf{Practical Implication}
+
+When analyzing a real-world event (e.g., a stablecoin depeg):
+\begin{enumerate}
+\item Start with the \textbf{dominant lens} (Monetary: money demand shock)
+\item Trace interactions using the matrix (M$\rightarrow$P: network effects in redemptions)
+\item Check for feedback loops (P$\rightarrow$Mi$\rightarrow$M: liquidity dry-up affects monetary function)
+\end{enumerate}
+
+\textit{The matrix is your analytical road map.}
+\end{columns}
+
+\bottomnote{Strongest links: P$\rightarrow$Mi (network effects drive liquidity) and R$\rightarrow$M (regulation shapes money). Weakest: Mi$\rightarrow$M (trading mechanics have limited monetary impact).}
+\end{frame}
+
+%% ============================================================
+%% SECTION 7: Synthesis and Course Conclusions (3 frames)
+%% ============================================================
+\section{Synthesis and Course Conclusions}
+
+% --- FRAME 26 ---
+\begin{frame}[t]{The Complete Analytical Framework}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What This Course Taught You}
+
+\begin{enumerate}
+\item \textbf{L01--L02}: Monetary economics---money creation, seigniorage, exchange rates, Diamond-Dybvig bank runs
+\item \textbf{L03}: CBDCs---public digital money, deposit competition, financial inclusion
+\item \textbf{L04}: Payment systems---remittance costs, correspondent banking, network effects
+\item \textbf{L05}: Platform and token economics---adoption dynamics, token velocity, winner-take-all
+\item \textbf{L06}: Market microstructure---AMMs, order books, price discovery, MEV
+\item \textbf{L07}: Regulatory economics---market failures, policy trade-offs, international coordination
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{What This Extended Lecture Added}
+
+\begin{enumerate}
+\item \textbf{Acemoglu contagion}: $L_i = \max(0, \sum_j a_{ij}L_j - c_i)$---how network topology determines cascade severity
+\item \textbf{CoVaR}: $\Delta\text{CoVaR}^{j|i}$---measuring pairwise systemic spillovers
+\item \textbf{Composability}: $P = 1 - \prod(1-p_i)$---why ``safe'' layers stack into fragile systems
+\item \textbf{MCDA}: $W_i = \sum \omega_j s_{ij}$---explicit policy evaluation framework
+\item \textbf{Trilemma}: $D + S + Sc \leq K$---the fundamental constraint on blockchain design
+\item \textbf{Cross-lens matrix}: quantifying how the four lenses interact
+\end{enumerate}
+\end{columns}
+
+\bottomnote{Six mathematical models---contagion, CoVaR, composability, MCDA, trilemma, interaction matrix---formalize the qualitative insights from the entire course.}
+\end{frame}
+
+% --- FRAME 27 ---
+\begin{frame}[t]{Final Messages and Research Frontiers}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Five Key Takeaways}
+
+\begin{enumerate}
+\item \textbf{Digital finance is economics}, not just technology. Every protocol encodes economic assumptions
+\item \textbf{No single lens suffices}. The cross-lens matrix shows interactions of 4--9 on a 10-point scale
+\item \textbf{Network structure determines fragility}. Dense = robust-yet-fragile (Acemoglu). Star = hub-vulnerable
+\item \textbf{Composability compounds risk}. Five ``safe'' layers create 5\% total failure probability
+\item \textbf{Policy requires multi-criteria thinking}. MCDA reveals that stakeholder disagreements are about weights, not facts
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Open Research Questions}
+
+\begin{itemize}
+\item Can we estimate $\Delta$CoVaR in real-time from blockchain data?
+\item How does correlated failure ($\rho > 0$) change composability risk formulas?
+\item What is the empirical technology frontier parameter $K$, and how fast is it shifting?
+\item Can mechanism design reduce the Acemoglu cascade threshold $\theta_A$ through better capital buffer rules?
+\item How should MCDA weights be elicited from democratic processes?
+\end{itemize}
+
+\vspace{0.3em}
+\textit{These questions await your generation of economists. The tools in this course give you the language to formulate and address them.}
+\end{columns}
+
+\bottomnote{The economic frameworks from this course---monetary, platform, microstructure, regulatory---provide the foundation for analyzing future digital finance innovations.}
+\end{frame}
+
+% --- FRAME 28 ---
+\begin{frame}[t]{Course Conclusion: Economics as the Analytical Lens}
+\begin{center}
+\large \textbf{Digital finance will continue to evolve.}\\[0.5em]
+\large \textbf{The economic frameworks you learned here will not.}\\[1em]
+\normalsize
+
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What Changes}
+\begin{itemize}
+\item Specific protocols and tokens
+\item Technology parameters ($K$)
+\item Regulatory jurisdictions
+\item Market structures
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{What Endures}
+\begin{itemize}
+\item Network contagion dynamics
+\item Systemic risk measurement
+\item Policy trade-off analysis
+\item The four economic lenses
+\end{itemize}
+\end{columns}
+
+\vspace{1em}
+\textit{``Protocols are temporary. Incentive structures are permanent.''\\
+--- Course synthesis principle}
+\end{center}
+
+\bottomnote{Thank you for engaging with the Economics of Digital Finance. The analytical tools endure even as the specific technologies evolve.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 8: Appendix (3 frames)
+%% ============================================================
+\section{Appendix}
+
+% --- FRAME 29 ---
+\begin{frame}[t]{Appendix A: Key Formulas Reference Card}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Risk Models}
+
+\vspace{0.3em}
+\textbf{Acemoglu Contagion:}
+\[
+L_i = \max\!\bigl(0,\;\textstyle\sum_j a_{ij} L_j - c_i\bigr)
+\]
+
+\textbf{CoVaR:}
+\[
+\text{CoVaR}_q^{j|i} = \text{VaR}_q^{j} \;\big|\; R^i = \text{VaR}_q^{i}
+\]
+\[
+\Delta\text{CoVaR}^{j|i} = \text{CoVaR}_q^{j|i} - \text{VaR}_q^{j}
+\]
+
+\textbf{Composability:}
+\[
+P(\text{chain fail}) = 1 - \prod_{i=1}^{n}(1 - p_i)
+\]
+
+\column{0.48\textwidth}
+\textbf{Evaluation Models}
+
+\vspace{0.3em}
+\textbf{MCDA:}
+\[
+W_i = \sum_{j=1}^{m} \omega_j \cdot s_{ij}
+\]
+
+\textbf{Trilemma:}
+\[
+D + S + Sc \leq K
+\]
+
+\textbf{Key Parameters:}
+\begin{tabular}{ll}
+\toprule
+$\theta_A$ & cascade threshold \\
+$\alpha_q$ & VaR confidence level \\
+$\rho$ & failure correlation \\
+$\omega$ & objective weight vector \\
+$K$ & technology frontier \\
+\bottomrule
+\end{tabular}
+\end{columns}
+
+\bottomnote{Reference card: all five mathematical models from this lecture on one slide. Print this for exam revision.}
+\end{frame}
+
+% --- FRAME 30 ---
+\begin{frame}[t]{Appendix B: Further Reading}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Network Contagion}
+\begin{itemize}
+\item Acemoglu, Ozdaglar \& Tahbaz-Salehi (2015): ``Systemic Risk and Stability in Financial Networks,'' \textit{American Economic Review}
+\item Allen \& Gale (2000): ``Financial Contagion,'' \textit{Journal of Political Economy}
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Systemic Risk Measurement}
+\begin{itemize}
+\item Adrian \& Brunnermeier (2016): ``CoVaR,'' \textit{American Economic Review}
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{DeFi Composability}
+\begin{itemize}
+\item Werner, Perez, Gudgeon, Klages-Mundt, Harz \& Knottenbelt (2022): ``SoK: Decentralized Finance (DeFi)''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Blockchain Economics}
+\begin{itemize}
+\item Buterin (2017): ``The Blockchain Trilemma''
+\item Abadi \& Brunnermeier (2018): ``Blockchain Economics''
+\item Cong \& He (2019): ``Blockchain Disruption and Smart Contracts''
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy Analysis}
+\begin{itemize}
+\item BIS (2023): ``Blueprint for the Future Monetary System''
+\item IMF (2023): ``Elements of Effective Policies for Crypto Assets''
+\item Belton \& Stewart (2002): \textit{Multiple Criteria Decision Analysis}
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Synthesis}
+\begin{itemize}
+\item Makarov \& Schoar (2023): ``Cryptocurrencies and Decentralized Finance''
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings support the mathematical models covered in this extended lecture. Start with Acemoglu (2015) and Adrian \& Brunnermeier (2016).}
+\end{frame}
+
+% --- FRAME 31 ---
+\begin{frame}[t]{Appendix C: Key Terms Glossary}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Acemoglu Contagion}: Model where losses propagate through a network and nodes fail when cumulative incoming losses exceed their capital buffer.
+
+\vspace{0.2em}
+\textbf{Cascade Threshold ($\theta_A$)}: The minimum capital buffer required to survive incoming losses from connected nodes.
+
+\vspace{0.2em}
+\textbf{CoVaR}: Conditional Value-at-Risk---the VaR of institution $j$ given that institution $i$ is at its VaR. Measures systemic spillovers.
+
+\vspace{0.2em}
+\textbf{Delta-CoVaR}: The difference between CoVaR and unconditional VaR, capturing the \emph{additional} risk from spillovers.
+
+\vspace{0.2em}
+\textbf{Composability}: Property of DeFi protocols to interact and stack on each other, creating compound functionality and compound risk.
+
+\vspace{0.2em}
+\textbf{Robust-Yet-Fragile}: Dense networks absorb small shocks but amplify large ones---a key result from Acemoglu et al.\ (2015).
+
+\column{0.48\textwidth}
+\textbf{MCDA}: Multi-Criteria Decision Analysis---a framework for evaluating policies across multiple objectives using weighted scores.
+
+\vspace{0.2em}
+\textbf{Technology Frontier ($K$)}: The parameter constraining the sum $D + S + Sc$ in the blockchain trilemma. Higher $K$ means more design freedom.
+
+\vspace{0.2em}
+\textbf{Fire Sale}: Forced selling of assets at distressed prices, which can trigger further price declines and cascade through connected markets.
+
+\vspace{0.2em}
+\textbf{Oracle Failure}: When the external data feed to a smart contract provides incorrect information, triggering wrong automated decisions.
+
+\vspace{0.2em}
+\textbf{Circuit Breaker}: An automatic pause mechanism that halts trading or protocol operation when abnormal conditions are detected, preventing cascade amplification.
+
+\vspace{0.2em}
+\textbf{Self-Fulfilling Equilibrium}: An outcome that occurs because agents \emph{expect} it to occur---central to Diamond-Dybvig bank run theory.
+\end{columns}
+
+\bottomnote{All terms are defined at first use in the lecture slides. This glossary provides a consolidated reference.}
+\end{frame}
+
+\end{document}

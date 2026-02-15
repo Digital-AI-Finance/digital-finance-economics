@@ -1,0 +1,1180 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Platform and Token Economics: Mathematical Models and Mechanism Design}
+\subtitle{L05 Extended: Formalizing Network Effects, Token Valuation, and Governance\\[0.3em]\normalsize From Katz-Shapiro equilibria to quadratic voting welfare}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+%% ============================================================
+%% SECTION 1: Bridge from Basic Lecture (1 title + 3 content = 4 frames)
+%% ============================================================
+
+% --- Frame 1: Title ---
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+\section{Bridge from Basic Lecture}
+
+% --- Frame 2: From Concepts to Models ---
+\begin{frame}[t]{From Concepts to Models}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What We Know from L05}
+\begin{enumerate}
+\item Platforms exhibit network effects (when a product becomes more valuable as more people use it)
+\item Token velocity (how fast tokens change hands) drives token value
+\item Winner-take-all (one platform captures most of the market) is common in platform markets
+\item Governance design affects fairness and efficiency
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{What We'll Formalize}
+\begin{enumerate}
+\item Katz-Shapiro (1985): adoption equilibria with network externalities
+\item Samani (2017): token velocity model and staking effects
+\item Weyl \& Lalley (2018): quadratic voting welfare analysis
+\item Gibrat (1931): stochastic market concentration
+\item Hotelling (1929): multi-platform competition with transport costs
+\end{enumerate}
+\end{columns}
+
+\bottomnote{This lecture builds mathematical foundations for the platform and token concepts introduced in the basic L05 lecture.}
+\end{frame}
+
+% --- Frame 3: Mathematical Toolkit (NO Greek) ---
+\begin{frame}[t]{Mathematical Toolkit}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Mathematical Concepts}
+\begin{itemize}
+\item Equilibrium analysis (finding where supply equals demand, or where no player wants to change strategy)
+\item Comparative statics (how the equilibrium shifts when a parameter changes)
+\item Welfare measurement (quantifying how well off different groups are under a policy)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Notation Preview}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+$V$ & Network value or token velocity \\
+$n$ & Number or fraction of adopters \\
+$c$ & Adoption cost \\
+$s$ & Market share of a platform \\
+$M$ & Token supply (number of tokens) \\
+$V_{tok}$ & Token velocity (turnover rate) \\
+$P$ & Token price in dollars \\
+$Q$ & Transaction volume \\
+$w$ & Voting weight \\
+$x$ & Voting allocation \\
+$HHI$ & Herfindahl-Hirschman Index \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{columns}
+
+\bottomnote{All derivations use BSc-level calculus. Greek letters will be introduced one at a time starting next slide. Full notation in Appendix~A1.}
+\end{frame}
+
+% --- Frame 4: Introducing sigma ---
+\begin{frame}[t]{Network Effects: The Strength Parameter}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Introducing $\sigma$ = network effect strength}
+
+The Katz-Shapiro (1985) model captures how network size creates value. We define:
+$$b(n) = \frac{\sigma \cdot n}{1 + \sigma \cdot n}$$
+
+where:
+\begin{itemize}
+\item $b(n)$ = benefit of joining when fraction $n$ of the market has adopted
+\item $\sigma$ = network effect strength (how much each additional user adds to value)
+\item $n \in [0, 1]$ = fraction of potential users who have adopted
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key property:} $b(n)$ is concave (rising but at a decreasing rate)---the first users add the most value, later users add less.
+
+\column{0.48\textwidth}
+\textbf{Equilibrium Condition}
+
+A user adopts if benefit exceeds cost: $b(n) \geq c$.
+
+\vspace{0.3em}
+At equilibrium: $b(n^*) = c$, giving:
+$$n^* = \frac{c}{\sigma(1 - c)}$$
+
+\textbf{Three outcomes:}
+\begin{enumerate}
+\item $n^* = 0$ (nobody adopts---always exists)
+\item $n^* = \frac{c}{\sigma(1-c)}$ (tipping point---unstable)
+\item Full adoption (stable, if past tipping point)
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Existence condition:} interior equilibrium exists only if $c < \frac{\sigma}{1 + \sigma}$. Otherwise the cost is too high for any adoption.
+\end{columns}
+
+\bottomnote{Katz \& Shapiro (1985): the benefit function $b(n) = \sigma n / (1 + \sigma n)$ captures diminishing marginal network effects.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 2: Katz-Shapiro Network Adoption Equilibria (4 frames)
+%% ============================================================
+\section{Katz-Shapiro Network Adoption Equilibria}
+
+% --- Frame 5: Worked Example ---
+\begin{frame}[t]{Worked Example: Katz-Shapiro Equilibria}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Parameters:} $\sigma = 2.0$, $c = 0.25$
+
+\vspace{0.3em}
+\textbf{Step 1: Critical boundary}
+$$c^* = \frac{\sigma}{1 + \sigma} = \frac{2}{3} = 0.667$$
+Since $c = 0.25 < 0.667$: interior equilibrium exists.
+
+\vspace{0.3em}
+\textbf{Step 2: Find tipping point}
+$$n^* = \frac{c}{\sigma(1-c)} = \frac{0.25}{2.0 \times 0.75} = \frac{0.25}{1.5} = 0.167$$
+
+\vspace{0.3em}
+\textbf{Step 3: Verify with $b(n^*)$}
+$$b(0.167) = \frac{2 \times 0.167}{1 + 2 \times 0.167} = \frac{0.333}{1.333} = 0.25 = c \;\checkmark$$
+
+\column{0.48\textwidth}
+\textbf{Interpretation}
+
+\begin{itemize}
+\item $n^* = 0$: no-adoption equilibrium (stable---if nobody uses it, nobody wants to join)
+\item $n^* = 0.17$: tipping point (unstable---the ``critical mass'' threshold)
+\item Above $n^* = 0.17$: platform tips to full adoption (stable)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy implication:} to launch successfully, a platform must subsidize past $n = 0.17$ (17\% of the market). Below that, it collapses to zero.
+
+\vspace{0.3em}
+\textbf{Compare across costs:}
+
+\begin{tabular}{lll}
+\toprule
+$c$ & Tipping $n^*$ & Adoptable? \\
+\midrule
+0.15 & 0.088 & Yes (easy) \\
+0.25 & 0.167 & Yes (moderate) \\
+0.35 & 0.269 & Yes (hard) \\
+0.70 & $> 1$ & No \\
+\bottomrule
+\end{tabular}
+\end{columns}
+
+\bottomnote{The tipping point $n^* = c/(\sigma(1-c))$ rises with cost and falls with network effect strength---cheaper or more valuable networks tip more easily.}
+\end{frame}
+
+% --- Frame 6: Katz-Shapiro Equilibrium Map (Chart 06) ---
+\begin{frame}[t]{Katz-Shapiro Equilibrium Map}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{06_katz_shapiro_equilibrium/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): The purple benefit curve $b(n) = 2n/(1+2n)$ intersects each cost line at the tipping point. Below that point the platform collapses; above it, the platform tips to full adoption.
+\item Panel~(b): The phase diagram shows the critical boundary $c^* = \sigma/(1+\sigma)$. Below the curve, adoption is possible; above it, cost is prohibitive regardless of network size.
+\end{itemize}
+
+\bottomnote{Katz \& Shapiro (1985): the phase boundary separates the adoption-possible region from the no-adoption region in $(\sigma, c)$ space.}
+\end{frame}
+
+% --- Frame 7: Cross-reference and Extensions ---
+\begin{frame}[t]{Network Effects: Empirical Evidence and Extensions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Empirical Calibration}
+
+How large is $\sigma$ in practice?
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lll}
+\toprule
+\textbf{Platform} & \textbf{Est.\ $\sigma$} & \textbf{Source} \\
+\midrule
+Bitcoin & 1.5--2.5 & Metcalfe regression \\
+Ethereum & 2.0--3.5 & TVL correlations \\
+Visa/MC & 3.0--5.0 & Merchant adoption data \\
+Telephone (1900s) & 1.0--1.5 & Historical data \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+Higher $\sigma$ means easier tipping. Ethereum's DeFi ecosystem created $\sigma > 2$ through composability (the ability of different DeFi protocols to interact, creating compound network effects).
+
+\column{0.48\textwidth}
+\textbf{Extensions}
+\begin{itemize}
+\item \textbf{Heterogeneous users:} different users have different costs $c_i$, so adoption is gradual rather than all-or-nothing
+\item \textbf{Multi-platform:} users can multi-home (use several platforms), weakening winner-take-all
+\item \textbf{Dynamic adoption:} users adopt sequentially, not simultaneously---early adopters face higher cost
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Cross-reference:} For empirical network valuation using Metcalfe's Law ($V \propto n^2$), see L01 Extended.
+\end{columns}
+
+\bottomnote{The Katz-Shapiro model is a building block. Real platforms have heterogeneous users, multi-homing, and dynamic adoption paths.}
+\end{frame}
+
+% --- Frame 8: Introducing theta ---
+\begin{frame}[t]{Token Velocity: Introducing the Stake Ratio}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Introducing $\theta$ = stake ratio}
+
+The stake ratio is the fraction of tokens locked in staking (locked to earn rewards and secure the network) rather than circulating freely.
+
+\vspace{0.3em}
+\textbf{Effective velocity:}
+$$V_{eff} = V_{base} \times (1 - \theta)$$
+
+\begin{itemize}
+\item $V_{base}$ = velocity if all tokens circulated freely
+\item $\theta \in [0, 1)$ = fraction locked (staked)
+\item $V_{eff}$ = actual velocity of circulating tokens
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Token price (from Fisher's equation):}
+$$P_{token} = \frac{GDP_{network}}{M \times V_{eff}} = \frac{GDP_{network}}{M \times V_{base} \times (1 - \theta)}$$
+
+\column{0.48\textwidth}
+\textbf{Why $\theta$ Matters}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{llll}
+\toprule
+\textbf{Token} & $\theta$ & $V_{base}$ & $V_{eff}$ \\
+\midrule
+BTC & 0 & 5 & 5.00 \\
+ETH & 0.25 & 15 & 11.25 \\
+SOL & 0.70 & 25 & 7.50 \\
+ADA & 0.65 & 20 & 7.00 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+Despite SOL's high $V_{base} = 25$, heavy staking ($\theta = 0.70$) reduces effective velocity to 7.50---comparable to BTC's 5.0.
+
+\vspace{0.3em}
+\textbf{Design insight:} staking is a ``velocity sink'' (mechanism that slows how fast tokens change hands)---it reduces $V_{eff}$ and supports token price.
+\end{columns}
+
+\bottomnote{Samani (2017): token velocity is the central challenge in cryptoeconomics. Staking is the primary velocity sink mechanism.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 3: Token Valuation and Velocity Economics (4 frames)
+%% ============================================================
+\section{Token Valuation and Velocity Economics}
+
+% --- Frame 9: Worked Example with theta ---
+\begin{frame}[t]{Worked Example: Staking and Token Value}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Setup:} ETH with $\theta = 0.25$, $V_{base} = 15$
+
+\vspace{0.3em}
+\textbf{Step 1: Effective velocity}
+$$V_{eff} = 15 \times (1 - 0.25) = 15 \times 0.75 = 11.25$$
+
+\textbf{Step 2: Token price (M = 120M, GDP = \$100B)}
+$$P = \frac{100 \times 10^9}{120 \times 10^6 \times 11.25} = \frac{100B}{1.35B} = \$74.07$$
+
+\textbf{Step 3: Compare without staking ($\theta = 0$)}
+$$P_{\theta=0} = \frac{100B}{120M \times 15} = \frac{100B}{1.8B} = \$55.56$$
+
+\vspace{0.3em}
+\textbf{Value uplift from staking:}
+$$\Delta P = \$74.07 - \$55.56 = \$18.52 \;(+33\%)$$
+
+\column{0.48\textwidth}
+\textbf{Sensitivity: How $\theta$ Affects Price}
+
+\vspace{0.3em}
+\begin{tabular}{lll}
+\toprule
+$\theta$ & $V_{eff}$ & $P_{token}$ \\
+\midrule
+0.00 & 15.00 & \$55.56 \\
+0.10 & 13.50 & \$61.73 \\
+0.25 & 11.25 & \$74.07 \\
+0.50 & 7.50 & \$111.11 \\
+0.70 & 4.50 & \$185.19 \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Warning:} very high $\theta$ (say $> 0.80$) creates illiquidity risk---too few tokens circulating for normal transactions. The protocol freezes.
+
+\vspace{0.3em}
+\textbf{Optimal $\theta$:} balances price support against liquidity needs. Most PoS chains target $\theta \in [0.30, 0.70]$.
+\end{columns}
+
+\bottomnote{Staking lifts token price by $1/(1-\theta)$. At $\theta = 0.25$: $+33\%$. At $\theta = 0.50$: $+100\%$. Diminishing liquidity is the trade-off.}
+\end{frame}
+
+% --- Frame 10: Token Value Heatmap (Chart 07) ---
+\begin{frame}[t]{Token Value Heatmap}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{07_token_value_heatmap/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Heatmap of token price across velocity and supply. Stars mark BTC, ETH, and SOL at their approximate coordinates. Moving left (lower V) or down (lower M) increases price.
+\item Panel~(b): The staking effect---as stake ratio $\theta$ increases, effective velocity drops and price rises. The red zone marks where excessive staking creates dangerous illiquidity.
+\end{itemize}
+
+\bottomnote{Samani (2017): $P = GDP/(M \times V)$. Staking reduces effective $V$, acting as a velocity sink that supports token price.}
+\end{frame}
+
+% --- Frame 11: Multi-Token Valuation Comparison ---
+\begin{frame}[t]{Multi-Token Valuation Comparison}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Equation of Exchange Applied}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrrrrr}
+\toprule
+& $GDP$ & $M$ & $V_{base}$ & $\theta$ & $P_{model}$ \\
+\midrule
+BTC & \$4.0T & 19M & 5 & 0 & \$42,105 \\
+ETH & \$1.8T & 120M & 15 & 0.25 & \$13,333 \\
+SOL & \$1.3T & 400M & 25 & 0.70 & \$433 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{Key insight:} BTC's low velocity ($V = 5$, no staking needed) and tiny supply ($M = 19$M) drive its high per-unit price. SOL has 20$\times$ the supply and 5$\times$ the velocity---but heavy staking partially compensates.
+
+\column{0.48\textwidth}
+\textbf{Limitations of the MV = PQ Model}
+
+\begin{itemize}
+\item Assumes constant GDP (in reality, GDP grows with adoption)
+\item Ignores speculative demand (most crypto volume is speculation, not utility)
+\item $V$ is hard to measure (on-chain vs.\ off-chain turnover)
+\item Does not capture fee revenue to token holders
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Alternative: Discounted Cash Flow}
+\begin{itemize}
+\item Treat token like equity
+\item Value = PV of future fee revenue
+\item Works better for fee-earning tokens (ETH, UNI)
+\end{itemize}
+\end{columns}
+
+\bottomnote{The equation of exchange is a useful first approximation. For precision, combine with DCF models or use network-specific metrics.}
+\end{frame}
+
+% --- Frame 12: Introducing phi (voting power) ---
+\begin{frame}[t]{Governance Mechanisms: Voting Power Design}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Introducing $\phi$ = voting power}
+
+In token governance, $\phi_i$ is the voting power of participant $i$. Different rules assign $\phi$ differently:
+
+\vspace{0.3em}
+\textbf{One-Token-One-Vote (1T1V):}
+$$\phi_i^{1T1V} = t_i$$
+where $t_i$ = tokens held by voter $i$.
+
+\vspace{0.3em}
+\textbf{Quadratic Voting (QV):}
+
+Cost of $k$ votes = $k^2$ tokens. So optimal allocation:
+$$\phi_i^{QV} = \sqrt{t_i}$$
+(a voter with 100 tokens gets 10 votes; with 10{,}000 tokens gets 100 votes---not 100$\times$ more, only 10$\times$ more)
+
+\column{0.48\textwidth}
+\textbf{Social Welfare Comparison}
+
+Define social welfare as the sum of voter preferences weighted by voting power:
+
+\vspace{0.3em}
+\textbf{1T1V welfare:}
+$$W_{1T1V} = \sum_i v_i \cdot \frac{t_i}{\sum_j t_j}$$
+
+\textbf{QV welfare:}
+$$W_{QV} = \sum_i v_i \cdot \frac{\sqrt{t_i}}{\sum_j \sqrt{t_j}}$$
+
+where $v_i$ = voter $i$'s preference intensity (how strongly they care about the outcome).
+
+\vspace{0.3em}
+\textbf{Key result (Weyl \& Lalley, 2018):} QV is the unique mechanism that maximizes utilitarian welfare when voters have private information about their preference intensity.
+\end{columns}
+
+\bottomnote{Weyl \& Lalley (2018): quadratic voting is optimal because it makes the marginal cost of influence proportional to preference intensity.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 4: Mechanism Design for Token Governance (5 frames)
+%% ============================================================
+\section{Mechanism Design for Token Governance}
+
+% --- Frame 13: QV Worked Example ---
+\begin{frame}[t]{Worked Example: Quadratic Voting in a DAO}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Setup:} DAO proposal to change fee from 0.3\% to 0.5\%
+
+\vspace{0.3em}
+\textbf{Voters:}
+
+\begin{tabular}{lrlr}
+\toprule
+\textbf{Voter} & \textbf{Tokens} & \textbf{Preference} & $v_i$ \\
+\midrule
+Whale & 100{,}000 & Against & $-1$ \\
+Fund A & 10{,}000 & For & $+1$ \\
+50 users & 100 each & For & $+1$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Under 1T1V:}
+\begin{itemize}
+\item Whale: 100{,}000 votes against
+\item Fund A: 10{,}000 votes for
+\item 50 users: $50 \times 100 = 5{,}000$ votes for
+\item Net: $-$85{,}000 $\Rightarrow$ \textbf{Proposal rejected}
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Under QV:}
+\begin{itemize}
+\item Whale: $\sqrt{100{,}000} = 316$ votes against
+\item Fund A: $\sqrt{10{,}000} = 100$ votes for
+\item 50 users: $50 \times \sqrt{100} = 500$ votes for
+\item Net: $+284$ $\Rightarrow$ \textbf{Proposal passes}
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Welfare analysis:}
+\begin{itemize}
+\item The 51 ``for'' voters represent broad support
+\item The 1 ``against'' voter has concentrated tokens but not more intense preference
+\item QV reveals that broad support should win
+\item 1T1V masks this by weighting wealth, not preference
+\end{itemize}
+\end{columns}
+
+\bottomnote{QV gives voice to broad coalitions over concentrated wealth. The whale's 316 votes reflect $\sqrt{\text{tokens}}$, not raw holdings.}
+\end{frame}
+
+% --- Frame 14: Governance Welfare Chart (Chart 08) ---
+\begin{frame}[t]{Governance Welfare Comparison}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{08_governance_welfare_comparison/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): As token inequality (Gini coefficient) rises, 1T1V welfare diverges downward from the equal-weight benchmark, while QV stays much closer. The green shaded area shows the QV welfare gain.
+\item Panel~(b): At Gini = 0.8, the top whale holds massive 1T1V weight but only moderate QV weight. The ``rest'' (990 voters) collectively gain far more influence under QV.
+\end{itemize}
+
+\bottomnote{Buterin, Hitzig \& Weyl (2019): quadratic voting is particularly valuable when token inequality is high---exactly the case in most DAOs.}
+\end{frame}
+
+% --- Frame 15: Advanced Governance Mechanisms ---
+\begin{frame}[t]{Advanced Governance Mechanisms}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Beyond QV: Other Innovations}
+
+\vspace{0.3em}
+\textbf{1. Conviction Voting}
+\begin{itemize}
+\item Voting power accumulates over time while staked on a proposal
+\item Rewards long-term conviction over flash votes
+\item Used by: 1Hive, Gardens
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Holographic Consensus}
+\begin{itemize}
+\item Predictors stake tokens to boost proposals they believe will pass
+\item Reduces quorum requirements for ``pre-approved'' proposals
+\item Used by: DAOstack
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{3. Futarchy}
+\begin{itemize}
+\item ``Vote on values, bet on beliefs'' (Hanson, 2013)
+\item Two prediction markets per proposal: one conditional on passing, one on rejection
+\item Implement whichever market predicts higher welfare metric
+\item Used by: Gnosis experiments
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Mechanism Design Trade-offs}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lccc}
+\toprule
+& \textbf{Sybil-proof} & \textbf{Fair} & \textbf{Simple} \\
+\midrule
+1T1V & Yes & No & Yes \\
+QV & Partial & Yes & Moderate \\
+Conviction & Yes & Moderate & No \\
+Futarchy & Yes & Yes & No \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{columns}
+
+\bottomnote{No mechanism is perfect. Sybil resistance (preventing fake identities from gaining unfair votes) remains the hardest unsolved problem in token governance.}
+\end{frame}
+
+% --- Frame 16: Governance Failure Case Studies ---
+\begin{frame}[t]{Governance Failure: Case Studies}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Case 1: The DAO Hack (2016)}
+\begin{itemize}
+\item \$60M stolen via reentrancy exploit
+\item Governance dilemma: hard fork (reverse theft) or preserve immutability?
+\item Ethereum community voted to fork $\Rightarrow$ ETH (forked) vs.\ ETC (original)
+\item Lesson: governance must handle unforeseen crises
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Case 2: Beanstalk Flash Loan Attack (2022)}
+\begin{itemize}
+\item Attacker borrowed \$1B in flash loan (borrow and repay in single transaction)
+\item Used borrowed tokens to pass governance proposal
+\item Drained \$182M from protocol treasury
+\item Lesson: 1T1V is vulnerable to temporary token accumulation
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Case 3: MakerDAO Concentration (ongoing)}
+\begin{itemize}
+\item Top 20 addresses hold $>$50\% of MKR voting power
+\item Most votes pass with $<$5\% participation (rational apathy---when the cost of voting exceeds the expected benefit)
+\item Effectively oligarchic despite decentralization narrative
+\item Lesson: even well-designed governance concentrates over time
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Design Implications}
+\begin{itemize}
+\item Time locks prevent flash-loan governance attacks
+\item Delegation reduces apathy but creates new power centers
+\item QV mitigates plutocracy but requires Sybil resistance
+\end{itemize}
+\end{columns}
+
+\bottomnote{Real-world governance failures reveal limitations of theoretical mechanism design. Implementation details matter as much as the mechanism.}
+\end{frame}
+
+% --- Frame 17: Governance Design Scorecard ---
+\begin{frame}[t]{Governance Design Scorecard}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Evaluating Governance Mechanisms}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Criterion} & \textbf{1T1V} & \textbf{QV} & \textbf{Deleg.} & \textbf{Conv.} & \textbf{Futarchy} \\
+\midrule
+Sybil-proof & A & C & B & A & A \\
+Whale resist. & F & B & D & B & B \\
+Participation & B & C & A & B & D \\
+Simplicity & A & B & A & D & F \\
+Welfare opt. & D & A & C & B & A \\
+Flash-loan safe & F & D & B & A & B \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+Grades: A (excellent) to F (failing). No mechanism scores A across all criteria.
+
+\column{0.48\textwidth}
+\textbf{Choosing the Right Mechanism}
+
+\begin{itemize}
+\item \textbf{High-stakes protocol changes:} time-locked QV with delegation (prevents flash-loan attacks while limiting plutocracy)
+\item \textbf{Treasury grants:} conviction voting (rewards deep investigation over snap decisions)
+\item \textbf{Parameter tuning:} futarchy (market-based prediction outperforms voting for measurable outcomes)
+\item \textbf{Emergency response:} multisig with time delay (speed + security, sacrifices decentralization)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key insight:} the best governance is context-dependent. Most mature DAOs use hybrid systems combining multiple mechanisms.
+\end{columns}
+
+\bottomnote{Practical governance design combines mechanisms. No single voting rule solves all problems---DAOs increasingly adopt context-specific hybrids.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 5: Multi-Platform Competition (4 frames)
+%% ============================================================
+\section{Multi-Platform Competition}
+
+% --- Frame 17: Introducing lambda (Hotelling) ---
+\begin{frame}[t]{Multi-Platform Competition: The Hotelling Model}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Introducing $\lambda$ = transport cost}
+
+In Hotelling's (1929) model, platforms are located on a line and users incur ``transport costs'' (switching costs, learning costs, ecosystem lock-in) proportional to distance.
+
+\vspace{0.3em}
+\textbf{User utility from platform $j$:}
+$$U_{ij} = V_j + \sigma \cdot n_j - \lambda \cdot |x_i - l_j| - p_j$$
+
+\begin{itemize}
+\item $V_j$ = platform intrinsic value
+\item $\sigma \cdot n_j$ = network effect (more users = more value)
+\item $\lambda \cdot |x_i - l_j|$ = transport cost (mismatch between user preference $x_i$ and platform location $l_j$)
+\item $p_j$ = platform fee
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Blockchain Application}
+
+``Transport cost'' in crypto = cost of switching ecosystems:
+\begin{itemize}
+\item Learning a new programming language (Solidity vs.\ Move vs.\ Rust)
+\item Migrating smart contracts
+\item Rebuilding liquidity
+\item Losing composability with existing dApps
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key insight:} when $\lambda$ is high (large transport costs), multiple platforms can coexist even with network effects. When $\lambda$ is low (easy switching), winner-take-all dominates.
+
+\vspace{0.3em}
+\textbf{Example:} Ethereum and Solana coexist because $\lambda$ is high (different ecosystems, languages, tooling). Ethereum L2s compete more fiercely because $\lambda$ is lower (shared security, similar tooling).
+\end{columns}
+
+\bottomnote{Hotelling (1929): transport costs create differentiation that can sustain multiple competing platforms despite network effects.}
+\end{frame}
+
+% --- Frame 18: Gibrat with Network Effects ---
+\begin{frame}[t]{Stochastic Concentration: Gibrat with Network Effects}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Extended Gibrat Model}
+
+The Gibrat (1931) law of proportionate growth, augmented with network effect advantage:
+$$S_{i,t+1} = S_{i,t}^{1+\gamma} \times (1 + \mu + \sigma \cdot \varepsilon_{i,t})$$
+
+\begin{itemize}
+\item $S_{i,t}$ = market share of platform $i$ at time $t$
+\item $\gamma > 0$ = network effect advantage (larger platforms grow disproportionately)
+\item $\mu = 0$ = no systematic drift
+\item $\sigma = 0.15$ = random shock volatility
+\item $\varepsilon_{i,t} \sim N(0, 1)$ = random growth shock
+\end{itemize}
+
+After each period, shares are renormalized to sum to 1.
+
+\column{0.48\textwidth}
+\textbf{Key results (from simulation)}
+
+\begin{itemize}
+\item \textbf{Pure Gibrat ($\gamma = 0$):} random growth alone produces some concentration, but slowly
+\item \textbf{With network effects ($\gamma = 0.1$):} concentration is faster and more extreme---one platform typically dominates by $T = 100$
+\item \textbf{HHI trajectory:} starts at 0.20 (equal shares among 5), rises to 0.3--0.5 with network effects
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Policy implication:} in platform markets with $\gamma > 0$, laissez-faire leads to monopoly. Interoperability mandates (reducing effective $\gamma$) can preserve competition.
+\end{columns}
+
+\bottomnote{Gibrat (1931) + Arthur (1989): network effects turn random advantages into persistent dominance through positive feedback loops.}
+\end{frame}
+
+% --- Frame 19: Multi-Platform Market Share Chart (Chart 09) ---
+\begin{frame}[t]{Multi-Platform Market Share Evolution}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{09_multiplatform_market_share/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Five platforms start with equal 20\% share. Random shocks plus network effects ($\gamma = 0.1$) quickly tip the market---one platform emerges dominant while others shrink or stagnate.
+\item Panel~(b): HHI comparison shows network effects (red) accelerate concentration far beyond pure random growth (blue dashed). The ``highly concentrated'' threshold (0.25) is reached much earlier.
+\end{itemize}
+
+\bottomnote{Shapiro \& Varian (1999): even small network effects transform random variation into persistent winner-take-all concentration.}
+\end{frame}
+
+% --- Frame 20: Competition Policy ---
+\begin{frame}[t]{Competition Policy for Platform Markets}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Antitrust Challenge}
+
+Traditional antitrust tools (breakups, price regulation) don't translate well to platforms:
+\begin{itemize}
+\item Breakups destroy network effects (the value IS the network)
+\item Price regulation is hard when the ``product'' is a protocol
+\item Market definition is unclear (is ETH competing with SOL or with banks?)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{New Tools for Platform Markets}
+\begin{itemize}
+\item \textbf{Interoperability mandates:} require bridges and common standards (reduce $\lambda$)
+\item \textbf{Data portability:} users can move their history and assets (reduce switching costs)
+\item \textbf{Non-discrimination:} platforms cannot disadvantage rival services
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{The EU Digital Markets Act (DMA)}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{DMA Provision} & \textbf{Crypto Parallel} \\
+\midrule
+Interoperability & Cross-chain bridges \\
+Data portability & Wallet export \\
+Anti-self-preferencing & No oracle manipulation \\
+Transparency & Open-source code \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+\textbf{Open question:} Can decentralized governance substitute for antitrust regulation? Or does token concentration create the same power asymmetries that antitrust addresses?
+\end{columns}
+
+\bottomnote{Competition policy must evolve for platform markets. Decentralization promises self-regulation but token concentration may undermine it.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 6: Platform Dominance Measurement (4 frames)
+%% ============================================================
+\section{Platform Dominance Measurement}
+
+% --- Frame 21: HHI and Concentration Metrics ---
+\begin{frame}[t]{Measuring Platform Dominance: HHI and Beyond}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Herfindahl-Hirschman Index}
+$$HHI = \sum_{i=1}^{N} s_i^2$$
+
+where $s_i$ is the market share of firm $i$ (as a fraction).
+
+\vspace{0.3em}
+\textbf{Interpretation (DOJ/FTC guidelines):}
+
+\begin{tabular}{ll}
+\toprule
+HHI & Market Type \\
+\midrule
+$< 0.15$ & Competitive \\
+$0.15$--$0.25$ & Moderately concentrated \\
+$> 0.25$ & Highly concentrated \\
+$1.0$ & Perfect monopoly \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\textbf{Worked example:} 3 L1 chains with shares 55\%, 30\%, 15\%:
+$$HHI = 0.55^2 + 0.30^2 + 0.15^2 = 0.3025 + 0.09 + 0.0225 = 0.415$$
+Highly concentrated.
+
+\column{0.48\textwidth}
+\textbf{Alternative Metrics}
+
+\vspace{0.3em}
+\textbf{Concentration Ratio ($CR_k$):}
+$$CR_4 = \sum_{i=1}^{4} s_i$$
+(sum of top 4 shares)
+
+\vspace{0.3em}
+\textbf{Nakamoto Coefficient:}
+
+Minimum number of entities needed to control $>$50\% of a resource (block production, staking power, governance votes). Lower = more centralized.
+
+\vspace{0.3em}
+\begin{tabular}{ll}
+\toprule
+Chain & Nakamoto Coeff. \\
+\midrule
+Bitcoin & $\sim$4 (mining pools) \\
+Ethereum & $\sim$3 (staking services) \\
+Solana & $\sim$19 (validators) \\
+\bottomrule
+\end{tabular}
+\end{columns}
+
+\bottomnote{HHI measures market-level concentration. The Nakamoto coefficient measures within-chain centralization---both matter for platform economics.}
+\end{frame}
+
+% --- Frame 22: Cross-Reference and DEX Concentration ---
+\begin{frame}[t]{DEX Market Concentration}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{DEX Market Shares (2024 est.)}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{lrr}
+\toprule
+\textbf{DEX} & \textbf{Share} & $s_i^2$ \\
+\midrule
+Uniswap & 45\% & 0.2025 \\
+PancakeSwap & 15\% & 0.0225 \\
+Curve & 10\% & 0.0100 \\
+SushiSwap & 8\% & 0.0064 \\
+Others & 22\% & 0.0484 \\
+\midrule
+\textbf{HHI} & & \textbf{0.290} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.3em}
+Highly concentrated ($HHI > 0.25$), but declining from $\sim$0.95 in 2018 when Uniswap was essentially a monopoly.
+
+\column{0.48\textwidth}
+\textbf{Why DEX Concentration Differs from CEX}
+
+\begin{itemize}
+\item DEXs are forkable (anyone can copy the code)---low barriers to entry
+\item Liquidity is more portable (LPs can move easily between pools)
+\item But: brand trust and smart contract audits create switching costs
+\item Network effects in liquidity: deeper pools attract more traders
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Cross-reference:} For detailed analysis of AMM pricing and liquidity provider dynamics, see L06 Extended (Market Microstructure).
+\end{columns}
+
+\bottomnote{DEX markets are concentrating but less than traditional finance. Open-source code reduces barriers but liquidity network effects persist.}
+\end{frame}
+
+% --- Frame 23: Token Design Space Chart (Chart 10) ---
+\begin{frame}[t]{Token Design Space}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{10_token_design_space/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): Iso-GDP curves show the velocity-market cap trade-off. BTC sits on a high-GDP curve with low velocity; SOL is on a lower curve with high velocity. Moving left (adding velocity sinks) increases market cap for given GDP.
+\item Panel~(b): Token classification by design---payment tokens cluster at high V / low GDP, while store-of-value tokens sit at low V / high GDP. Bubble size reflects market cap.
+\end{itemize}
+
+\bottomnote{Samani (2017), Burniske (2017): token design choices (velocity sinks, supply caps) determine where a token sits in the design space.}
+\end{frame}
+
+% --- Frame 24: HHI Evolution Chart (Chart 11) ---
+\begin{frame}[t]{Platform HHI Evolution}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{11_platform_hhi_evolution/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel~(a): L1 blockchain HHI has declined from 0.65 (Bitcoin dominance) in 2015 to 0.35 in 2024 as Ethereum, Solana, and others gained share. DEX HHI shows similar deconcentration from Uniswap's early monopoly.
+\item Panel~(b): Cross-industry comparison reveals crypto markets are less concentrated than Big Tech (web search HHI = 0.92, social media = 0.70) but still above the ``competitive'' threshold.
+\end{itemize}
+
+\bottomnote{DOJ/FTC guidelines: HHI above 0.25 is ``highly concentrated.'' Crypto is deconcentrating but remains above this threshold in most segments.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 7: Synthesis and Policy Implications (3 frames)
+%% ============================================================
+\section{Synthesis and Policy Implications}
+
+% --- Frame 25: Model Synthesis ---
+\begin{frame}[t]{Model Synthesis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Converging Insights}
+\begin{itemize}
+\item \textbf{Katz-Shapiro:} platforms tip past critical mass ($n^* = c/(\sigma(1-c))$); higher $\sigma$ means easier tipping
+\item \textbf{Samani/Fisher:} token price = $GDP/(M \times V_{eff})$; staking reduces $V_{eff}$ and supports price
+\item \textbf{Weyl-Lalley:} QV maximizes welfare when token inequality is high (Gini $> 0.5$)
+\item \textbf{Gibrat + network effects:} random growth with $\gamma > 0$ produces winner-take-all concentration
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Design Principles for Token Platforms}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{ll}
+\toprule
+\textbf{Principle} & \textbf{Model Basis} \\
+\midrule
+Subsidize past tipping point & Katz-Shapiro: $n^* > 0$ \\
+Add velocity sinks (staking) & Samani: reduce $V_{eff}$ \\
+Use QV for governance & Weyl-Lalley: welfare optimal \\
+Monitor HHI trajectory & Gibrat: concentration risk \\
+Reduce transport costs & Hotelling: enable competition \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{columns}
+
+\bottomnote{Five distinct models converge on a unified toolkit for platform token design. Each model addresses a different dimension of the problem.}
+\end{frame}
+
+% --- Frame 26: Open Questions ---
+\begin{frame}[t]{Open Questions and Research Frontiers}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Unresolved Issues}
+\begin{itemize}
+\item \textbf{Optimal staking ratio:} what $\theta$ maximizes long-run protocol health? (Price vs.\ liquidity trade-off)
+\item \textbf{Sybil-resistant QV:} how to prevent identity splitting to game $\sqrt{t_i}$?
+\item \textbf{Cross-chain network effects:} do bridges create or destroy value?
+\item \textbf{Regulatory arbitrage:} does competition policy work when platforms are decentralized?
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Connections to Other Lectures}
+\begin{itemize}
+\item \textbf{L01 Extended:} Metcalfe's Law empirical estimation for network valuation
+\item \textbf{L03 Extended:} CBDC as a competing platform to DeFi
+\item \textbf{L04 Extended:} Payment system network effects and interoperability
+\item \textbf{L06 Extended:} AMM market microstructure and liquidity provision
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Assignment Connection}
+\begin{itemize}
+\item Exercises use the Katz-Shapiro tipping point formula
+\item Quiz questions test velocity model calculations
+\end{itemize}
+\end{columns}
+
+\bottomnote{Platform token economics is an active research frontier. These models provide the analytical toolkit for evaluating new proposals and protocols.}
+\end{frame}
+
+% --- Frame 27: References ---
+\begin{frame}[t]{References}
+\small
+\begin{itemize}
+\setlength{\itemsep}{2pt}
+\item Katz, M.L.\ \& Shapiro, C.\ (1985). Network Externalities, Competition, and Compatibility. \textit{American Economic Review}, 75(3), 424--440.
+\item Samani, K.\ (2017). Understanding Token Velocity. \textit{Multicoin Capital}.
+\item Burniske, C.\ (2017). Cryptoasset Valuations. \textit{Placeholder VC}.
+\item Weyl, E.G.\ \& Lalley, S.P.\ (2018). Quadratic Voting: How Mechanism Design Can Radicalize Democracy. \textit{AEA Papers \& Proceedings}, 108, 33--37.
+\item Buterin, V., Hitzig, Z.\ \& Weyl, E.G.\ (2019). A Flexible Design for Funding Public Goods. \textit{Management Science}, 65(11), 5171--5187.
+\item Gibrat, R.\ (1931). \textit{Les In\'egalit\'es \'Economiques}. Sirey.
+\item Shapiro, C.\ \& Varian, H.R.\ (1999). \textit{Information Rules: A Strategic Guide to the Network Economy}. Harvard Business Press.
+\item Hotelling, H.\ (1929). Stability in Competition. \textit{Economic Journal}, 39(153), 41--57.
+\end{itemize}
+
+\bottomnote{Full references for all models and data sources cited in this lecture.}
+\end{frame}
+
+%% ============================================================
+%% SECTION 8: Appendix (3 frames)
+%% ============================================================
+\appendix
+\section{Appendix}
+
+% --- Frame 28 (A1): Complete Notation Table ---
+\begin{frame}[t]{Appendix A1: Complete Notation Table}
+\begin{center}
+\begin{adjustbox}{max width=0.95\textwidth, max totalheight=0.78\textheight}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} & \textbf{Section} \\
+\midrule
+$n$ & Adoption fraction $\in [0,1]$ & Katz-Shapiro \\
+$\sigma$ & Network effect strength & Katz-Shapiro \\
+$c$ & Adoption cost & Katz-Shapiro \\
+$b(n)$ & Benefit function: $\sigma n/(1+\sigma n)$ & Katz-Shapiro \\
+$n^*$ & Equilibrium adoption: $c/(\sigma(1-c))$ & Katz-Shapiro \\
+$V$ & Network value (Metcalfe) or velocity & Various \\
+$M$ & Token supply & Token Valuation \\
+$V_{tok}$ / $V_{base}$ & Base token velocity & Token Valuation \\
+$V_{eff}$ & Effective velocity: $V_{base}(1-\theta)$ & Token Valuation \\
+$\theta$ & Stake ratio (fraction locked) & Token Valuation \\
+$P$ & Token price: $GDP/(M \times V_{eff})$ & Token Valuation \\
+$Q$ & Transaction volume & Token Valuation \\
+$\phi_i$ & Voting power of voter $i$ & Governance \\
+$t_i$ & Token holdings of voter $i$ & Governance \\
+$v_i$ & Preference intensity of voter $i$ & Governance \\
+$W$ & Social welfare & Governance \\
+$S_{i,t}$ & Market share of platform $i$ at time $t$ & Gibrat \\
+$\gamma$ & Network effect growth advantage & Gibrat \\
+$\mu$ & Mean growth rate & Gibrat \\
+$\lambda$ & Transport cost (Hotelling) & Competition \\
+$HHI$ & Herfindahl-Hirschman Index: $\sum s_i^2$ & Dominance \\
+$CR_k$ & Concentration ratio (top $k$ shares) & Dominance \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{center}
+
+\bottomnote{Reference page for all mathematical notation used in this lecture.}
+\end{frame}
+
+% --- Frame 29 (A2): Katz-Shapiro Full Derivation ---
+\begin{frame}[t]{Appendix A2: Katz-Shapiro Equilibrium Derivation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Benefit Function Derivation}
+
+Start from user $i$'s utility:
+$$u_i = v(n) - c = \frac{\sigma n}{1 + \sigma n} - c$$
+
+The benefit $b(n) = \sigma n / (1 + \sigma n)$ is:
+\begin{itemize}
+\item $b(0) = 0$ (no network, no benefit)
+\item $b(n) \to 1$ as $n \to \infty$ (saturating)
+\item $b'(n) = \sigma / (1 + \sigma n)^2 > 0$ (increasing)
+\item $b''(n) < 0$ (concave---diminishing returns)
+\end{itemize}
+
+\textbf{Equilibrium:} $b(n^*) = c$
+\begin{align*}
+\frac{\sigma n^*}{1 + \sigma n^*} &= c \\
+\sigma n^* &= c(1 + \sigma n^*) \\
+\sigma n^* - c\sigma n^* &= c \\
+n^*(\sigma - c\sigma) &= c \\
+n^* &= \frac{c}{\sigma(1 - c)}
+\end{align*}
+
+\column{0.48\textwidth}
+\textbf{Stability Analysis}
+
+At the interior equilibrium $n^*$:
+\begin{itemize}
+\item For $n < n^*$: $b(n) < c \Rightarrow$ users leave $\Rightarrow n$ falls to 0
+\item For $n > n^*$: $b(n) > c \Rightarrow$ users join $\Rightarrow n$ rises to 1
+\end{itemize}
+
+Therefore $n^*$ is \textbf{unstable}---it is the tipping point.
+
+\vspace{0.3em}
+\textbf{Existence condition:}
+$$n^* \leq 1 \iff \frac{c}{\sigma(1-c)} \leq 1 \iff c \leq \frac{\sigma}{1+\sigma}$$
+
+This defines the critical boundary in the phase diagram (Panel~b of Chart~06).
+
+\vspace{0.3em}
+\textbf{Comparative statics:}
+$$\frac{\partial n^*}{\partial \sigma} = -\frac{c}{\sigma^2(1-c)} < 0$$
+
+Stronger network effects ($\uparrow \sigma$) lower the tipping point ($\downarrow n^*$), making adoption easier.
+\end{columns}
+
+\bottomnote{Full derivation of the Katz-Shapiro fulfilled-expectations equilibrium. The tipping point $n^*$ is unstable by construction.}
+\end{frame}
+
+% --- Frame 30 (A3): QV Optimality Proof Sketch ---
+\begin{frame}[t]{Appendix A3: Quadratic Voting Optimality}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Why $k^2$? The Marginal Cost Argument}
+
+Under QV, the cost of $k$ votes is $k^2$ tokens. The marginal cost of the $k$-th vote:
+$$MC(k) = k^2 - (k-1)^2 = 2k - 1$$
+
+This means marginal cost is linear in votes cast. A voter with preference intensity $v_i$ optimizes:
+$$\max_k \; v_i \cdot k - k^2$$
+FOC: $v_i = 2k^* \Rightarrow k^* = v_i / 2$
+
+\vspace{0.3em}
+\textbf{Key property:} votes cast are proportional to preference intensity ($k^* \propto v_i$), regardless of wealth.
+
+\column{0.48\textwidth}
+\textbf{Welfare Optimality (Sketch)}
+
+Social welfare:
+$$W = \sum_i v_i \cdot d$$
+where $d \in \{0, 1\}$ is the policy decision. Optimal $d = 1$ iff $\sum_i v_i > 0$.
+
+Under QV, decision passes iff:
+$$\sum_i k_i^* = \sum_i \frac{v_i}{2} > 0 \iff \sum_i v_i > 0$$
+
+So QV implements the welfare-optimal decision in the limit (Weyl \& Lalley, 2018).
+
+\vspace{0.3em}
+\textbf{1T1V fails because:}
+$$\sum_i t_i \cdot \text{sign}(v_i) \neq \sum_i v_i$$
+
+Wealth ($t_i$) contaminates the aggregation of preferences ($v_i$).
+\end{columns}
+
+\bottomnote{Weyl \& Lalley (2018): QV is the unique voting rule where marginal cost equals marginal benefit for truthful preference revelation.}
+\end{frame}
+
+\end{document}

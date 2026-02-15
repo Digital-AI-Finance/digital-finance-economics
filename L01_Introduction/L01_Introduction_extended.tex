@@ -1,0 +1,1262 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+% Color definitions
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Introduction to Digital Finance: Mathematical Models and Technology Adoption}
+\subtitle{L01 Extended: Formalizing the S-Curve and Economics of Money\\[0.3em]\normalsize From barter inefficiency to Metcalfe's Law and diffusion dynamics}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+%% ============================================================
+%% SECTION 1: Bridge from Basic Lecture
+%% ============================================================
+\section{Bridge from Basic Lecture}
+
+% Frame 0 (title)
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Frame 1
+\begin{frame}[t]{Welcome Back: From Concepts to Math}
+\begin{center}
+\vspace{1em}
+{\Large\textit{``In God we trust; all others must bring data.''}}\\[0.5em]
+{\normalsize --- W.\ Edwards Deming}
+
+\vspace{1.5em}
+{\large In L01, we introduced \textbf{four economic lenses} and the \textbf{S-curve} of technology adoption.}
+
+\vspace{1em}
+{\large Now we formalize these ideas with \textbf{mathematical models} that let us:}
+
+\vspace{0.5em}
+\begin{itemize}
+\item \textbf{Predict} --- When will a payment technology reach critical mass?
+\item \textbf{Quantify} --- How much does money reduce transaction costs versus barter?
+\item \textbf{Compare} --- Is a network worth $n^2$ or $n \ln(n)$?
+\item \textbf{Test} --- Do the models fit real-world data?
+\end{itemize}
+
+\vspace{1em}
+{\footnotesize (Relevant XKCD: \#435 --- ``Purity'' --- mathematics as the foundation of all sciences)}
+\end{center}
+
+\bottomnote{This extended lecture adds formal models to the conceptual framework from L01}
+\end{frame}
+
+% Frame 2
+\begin{frame}[t]{From Concepts to Models}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{What We Know (from L01)}
+\begin{enumerate}
+\item S-curve adoption patterns in payment technology
+\item Four economic lenses (monetary, platform, microstructure, regulatory)
+\item Historical evolution from barter to digital payments
+\item Digital finance as economic disruption
+\end{enumerate}
+
+\vspace{0.5em}
+\textit{These are qualitative insights --- useful for intuition but insufficient for precise analysis.}
+
+\column{0.48\textwidth}
+\textbf{What We'll Formalize (today)}
+\begin{enumerate}
+\item \textbf{Kiyotaki-Wright barter model}: Why money emerges as an equilibrium outcome
+\item \textbf{Bass diffusion model}: S-curve dynamics with calibrated parameters
+\item \textbf{Metcalfe/Odlyzko valuation}: Network value scaling laws
+\item \textbf{Coase transaction costs}: Digital finance cost decomposition
+\end{enumerate}
+
+\vspace{0.5em}
+\textit{Formal models let us make testable predictions and evaluate policy.}
+\end{columns}
+
+\bottomnote{Models are simplified representations of reality --- useful precisely because they omit irrelevant details}
+\end{frame}
+
+% Frame 3 --- NO GREEK LETTERS
+\begin{frame}[t]{Mathematical Toolkit}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Key Concepts (in plain English)}
+\begin{itemize}
+\item \textbf{Optimization}: Finding the best choice given constraints (e.g., minimizing cost)
+\item \textbf{Equilibrium}: A stable state where no participant wants to change behavior
+\item \textbf{Differential equations}: Rules describing how quantities change over time (e.g., adoption rate depends on current adoption level)
+\item \textbf{Comparative statics}: Asking ``what happens to the answer if we change one input?''
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Notation Guide}
+
+\vspace{0.3em}
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning} \\
+\midrule
+$n$ & Number of goods or network users \\
+$c_b$ & Cost per barter trade (\$/trade) \\
+$c_m$ & Cost per money trade (\$/trade) \\
+$V$ & Network value (\$) \\
+$t$ & Time (years) \\
+$p$ & Innovation coefficient (Bass) \\
+$q$ & Imitation coefficient (Bass) \\
+$F$ & Cumulative adoption fraction \\
+$TC$ & Total transaction cost (\$) \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.3em}
+\footnotesize Greek letters (introduced in later slides) will always be defined at first use.
+\end{columns}
+
+\bottomnote{No prior math beyond basic algebra is assumed --- every formula is derived step by step}
+\end{frame}
+
+%% ============================================================
+%% SECTION 2: Barter Inefficiency and the Emergence of Money
+%% ============================================================
+\section{Barter Inefficiency and the Emergence of Money}
+
+% Frame 4
+\begin{frame}[t]{The Barter Problem --- Formal Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Double Coincidence Problem}
+
+In an economy with $n$ goods, barter requires:
+\begin{itemize}
+\item Each pair of goods needs its own exchange rate
+\item Number of exchange rates: $P_{barter}(n) = \frac{n(n-1)}{2}$
+\item With money: only $P_{money}(n) = n - 1$ prices needed
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Introducing} $\alpha$ (alpha):
+\begin{itemize}
+\item $\alpha$ = probability that two random traders each want what the other has (``double coincidence of wants'')
+\item With $n$ goods: $\alpha \approx 1/n^2$ (very small for large $n$)
+\item Money eliminates the need for double coincidence
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Worked Example: $n = 10$ goods}
+
+\vspace{0.3em}
+\textit{Under barter:}
+\begin{itemize}
+\item Exchange rates: $\frac{10 \times 9}{2} = 45$
+\item You must memorize or look up 45 relative prices
+\item Probability of match: $\alpha \approx 1/100 = 1\%$
+\end{itemize}
+
+\vspace{0.3em}
+\textit{With money (one medium of exchange):}
+\begin{itemize}
+\item Prices: $10 - 1 = 9$
+\item Reduction: $45 - 9 = 36$ fewer prices (80\% reduction)
+\item Any trade is possible through money
+\end{itemize}
+
+\vspace{0.3em}
+\textit{At $n = 100$ goods:}
+\begin{itemize}
+\item Barter: 4,950 exchange rates
+\item Money: 99 prices (98\% reduction)
+\end{itemize}
+\end{columns}
+
+\bottomnote{Jevons (1875) first formalized why barter is inefficient; Kiyotaki \& Wright (1989) proved money emerges as equilibrium}
+\end{frame}
+
+% Frame 5
+\begin{frame}[t]{Money as Information Technology}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Kiyotaki-Wright (1989) Search Model}
+
+\vspace{0.3em}
+Key setup:
+\begin{itemize}
+\item Agents are randomly matched each period
+\item Each agent produces one good, consumes another
+\item Without money: agents search for direct swap partners
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Introducing} $\pi$ (pi):
+\begin{itemize}
+\item $\pi$ = search cost per period (time, effort, travel)
+\item Expected search time under barter: $1/\alpha$ periods
+\item Expected total barter cost: $\pi / \alpha$
+\item With money: search cost drops to $\pi$ (one search)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Why does money emerge?}\\
+When $\pi / \alpha > \pi + c_m$ (barter search cost exceeds money search cost plus money holding cost $c_m$), all agents prefer to accept money.
+
+\column{0.48\textwidth}
+\textbf{Worked Example}
+
+\vspace{0.3em}
+Parameters:
+\begin{itemize}
+\item $n = 20$ goods, so $\alpha = 1/400$
+\item $\pi = \$2$ per search period
+\item $c_m = \$0.50$ (cost of carrying money)
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Barter cost per trade:}
+$$\frac{\pi}{\alpha} = \frac{2}{1/400} = \$800$$
+
+\vspace{0.3em}
+\textit{Money cost per trade:}
+$$\pi + c_m = 2 + 0.50 = \$2.50$$
+
+\vspace{0.3em}
+\textit{Savings:}
+$$\$800 - \$2.50 = \$797.50 \text{ per trade}$$
+
+\vspace{0.3em}
+Money reduces transaction costs by \textbf{99.7\%} in this example.
+\end{columns}
+
+\bottomnote{Kiyotaki \& Wright (1989): money is an equilibrium institution, not an arbitrary convention}
+\end{frame}
+
+% Frame 6
+\begin{frame}[t]{Barter Cost Reduction}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{06_barter_cost_reduction/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel (a): Barter exchange rates grow quadratically ($n^2/2$) while money prices grow linearly ($n-1$) --- the gap widens dramatically
+\item Panel (b): Transaction cost savings from money (green area) increase rapidly; at $n{=}50$, barter costs \$15,313 vs money costs \$24.50 per round
+\item Parameters: $c_b = \$5.00$/trade (barter), $c_m = \$0.50$/trade (money) --- calibrated from Kiyotaki \& Wright (1989)
+\end{itemize}
+
+\bottomnote{Money is the oldest and most successful financial technology --- digital money extends the same logic}
+\end{frame}
+
+% Frame 7
+\begin{frame}[t]{Search Equilibrium Results}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Equilibrium Conditions}
+
+\vspace{0.3em}
+Money emerges when:
+$$\frac{\pi}{\alpha} > \pi + c_m$$
+
+Rearranging:
+$$\alpha < \frac{\pi}{\pi + c_m}$$
+
+This means: money is adopted when the probability of a double coincidence ($\alpha$) is sufficiently low --- i.e., when the economy is sufficiently complex.
+
+\vspace{0.3em}
+\textbf{Digital extension:}
+\begin{itemize}
+\item Digital money reduces $c_m$ further (near zero storage/transfer cost)
+\item This makes the money equilibrium even more dominant
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Numerical Results}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Goods} & $\alpha$ & \textbf{Barter} & \textbf{Money} \\
+$n$ & $(1/n^2)$ & \textbf{Cost} & \textbf{Cost} \\
+\midrule
+5 & 0.040 & \$50 & \$2.50 \\
+10 & 0.010 & \$200 & \$2.50 \\
+20 & 0.003 & \$800 & \$2.50 \\
+50 & 0.000 & \$5,000 & \$2.50 \\
+100 & 0.000 & \$20,000 & \$2.50 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.5em}
+\footnotesize
+$\pi = \$2.00$, $c_m = \$0.50$.\\
+Barter cost = $\pi/\alpha$; Money cost = $\pi + c_m$.
+
+\vspace{0.3em}
+\normalsize
+\textbf{Key insight}: Money's advantage grows quadratically with economic complexity. Digital money amplifies this by reducing $c_m$ to near zero.
+\end{columns}
+
+\bottomnote{Even with just 10 goods, money reduces search costs by 98.75\% --- the case for digital money is even stronger}
+\end{frame}
+
+%% ============================================================
+%% SECTION 3: Technology Diffusion: The Bass Model
+%% ============================================================
+\section{Technology Diffusion: The Bass Model}
+
+% Frame 8
+\begin{frame}[t]{The Bass Diffusion Model --- Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Bass (1969) Model}
+
+\vspace{0.3em}
+The adoption rate depends on two forces:
+
+$$\frac{dF}{dt} = (p + qF)(1 - F)$$
+
+where:
+\begin{itemize}
+\item $F(t)$ = fraction of population that has adopted (0 to 1)
+\item $p$ = innovation coefficient (external influence: advertising, media)
+\item $q$ = imitation coefficient (internal influence: word-of-mouth, network effects)
+\item $(1-F)$ = remaining potential adopters
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Introducing} $\tau$ (tau):
+\begin{itemize}
+\item $\tau$ = time to inflection (steepest adoption)
+\item Inflection when $F = (1 - p/q)/2$ approximately
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Intuition}
+
+\vspace{0.3em}
+The $(p + qF)$ term captures:
+\begin{itemize}
+\item $p$: ``innovators'' who adopt independently
+\item $qF$: ``imitators'' who adopt because others did (grows as $F$ increases)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Parameter meaning:}
+
+\vspace{0.3em}
+\begin{tabular}{@{}lll@{}}
+\toprule
+& \textbf{Low} & \textbf{High} \\
+\midrule
+$p$ & Slow start & Fast start \\
+$q$ & Weak network & Strong network \\
+$q/p$ & Tech-driven & Social-driven \\
+\bottomrule
+\end{tabular}
+
+\vspace{0.5em}
+Digital payment technologies have \textit{higher} $p$ (better marketing/UX) and \textit{higher} $q$ (stronger network effects) than earlier technologies.
+\end{columns}
+
+\bottomnote{Bass (1969): the most widely used model for forecasting technology adoption timing}
+\end{frame}
+
+% Frame 9
+\begin{frame}[t]{Fitting the S-Curve}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Closed-Form Solution}
+
+\vspace{0.3em}
+The differential equation has an exact solution:
+
+$$F(t) = \frac{1 - e^{-(p+q)t}}{1 + \frac{q}{p} e^{-(p+q)t}}$$
+
+\vspace{0.3em}
+\textbf{Peak adoption time:}
+$$t^* = \frac{\ln(q/p)}{p + q}$$
+
+At $t^*$, the adoption rate $dF/dt$ reaches its maximum --- this is the ``tipping point.''
+
+\vspace{0.3em}
+\textbf{Peak adoption rate:}
+$$\left.\frac{dF}{dt}\right|_{t^*} = \frac{(p+q)^2}{4q}$$
+
+\column{0.48\textwidth}
+\textbf{Worked Example: Digital Payments}
+
+\vspace{0.3em}
+Parameters: $p = 0.03$, $q = 0.50$
+
+\vspace{0.3em}
+\textit{Peak time:}
+$$t^* = \frac{\ln(0.50/0.03)}{0.03 + 0.50} = \frac{2.81}{0.53} = 5.3 \text{ years}$$
+
+\vspace{0.3em}
+\textit{Peak rate:}
+$$\frac{(0.03 + 0.50)^2}{4 \times 0.50} = \frac{0.281}{2.0} = 14.0\% \text{/year}$$
+
+\vspace{0.3em}
+\textit{Compare with Cash} ($p=0.01$, $q=0.20$):
+$$t^*_{cash} = \frac{\ln(0.20/0.01)}{0.21} = \frac{3.00}{0.21} = 14.3 \text{ years}$$
+
+\vspace{0.3em}
+Digital payments reach peak adoption \textbf{2.7$\times$ faster} than cash equivalents.
+\end{columns}
+
+\bottomnote{The ratio $q/p$ determines whether adoption is innovation-driven ($q/p < 1$) or imitation-driven ($q/p > 1$)}
+\end{frame}
+
+% Frame 10
+\begin{frame}[t]{Diffusion Dynamics Visualization}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{07_bass_diffusion_payment/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel (a): Cumulative S-curves show digital payments reaching 50\% adoption in 5.3 years vs 14.3 years for cash --- network effects ($q$) are the accelerator
+\item Panel (b): Adoption rate curves peak earlier and higher for digital ($dF/dt$ max = 14\%/year) vs cash (max = 5.3\%/year)
+\item Dots mark inflection points $t^*$ --- the moment adoption accelerates most rapidly
+\end{itemize}
+
+\bottomnote{Bass parameters: Cash ($p{=}0.01$, $q{=}0.20$), Cards ($p{=}0.02$, $q{=}0.35$), Digital ($p{=}0.03$, $q{=}0.50$)}
+\end{frame}
+
+% Frame 11
+\begin{frame}[t]{Speed of Adoption: Why Digital Is Faster}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Comparative Diffusion Parameters}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Technology} & $p$ & $q$ & $q/p$ & $t^*$ (yr) \\
+\midrule
+Cash & 0.01 & 0.20 & 20 & 14.3 \\
+Cards & 0.02 & 0.35 & 17.5 & 7.6 \\
+Digital & 0.03 & 0.50 & 16.7 & 5.3 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.5em}
+\textbf{Why is digital faster?}
+\begin{itemize}
+\item Higher $p$: better initial UX, lower friction, smartphone penetration
+\item Higher $q$: stronger network effects (instant, global, interoperable)
+\item Lower $q/p$: more balanced adoption (both innovators and imitators contribute)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Implications for Policy}
+
+\vspace{0.3em}
+\begin{itemize}
+\item Fast adoption creates \textbf{regulatory lag} --- rules cannot keep up with technology
+\item Network effects create \textbf{winner-take-all} dynamics --- early movers have enormous advantages
+\item High $q$ means \textbf{tipping points are abrupt} --- small changes in conditions can trigger rapid shifts
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Historical comparison:}
+\begin{itemize}
+\item Telephone: $\sim$75 years to 50\% adoption
+\item Internet: $\sim$15 years
+\item Smartphones: $\sim$10 years
+\item Mobile payments: $\sim$5--7 years
+\end{itemize}
+
+\vspace{0.3em}
+Each generation adopts faster because $q$ increases with digital connectivity.
+\end{columns}
+
+\bottomnote{Rogers (1962): adoption speed depends on relative advantage, compatibility, complexity, trialability, and observability}
+\end{frame}
+
+%% ============================================================
+%% SECTION 4: Network Value Estimation: Metcalfe and Beyond
+%% ============================================================
+\section{Network Value Estimation: Metcalfe and Beyond}
+
+% Frame 12
+\begin{frame}[t]{Metcalfe's Law --- Formal Derivation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Argument}
+
+\vspace{0.3em}
+In a network with $n$ users:
+\begin{itemize}
+\item Each user can connect with $n - 1$ others
+\item Total possible connections: $\frac{n(n-1)}{2}$
+\item If each connection has value $v$, total value:
+\end{itemize}
+$$V = \frac{n(n-1)}{2} \cdot v \approx \alpha n^2$$
+
+where $\alpha = v/2$ (for large $n$).
+
+\vspace{0.3em}
+\textbf{Calibration:}
+\begin{itemize}
+\item $\alpha = 0.001$ (fitted to crypto network data)
+\item At $n = 1{,}000$: $V = 0.001 \times 10^6 = 1{,}000$
+\item At $n = 10{,}000$: $V = 100{,}000$ (100$\times$ more)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Worked Example: Bitcoin Network}
+
+\vspace{0.3em}
+\textit{2013}: $n \approx 100{,}000$ active addresses
+$$V_{Metcalfe} = 0.001 \times (10^5)^2 = \$10 \text{ billion}$$
+
+\vspace{0.3em}
+\textit{2021}: $n \approx 1{,}000{,}000$ active addresses
+$$V_{Metcalfe} = 0.001 \times (10^6)^2 = \$1 \text{ trillion}$$
+
+\vspace{0.3em}
+\textit{Actual market cap (peak 2021):} $\sim$\$1.2 trillion
+
+\vspace{0.5em}
+\textbf{Key insight:}\\
+Metcalfe's Law predicts that a 10$\times$ increase in users leads to a 100$\times$ increase in value. This explains why crypto projects obsess over user growth.
+\end{columns}
+
+\bottomnote{Metcalfe (2013): validated $V \propto n^2$ for Facebook data; crypto markets show similar scaling}
+\end{frame}
+
+% Frame 13
+\begin{frame}[t]{Beyond Metcalfe: Odlyzko-Tilly and Zipf}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Critique of $n^2$}
+
+\vspace{0.3em}
+Odlyzko \& Tilly (2005) argued:
+\begin{itemize}
+\item Not all connections are equally valuable
+\item Value follows Zipf's Law: the $k$-th most valuable connection is worth $\sim v/k$
+\item Total value sums a harmonic series:
+\end{itemize}
+$$V_{Odlyzko} = \beta \cdot n \cdot \ln(n)$$
+
+where $\beta = 0.05$.
+
+\vspace{0.3em}
+\textbf{Comparison at $n = 1{,}000{,}000$:}
+\begin{itemize}
+\item Metcalfe: $V = 0.001 \times 10^{12} = 10^9$
+\item Odlyzko: $V = 0.05 \times 10^6 \times 13.8 = 6.9 \times 10^5$
+\item Ratio: Metcalfe is $\sim$1,450$\times$ higher
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{When Each Model Applies}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Model} & \textbf{Scaling} & \textbf{Best for} \\
+\midrule
+Metcalfe & $n^2$ & Small networks \\
+ & & (all connections used) \\
+Odlyzko & $n \ln(n)$ & Large networks \\
+ & & (diminishing returns) \\
+Linear & $n$ & Utility networks \\
+ & & (value per user fixed) \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.5em}
+\textbf{Practical rule of thumb:}
+\begin{itemize}
+\item $n < 10{,}000$: Metcalfe is reasonable
+\item $10{,}000 < n < 1{,}000{,}000$: Odlyzko is more realistic
+\item $n > 1{,}000{,}000$: consider saturation effects
+\end{itemize}
+
+\vspace{0.3em}
+For crypto valuation, Odlyzko typically fits better because not all wallet addresses actively transact.
+\end{columns}
+
+\bottomnote{Briscoe et al.\ (2006): the true scaling law depends on the network's communication structure}
+\end{frame}
+
+% Frame 14
+\begin{frame}[t]{Network Valuation Models}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{08_network_valuation_models/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel (a): On log-log axes, Metcalfe ($n^2$) grows fastest; the shaded area shows the ``Metcalfe premium'' over Odlyzko ($n \ln n$)
+\item Panel (b): The ratio $V_{Metcalfe}/V_{Odlyzko}$ diverges as $n$ grows --- Metcalfe increasingly overestimates for large networks
+\item Panel (c): Ethereum data (illustrative) shows Odlyzko fits better at scale as saturation effects dominate
+\end{itemize}
+
+\bottomnote{Parameters: $\alpha{=}0.001$, $\beta{=}0.05$, $\gamma{=}1.0$ --- Metcalfe (2013), Odlyzko \& Tilly (2005)}
+\end{frame}
+
+% Frame 15
+\begin{frame}[t]{Empirical Network Value}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Regression Approach}
+
+\vspace{0.3em}
+To test which model fits best, estimate:
+$$\ln(V) = a + b \cdot \ln(n) + \varepsilon$$
+
+\vspace{0.3em}
+\begin{itemize}
+\item If $b \approx 2$: Metcalfe ($V \propto n^2$)
+\item If $b \approx 1$: linear ($V \propto n$)
+\item If $b$ between 1 and 2: sub-quadratic (Odlyzko region)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Introducing} $\varepsilon$ (epsilon):
+\begin{itemize}
+\item $\varepsilon$ = error term capturing factors not in the model (speculation, regulation, sentiment)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Empirical Findings}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lccc@{}}
+\toprule
+\textbf{Network} & $b$ & $R^2$ & \textbf{Best fit} \\
+\midrule
+Bitcoin & 1.69 & 0.78 & Sub-quadratic \\
+Ethereum & 1.43 & 0.82 & Odlyzko \\
+Facebook & 1.95 & 0.91 & Metcalfe \\
+Tencent & 1.88 & 0.89 & Near-Metcalfe \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.5em}
+\textbf{Interpretation:}
+\begin{itemize}
+\item Social networks (Facebook, Tencent) are closer to $n^2$ --- users actively connect
+\item Crypto networks are closer to $n \ln(n)$ --- many addresses are inactive or single-use
+\item $R^2$ indicates how much of value variation is explained by user count alone
+\end{itemize}
+\end{columns}
+
+\bottomnote{$R^2$ (R-squared) measures goodness of fit: $R^2 = 0.82$ means 82\% of value variation is explained by network size}
+\end{frame}
+
+% Frame 16
+\begin{frame}[t]{When Metcalfe Breaks}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Saturation and Critique}
+
+\vspace{0.3em}
+Metcalfe's Law breaks down when:
+\begin{itemize}
+\item \textbf{Congestion}: Adding users degrades experience (e.g., Ethereum gas fees rising with usage)
+\item \textbf{Sybil attacks}: Fake accounts inflate $n$ without adding real value
+\item \textbf{Inactive users}: Many accounts never transact --- $n_{active} \ll n_{total}$
+\item \textbf{Diminishing returns}: The 1,000th connection is worth less than the 10th
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Modified Metcalfe:}
+$$V = \alpha \cdot n^b, \quad 1 < b < 2$$
+
+The exponent $b$ captures the degree of network effect saturation.
+
+\column{0.48\textwidth}
+\textbf{Implications for Crypto Valuation}
+
+\vspace{0.3em}
+\begin{itemize}
+\item Using $n^2$ overestimates value by 10--1,000$\times$ for large networks
+\item Better to use $n \ln(n)$ or estimate $b$ empirically
+\item User quality matters more than quantity
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{Real-world examples:}
+\begin{itemize}
+\item \textbf{MySpace} ($n{=}100$M): Metcalfe predicted enormous value, but the network collapsed when users migrated
+\item \textbf{Bitcoin} ($n{=}1$M active): Metcalfe predicts \$1T; actual is volatile between \$200B and \$1.2T
+\end{itemize}
+
+\vspace{0.5em}
+\textit{Cross-reference: For equilibrium analysis of network adoption under fulfilled expectations, see L05 Extended.}
+\end{columns}
+
+\bottomnote{Metcalfe gives an upper bound; Odlyzko gives a more realistic estimate for mature networks}
+\end{frame}
+
+%% ============================================================
+%% SECTION 5: Transaction Cost Economics of Digital Finance
+%% ============================================================
+\section{Transaction Cost Economics of Digital Finance}
+
+% Frame 17
+\begin{frame}[t]{Coase and Transaction Costs --- Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Coase (1937): The Nature of the Firm}
+
+\vspace{0.3em}
+Why do firms exist? Because markets have \textbf{transaction costs}:
+\begin{itemize}
+\item Finding a trading partner (search costs)
+\item Verifying quality and identity (verification costs)
+\item Executing and recording the exchange (settlement costs)
+\item Following rules and reporting (compliance costs)
+\end{itemize}
+
+$$TC_{total} = TC_{search} + TC_{verify} + TC_{settle} + TC_{comply}$$
+
+\vspace{0.3em}
+\textbf{Introducing} $\gamma$ (gamma):
+\begin{itemize}
+\item $\gamma$ = technology efficiency parameter
+\item Digital reduces each component: $TC_i^{digital} = \gamma_i \cdot TC_i^{traditional}$
+\item Where $0 < \gamma_i < 1$ (lower is better)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Williamson (1985) Categories}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lp{4.5cm}@{}}
+\toprule
+\textbf{Category} & \textbf{Digital Impact} \\
+\midrule
+Search & Algorithms replace brokers; near-zero marginal cost \\
+\addlinespace
+Verification & Cryptographic proof replaces trust; automated KYC \\
+\addlinespace
+Settlement & Instant (blockchain) vs 2--3 day (bank wire) \\
+\addlinespace
+Compliance & Smart contracts automate; but regulatory burden grows \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.5em}
+\textbf{Key insight:}\\
+Digital finance reduces search, verification, and settlement costs dramatically, but may \textit{increase} compliance costs (new regulations, AML requirements).
+\end{columns}
+
+\bottomnote{Coase (1937): transaction costs explain why firms exist; Williamson (1985) classified the types of costs}
+\end{frame}
+
+% Frame 18
+\begin{frame}[t]{Digital Finance Transaction Cost Reduction}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Cost Decomposition per \$100 Transaction}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Component} & \textbf{Cash} & \textbf{Card} & \textbf{Crypto} & \textbf{CBDC} \\
+\midrule
+Search & \$0.50 & \$0.10 & \$0.05 & \$0.05 \\
+Verification & \$0.20 & \$0.15 & \$0.10 & \$0.05 \\
+Settlement & \$0.30 & \$0.25 & \$0.05 & \$0.05 \\
+Compliance & \$0.00 & \$0.50 & \$0.30 & \$0.15 \\
+\midrule
+\textbf{Total} & \textbf{\$1.00} & \textbf{\$1.00} & \textbf{\$0.50} & \textbf{\$0.30} \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.5em}
+\textbf{Key observations:}
+\begin{itemize}
+\item Cash has zero compliance cost (anonymous) but high search/settlement
+\item Cards shift costs to compliance (fraud monitoring, chargebacks)
+\item Crypto reduces settlement but adds compliance burden
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Worked Example: \$200 Remittance}
+
+\vspace{0.3em}
+\textit{Traditional (Western Union):}
+\begin{itemize}
+\item Fee: \$14 (7\% of \$200)
+\item Time: 1--3 business days
+\item Exchange rate markup: 2--4\%
+\item Total effective cost: $\sim$\$22
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Crypto (stablecoin transfer):}
+\begin{itemize}
+\item Network fee: \$0.50--\$2.00
+\item Time: 2--30 minutes
+\item Exchange rate: market rate
+\item Total effective cost: $\sim$\$2
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Cost reduction: 91\%}
+
+\vspace{0.3em}
+This explains why remittance corridors are among the first use cases for digital finance (see L04).
+\end{columns}
+
+\bottomnote{World Bank (2023): global average remittance cost is 6.2\% --- crypto can reduce this to under 1\%}
+\end{frame}
+
+% Frame 19
+\begin{frame}[t]{Transaction Cost Waterfall}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{09_transaction_cost_waterfall/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel (a): Stacked bars decompose total cost into four Williamson categories --- CBDC achieves the lowest total at \$0.30 per \$100
+\item Panel (b): Crypto and CBDC achieve 50\% and 70\% cost reduction versus cash, respectively
+\item Note: Cash and Card have equal totals (\$1.00) but different cost \textit{structures} --- cards shift costs from search/settlement to compliance
+\end{itemize}
+
+\bottomnote{Transaction costs per \$100 transaction --- Coase (1937), Williamson (1985)}
+\end{frame}
+
+% Frame 20
+\begin{frame}[t]{Disintermediation Economics}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Williamson's Asset Specificity}
+
+\vspace{0.3em}
+Intermediaries (banks, exchanges) exist because of:
+\begin{itemize}
+\item \textbf{Asset specificity}: specialized infrastructure is expensive to build but cheap to share
+\item \textbf{Uncertainty}: intermediaries absorb risk (fraud, default, settlement failure)
+\item \textbf{Frequency}: high-volume transactions justify fixed costs of infrastructure
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Digital finance disrupts this:}
+\begin{itemize}
+\item Blockchain reduces asset specificity (open infrastructure)
+\item Smart contracts reduce uncertainty (automated execution)
+\item APIs reduce frequency thresholds (even small transactions are economical)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Disintermediation vs Re-intermediation}
+
+\vspace{0.3em}
+\begin{itemize}
+\item \textbf{Disintermediation}: removing banks from payments (e.g., Bitcoin peer-to-peer)
+\item \textbf{Re-intermediation}: replacing old intermediaries with new ones (e.g., Coinbase replaces a traditional broker)
+\end{itemize}
+
+\vspace{0.5em}
+\textbf{The paradox:}
+\begin{itemize}
+\item DeFi promises disintermediation
+\item But users still rely on: wallets, bridges, DEX front-ends, oracles (data feeds connecting blockchain to real-world information)
+\item Transaction costs shift from one intermediary to another, not to zero
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Coase's insight remains:} as long as transaction costs exist, some form of intermediation is efficient.
+\end{columns}
+
+\bottomnote{Complete disintermediation is a myth --- digital finance \textit{restructures} intermediation, it does not eliminate it}
+\end{frame}
+
+%% ============================================================
+%% SECTION 6: Adoption Threshold Analysis
+%% ============================================================
+\section{Adoption Threshold Analysis}
+
+% Frame 21
+\begin{frame}[t]{The Standards Problem in Digital Finance}
+\begin{center}
+\vspace{1em}
+{\Large\textbf{The Competing Standards Dilemma}}
+
+\vspace{1em}
+{\large\textit{``The nice thing about standards is that there are so many to choose from.''}}\\[0.3em]
+{\normalsize --- Andrew S.\ Tanenbaum (paraphrased in XKCD \#927)}
+
+\vspace{1em}
+\textbf{Situation}: 14 competing digital payment standards exist.\\
+\textbf{``Solution''}: Create a universal standard that covers all use cases.\\
+\textbf{Result}: Now there are 15 competing standards.
+
+\vspace{1em}
+\begin{itemize}
+\item This is exactly the adoption threshold problem: each standard needs a \textbf{critical mass} of users to be viable
+\item With 15 standards, users are split across too many networks --- none reaches critical mass
+\item \textbf{Network effects} create winner-take-all dynamics: only 1--2 standards can survive
+\item The Katz-Shapiro (1985) model formalizes when adoption succeeds vs.\ fails
+\end{itemize}
+\end{center}
+
+\bottomnote{XKCD \#927 ``Standards'' --- the proliferation problem applies directly to crypto tokens, L2 chains, and payment protocols}
+\end{frame}
+
+% Frame 22
+\begin{frame}[t]{Growth Accounting Framework}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Solow-Style Decomposition}
+
+\vspace{0.3em}
+Adapting Solow's (1957) growth accounting to digital finance:
+
+$$g_{total} = g_{tech} + g_{adopt} + g_{network} + g_{reg}$$
+
+where each term is the contribution (in percentage points) of:
+\begin{itemize}
+\item $g_{tech}$: Technology infrastructure (cloud, APIs, mobile)
+\item $g_{adopt}$: User adoption and penetration
+\item $g_{network}$: Network effect value creation
+\item $g_{reg}$: Regulatory environment (enabling or constraining)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key difference from Solow:}\\
+In traditional growth accounting, there is a residual (TFP). Here, we attribute all growth to observable factors.
+
+\column{0.48\textwidth}
+\textbf{Era-by-Era Decomposition}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Era} & \textbf{Tech} & \textbf{Adopt} & \textbf{Net} & \textbf{Reg} \\
+\midrule
+2010--14 & 60\% & 20\% & 10\% & 10\% \\
+2015--19 & 35\% & 35\% & 18\% & 12\% \\
+2020--24 & 25\% & 30\% & 28\% & 17\% \\
+2025--30 & 20\% & 25\% & 30\% & 25\% \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\vspace{0.5em}
+\textbf{Interpretation:}
+\begin{itemize}
+\item Early phase: technology-driven (building infrastructure)
+\item Middle phase: adoption-driven (user growth)
+\item Late phase: network + regulation dominate (maturity)
+\end{itemize}
+
+\vspace{0.3em}
+The dominant driver shifts over the lifecycle --- policy must adapt accordingly.
+\end{columns}
+
+\bottomnote{Solow (1957): growth accounting decomposes output growth into input contributions --- we apply the same logic to fintech}
+\end{frame}
+
+% Frame 23
+\begin{frame}[t]{Digital Finance Growth Decomposition}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{10_growth_accounting_decomposition/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel (a): Stacked area shows how the dominant growth driver shifts from technology (blue, 2010--14) to adoption (green, 2015--19) to network effects (orange, 2020+)
+\item Panel (b): Bar chart confirms the transition --- regulation's share increases steadily as the sector matures
+\item Policy implication: regulators who focus only on technology risk missing the network-effects phase where systemic risk emerges
+\end{itemize}
+
+\bottomnote{Growth accounting: $g_{total} = g_{tech} + g_{adopt} + g_{network} + g_{reg}$ --- Solow (1957)}
+\end{frame}
+
+% Frame 24
+\begin{frame}[t]{Adoption Threshold Phase Diagram}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{11_adoption_threshold_phase/chart.pdf}
+\end{center}
+
+\begin{itemize}
+\item Panel (a): Phase diagram maps ($\sigma$, $c$) space --- above the curve adoption fails; below it succeeds. BTC and ETH are in the viable zone; a failed token is not
+\item Panel (b): Cross-section at $\sigma{=}1.5$ shows benefit curve $b(n) = \sigma n / (1 + \sigma n)$ intersecting cost lines --- lower cost or stronger network effects shifts equilibrium toward adoption
+\item Parameters: BTC ($\sigma{=}2.5$, $c{=}0.15$), ETH ($\sigma{=}2.0$, $c{=}0.20$), Failed ($\sigma{=}0.5$, $c{=}0.35$)
+\end{itemize}
+
+\bottomnote{Katz \& Shapiro (1985): fulfilled expectations equilibrium determines which technologies survive}
+\end{frame}
+
+%% ============================================================
+%% SECTION 7: Synthesis and Policy Implications
+%% ============================================================
+\section{Synthesis and Policy Implications}
+
+% Frame 25
+\begin{frame}[t]{Model Synthesis}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{How the Five Models Connect}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item \textbf{Barter model} (Kiyotaki-Wright): Money reduces transaction costs by eliminating double coincidence
+\item \textbf{Bass diffusion}: Adoption follows S-curves driven by innovation ($p$) and imitation ($q$)
+\item \textbf{Metcalfe/Odlyzko}: Network value scales with user count (quadratic or sub-quadratic)
+\item \textbf{Coase-Williamson}: Digital finance restructures (not eliminates) transaction costs
+\item \textbf{Katz-Shapiro}: Adoption requires sufficient network effects relative to cost
+\end{enumerate}
+
+\vspace{0.3em}
+\textit{Each model illuminates a different dimension of the same phenomenon: why digital money is emerging as a dominant form.}
+
+\column{0.48\textwidth}
+\textbf{Policy Implications Table}
+
+\vspace{0.3em}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}lp{4.5cm}@{}}
+\toprule
+\textbf{Model} & \textbf{Policy Implication} \\
+\midrule
+Barter & Money is a public good; CBDCs extend this logic digitally \\
+\addlinespace
+Bass & Regulate during early phase (pre-tipping point) or lose the window \\
+\addlinespace
+Metcalfe & Antitrust matters: $n^2$ creates natural monopolies \\
+\addlinespace
+Coase & Focus regulation on the cost component that is \textit{increasing} (compliance) \\
+\addlinespace
+Katz-Shapiro & Interoperability standards reduce critical mass threshold \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{columns}
+
+\bottomnote{These five models form the analytical foundation for all subsequent lectures in this course}
+\end{frame}
+
+% Frame 26
+\begin{frame}[t]{Open Questions}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Unresolved Theoretical Questions}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item \textbf{Is digital money a substitute or complement to cash?}\\
+Bass model assumes independent adoption, but cash and digital may cannibalize each other
+\item \textbf{Does Metcalfe hold for multi-chain ecosystems?}\\
+Ethereum L2s fragment the network --- does $V \propto n^2$ apply to the sum or individual chains?
+\item \textbf{Can transaction costs reach zero?}\\
+Coase says no --- but how close can blockchain get?
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Unresolved Empirical Questions}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item \textbf{What are the true Bass parameters for CBDCs?}\\
+Only 3 countries have launched retail CBDCs (Nigeria, Bahamas, Jamaica) --- too little data
+\item \textbf{How do network effects interact across payment systems?}\\
+Cross-network effects (e.g., Apple Pay users boosting Visa) are poorly measured
+\item \textbf{What is the optimal regulatory intensity?}\\
+Growth accounting suggests regulation contributes 10--25\% of growth, but causality is unclear
+\end{enumerate}
+\end{columns}
+
+\bottomnote{These questions motivate the detailed analyses in L02--L08 of this course}
+\end{frame}
+
+% Frame 27
+\begin{frame}[t]{References}
+
+\textbf{Core References}
+\begin{itemize}
+\item Bass, F.\ M.\ (1969). A new product growth for model consumer durables. \textit{Management Science}, 15(5), 215--227.
+\item Briscoe, B., Odlyzko, A., \& Tilly, B.\ (2006). Metcalfe's Law is wrong. \textit{IEEE Spectrum}, 43(7), 34--39.
+\item Coase, R.\ H.\ (1937). The nature of the firm. \textit{Economica}, 4(16), 386--405.
+\item Jevons, W.\ S.\ (1875). \textit{Money and the Mechanism of Exchange}. London: Henry S.\ King.
+\item Katz, M.\ L., \& Shapiro, C.\ (1985). Network externalities, competition, and compatibility. \textit{American Economic Review}, 75(3), 424--440.
+\item Kiyotaki, N., \& Wright, R.\ (1989). On money as a medium of exchange. \textit{Journal of Political Economy}, 97(4), 927--954.
+\item Metcalfe, B.\ (2013). Metcalfe's Law after 40 years of Ethernet. \textit{Computer}, 46(12), 26--31.
+\item Odlyzko, A., \& Tilly, B.\ (2005). A refutation of Metcalfe's Law. Working Paper, University of Minnesota.
+\item Rogers, E.\ M.\ (1962). \textit{Diffusion of Innovations}. New York: Free Press.
+\item Solow, R.\ M.\ (1957). Technical change and the aggregate production function. \textit{Review of Economics and Statistics}, 39(3), 312--320.
+\item Williamson, O.\ E.\ (1985). \textit{The Economic Institutions of Capitalism}. New York: Free Press.
+\end{itemize}
+
+\bottomnote{All references are foundational --- students are encouraged to read the original papers}
+\end{frame}
+
+%% ============================================================
+%% APPENDIX
+%% ============================================================
+\appendix
+\section{Appendix}
+
+% Frame 28
+\begin{frame}[t]{Appendix A1: Complete Notation Table}
+
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Symbol} & \textbf{Name} & \textbf{Definition} & \textbf{First used} \\
+\midrule
+$n$ & Network size / goods & Number of goods (barter) or users (network) & Frame 3 \\
+$c_b$ & Barter cost & Cost per barter trade (\$/trade); calibrated at 5.0 & Frame 4 \\
+$c_m$ & Money cost & Cost per money trade (\$/trade); calibrated at 0.50 & Frame 4 \\
+$\alpha$ & Match probability & Probability of double coincidence of wants & Frame 4 \\
+$\pi$ & Search cost & Cost per search period (\$/period) & Frame 5 \\
+$F(t)$ & Cumulative adoption & Fraction of population adopted at time $t$ & Frame 8 \\
+$p$ & Innovation coefficient & Bass external influence parameter & Frame 8 \\
+$q$ & Imitation coefficient & Bass internal influence (network effects) parameter & Frame 8 \\
+$\tau$ & Inflection time & Time to maximum adoption rate & Frame 8 \\
+$t^*$ & Peak adoption time & $t^* = \ln(q/p)/(p+q)$ & Frame 9 \\
+$V$ & Network value & Total value of network (\$) & Frame 12 \\
+$\alpha$ (network) & Metcalfe coefficient & Scaling parameter in $V = \alpha n^2$ & Frame 12 \\
+$\beta$ & Odlyzko coefficient & Scaling parameter in $V = \beta n \ln(n)$ & Frame 13 \\
+$\gamma$ & Technology efficiency & Reduction factor for digital transaction costs & Frame 17 \\
+$\varepsilon$ & Error term & Regression residual & Frame 15 \\
+$TC$ & Transaction cost & Total cost of executing a transaction (\$) & Frame 17 \\
+$g$ & Growth rate & Percentage point contribution to total growth & Frame 22 \\
+$\sigma$ & Network strength & Network effect parameter (Katz-Shapiro) & Frame 24 \\
+$c$ (KS) & Adoption cost & Cost of joining the network (Katz-Shapiro) & Frame 24 \\
+$b(n)$ & Network benefit & Benefit from joining network of size $n$ & Frame 24 \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+
+\bottomnote{Context-dependent: $\alpha$ means match probability in Section 2 and Metcalfe coefficient in Section 4}
+\end{frame}
+
+% Frame 29
+\begin{frame}[t]{Appendix A2: Bass Model Full Derivation}
+
+\textbf{Step 1: The differential equation}
+$$\frac{dF}{dt} = (p + qF)(1 - F) = p + (q - p)F - qF^2$$
+
+This is a Riccati equation (a type of nonlinear ODE) with known solution technique.
+
+\vspace{0.3em}
+\textbf{Step 2: Separation of variables}
+$$\frac{dF}{(p + qF)(1 - F)} = dt$$
+
+Using partial fractions: $\frac{1}{(p + qF)(1-F)} = \frac{1}{p+q}\left(\frac{1}{1-F} + \frac{q}{p+qF}\right)$
+
+\vspace{0.3em}
+\textbf{Step 3: Integration}
+$$\frac{1}{p+q}\left[-\ln(1-F) + \ln(p + qF)\right] = t + C$$
+
+With initial condition $F(0) = 0$: $C = \frac{1}{p+q}\ln(p)$
+
+\vspace{0.3em}
+\textbf{Step 4: Solve for $F(t)$}
+$$\ln\!\left(\frac{p + qF}{p(1-F)}\right) = (p+q)t \implies F(t) = \frac{1 - e^{-(p+q)t}}{1 + \frac{q}{p}e^{-(p+q)t}}$$
+
+\vspace{0.3em}
+\textbf{Step 5: Inflection point} --- Set $d^2F/dt^2 = 0$: occurs at $F^* = \frac{1}{2}\left(1 - \frac{p}{q}\right)$, giving $t^* = \frac{\ln(q/p)}{p+q}$
+
+\bottomnote{The Bass model is one of the few nonlinear ODEs with a clean closed-form solution}
+\end{frame}
+
+% Frame 30
+\begin{frame}[t]{Appendix A3: Metcalfe's Law Conditions and Limitations}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{When $V \sim n^2$ Holds}
+
+\vspace{0.3em}
+Metcalfe's Law requires:
+\begin{enumerate}
+\item \textbf{Homogeneity}: All users are equally valuable connections (e.g., a telephone network where every call is equally important)
+\item \textbf{Full connectivity}: Each user communicates with all others (or a constant fraction)
+\item \textbf{No congestion}: Adding users does not degrade experience
+\item \textbf{Positive externality}: Each new user benefits all existing users
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Networks where $n^2$ works:}
+\begin{itemize}
+\item Early-stage social networks
+\item Small cryptocurrency communities
+\item Interbank payment systems (e.g., SWIFT with $\sim$11,000 members)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{When $V \sim n^2$ Breaks}
+
+\vspace{0.3em}
+\begin{enumerate}
+\item \textbf{Heterogeneity}: Some connections are worth much more than others (Zipf distribution) $\Rightarrow$ $V \sim n \ln(n)$
+\item \textbf{Clustering}: Users form subgroups that don't interact $\Rightarrow$ $V \sim k \cdot n_i^2$ (sum of cluster values)
+\item \textbf{Congestion}: More users = slower/more expensive (Ethereum gas) $\Rightarrow$ $V$ can decrease with $n$
+\item \textbf{Negative externalities}: Spam, fraud, misinformation reduce per-connection value
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Summary formula:}
+$$V(n) = \alpha \cdot n^b \cdot e^{-\delta n}$$
+where $b \in [1,2]$ captures network effect strength and $\delta$ captures congestion/saturation.
+\end{columns}
+
+\bottomnote{The modified formula nests all three models: $\delta{=}0, b{=}2$ (Metcalfe); $\delta{=}0, b{\approx}1.3$ (Odlyzko); $\delta{>}0$ (saturation)}
+\end{frame}
+
+\end{document}

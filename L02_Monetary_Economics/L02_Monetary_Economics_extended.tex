@@ -1,0 +1,1214 @@
+\documentclass[8pt,aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{multicol}
+\usepackage{amsmath}
+
+\definecolor{mlblue}{RGB}{0,102,204}
+\definecolor{mlpurple}{RGB}{51,51,178}
+\definecolor{mllavender}{RGB}{173,173,224}
+\definecolor{mllavender2}{RGB}{193,193,232}
+\definecolor{mllavender3}{RGB}{204,204,235}
+\definecolor{mllavender4}{RGB}{214,214,239}
+\definecolor{mlorange}{RGB}{255, 127, 14}
+\definecolor{mlgreen}{RGB}{44, 160, 44}
+\definecolor{mlred}{RGB}{214, 39, 40}
+\definecolor{mlgray}{RGB}{127, 127, 127}
+\definecolor{lightgray}{RGB}{240, 240, 240}
+\definecolor{midgray}{RGB}{180, 180, 180}
+
+\setbeamercolor{palette primary}{bg=mllavender3,fg=mlpurple}
+\setbeamercolor{palette secondary}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{palette tertiary}{bg=mllavender,fg=white}
+\setbeamercolor{palette quaternary}{bg=mlpurple,fg=white}
+\setbeamercolor{structure}{fg=mlpurple}
+\setbeamercolor{section in toc}{fg=mlpurple}
+\setbeamercolor{subsection in toc}{fg=mlblue}
+\setbeamercolor{title}{fg=mlpurple}
+\setbeamercolor{frametitle}{fg=mlpurple,bg=mllavender3}
+\setbeamercolor{block title}{bg=mllavender2,fg=mlpurple}
+\setbeamercolor{block body}{bg=mllavender4,fg=black}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamersize{text margin left=5mm,text margin right=5mm}
+
+\newcommand{\bottomnote}[1]{%
+\vfill
+\vspace{-2mm}
+\textcolor{mllavender2}{\rule{\textwidth}{0.4pt}}
+\vspace{1mm}
+\footnotesize
+\textbf{#1}
+}
+
+\title{Monetary Economics of Digital Currencies: Mathematical Models and Empirical Analysis}
+\subtitle{L02 Extended: Formalizing Money Theory for the Crypto Age\\[0.3em]\normalsize From Baumol-Tobin cash management to Diamond-Dybvig bank runs}
+\author{Economics of Digital Finance}
+\institute{BSc Course}
+\date{}
+
+\begin{document}
+
+%% ===== SECTION 1: Bridge from Basic Lecture =====
+\section{Bridge from Basic Lecture}
+
+% Frame 0: Title Page
+\begin{frame}[plain]
+\titlepage
+\end{frame}
+
+% Frame 1: Welcome Back
+\begin{frame}[c]{Welcome Back: From Concepts to Math}
+\begin{center}
+\Large
+\textit{``In God we trust; all others must bring data.''}\\[0.5em]
+\normalsize --- W.\ Edwards Deming\\[1.5em]
+\large
+In L02 Basic, you learned \textbf{what} money does and \textbf{why} Bitcoin struggles as money.\\[0.5em]
+Now we formalize \textbf{how much} cash to hold, \textbf{when} bank runs happen,\\
+and \textbf{how volatile} crypto really is --- with math that makes predictions.
+\end{center}
+
+\bottomnote{This extended lecture adds four formal models to the conceptual framework from L02 Basic}
+\end{frame}
+
+% Frame 2: From Concepts to Models
+\begin{frame}[t]{From Concepts to Models}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{L02 Basic: Concepts You Know}
+\begin{enumerate}
+\item \textbf{MV=PY}: Money supply times velocity equals price level times real output --- the equation of exchange
+\item \textbf{Volatility problem}: Bitcoin's price swings too much for everyday pricing
+\item \textbf{Gresham's Law}: ``Bad money drives out good'' --- people spend depreciating currency and hoard appreciating currency
+\item \textbf{Stablecoins}: Designed to maintain a fixed price (peg) relative to a reference currency like USD
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{L02 Extended: Models We Add}
+\begin{enumerate}
+\item \textbf{Baumol-Tobin}: How much cash should you hold? Optimal balance between transaction costs and interest foregone
+\item \textbf{Diamond-Dybvig}: When do stablecoins collapse? A coordination game (where outcomes depend on what everyone else does) with two equilibria
+\item \textbf{GARCH}: How do we measure and forecast crypto volatility? Time-varying variance that clusters
+\item \textbf{Currency substitution}: Why do people switch from local currency to crypto? A utility-based (satisfaction-maximizing) model
+\end{enumerate}
+\end{columns}
+
+\bottomnote{Each model builds on one concept from L02 Basic; together they form a complete analytical toolkit}
+\end{frame}
+
+% Frame 3: Mathematical Toolkit (NO GREEK)
+\begin{frame}[t]{Mathematical Toolkit}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Variables We Use}
+
+\begin{tabular}{ll}
+\toprule
+Symbol & Meaning \\
+\midrule
+M & Money supply (total money in circulation) \\
+V & Velocity (how fast money changes hands) \\
+P & Price level (average price of goods) \\
+Y & Real output (total goods and services) \\
+i & Interest rate (cost of holding cash) \\
+c, b & Transaction cost per withdrawal \\
+W & Wealth (total assets owned) \\
+r & Return (profit rate on an investment) \\
+T & Time horizon (number of periods) \\
+n & Number of withdrawals \\
+\bottomrule
+\end{tabular}
+
+\column{0.48\textwidth}
+\textbf{Math Operations You Need}
+
+\vspace{0.3em}
+\textbf{Square root:} $\sqrt{x}$ finds the number that, multiplied by itself, gives $x$. Example: $\sqrt{9} = 3$.
+
+\vspace{0.3em}
+\textbf{Optimization:} Finding the value of a variable that makes a function as large or small as possible. We write ``minimize TC(n)'' meaning ``find the n that makes total cost smallest.''
+
+\vspace{0.3em}
+\textbf{Elasticity:} How sensitive one variable is to changes in another, measured in percentages. If interest rates rise 10\% and cash holdings fall 5\%, the elasticity is $-0.5$.
+
+\vspace{0.3em}
+\textbf{Equilibrium:} A state where no one wants to change their behavior. A ball at the bottom of a bowl is in stable equilibrium; a ball on top of a hill is in unstable equilibrium.
+\end{columns}
+
+\bottomnote{We introduce formal notation (including Greek letters) starting in Section 2; this slide establishes the building blocks}
+\end{frame}
+
+%% ===== SECTION 2: Baumol-Tobin Optimal Cash Holdings =====
+\section{Baumol-Tobin Optimal Cash Holdings}
+
+% Frame 4: The Cash Management Problem
+\begin{frame}[t]{The Cash Management Problem}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Setup (Baumol, 1952; Tobin, 1956)}
+
+You earn $Y$ dollars per year. You can keep money in:
+\begin{itemize}
+\item A \textbf{checking account} (earns 0\% interest, but you can spend instantly)
+\item A \textbf{savings account} (earns interest rate $i$, but costs $b$ dollars each time you transfer money out)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{The trade-off:}
+\begin{itemize}
+\item Hold more cash $\rightarrow$ lose interest income
+\item Hold less cash $\rightarrow$ pay more withdrawal fees
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{New notation:} We now introduce $\sigma$ (sigma, the Greek letter) to denote volatility (the standard deviation of returns, measuring how much a price swings around its average).
+
+\column{0.48\textwidth}
+\textbf{Why This Matters for Crypto}
+
+\begin{itemize}
+\item Transaction cost $b$ varies enormously:
+  \begin{itemize}
+  \item Traditional bank: $b \approx \$2$ (ATM fee, time)
+  \item Digital bank: $b \approx \$0.50$ (app transfer)
+  \item Crypto wallet: $b \approx \$0.10$ (gas fee on L2)
+  \end{itemize}
+\item Lower $b$ means you hold \textbf{less} cash (more frequent, cheaper transfers)
+\item Crypto's low $b$ should increase velocity $V$ --- consistent with the velocity puzzle from L02 Basic
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key question:} How much cash should you hold at any moment?
+\end{columns}
+
+\bottomnote{Baumol-Tobin is the first formal model of money demand; it predicts how technology changes cash-holding behavior}
+\end{frame}
+
+% Frame 5: Deriving Optimal Cash Holdings
+\begin{frame}[t]{Deriving Optimal Cash Holdings}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Total Cost Function}
+
+If you make $n$ withdrawals per year, each of size $Y/n$:
+
+$$TC(n) = \underbrace{b \cdot n}_{\text{withdrawal fees}} + \underbrace{\frac{i \cdot Y}{2n}}_{\text{interest foregone}}$$
+
+\textit{(First term: you pay b dollars each of n times.
+Second term: average cash balance is Y/(2n), and you lose i percent interest on it.)}
+
+\vspace{0.3em}
+\textbf{Minimize by setting} $\frac{dTC}{dn} = 0$:
+$$b - \frac{iY}{2n^2} = 0 \quad \Rightarrow \quad n^* = \sqrt{\frac{iY}{2b}}$$
+
+\textbf{Optimal cash holdings:}
+$$\boxed{M^* = \frac{Y}{2n^*} = \sqrt{\frac{bY}{2i}}}$$
+
+\column{0.48\textwidth}
+\textbf{Worked Example}
+
+Given: $Y = \$36{,}000$/year, $i = 5\%$, $b = \$2$
+
+\vspace{0.3em}
+Step 1: Optimal withdrawals
+$$n^* = \sqrt{\frac{0.05 \times 36{,}000}{2 \times 2}} = \sqrt{450} = 21.2$$
+
+Step 2: Optimal cash holdings
+$$M^* = \sqrt{\frac{2 \times 36{,}000}{2 \times 0.05}} = \sqrt{720{,}000} = \$848.53$$
+
+Step 3: Total cost at optimum
+$$TC^* = \sqrt{2bYi} = \sqrt{2 \times 2 \times 36{,}000 \times 0.05} = \$84.85$$
+
+\vspace{0.3em}
+\textit{So you should hold about \$849 in cash at any time, making about 21 withdrawals per year.}
+\end{columns}
+
+\bottomnote{The square-root formula shows money demand rises with income and transaction costs, but falls with interest rates}
+\end{frame}
+
+% Frame 6: Baumol-Tobin in Crypto (Chart 06)
+\begin{frame}[t]{Baumol-Tobin in Crypto: Comparative Statics}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{06_baumol_tobin_money_demand/chart.pdf}
+\end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Panel (a):} Lower transaction costs (crypto $b{=}\$0.10$) dramatically reduce optimal cash holdings compared to traditional banking ($b{=}\$2$).
+\item \textbf{Panel (b):} At $i{=}5\%$, the crypto user's total cost curve is almost flat --- many small withdrawals cost almost nothing.
+\item \textbf{Panel (c):} All three regimes converge to elasticity $-0.5$: a 10\% rate increase always reduces cash demand by 5\%.
+\end{itemize}
+
+\bottomnote{Crypto's low transaction costs predict higher velocity and lower cash balances --- exactly what we observe empirically}
+\end{frame}
+
+% Frame 7: Key Results and Crypto Implications
+\begin{frame}[t]{Key Results and Crypto Implications}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Elasticities (How Sensitive?)}
+
+Interest-rate elasticity of money demand:
+$$\frac{\partial \ln M^*}{\partial \ln i} = -0.5$$
+
+\textit{(A 10\% increase in interest rates reduces optimal cash holdings by 5\%, regardless of transaction costs.)}
+
+\vspace{0.3em}
+Income elasticity:
+$$\frac{\partial \ln M^*}{\partial \ln Y} = +0.5$$
+
+\textit{(A 10\% increase in income raises optimal cash holdings by 5\%.)}
+
+\vspace{0.3em}
+Transaction cost elasticity:
+$$\frac{\partial \ln M^*}{\partial \ln b} = +0.5$$
+
+\textit{(Higher withdrawal costs mean you hold more cash to avoid frequent trips.)}
+
+\column{0.48\textwidth}
+\textbf{Implications for Digital Money}
+
+\begin{enumerate}
+\item \textbf{Low $b$ $\rightarrow$ high velocity:} Crypto makes transfers nearly free, so people hold less idle cash and transact more frequently
+\item \textbf{DeFi yield $\rightarrow$ low $M^*$:} When DeFi offers high interest ($i$), rational agents minimize cash holdings
+\item \textbf{Staking as savings:} Crypto staking (locking tokens to earn rewards) is analogous to the savings account in Baumol-Tobin
+\item \textbf{Gas fees as $b$:} Ethereum gas fees function exactly as $b$ --- when gas spikes, users batch transactions and hold more ETH
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Limitation:} Model assumes deterministic income. Crypto income is volatile, requiring extensions (precautionary savings motive).
+\end{columns}
+
+\bottomnote{Baumol-Tobin explains why crypto ecosystems with low fees and high yields exhibit dramatically higher velocity than traditional money}
+\end{frame}
+
+%% ===== SECTION 3: Diamond-Dybvig and Stablecoin Runs =====
+\section{Diamond-Dybvig and Stablecoin Runs}
+
+% Frame 8: Bank Runs --- Setup
+\begin{frame}[t]{Bank Runs: The Diamond-Dybvig Setup}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Model (Diamond \& Dybvig, 1983)}
+
+Three time periods: $t = 0, 1, 2$
+\begin{itemize}
+\item $t{=}0$: Everyone deposits \$1 in the bank
+\item $t{=}1$: Some depositors need money early (``early consumers'')
+\item $t{=}2$: Remaining depositors withdraw with returns
+\end{itemize}
+
+\vspace{0.3em}
+Two types of depositors:
+\begin{itemize}
+\item \textbf{Type 1} (fraction $\lambda$, Greek letter ``lambda''): Need money at $t{=}1$. Receive $c_1 = 1$ (their deposit back)
+\item \textbf{Type 2} (fraction $1{-}\lambda$): Can wait until $t{=}2$. Receive $c_2 = R > 1$ (deposit plus profit)
+\end{itemize}
+
+\vspace{0.3em}
+The bank invests in a long-term project returning $R > 1$ at $t{=}2$, but only $L < 1$ if liquidated early at $t{=}1$.
+
+\column{0.48\textwidth}
+\textbf{The Key Insight: Coordination}
+
+The bank's problem:
+\begin{itemize}
+\item It promised $c_1 = 1$ to early withdrawers
+\item It invested in illiquid (hard to sell quickly) assets returning $R$ at $t{=}2$
+\item If too many withdraw at $t{=}1$, the bank must liquidate assets at loss ($L < 1$)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{This is a coordination game:}
+\begin{itemize}
+\item If you believe others will NOT run $\rightarrow$ you do not run $\rightarrow$ bank survives
+\item If you believe others WILL run $\rightarrow$ you must run too $\rightarrow$ bank fails
+\end{itemize}
+
+\vspace{0.3em}
+\textit{Your best action depends entirely on what you believe other depositors will do --- not on the bank's actual solvency (whether its assets exceed liabilities).}
+\end{columns}
+
+\bottomnote{Diamond-Dybvig shows bank runs are rational: even a perfectly solvent bank can fail if depositors lose confidence simultaneously}
+\end{frame}
+
+% Frame 9: The Two Equilibria
+\begin{frame}[t]{The Two Equilibria}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Good Equilibrium (No Run)}
+
+\begin{itemize}
+\item Only Type 1 depositors (fraction $\lambda$) withdraw at $t{=}1$
+\item Bank has enough liquid assets to pay them $c_1 = 1$
+\item Type 2 depositors wait, receive $c_2 = R > 1$
+\item Everyone is better off than under autarky (self-reliance without a bank)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Payoff:} Type 1 gets 1, Type 2 gets $R$.
+
+\column{0.48\textwidth}
+\textbf{Bad Equilibrium (Bank Run)}
+
+\begin{itemize}
+\item ALL depositors (both types) try to withdraw at $t{=}1$
+\item Bank must liquidate long-term assets at fire-sale price $L < 1$
+\item Total available: $\lambda \cdot 1 + (1{-}\lambda) \cdot L < 1$ per depositor
+\item First in line get paid; latecomers get nothing
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Payoff:} Everyone gets $L < 1$ on average (some get 0).
+
+\vspace{0.5em}
+\begin{block}{Why Both Are Equilibria}
+In each case, no individual wants to deviate given what others do. If no one runs, running costs you the return $R$. If everyone runs, not running means you get nothing.
+\end{block}
+\end{columns}
+
+\bottomnote{The bad equilibrium is self-fulfilling: the run causes the insolvency that depositors feared, even though the bank was solvent before the run}
+\end{frame}
+
+% Frame 10: Diamond-Dybvig Applied to Stablecoins
+\begin{frame}[t]{Diamond-Dybvig Applied to Stablecoins}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Stablecoins as Banks}
+
+The analogy is exact:
+\begin{itemize}
+\item \textbf{Depositors} = Stablecoin holders
+\item \textbf{Bank assets} = Reserves (Treasury bonds, cash, commercial paper)
+\item \textbf{Withdrawal} = Redemption (exchanging stablecoin for USD)
+\item \textbf{$R > 1$} = Interest earned on reserves
+\item \textbf{$L < 1$} = Fire-sale price of illiquid reserves
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Terra/UST Collapse (May 2022)}
+\begin{itemize}
+\item UST was algorithmic: no real reserves, just LUNA token backing
+\item When UST depegged slightly, holders rushed to redeem
+\item Minting LUNA to pay redemptions crashed LUNA's price
+\item Death spiral: UST depeg $\rightarrow$ LUNA crash $\rightarrow$ worse depeg
+\item \$40B+ destroyed in one week
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Phase Dynamics Formalization}
+
+We model the withdrawal rate $x$ (fraction of holders trying to redeem) and reserve ratio $R$:
+
+$$\frac{dx}{dt} = -k(R - R_{crit}) \cdot x(1-x)$$
+
+\textit{Where:}
+\begin{itemize}
+\item $x$ = fraction of holders withdrawing (0 to 1)
+\item $R$ = current reserve ratio (reserves/liabilities)
+\item $R_{crit}$ = critical threshold (typically 80\%)
+\item $k$ = sensitivity to reserve shortfall
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Interpretation:}
+\begin{itemize}
+\item When $R > R_{crit}$: $dx/dt < 0$ (withdrawals shrink, confidence holds)
+\item When $R < R_{crit}$: $dx/dt > 0$ (withdrawals accelerate, run begins)
+\item $x(1{-}x)$ ensures S-shaped transition (slow start, rapid middle, saturation)
+\end{itemize}
+\end{columns}
+
+\bottomnote{The Terra/UST collapse was a textbook Diamond-Dybvig bank run, with algorithmic backing replacing traditional reserves}
+\end{frame}
+
+% Frame 11: Stablecoin Run Dynamics (Chart 07)
+\begin{frame}[t]{Stablecoin Run Dynamics}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{07_diamond_dybvig_stablecoin/chart.pdf}
+\end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Panel (a):} Phase portrait shows two regions. Above $R_{crit}{=}0.80$, trajectories flow toward stability (no run). Below $R_{crit}$, trajectories flow toward full collapse.
+\item \textbf{Panel (b):} Time series comparison. The UST-style scenario (starting at $R{=}0.85$) breaches $R_{crit}$ and collapses rapidly. Deposit insurance (dashed) prevents the run.
+\end{itemize}
+
+\bottomnote{The critical insight: once reserves breach $R_{crit}$, collapse is self-reinforcing and nearly impossible to stop without external intervention}
+\end{frame}
+
+% Frame 12: Deposit Insurance and Holding Limits
+\begin{frame}[t]{Deposit Insurance and Holding Limits}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{How Insurance Eliminates the Bad Equilibrium}
+
+Diamond \& Dybvig's key policy result:
+\begin{itemize}
+\item Government deposit insurance guarantees repayment
+\item If depositors \textbf{know} they will be repaid, they have no reason to run
+\item The bad equilibrium disappears --- only the good equilibrium remains
+\item The insurance may never need to be paid out (the guarantee itself prevents runs)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{In the model:}
+$$\text{With insurance: } R_{eff} = R + \Delta_{insurance}$$
+where $\Delta_{insurance}$ is the perceived government backing, ensuring $R_{eff} > R_{crit}$ always.
+
+\column{0.48\textwidth}
+\textbf{Can We Insure Stablecoins?}
+
+\begin{itemize}
+\item \textbf{Fiat-backed (USDT, USDC):} Possible. Regulate as narrow banks (banks that hold only safe, liquid assets), require full reserves, provide limited insurance
+\item \textbf{Crypto-backed (DAI):} Harder. Over-collateralization (150\%+) acts as self-insurance, but crypto collateral itself is volatile
+\item \textbf{Algorithmic (UST):} Impossible. No real assets to insure against. The ``insurance'' would require unlimited money printing
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{CBDC Alternative:}
+\begin{itemize}
+\item CBDCs (Central Bank Digital Currencies) are inherently insured by the sovereign
+\item No bank run possible: central bank is the issuer
+\item But: holding limits may be needed to prevent disintermediation (people moving all deposits from banks to CBDC, starving banks of funding)
+\end{itemize}
+\end{columns}
+
+\bottomnote{Diamond-Dybvig's policy conclusion applies directly: credible guarantees eliminate runs, but algorithmic stablecoins cannot provide them}
+\end{frame}
+
+%% ===== SECTION 4: GARCH Volatility Modeling =====
+\section{GARCH Volatility Modeling}
+
+% Frame 13: GARCH(1,1) Setup
+\begin{frame}[t]{GARCH(1,1): Modeling Time-Varying Volatility}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{The Problem}
+
+In L02 Basic, we noted Bitcoin's volatility is 50--85\% annually. But volatility is not constant --- it \textbf{clusters}:
+\begin{itemize}
+\item After a big price move (up or down), more big moves follow
+\item Calm periods tend to persist too
+\item Standard deviation measured over a fixed window misses this pattern
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{GARCH(1,1) Model (Bollerslev, 1986)}
+
+Conditional variance (today's expected volatility given yesterday's information):
+$$\sigma_t^2 = \omega + \alpha \epsilon_{t-1}^2 + \beta \sigma_{t-1}^2$$
+
+\textit{Where:}
+\begin{itemize}
+\item $\omega$ (omega) = baseline variance (always positive)
+\item $\alpha$ (alpha) = reaction to yesterday's shock $\epsilon_{t-1}^2$
+\item $\beta$ (beta) = persistence of yesterday's variance
+\item $\epsilon_t = \sigma_t \cdot z_t$, where $z_t$ is a standard normal random variable
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Key Properties}
+
+\vspace{0.3em}
+\textbf{Stationarity condition:}
+$$\alpha + \beta < 1$$
+\textit{(If this fails, volatility explodes to infinity over time.)}
+
+\vspace{0.3em}
+\textbf{Unconditional (long-run) variance:}
+$$\bar{\sigma}^2 = \frac{\omega}{1 - \alpha - \beta}$$
+\textit{(The average level volatility returns to after shocks die out.)}
+
+\vspace{0.3em}
+\textbf{Persistence:} $\alpha + \beta$ measures how slowly volatility returns to its long-run level.
+\begin{itemize}
+\item $\alpha + \beta = 0.95$: shock half-life $\approx 14$ days
+\item $\alpha + \beta = 0.99$: shock half-life $\approx 69$ days
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Intuition:} GARCH says ``if yesterday was crazy, today is probably crazy too'' --- and quantifies exactly how much.
+\end{columns}
+
+\bottomnote{GARCH is the standard volatility model in finance; Engle won the 2003 Nobel Prize for the original ARCH model (Engle, 1982)}
+\end{frame}
+
+% Frame 14: Calibrating to Bitcoin
+\begin{frame}[t]{Calibrating GARCH to Bitcoin}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Bitcoin GARCH(1,1) Parameters}
+
+Estimated from daily BTC/USD returns:
+\begin{itemize}
+\item $\omega = 10^{-5}$ (small baseline)
+\item $\alpha = 0.10$ (moderate shock reaction)
+\item $\beta = 0.85$ (high persistence)
+\item Persistence: $\alpha + \beta = 0.95$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Unconditional daily variance:}
+$$\bar{\sigma}^2 = \frac{10^{-5}}{1 - 0.95} = 2 \times 10^{-4}$$
+
+\textbf{Annualized volatility:}
+$$\bar{\sigma}_{ann} = \sqrt{2 \times 10^{-4}} \times \sqrt{252} = 22.4\%$$
+
+\textit{(Multiply daily vol by $\sqrt{252}$ because there are 252 trading days per year.)}
+
+\column{0.48\textwidth}
+\textbf{S\&P 500 for Comparison}
+
+\begin{itemize}
+\item $\omega = 2 \times 10^{-6}$ (smaller baseline)
+\item $\alpha = 0.08$ (slightly lower reaction)
+\item $\beta = 0.88$ (slightly higher persistence)
+\item Persistence: $\alpha + \beta = 0.96$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Unconditional annualized vol:}
+$$\bar{\sigma}_{ann} = \sqrt{\frac{2 \times 10^{-6}}{0.04}} \times \sqrt{252} = 11.2\%$$
+
+\vspace{0.3em}
+\textbf{Comparison Table}
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+& \textbf{BTC} & \textbf{S\&P} \\
+\midrule
+Ann.\ vol & 22.4\% & 11.2\% \\
+Persistence & 0.95 & 0.96 \\
+$\omega$ & $10^{-5}$ & $2 \times 10^{-6}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+\textit{BTC is $\sim$2x more volatile but has similar persistence.}
+\end{columns}
+
+\bottomnote{Bitcoin's annualized volatility of 22.4\% is about twice the S\&P 500's, but both show strong volatility clustering ($\alpha+\beta > 0.95$)}
+\end{frame}
+
+% Frame 15: BTC vs S&P Volatility (Chart 08)
+\begin{frame}[t]{BTC vs S\&P 500: GARCH Volatility Simulation}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{08_garch_btc_volatility/chart.pdf}
+\end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Panel (a):} Simulated conditional volatility paths. BTC (orange) fluctuates more and spikes higher, but both return to their long-run averages.
+\item \textbf{Panel (b):} Volatility distributions. BTC's distribution has a longer right tail (more extreme volatility episodes). The green line marks the $\sim$5\% threshold for unit-of-account viability.
+\end{itemize}
+
+\bottomnote{Both assets use GARCH(1,1) with seed=42; BTC's higher $\omega$ drives a higher baseline, while similar persistence produces comparable clustering patterns}
+\end{frame}
+
+% Frame 16: Volatility and Unit-of-Account
+\begin{frame}[t]{Volatility and the Unit-of-Account Function}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Why Volatility Kills Unit-of-Account}
+
+For money to serve as a unit of account (standard pricing benchmark):
+\begin{itemize}
+\item Prices must be \textbf{meaningful} over time
+\item A coffee priced at 0.001 BTC today might cost 0.0005 or 0.002 BTC tomorrow
+\item ``Menu costs'' (repricing expenses) become enormous
+\item Contracts denominated in volatile currency carry unhedgeable risk (risk that cannot be eliminated through financial instruments)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Threshold estimate:} Annual volatility must be below $\sim$5\% for practical unit-of-account use. This is based on:
+\begin{itemize}
+\item Major fiat currencies: 3--8\% annual vol
+\item Consumer tolerance for price uncertainty
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{GARCH Forecasting for UoA Assessment}
+
+From our GARCH model, we can forecast:
+$$\sigma_{t+h}^2 = \bar{\sigma}^2 + (\alpha + \beta)^h (\sigma_t^2 - \bar{\sigma}^2)$$
+
+\textit{(Future volatility decays toward unconditional level, with speed depending on persistence.)}
+
+\vspace{0.3em}
+\textbf{BTC as UoA?}
+\begin{itemize}
+\item Unconditional vol: 22.4\% $\gg$ 5\% threshold
+\item Even in calm periods: $\sigma_{min} \approx 10$--$15\%$
+\item Conclusion: BTC cannot serve as unit of account under current volatility regime
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Stablecoins as UoA?}
+\begin{itemize}
+\item USDT vol: $\sim$0.5--2\% (under normal conditions)
+\item Passes the 5\% threshold easily
+\item But: tail risk from de-peg events (see Section 3)
+\end{itemize}
+\end{columns}
+
+\bottomnote{GARCH quantifies exactly why Bitcoin fails as a unit of account: its unconditional volatility is 4--5x above the practical threshold}
+\end{frame}
+
+%% ===== SECTION 5: Currency Substitution and Crypto Velocity =====
+\section{Currency Substitution and Crypto Velocity}
+
+% Frame 17: Currency Substitution Model
+\begin{frame}[t]{Currency Substitution: A Formal Model}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{CES Utility Framework}
+
+A consumer uses two currencies (A and B) and derives utility (satisfaction) from the liquidity services (ease of transacting) each provides:
+
+$$U = \left[\alpha \cdot m_A^{\rho} + (1 - \alpha) \cdot m_B^{\rho}\right]^{1/\rho}$$
+
+\textit{Where:}
+\begin{itemize}
+\item $m_A, m_B$ = real balances of currency A and B
+\item $\alpha$ = preference weight for currency A
+\item $\rho$ (rho) = substitution parameter ($-\infty < \rho \leq 1$)
+\item Elasticity of substitution: $\sigma_s = \frac{1}{1 - \rho}$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Key cases:}
+\begin{itemize}
+\item $\rho \rightarrow 1$: Perfect substitutes ($\sigma_s \rightarrow \infty$), meaning any small advantage causes complete switching
+\item $\rho \rightarrow 0$: Cobb-Douglas ($\sigma_s = 1$)
+\item $\rho \rightarrow -\infty$: Perfect complements ($\sigma_s \rightarrow 0$)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Application to Crypto Adoption}
+
+Setting A = local fiat, B = crypto:
+
+\vspace{0.3em}
+\textbf{The optimality condition:}
+$$\frac{m_A}{m_B} = \left(\frac{\alpha}{1 - \alpha}\right)^{\sigma_s} \left(\frac{i_B + \pi_B}{i_A + \pi_A}\right)^{\sigma_s}$$
+
+\textit{(Ratio of holdings depends on relative costs: interest rate $i$ plus inflation $\pi$ for each currency.)}
+
+\vspace{0.3em}
+\textbf{Implications:}
+\begin{itemize}
+\item High local inflation ($\pi_A$) shifts demand toward crypto
+\item High crypto yield ($i_B$ from staking/DeFi) attracts holdings
+\item When $\sigma_s$ is large, small cost differences cause large shifts
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Empirical example:} Argentina ($\pi_A > 100\%$, 2023) saw rapid crypto adoption because $\pi_A \gg \pi_B$, making crypto the lower-cost money despite volatility.
+\end{columns}
+
+\bottomnote{CES utility = Constant Elasticity of Substitution; it nests perfect substitutes, Cobb-Douglas, and perfect complements as special cases}
+\end{frame}
+
+% Frame 18: Gresham's Law Formalization
+\begin{frame}[t]{Gresham's Law: A Logit Formalization}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{From Aphorism to Model}
+
+Gresham's Law (``bad money drives out good'') can be modeled as a spending probability:
+
+$$P(\text{spend}_A) = \frac{1}{1 + \exp\left(-\gamma(E[r_B] - E[r_A])\right)}$$
+
+\textit{Where:}
+\begin{itemize}
+\item $P(\text{spend}_A)$ = probability of spending currency A
+\item $E[r_A], E[r_B]$ = expected returns on A, B
+\item $\gamma$ (gamma) = sensitivity to return differential
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Interpretation:}
+\begin{itemize}
+\item If $E[r_B] > E[r_A]$: people hoard B (``good money''), spend A (``bad money'')
+\item $\gamma$ controls how sharply behavior switches (higher $\gamma$ = more decisive agents)
+\item At $E[r_B] = E[r_A]$: each currency equally likely to be spent
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Crypto Application}
+
+Set A = stablecoins, B = Bitcoin:
+\begin{itemize}
+\item $E[r_A] \approx 0\%$ (stablecoins maintain peg)
+\item $E[r_B] \approx 50\%+$ (Bitcoin expected appreciation)
+\item $\Rightarrow P(\text{spend}_A) \gg P(\text{spend}_B)$
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{This explains:}
+\begin{enumerate}
+\item Why stablecoins dominate crypto payments while Bitcoin is hoarded (``HODL'' culture)
+\item Why Bitcoin velocity is lower than expected despite high transaction volume
+\item Why ``crypto-ization'' in developing countries uses stablecoins for transactions but Bitcoin for savings
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Important caveat:} Classical Gresham's Law requires a fixed exchange rate. In crypto, exchange rates float, so the mechanism operates through expected appreciation rather than legal tender laws.
+\end{columns}
+
+\bottomnote{The logit model formalizes Gresham's Law as a continuous probability rather than a binary switch, capturing gradual adoption patterns}
+\end{frame}
+
+% Frame 19: Crypto Velocity Estimation (Chart 09)
+\begin{frame}[t]{Crypto Velocity: Empirical Estimation}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{09_crypto_velocity_estimation/chart.pdf}
+\end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Panel (a):} Velocity varies enormously: USDT ($V{\approx}55$) circulates 46x faster than USD M2 ($V{\approx}1.2$). Error bars reflect high estimation uncertainty for crypto.
+\item \textbf{Panel (b):} Velocity spikes during bull markets (2017, 2021) when speculative trading surges. USD velocity has steadily declined since 2015.
+\end{itemize}
+
+\bottomnote{Based on Samani (2017) and Fisher (1911); crypto velocity estimates use on-chain transaction volume divided by circulating supply}
+\end{frame}
+
+% Frame 20: Seigniorage Distribution (Chart 10)
+\begin{frame}[t]{Seigniorage Distribution Across Money Types}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{10_seigniorage_distribution/chart.pdf}
+\end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Panel (a):} Absolute seigniorage: Central banks earn the most (\$50B), but stablecoin issuers earn \$8B from a much smaller base.
+\item \textbf{Panel (b):} As a percentage of money managed, stablecoin issuers earn 6\% --- \textbf{24x} the rate of central banks. They invest reserves at 4--5\% interest while paying holders 0\%.
+\end{itemize}
+
+\bottomnote{Seigniorage $S = (dM/dt) \cdot (1/P)$; stablecoin issuers capture monopoly rents that CBDCs would return to the public}
+\end{frame}
+
+%% ===== SECTION 6: Seigniorage and Money Demand =====
+\section{Seigniorage and Money Demand}
+
+% Frame 21: Money Standards Comic
+\begin{frame}[c]{The History of Money Standards}
+\begin{center}
+\Large
+\textit{``Money is a matter of functions four:\\
+a medium, a measure, a standard, a store.''}\\[0.5em]
+\normalsize --- Alfred Milnes, \textit{The Economics of Commerce} (1919)\\[1.5em]
+\large
+Gold standard $\rightarrow$ Bretton Woods $\rightarrow$ Fiat float $\rightarrow$ \textbf{Crypto?}\\[0.5em]
+Each transition changed who earns seigniorage\\
+and who bears the costs of monetary instability.
+\end{center}
+
+\bottomnote{The gold standard constrained seigniorage to the cost of mining; fiat freed governments to print; crypto distributes seigniorage to miners and stakers}
+\end{frame}
+
+% Frame 22: Money Demand Frontier
+\begin{frame}[t]{Money Demand Frontier: Markowitz Meets Money}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Applying Portfolio Theory to Money}
+
+Markowitz (1952) portfolio selection applies to money choice:
+\begin{itemize}
+\item Each form of money has expected return $E[r]$ and risk $\sigma$
+\item Rational agents choose the portfolio on the efficient frontier (the set of portfolios offering maximum return for each level of risk)
+\item ``Money demand'' = position on the frontier matching investor risk tolerance
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Asset Parameters:}
+\begin{center}
+\footnotesize
+\begin{tabular}{lcc}
+\toprule
+Asset & $E[r]$ & $\sigma$ \\
+\midrule
+Cash & 0\% & 0\% \\
+Savings & 3\% & 1\% \\
+CBDC & 1\% & 0.5\% \\
+USDT & 0\% & 5\% \\
+BTC & 50\% & 65\% \\
+ETH & 40\% & 75\% \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Key Insights}
+
+\begin{enumerate}
+\item \textbf{Traditional money clusters near origin:} Cash, savings, and CBDCs all have very low risk and low return. They are ``money'' precisely because they are boring.
+
+\item \textbf{Crypto is in the speculative zone:} BTC and ETH offer high expected returns but with enormous risk. They behave more like venture capital than money.
+
+\item \textbf{USDT is inefficient:} It has the risk of crypto (de-peg risk) but the return of cash (0\%). It sits below the efficient frontier.
+
+\item \textbf{CBDC dominates USDT:} CBDC offers higher return (potential interest), lower risk (sovereign backing), and sits closer to the frontier.
+\end{enumerate}
+
+\vspace{0.3em}
+\textit{This framework explains why different ``monies'' coexist: agents with different risk preferences choose different points on the frontier.}
+\end{columns}
+
+\bottomnote{Markowitz's insight that risk-return trade-offs determine asset allocation applies equally to money: agents ``invest'' in the form of money matching their risk tolerance}
+\end{frame}
+
+% Frame 23: Money Demand Frontier Chart (Chart 11)
+\begin{frame}[t]{Money Demand Frontier: Scatter and Frontier}
+\begin{center}
+\includegraphics[width=0.55\textwidth]{11_money_demand_frontier/chart.pdf}
+\end{center}
+\vspace{-2mm}
+\begin{itemize}\footnotesize
+\item \textbf{Panel (a):} Full frontier showing the dramatic separation between traditional money (near origin) and crypto assets (upper right). The red line is the efficient frontier computed from all assets.
+\item \textbf{Panel (b):} Zoomed view of the low-risk ``money region.'' CBDC offers the best risk-return trade-off among stable monies. USDT sits below the frontier (inefficient).
+\end{itemize}
+
+\bottomnote{Frontier computed using Markowitz mean-variance optimization with mild short-selling allowed; CBDC parameters are projections based on proposed designs}
+\end{frame}
+
+% Frame 24: Digital Money Classification
+\begin{frame}[t]{Digital Money Classification}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Taxonomy by Three Dimensions}
+
+\vspace{0.3em}
+\textbf{1. Issuer:}
+\begin{itemize}
+\item Central bank (CBDC, physical cash)
+\item Commercial bank (deposits)
+\item Private company (stablecoins)
+\item Decentralized protocol (BTC, ETH)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{2. Technology:}
+\begin{itemize}
+\item Account-based (identity verified; bank accounts, some CBDCs)
+\item Token-based (possession proves ownership; cash, crypto)
+\item Hybrid (CBDC designs combining both)
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{3. Backing:}
+\begin{itemize}
+\item Full reserve (1:1 asset backing)
+\item Fractional reserve (partial backing, leverage)
+\item Algorithmic (no backing, code-based)
+\item None (pure fiat, Bitcoin)
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Cross-Reference to Our Models}
+
+\begin{center}
+\footnotesize
+\begin{tabular}{lp{5cm}}
+\toprule
+\textbf{Model} & \textbf{What It Tells Us} \\
+\midrule
+Baumol-Tobin (Sec.\ 2) & Token-based money with low $b$ increases velocity \\
+\addlinespace
+Diamond-Dybvig (Sec.\ 3) & Fractional reserve and algorithmic backing are fragile; full reserve or sovereign backing eliminates runs \\
+\addlinespace
+GARCH (Sec.\ 4) & Decentralized, unbacked money (BTC) has highest volatility, failing UoA \\
+\addlinespace
+CES Substitution (Sec.\ 5) & When fiat fails ($\pi_A$ high), agents substitute toward any available alternative \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.3em}
+\textit{For analysis of systemic contagion across these money types, see L08 Extended (Systemic Risk).}
+\end{columns}
+
+\bottomnote{The classification framework combines issuer, technology, and backing dimensions; each of our four models illuminates different combinations}
+\end{frame}
+
+%% ===== SECTION 7: Synthesis and Policy Implications =====
+\section{Synthesis and Policy Implications}
+
+% Frame 25: Model Synthesis
+\begin{frame}[t]{Model Synthesis: Four Lenses on Digital Money}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{How the Models Connect}
+
+\begin{enumerate}
+\item \textbf{Baumol-Tobin} predicts \textit{how much} money agents hold
+  \begin{itemize}
+  \item Low crypto $b$ $\rightarrow$ low $M^*$ $\rightarrow$ high $V$
+  \end{itemize}
+
+\item \textbf{Diamond-Dybvig} predicts \textit{when} money systems fail
+  \begin{itemize}
+  \item $R < R_{crit}$ $\rightarrow$ self-fulfilling run
+  \end{itemize}
+
+\item \textbf{GARCH} measures \textit{how volatile} money is
+  \begin{itemize}
+  \item $\sigma_{ann} > 5\%$ $\rightarrow$ fails UoA
+  \end{itemize}
+
+\item \textbf{CES substitution} predicts \textit{which} money wins
+  \begin{itemize}
+  \item High $\pi_A$ + low $\pi_B$ $\rightarrow$ substitution
+  \end{itemize}
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Together:} Low transaction costs (1) increase velocity but also fragility (2). High volatility (3) limits adoption as money but not as speculation. Currency competition (4) disciplines monetary policy.
+
+\column{0.48\textwidth}
+\textbf{Policy Synthesis}
+
+\begin{center}
+\footnotesize
+\begin{tabular}{lp{4.5cm}}
+\toprule
+\textbf{Policy} & \textbf{Model Support} \\
+\midrule
+Regulate stablecoins as banks & Diamond-Dybvig: require full reserves \\
+\addlinespace
+Issue CBDCs & Markowitz: dominates USDT; D-D: eliminates runs \\
+\addlinespace
+Impose holding limits & D-D: prevent disintermediation \\
+\addlinespace
+Allow crypto as asset, not money & GARCH: too volatile for UoA/MoE \\
+\addlinespace
+Tax crypto seigniorage & Seigniorage theory: private capture of public rent \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\vspace{0.3em}
+\textit{For systemic contagion analysis across traditional and crypto financial systems, see L08 Extended.}
+\end{columns}
+
+\bottomnote{Each policy recommendation is grounded in a specific model prediction, not mere opinion; this is the power of formal economic analysis}
+\end{frame}
+
+% Frame 26: Open Questions
+\begin{frame}[t]{Open Questions in Monetary Economics of Crypto}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Unresolved Theoretical Questions}
+
+\begin{enumerate}
+\item \textbf{Will Bitcoin volatility decline?} GARCH persistence ($\alpha+\beta = 0.95$) is high but $\omega$ could fall as markets mature. If $\omega \rightarrow 0$, unconditional vol $\rightarrow 0$. But is this realistic?
+
+\item \textbf{Can algorithmic stablecoins ever work?} Diamond-Dybvig says no without exogenous (externally provided) insurance. But what about hybrid designs with partial reserves?
+
+\item \textbf{Optimal CBDC interest rate?} Too high: disintermediates banks. Too low: cannot compete with stablecoins. What does the Baumol-Tobin framework say about the optimal rate?
+\end{enumerate}
+
+\column{0.48\textwidth}
+\textbf{Unresolved Empirical Questions}
+
+\begin{enumerate}
+\item \textbf{True crypto velocity:} On-chain data overestimates (wash trading) and underestimates (off-chain transactions). How do we measure $V$ correctly?
+
+\item \textbf{Seigniorage redistribution:} If stablecoin issuers must share interest with holders, does the business model survive? How elastic is stablecoin demand to yield?
+
+\item \textbf{Currency substitution thresholds:} At what inflation rate does crypto adoption become mainstream? Argentina ($>100\%$) suggests the threshold is high, but Nigeria ($\sim 30\%$) shows earlier adoption.
+\end{enumerate}
+
+\vspace{0.3em}
+\textbf{Research opportunity:} Each question is an active area of academic research with publication potential.
+\end{columns}
+
+\bottomnote{These questions define the frontier of monetary economics research; answering them requires combining theory (our four models) with empirical crypto data}
+\end{frame}
+
+% Frame 27: References
+\begin{frame}[t]{References}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Core Models}
+\begin{itemize}
+\item Baumol, W.\ (1952). ``The Transactions Demand for Cash: An Inventory Theoretic Approach.'' \textit{Quarterly Journal of Economics}, 66(4), 545--556.
+\item Tobin, J.\ (1956). ``The Interest-Elasticity of Transactions Demand for Cash.'' \textit{Review of Economics and Statistics}, 38(3), 241--247.
+\item Diamond, D.\ \& Dybvig, P.\ (1983). ``Bank Runs, Deposit Insurance, and Liquidity.'' \textit{Journal of Political Economy}, 91(3), 401--419.
+\item Bollerslev, T.\ (1986). ``Generalized Autoregressive Conditional Heteroskedasticity.'' \textit{Journal of Econometrics}, 31(3), 307--327.
+\end{itemize}
+
+\column{0.48\textwidth}
+\textbf{Foundations and Applications}
+\begin{itemize}
+\item Engle, R.\ (1982). ``Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation.'' \textit{Econometrica}, 50(4), 987--1007.
+\item Fisher, I.\ (1911). \textit{The Purchasing Power of Money}. Macmillan.
+\item Samani, K.\ (2017). ``Understanding Token Velocity.'' Multicoin Capital Research.
+\item Yermack, D.\ (2015). ``Is Bitcoin a Real Currency? An Economic Appraisal.'' In \textit{Handbook of Digital Currency}, 31--43.
+\item Markowitz, H.\ (1952). ``Portfolio Selection.'' \textit{Journal of Finance}, 7(1), 77--91.
+\end{itemize}
+\end{columns}
+
+\bottomnote{All readings available on course platform; Diamond \& Dybvig (1983) is essential for understanding stablecoin fragility}
+\end{frame}
+
+%% ===== APPENDIX =====
+\appendix
+\section{Appendix}
+
+% Frame 28: A1 Notation Table
+\begin{frame}[t]{A1: Complete Notation Reference}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Latin Symbols}
+\begin{center}
+\footnotesize
+\begin{tabular}{lp{5.5cm}}
+\toprule
+Symbol & Definition \\
+\midrule
+$M$ & Money supply \\
+$M^*$ & Optimal cash holdings (Baumol-Tobin) \\
+$V$ & Velocity of money ($PQ/M$) \\
+$P$ & Price level \\
+$Y$ & Real output (or annual income) \\
+$i$ & Nominal interest rate \\
+$b$ & Transaction cost per withdrawal \\
+$n$ & Number of withdrawals \\
+$n^*$ & Optimal number of withdrawals \\
+$TC$ & Total cost function \\
+$R$ & Reserve ratio (Diamond-Dybvig) or gross return \\
+$R_{crit}$ & Critical reserve threshold \\
+$S$ & Seigniorage revenue \\
+$W$ & Wealth \\
+$c_1, c_2$ & Consumption at period 1, 2 \\
+$L$ & Liquidation value ($< 1$) \\
+$x$ & Withdrawal rate (fraction) \\
+$k$ & Sensitivity parameter \\
+$r$ & Return on asset \\
+$E[r]$ & Expected return \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\column{0.48\textwidth}
+\textbf{Greek Symbols}
+\begin{center}
+\footnotesize
+\begin{tabular}{lp{5.5cm}}
+\toprule
+Symbol & Definition \\
+\midrule
+$\sigma$ & Volatility (standard deviation) \\
+$\sigma^2$ & Variance \\
+$\sigma_t^2$ & Conditional variance at time $t$ \\
+$\bar{\sigma}^2$ & Unconditional (long-run) variance \\
+$\omega$ & GARCH constant term (omega) \\
+$\alpha$ & ARCH coefficient (alpha): shock reaction \\
+$\beta$ & GARCH coefficient (beta): persistence \\
+$\epsilon_t$ & Return innovation (shock) at time $t$ \\
+$\lambda$ & Fraction of early consumers (D-D) \\
+$\rho$ & CES substitution parameter (rho) \\
+$\sigma_s$ & Elasticity of substitution \\
+$\pi$ & Inflation rate \\
+$\pi^e$ & Expected inflation \\
+$\gamma$ & Logit sensitivity parameter (gamma) \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{columns}
+
+\bottomnote{Greek letters are introduced gradually: Section 2 introduces $\sigma$, Section 3 adds $\lambda$, Section 4 adds $\omega, \alpha, \beta, \epsilon$}
+\end{frame}
+
+% Frame 29: A2 Baumol-Tobin Full Derivation
+\begin{frame}[t]{A2: Baumol-Tobin Complete Derivation}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Step 1: Setup}
+
+Income $Y$ arrives once per year. You withdraw $n$ times, each of size $W = Y/n$.
+
+Average cash balance: $\bar{M} = W/2 = Y/(2n)$
+
+\vspace{0.3em}
+\textbf{Step 2: Total Cost}
+$$TC(n) = \underbrace{bn}_{\text{fee cost}} + \underbrace{i \cdot \frac{Y}{2n}}_{\text{interest cost}}$$
+
+\vspace{0.3em}
+\textbf{Step 3: First-Order Condition}
+$$\frac{dTC}{dn} = b - \frac{iY}{2n^2} = 0$$
+$$n^2 = \frac{iY}{2b} \quad \Rightarrow \quad n^* = \sqrt{\frac{iY}{2b}}$$
+
+\column{0.48\textwidth}
+\textbf{Step 4: Optimal Holdings}
+$$M^* = \frac{Y}{2n^*} = \frac{Y}{2} \cdot \sqrt{\frac{2b}{iY}} = \sqrt{\frac{bY}{2i}}$$
+
+\vspace{0.3em}
+\textbf{Step 5: Second-Order Condition}
+$$\frac{d^2TC}{dn^2} = \frac{iY}{n^3} > 0 \quad \checkmark$$
+(Confirms $n^*$ is a minimum, not maximum.)
+
+\vspace{0.3em}
+\textbf{Step 6: Elasticities}
+$$\frac{\partial \ln M^*}{\partial \ln i} = \frac{\partial}{\partial \ln i} \left[\frac{1}{2}\ln b + \frac{1}{2}\ln Y - \frac{1}{2}\ln 2 - \frac{1}{2}\ln i\right] = -\frac{1}{2}$$
+
+Similarly: $\partial \ln M^* / \partial \ln Y = +1/2$, $\partial \ln M^* / \partial \ln b = +1/2$.
+
+\vspace{0.3em}
+\textbf{Step 7: Total Cost at Optimum}
+$$TC^* = b \sqrt{\frac{iY}{2b}} + \frac{iY}{2}\sqrt{\frac{2b}{iY}} = \sqrt{2bYi}$$
+\end{columns}
+
+\bottomnote{This derivation uses only calculus (derivatives and square roots); no advanced mathematics required}
+\end{frame}
+
+% Frame 30: A3 GARCH Stationarity Proof
+\begin{frame}[t]{A3: GARCH(1,1) Stationarity and Unconditional Variance}
+\begin{columns}[T]
+\column{0.48\textwidth}
+\textbf{Unconditional Variance Derivation}
+
+Start with GARCH(1,1):
+$$\sigma_t^2 = \omega + \alpha \epsilon_{t-1}^2 + \beta \sigma_{t-1}^2$$
+
+Take unconditional expectation (long-run average):
+$$E[\sigma_t^2] = \omega + \alpha E[\epsilon_{t-1}^2] + \beta E[\sigma_{t-1}^2]$$
+
+Since $\epsilon_t = \sigma_t z_t$ and $z_t \sim N(0,1)$:
+$$E[\epsilon_t^2] = E[\sigma_t^2 \cdot z_t^2] = E[\sigma_t^2] \cdot E[z_t^2] = E[\sigma_t^2]$$
+
+In stationarity, $E[\sigma_t^2] = E[\sigma_{t-1}^2] = \bar{\sigma}^2$:
+$$\bar{\sigma}^2 = \omega + \alpha \bar{\sigma}^2 + \beta \bar{\sigma}^2$$
+$$\bar{\sigma}^2 (1 - \alpha - \beta) = \omega$$
+$$\boxed{\bar{\sigma}^2 = \frac{\omega}{1 - \alpha - \beta}}$$
+
+\column{0.48\textwidth}
+\textbf{Stationarity Condition}
+
+For $\bar{\sigma}^2$ to be positive and finite:
+$$1 - \alpha - \beta > 0 \quad \Leftrightarrow \quad \alpha + \beta < 1$$
+
+\textit{If $\alpha + \beta \geq 1$: the denominator is zero or negative, and variance is infinite or undefined. The process is ``integrated'' (IGARCH) --- shocks never die out.}
+
+\vspace{0.3em}
+\textbf{Half-Life of Volatility Shocks}
+
+After a shock, conditional variance decays as:
+$$\sigma_{t+h}^2 - \bar{\sigma}^2 = (\alpha + \beta)^h (\sigma_t^2 - \bar{\sigma}^2)$$
+
+Half-life (time for shock to decay by 50\%):
+$$h_{1/2} = \frac{\ln(0.5)}{\ln(\alpha + \beta)}$$
+
+\vspace{0.3em}
+\textbf{Examples:}
+\begin{itemize}
+\item BTC ($\alpha{+}\beta = 0.95$): $h_{1/2} = 13.5$ days
+\item S\&P ($\alpha{+}\beta = 0.96$): $h_{1/2} = 17.0$ days
+\end{itemize}
+\end{columns}
+
+\bottomnote{Stationarity is crucial: without it, GARCH forecasts are meaningless because volatility has no level to revert to}
+\end{frame}
+
+\end{document}
